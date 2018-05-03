@@ -82,6 +82,7 @@ public class BlockSpawner : MonoBehaviour
     //Die Methode wird beim Festhalten des B-Buttons in jedem Frame aufgerufen und erhöht die blockChargeTime.
     public void AddBlockChargeTime()
     {
+        GetComponent<SpriteRenderer>().enabled = true;
         //sofern die Zeit noch geringer ist als die zu erreichende SpawnZeit
         if (blockChargeTime < spawnTimer)
         {
@@ -107,6 +108,15 @@ public class BlockSpawner : MonoBehaviour
         }
     }
 
+    public void ResetBlockChargeTime()
+    {
+        blockChargeTime = 0;    //die Zeit des Aufladens wird zurückgesetzt
+        SetSpawnerSize(blockChargeTime);  //ebenfalls die Größe des Spawners 
+        SetBlockTransparency(0, spawnColor);
+        collidingObjects = new List<GameObject>();
+        GetComponent<SpriteRenderer>().enabled = false; //und der Rahmen ausgeblendet
+    }
+
     //die Methode wird aufgerufen, sofern der B-Button losgelassen wird 
     public void SpawnBlock()
     {
@@ -115,12 +125,9 @@ public class BlockSpawner : MonoBehaviour
         {
             GameObject block = Instantiate(blockPrefab, this.transform.position, this.transform.rotation);  //wird der Block aus dem Prefab instanziiert
             block.GetComponent<Block>().SetColor(blockColor); //und entsprechend der Teamfarbe eingefärbt
-
         }
-        blockChargeTime = 0;    //die Zeit des Aufladens wird zurückgesetzt
-        SetSpawnerSize(blockChargeTime);  //ebenfalls die Größe des Spawners 
-        SetBlockTransparency(0, spawnColor);
-        collidingObjects = new List<GameObject>();  
+        ResetBlockChargeTime();
+
 }
 
     //Methode, um die Farbe des Blocks zu setzen
