@@ -19,23 +19,6 @@ public class ZoneCollider : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        switch (other.gameObject.name)
-        {
-            case "Zone_Center":
-                playerLogging.timeCenterZone++;
-                break;
-            case "Zone_Team1":
-                playerLogging.timeOwnZone++;
-                break;
-            case "Zone_Team1_Goal":
-                playerLogging.timeOwnGoalZone++;
-                break;
-            case "Zone_Team2":
-                playerLogging.timeOpponentZone++;
-                break;
-            case "Zone_Team2_Goal":
-                playerLogging.timeOpponentGoalZone++;
-                break;
-        }
+        playerLogging.AddZoneTime(other.gameObject.name);
     }
 }

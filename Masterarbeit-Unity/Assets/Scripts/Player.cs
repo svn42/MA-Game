@@ -38,7 +38,9 @@ public class Player : MonoBehaviour
         CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
         blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
         shotSpawn.GetComponent<ShotSpawner>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
+
         playerLogging = this.gameObject.GetComponent<PlayerLogging>();
+        playerLogging.SetPlayerTeam(playerTeam);
     }
 
     // Update is called once per frame
