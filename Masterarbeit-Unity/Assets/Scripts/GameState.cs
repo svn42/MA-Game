@@ -50,7 +50,7 @@ public class GameState : MonoBehaviour {
     }
 
     //Die Methode überprüft, ob das Maximum der zugelassenen Bälle erreicht wurde und liefert das Ergebnis als bool zurück
-    public bool CheckMaximumBalls()
+    public bool MaximumBallsReached()
     {
         if (ballList.Count < maximumBalls)
         {

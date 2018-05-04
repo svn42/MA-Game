@@ -87,6 +87,7 @@ public class Player : MonoBehaviour
             speedY /= 6;
             StartCoroutine(StunPlayer(stunDurationBall));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
             blockSpawn.ResetBlockChargeTime();
+            shotSpawn.ResetShotChargeTime();
         }
 
     }

@@ -6,6 +6,7 @@ public class Ball : MonoBehaviour {
 
     private GameState gameState;
     private BallSpawner ballSpawner;
+    private Rigidbody2D rb;
 
     //statische ID, um jedem Ball eine eindeutige ID zuzuweisen.
     public static int globalId;
@@ -26,12 +27,13 @@ public class Ball : MonoBehaviour {
         //Der Ballspawner wird dem Ball bekannt gemacht. Da es nur einen BallSpawner gibt, kann dies über die folgende Zeile geschehen
         ballSpawner = (BallSpawner)FindObjectOfType(typeof(BallSpawner));
 
+        rb = gameObject.GetComponent<Rigidbody2D>();
 
     }
 
     // Update is called once per frame
     void Update () {
-
+        Debug.Log(rb.velocity);
 
     }
 

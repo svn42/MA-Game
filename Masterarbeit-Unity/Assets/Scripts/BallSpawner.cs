@@ -5,6 +5,7 @@ using UnityEngine;
 public class BallSpawner : MonoBehaviour
 {
 
+    public bool centerCircleBlocked = false;    //wenn im Mittelkreis der zuletzt gespawnte Ball liegt, wird true zurückgeliefert
     public bool spawnBlocked = false;
     //in dieser Variable wird der zuletzt gespawnte Ball zwischengespeichert. Wird benötigt, um zu überprüfen, ob der neueste Ball den Mittelkreis verlassen hat.
     private GameObject lastSpawnedBall;
@@ -30,17 +31,21 @@ public class BallSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
     }
 
     public void SpawnBall()
     {
-        //sofern der Mittelkreis nicht mehr vom letzten Ball geblockt wird und das Ball-Maximum noch nicht ereicht wurde
-        if (!(gameState.CheckMaximumBalls()) && !spawnBlocked)
+        //sofern der Mittelkreis nicht mehr vom letzten Ball geblockt wird und das Ball-Maximum noch nicht ereicht wurde && nicht von einem Block oder Spieler Blockiert wird
+        if (!(gameState.MaximumBallsReached()) && !centerCircleBlocked)
         {
-            //wird ein neuer Ball gespawnt und als "neuester Ball" markiert
-            lastSpawnedBall = Instantiate(ballPrefab, ballPosition, ballRotation);
-            //der Mittelkreis wird zudem als Blockiert markiert
-            spawnBlocked = true;
+            if (!spawnBlocked)
+            {
+                //wird ein neuer Ball gespawnt und als "neuester Ball" markiert
+                lastSpawnedBall = Instantiate(ballPrefab, ballPosition, ballRotation);
+                //der Mittelkreis wird zudem als vom neuesten Ball blockiert markiert
+                centerCircleBlocked = true;
+            } 
         }
     }
 
@@ -51,12 +56,15 @@ public class BallSpawner : MonoBehaviour
         if (other.gameObject == lastSpawnedBall)
         {
             //wird der Spawn wieder freigegeben und ein neuer Ball gespawnt (sofern dies möglich ist --> sofern das Maximum der Bälle nicht erreicht wurde. Siehe SpawnBall Methode)
-            spawnBlocked = false; 
+            centerCircleBlocked = false; 
             SpawnBall();
         } 
 
     }
 
-
+    public void SetSpawnBlocked(bool b)
+    {
+        spawnBlocked = b;
+    }
 
 }

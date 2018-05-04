@@ -7,13 +7,13 @@ public class Shot : MonoBehaviour
 
     public float acceleration;  //der Beschleunigungswert des Partikels
     [Range(1, 3)]
-    public int strength;
+    public int strength;    //Stärke des Schusses. Normaler Schuss =1, Mittlerer Schuss = 2, Großer Schuss = 3.
+    public int ballImpact;     //Wirkung des Schusses auf den Ball bei einer Kollision
 
 
     // Use this for initialization
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -53,7 +53,12 @@ public class Shot : MonoBehaviour
                 DestroyShot();
                 break;
             case "Ball":
-                coll.rigidbody.AddForce(new Vector3(22f, 22f, 0f), ForceMode2D.Impulse);
+                // reference: https://answers.unity.com/questions/1100879/push-object-in-opposite-direction-of-collision.html
+                // calculate force vector
+                Vector3 force = coll.transform.position - transform.position;
+                // normalize force vector to get direction only and trim magnitude
+                force.Normalize();
+                coll.rigidbody.AddForce(force * ballImpact);
                 DestroyShot();
                 break;
         }

@@ -87,25 +87,31 @@ public class ShotSpawner : MonoBehaviour
     //die Methode wird aufgerufen, sofern der A-Button losgelassen wird 
     public void SpawnShot()
     {
+        bool shotFired = false;
         GameObject shot = new GameObject();
         //wenn das Ziel erreicht wurde und der ShotSpawner nicht kollidiert
         if (spawnNormalShot && spawnable)
         {
             shot = Instantiate(normalShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
+            shotFired = true;
         }
         else if (spawnMediumShot && spawnable)
         {
             shot = Instantiate(mediumShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
+            shotFired = true;
         }
         else if (spawnLargeShot && spawnable)
         {
             shot = Instantiate(largeShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
+            shotFired = true;
         }
-        shot.GetComponent<Shot>().SetDirection(this.transform.rotation);    //Der Schuss bekommt die Rotation des Spielers übergeben
-        shot.GetComponent<Shot>().SetColor(shotColor);                      //und dessen Farbe
 
-        shotChargeTime = 0;    //die Zeit des Aufladens wird zurückgesetzt
-        chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f);
+        if (shotFired)
+        {
+            shot.GetComponent<Shot>().SetDirection(this.transform.rotation);    //Der Schuss bekommt die Rotation des Spielers übergeben
+            shot.GetComponent<Shot>().SetColor(shotColor);                      //und dessen Farbe
+        }
+        ResetShotChargeTime();
 
     }
 
@@ -113,6 +119,12 @@ public class ShotSpawner : MonoBehaviour
     public void SetColor(Color col)
     {
         shotColor = col;    //Die Farbvariable für das Erstellen der neuen Schüsse bekommt die Farbe
+    }
+
+    public void ResetShotChargeTime()
+    {
+        shotChargeTime = 0;    //die Zeit des Aufladens wird zurückgesetzt
+        chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f); //und das Sprite zum aufladen auf 0 gesetzt
     }
 
 }

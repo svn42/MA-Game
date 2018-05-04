@@ -95,6 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 50
   strength: 3
+  ballImpact: 2000
 --- !u!212 &212764447594908098
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -108,6 +109,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:

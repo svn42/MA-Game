@@ -35,8 +35,8 @@ public class BlockSpawner : MonoBehaviour
     //Bei Aktivierung des Triggers
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //sofern das andere Objekt eine Bande, ein anderer Block oder ein Ball ist
-        if (other.gameObject.tag.Equals("Boundary") || other.gameObject.tag.Equals("Block") || other.gameObject.tag.Equals("Ball")) //"Player"
+        //sofern das andere Objekt eine Bande, ein anderer Block, ein Ball oder der andere Spieler ist
+        if (other.gameObject.tag.Equals("Boundary") || other.gameObject.tag.Equals("Block") || other.gameObject.tag.Equals("Ball") || other.gameObject.tag.Equals("Player"))
         {
             collidingObjects.Add(other.gameObject); //wird es in die Liste der kollidierenden Objekte aufgenommen
 
@@ -52,8 +52,8 @@ public class BlockSpawner : MonoBehaviour
     //Bei Verlassen des anderen Objektes
     private void OnTriggerExit2D(Collider2D other)
     {
-        //sofern das andere Objekt eine Bande, ein anderer Block oder ein Ball ist
-        if (other.gameObject.tag.Equals("Boundary") || other.gameObject.tag.Equals("Block") || other.gameObject.tag.Equals("Ball")) //"Player"
+        //sofern das andere Objekt eine Bande, ein anderer Block, ein Ball oder der andere Spieler ist
+        if (other.gameObject.tag.Equals("Boundary") || other.gameObject.tag.Equals("Block") || other.gameObject.tag.Equals("Ball") || other.gameObject.tag.Equals("Player")) 
         {
             collidingObjects.Remove(other.gameObject);  //wird es aus der Liste entfernt
         }
