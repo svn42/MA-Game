@@ -8,10 +8,8 @@ public class Ball : MonoBehaviour {
     private BallSpawner ballSpawner;
     private Rigidbody2D rb;
 
-    //statische ID, um jedem Ball eine eindeutige ID zuzuweisen.
-    public static int globalId;
-    //instanceID, um die ID des Balles zwischenzuspeichern
-    public int instanceID;
+    public static int globalId;    //statische ID, um jedem Ball eine eindeutige ID zuzuweisen.
+    public int instanceID;     //instanceID, um die ID des Balles zwischenzuspeichern
 
     // Use this for initialization
     void Start () {
@@ -32,9 +30,9 @@ public class Ball : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
-        Debug.Log(rb.velocity);
+    void FixedUpdate () {
 
+        rb.velocity = new Vector2 (rb.velocity.x * 0.99f, rb.velocity.y *0.99f);    //Bremst den Ball ab
     }
 
     // wenn der Ball mit dem GoalCollider in Berührung kommt
