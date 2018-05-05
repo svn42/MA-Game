@@ -44,6 +44,16 @@ public class Ball : MonoBehaviour {
             gameState.GoalScored(other.gameObject.name);
             //und der Ball zerstört
             DestroyBall();
+        } 
+    }
+
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag.Equals("Player"))   //bei Berührung mit dem Spieler
+        {
+            rb.velocity = new Vector2(0, 0);    //wird die Bewegung des Balles gestoppt
+            Debug.Log("ball hits player");
+
         }
     }
 

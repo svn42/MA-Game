@@ -85,6 +85,7 @@ public class Player : MonoBehaviour
         {
             speedX /= 6;    //wird die Geschwindigkeit reduziert
             speedY /= 6;
+            this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
             StartCoroutine(StunPlayer(stunDurationBall));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
             blockSpawn.ResetBlockChargeTime();
             shotSpawn.ResetShotChargeTime();
@@ -168,6 +169,14 @@ public class Player : MonoBehaviour
 
         //der Spieler bewegt sich dann mit Hilfe deses Vektors auf dem Spielfeld. Die Bewegung ist immer relativ zur Spielwelt 
         transform.Translate(movementVector * Time.deltaTime, Space.World);
+
+        //   float angleHorizontal = Input.GetAxis("Horizontal");
+        //  float angVertical = Input.GetAxis("Vertical");
+        // transform.localEulerAngles = new Vector3(angleHorizontal, angVertical, angleHorizontal*360);
+
+        //Vector3 lookDirection = new Vector3(0, 0, Input.GetAxisRaw("Vertical"));
+        //transform.rotation = Quaternion.LookRotation(lookDirection);
+
     }
 
     //Die Beschleunigen-Methode ermittelt die Geschwindigketi des Spielers bei einem Input
@@ -289,7 +298,6 @@ public class Player : MonoBehaviour
     {
         StartCoroutine(StunEffect(time));   //Es wird eine Coroutine für den Blinkeffekt gestartet und die Zeit der Betäubung übergeben.
         stunned = true;                     //die Stun-Variable auf True gesetzt
-        Debug.Log("stun true");
         yield return new WaitForSeconds(time);  //Die Zeit der Betäubung abgewartet 
         stunned = false;                        //und daraufhin die Stun-Variable auf false gesetzt
 

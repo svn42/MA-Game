@@ -427,6 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ab0a314532aa1748b980a0afadb0594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTeam: 0
   timeCenterZone: 0
   timeOwnZone: 0
   timeOwnGoalZone: 0

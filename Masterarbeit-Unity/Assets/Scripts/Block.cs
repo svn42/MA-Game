@@ -6,15 +6,17 @@ public class Block : MonoBehaviour
 {
 
     [Range(0, 3)]
-    private int strength;
+    private int health;
 
-    Sprite twoStrengthBlock;
-    Sprite oneStrengthBlock;
+    public Sprite twoHealthBlock;
+    public Sprite oneHealthBlock;
+    private SpriteRenderer sr;
 
     // Use this for initialization
     void Start()
     {
-        strength = 3;
+        health = 3;
+        sr = gameObject.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -23,22 +25,22 @@ public class Block : MonoBehaviour
 
     }
 
-    public void ReduceStrength(int damage)
+    public void ReduceHealth(int damage)
     {
-        strength -= damage;
-        if (strength == 2)
+        health -= damage;
+        if (health == 2)
         {
-            Debug.Log(strength);
-            //sprite anpassen
+            Debug.Log(health);
+            sr.sprite = (Sprite)Resources.Load<Sprite>("Textures/Block_2Health");
         }
-        else if (strength == 1)
+        else if (health == 1)
         {
-            Debug.Log(strength);
-            //sprite anpassen
+            Debug.Log(health);
+                sr.sprite = Resources.Load<Sprite>("Textures/Block_1Health");
         }
-        else if (strength <= 0)
+        else if (health <= 0)
         {
-            Debug.Log(strength);
+            Debug.Log(health);
             DestroyBlock();
         }
 

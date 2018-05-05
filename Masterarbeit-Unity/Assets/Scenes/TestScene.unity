@@ -911,6 +911,11 @@ Prefab:
       propertyPath: playerTeam
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 50372362101184918, guid: b79f309cebcdff441a93b0c0de8cdf6b,
+        type: 2}
+      propertyPath: m_Mass
+      value: 0.0001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b79f309cebcdff441a93b0c0de8cdf6b, type: 2}
   m_IsPrefabParent: 0
@@ -1762,7 +1767,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   centerCircleBlocked: 0
   spawnBlocked: 0
-  insideCircle: {fileID: 1758086577}
   ballPrefab: {fileID: 1243154274409858, guid: 520c5f0e330cc1045842f946757ba2ab, type: 2}
 --- !u!58 &1893410628
 CircleCollider2D:

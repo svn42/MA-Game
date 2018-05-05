@@ -42,7 +42,7 @@ public class Shot : MonoBehaviour
         switch (collidingObject.tag)
         {
             case "Block":
-                collidingObject.GetComponent<Block>().ReduceStrength(this.strength);
+                collidingObject.GetComponent<Block>().ReduceHealth(this.strength);
                 DestroyShot();
                 break;
             case "player":

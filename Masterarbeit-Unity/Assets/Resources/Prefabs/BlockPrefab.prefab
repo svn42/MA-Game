@@ -99,6 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13f4b57a1eb4ec74289b6e9e9f573121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  twoHealthBlock: {fileID: 21300000, guid: 3cb12b8d2a8729d47a0efed397670b4c, type: 3}
+  oneHealthBlock: {fileID: 21300000, guid: 7ddbb6b264126b84583dc39b3738cb98, type: 3}
 --- !u!212 &212723111244714900
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -112,6 +114,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
