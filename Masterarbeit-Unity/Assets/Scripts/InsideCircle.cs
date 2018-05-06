@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InsideCircle : MonoBehaviour {
 
-    bool spawnBlocked;
+    public bool spawnBlocked;
     private List<GameObject> collidingObjects; //Liste der GameObjects, die mit dem Spawner kollidieren
     public BallSpawner bs; //Der BallSpawner dem Objekt verknüpft
 

@@ -9,19 +9,24 @@ public class BallSpawner : MonoBehaviour
     public bool spawnBlocked = false;
     //in dieser Variable wird der zuletzt gespawnte Ball zwischengespeichert. Wird benötigt, um zu überprüfen, ob der neueste Ball den Mittelkreis verlassen hat.
     private GameObject lastSpawnedBall;
+    public GameObject ballInflater; 
 
     private GameState gameState;
     private List<Ball> ballList;
     public GameObject ballPrefab;
     private Vector3 ballPosition;
     private Quaternion ballRotation;
+
     public float ballSpawnDelay;
+    public Vector3 ballInflaterMaxSize;
 
 
     // Use this for initialization
     void Start()
     {
         gameState = (GameState)FindObjectOfType(typeof(GameState));
+        ballInflaterMaxSize = ballInflater.transform.localScale;
+        
         //die Ballposition der zukünftigen Bälle wird mit dem Mittelpunkt des Spawners gleichgesetzt. 
         ballPosition = this.transform.position - new Vector3(0,0,0.01f);
         ballRotation = new Quaternion(0, 0, 0, 0);
@@ -32,7 +37,7 @@ public class BallSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void CheckSpawnBall()
@@ -62,6 +67,7 @@ public class BallSpawner : MonoBehaviour
 
     public IEnumerator SpawnBall(float time)
     {
+        StartCoroutine(InflateBall(time));
         yield return new WaitForSeconds(time);
         //wird ein neuer Ball gespawnt und als "neuester Ball" markiert
         lastSpawnedBall = Instantiate(ballPrefab, ballPosition, ballRotation);
@@ -74,5 +80,19 @@ public class BallSpawner : MonoBehaviour
     {
         spawnBlocked = b;
     }
+
+    public IEnumerator InflateBall(float time)
+    {
+        float inflateTime = time * 60; //Zeit an Frames anpassen
+        for (float i = 0; i < inflateTime; i++)
+        {
+            Debug.Log(i + "i");
+            ballInflater.transform.localScale = ballInflaterMaxSize * (i / inflateTime);
+            yield return new WaitForSeconds( 1 / inflateTime);
+        }
+        ballInflater.transform.localScale = new Vector3(0, 0, 0);
+
+    }
+
 
 }
