@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 
     public bool stunned;    //Wenn der Spieler betäubt wurde, wird die Variable true
     public float stunBlinkEffect;   //Zeitliches Intervall (in Sekunden), in dem das Blinken beim Stun stattfindet
-    public float stunDurationBall;  //Die Zeit in Sekunden, die der Spieler gestunnt wird, soferne er den Ball berührt
+    public float stunDurationBall;  //Die Zeit in Sekunden, die der Spieler gestunnt wird, sofern er den Ball berührt
 
     public GameObject exhaustPrefab; //das Prefab des Abgaspartikels wird über den Inspector bekannt gemacht   
     public GameObject exSpawner;    // der Spawner für die Abgaspartikel wird ebenfalls über den Inspektor bekannt gemacht
@@ -26,10 +26,14 @@ public class Player : MonoBehaviour
 
     public BlockSpawner blockSpawn; //Der Blockspawner des Spielers wird über den Inspector mit dem Spieler verknüpft
     public ShotSpawner shotSpawn;   //Der Shotspawner des Spielers wird über den Inspector mit dem Spieler verknüpft
-    public ZoneCollider zoneCollider;
-    private PlayerLogging playerLogging;
+    public float shotDelay; //der shotDelay gibt die Zeit in Sekunden wieder, die nach einem Schuss vergehen muss, damit ein neuer Schuss gespawnt werden kann. (damit der normalShot nicht gespammt werden kann)
+    public float shotTimer; //der shotTimer gibt die Zeit in Frames wieder, die bereits auf den nächsten Schuss gewartet wurde.
 
+    private PlayerLogging playerLogging;
     private Color teamColor;    //Die Farbe des Spielers, die anhand der Teamzugehörigkeit ermittelt wird
+
+    public float emoteTimer; 
+    public float emoteDelay;
 
 
     // Use this for initialization
@@ -39,8 +43,12 @@ public class Player : MonoBehaviour
         blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
         shotSpawn.GetComponent<ShotSpawner>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
 
-        playerLogging = this.gameObject.GetComponent<PlayerLogging>();
+        playerLogging = this.gameObject.GetComponent<PlayerLogging>();  //der PlayerLogger wird verknüpft
         playerLogging.SetPlayerTeam(playerTeam);
+
+        shotDelay *= 60;    //der ShotDelay wird an die Frames angepasst
+        emoteDelay *= 60;    //der emoteDelay wird an die Frames angepasst
+        emoteTimer = emoteDelay;
     }
 
     // Update is called once per frame
@@ -52,8 +60,8 @@ public class Player : MonoBehaviour
             Move(); //dann der Spieler bewegt
             CheckExhaust(); //sowie überprüft, ob das Abgas erzeugt werden soll
         }
-
-
+        shotTimer++;
+        emoteTimer++;
 
     }
 
@@ -87,19 +95,11 @@ public class Player : MonoBehaviour
             speedY /= 6;
             this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
             StartCoroutine(StunPlayer(stunDurationBall));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
-            blockSpawn.ResetBlockChargeTime();
-            shotSpawn.ResetShotChargeTime();
+            blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
+            shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
         }
 
     }
-
-    //public void OnCollisionExit2D(Collision2D coll)
-    //{
-    //    if (coll.gameObject.name == "Boundary_Top" || coll.gameObject.name == "Boundary_Bottom" || coll.gameObject.name == "Boundary_Left" || coll.gameObject.name == "Boundary_Right")
-    //    {
-    //    }
-
-    //}
 
     public void CheckInput()
     {
@@ -151,13 +151,40 @@ public class Player : MonoBehaviour
         //wenn der Schuss-Button (A) gedrückt wird
         if (Input.GetButton("Shoot"))
         {
-            shotSpawn.AddShotChargeTime();  //wird die Zeit zum Aufladen des Schuss hochgezählt
+            if (shotTimer > shotDelay)  //und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen
+            {
+                shotSpawn.AddShotChargeTime();  //wird die Zeit zum Aufladen des Schuss hochgezählt
+            }
         }
-        //wenn der Schuss-Button (A) losgelassen wird
-        if (Input.GetButtonUp("Shoot"))
+        //wenn der Schuss-Button (A) losgelassen wird und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen 
+        if (Input.GetButtonUp("Shoot") && shotTimer > shotDelay)
         {
             shotSpawn.SpawnShot();  //wird der Schuss gespawnt 
         }
+
+        /*
+         * 
+        Emotes
+         * 
+         * */
+
+        if (Input.GetButtonUp("LB") && emoteTimer > emoteDelay)
+        {
+            CastEmote("haha");
+        }
+        if (Input.GetButtonUp("RB") && emoteTimer > emoteDelay)
+        {
+            CastEmote("gg");
+        }
+        if (Input.GetAxis("RT") != 0 && emoteTimer > emoteDelay)
+        {
+            CastEmote("oops");
+        }
+        if (Input.GetAxis("LT") != 0 && emoteTimer > emoteDelay)
+        {
+            CastEmote("superior");
+        }
+
 
     }
 
@@ -315,8 +342,61 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(stunBlinkEffect);
             spriteRenderer.color = teamColor;
             yield return new WaitForSeconds(stunBlinkEffect);
-
         }
+    }
+
+    //Methode, um den ShotTimer von außerhalb zu setzen. (Geschieht in der ShotSpawner-Klasse nach dem Schießen)
+    public void SetShotTimer(int i)
+    {
+        shotTimer = i;
+    }
+
+    //Methode fürs Benutzen der Emotes
+    public void CastEmote(string type)
+    {
+        
+        if (playerTeam == 1) {
+            switch (type)
+            {
+                case ("gg"): Debug.Log("Player "+playerTeam+": Gut gespielt!");
+                    //spawn UI an Position für Player1 für emoteDelay
+                    break;
+                case ("haha"):
+                    Debug.Log("Player " + playerTeam + ": Haha!");
+                    //spawn UI an Position für Player1
+                    break;
+                case ("superior"):
+                    Debug.Log("Player " + playerTeam + ": Ich werde dich besiegen");
+                    //spawn UI an Position für Player1
+                    break;
+                case ("oops"):
+                    Debug.Log("Player " + playerTeam + ": Mist!");
+                    //spawn UI an Position für Player1
+                    break;
+            }
+        } else if (playerTeam == 2)
+        {
+            switch (type)
+            {
+                case ("gg"):
+                    Debug.Log("Player " + playerTeam + ": Gut gespielt!");
+                    //spawn UI an Position für Player2
+                    break;
+                case ("haha"):
+                    Debug.Log("Player " + playerTeam + ": Haha!");
+                    //spawn UI an Position für Player2
+                    break;
+                case ("superior"):
+                    Debug.Log("Player " + playerTeam + ": Ich werde dich besiegen");
+                    //spawn UI an Position für Player2
+                    break;
+                case ("oops"):
+                    Debug.Log("Player " + playerTeam + ": Mist!");
+                    //spawn UI an Position für Player2
+                    break;
+            }
+        }
+        emoteTimer = 0;
 
     }
 

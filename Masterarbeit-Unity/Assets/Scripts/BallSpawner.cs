@@ -86,7 +86,6 @@ public class BallSpawner : MonoBehaviour
         float inflateTime = time * 60; //Zeit an Frames anpassen
         for (float i = 0; i < inflateTime; i++)
         {
-            Debug.Log(i + "i");
             ballInflater.transform.localScale = ballInflaterMaxSize * (i / inflateTime);
             yield return new WaitForSeconds( 1 / inflateTime);
         }

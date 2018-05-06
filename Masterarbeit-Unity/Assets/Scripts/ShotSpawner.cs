@@ -20,6 +20,7 @@ public class ShotSpawner : MonoBehaviour
     bool spawnLargeShot = false;
 
     public GameObject chargingShotSprite; //Sprite des charging-Shots (Child)
+    private Player player;
 
     private Color shotColor;
 
@@ -30,6 +31,7 @@ public class ShotSpawner : MonoBehaviour
         spawnTimerLarge *= 60;
         spawnTimerLimit *= 60;
         chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f);  //und die Visualisierung des ChargingShots "unsichtbar" gemacht
+        player = transform.parent.GetComponent<Player>();
 
 
     }
@@ -49,7 +51,7 @@ public class ShotSpawner : MonoBehaviour
     public void AddShotChargeTime()
     {
         shotChargeTime++;
-        if (shotChargeTime < spawnTimerMedium)
+        if (shotChargeTime != 0 && shotChargeTime < spawnTimerMedium)
         {
             spawnNormalShot = true;
             spawnMediumShot = false;
@@ -94,16 +96,19 @@ public class ShotSpawner : MonoBehaviour
         {
             shot = Instantiate(normalShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
             shotFired = true;
+            spawnNormalShot = false;
         }
         else if (spawnMediumShot && spawnable)
         {
             shot = Instantiate(mediumShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
             shotFired = true;
+            spawnMediumShot = false;
         }
         else if (spawnLargeShot && spawnable)
         {
             shot = Instantiate(largeShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
             shotFired = true;
+            spawnLargeShot = false;
         }
 
         if (shotFired)
@@ -124,6 +129,7 @@ public class ShotSpawner : MonoBehaviour
     public void ResetShotChargeTime()
     {
         shotChargeTime = 0;    //die Zeit des Aufladens wird zurückgesetzt
+        player.SetShotTimer(0);
         chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f); //und das Sprite zum aufladen auf 0 gesetzt
     }
 

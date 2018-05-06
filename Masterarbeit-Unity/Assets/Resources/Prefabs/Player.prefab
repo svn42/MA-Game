@@ -267,7 +267,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -375,7 +375,9 @@ MonoBehaviour:
   exhaustSpawnTime: 0.12
   blockSpawn: {fileID: 114277257188751900}
   shotSpawn: {fileID: 114237265526856248}
-  zoneCollider: {fileID: 114161868169587086}
+  shotDelay: 0.16
+  shotTimer: 0
+  emoteDelay: 3
 --- !u!114 &114237265526856248
 MonoBehaviour:
   m_ObjectHideFlags: 1
