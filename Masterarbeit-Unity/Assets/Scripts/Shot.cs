@@ -52,6 +52,9 @@ public class Shot : MonoBehaviour
             case "Boundary":
                 DestroyShot();
                 break;
+            case "Shot":
+                DestroyShot();
+                break;
             case "Ball":
                 // reference: https://answers.unity.com/questions/1100879/push-object-in-opposite-direction-of-collision.html
                 // calculate force vector

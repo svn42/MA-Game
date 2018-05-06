@@ -100,11 +100,21 @@ public class Player : MonoBehaviour
             StartCoroutine(StunPlayer(stunDurationBall));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
             blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
             shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
-        }  
+        }
+        if (coll.gameObject.tag == "Shot")
+        {
+            speedX /= 2;    //wird die Geschwindigkeit reduziert
+            speedY /= 2;
+            this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            StartCoroutine(StunPlayer(stunDurationShot));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
+            blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
+            shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
+            coll.gameObject.GetComponent<Shot>().DestroyShot();
+        }
 
     }
 
-    public void OnTriggerEnter2D(Collider2D other)
+  /*  public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Shot")
         {
@@ -115,8 +125,9 @@ public class Player : MonoBehaviour
             blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
             shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
             other.gameObject.GetComponent<Shot>().DestroyShot();
+            Debug.Log("haha ");
         }
-    }
+    } */
 
     public void CheckInput()
     {
