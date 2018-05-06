@@ -15,6 +15,7 @@ public class BallSpawner : MonoBehaviour
     public GameObject ballPrefab;
     private Vector3 ballPosition;
     private Quaternion ballRotation;
+    public float ballSpawnDelay;
 
 
     // Use this for initialization
@@ -25,7 +26,7 @@ public class BallSpawner : MonoBehaviour
         ballPosition = this.transform.position - new Vector3(0,0,0.01f);
         ballRotation = new Quaternion(0, 0, 0, 0);
         //Zu Beginn einer Partie wird der erste Ball gespawnt
-        SpawnBall();
+        StartCoroutine(SpawnBall(0));
     }
 
     // Update is called once per frame
@@ -34,17 +35,14 @@ public class BallSpawner : MonoBehaviour
         
     }
 
-    public void SpawnBall()
+    public void CheckSpawnBall()
     {
         //sofern der Mittelkreis nicht mehr vom letzten Ball geblockt wird und das Ball-Maximum noch nicht ereicht wurde && nicht von einem Block oder Spieler Blockiert wird
         if (!(gameState.MaximumBallsReached()) && !centerCircleBlocked)
         {
             if (!spawnBlocked)
             {
-                //wird ein neuer Ball gespawnt und als "neuester Ball" markiert
-                lastSpawnedBall = Instantiate(ballPrefab, ballPosition, ballRotation);
-                //der Mittelkreis wird zudem als vom neuesten Ball blockiert markiert
-                centerCircleBlocked = true;
+                StartCoroutine(SpawnBall(ballSpawnDelay));
             } 
         }
     }
@@ -55,11 +53,21 @@ public class BallSpawner : MonoBehaviour
         //Wenn der zuletzt gespawnte Ball den Mittelkreis verlässt
         if (other.gameObject == lastSpawnedBall)
         {
-            //wird der Spawn wieder freigegeben und ein neuer Ball gespawnt (sofern dies möglich ist --> sofern das Maximum der Bälle nicht erreicht wurde. Siehe SpawnBall Methode)
+            //wird der Spawn wieder freigegeben und ein neuer Ball gespawnt (sofern dies möglich ist --> sofern das Maximum der Bälle nicht erreicht wurde. Siehe CheckSpawnBall Methode)
             centerCircleBlocked = false; 
-            SpawnBall();
+            CheckSpawnBall();
         } 
 
+    }
+
+    public IEnumerator SpawnBall(float time)
+    {
+        yield return new WaitForSeconds(time);
+        //wird ein neuer Ball gespawnt und als "neuester Ball" markiert
+        lastSpawnedBall = Instantiate(ballPrefab, ballPosition, ballRotation);
+        //der Mittelkreis wird zudem als vom neuesten Ball blockiert markiert
+        centerCircleBlocked = true;
+        SetSpawnBlocked(true);
     }
 
     public void SetSpawnBlocked(bool b)

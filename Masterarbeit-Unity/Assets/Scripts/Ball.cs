@@ -69,7 +69,7 @@ public class Ball : MonoBehaviour {
         //Der Ball wird aus der Liste der GameState entfernt
         gameState.RemoveBall(instanceID);
         //Ein neuer Ball wird gespawnt, sofern der Spawn nicht geblockt wird
-        ballSpawner.SpawnBall();
+        ballSpawner.CheckSpawnBall();
         //Der Ball wird zerstört
         Destroy(this.gameObject);
     }

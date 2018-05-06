@@ -23,7 +23,7 @@ public class InsideCircle : MonoBehaviour {
     public void OnTriggerEnter2D(Collider2D other)
     {
         //sofern das andere Objekt ein Block oder ein Spieler ist
-        if (other.gameObject.tag.Equals("Block") || other.gameObject.tag.Equals("Player"))
+        if (other.gameObject.tag.Equals("Block") || other.gameObject.tag.Equals("Player") || other.gameObject.tag.Equals("Ball"))
         {
             collidingObjects.Add(other.gameObject); //wird es in die Liste der kollidierenden Objekte aufgenommen
 
@@ -35,17 +35,18 @@ public class InsideCircle : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D other)
     {
         //sofern das andere Objekt ein Block oder ein Spieler ist
-        if (other.gameObject.tag.Equals("Block") || other.gameObject.tag.Equals("Player")) 
+        if (other.gameObject.tag.Equals("Block") || other.gameObject.tag.Equals("Player") || other.gameObject.tag.Equals("Ball")) 
         {
             collidingObjects.Remove(other.gameObject);  //wird es aus der Liste entfernt
+                                                        //wenn kein Objekt mit dem Spawner kollidiert
+            if (collidingObjects.Count == 0)
+            {
+                spawnBlocked = false;   //wird der Spawner als frei angesehen
+                bs.SetSpawnBlocked(spawnBlocked); //und dies dem BlockSpawner mitgeteilt
+                bs.CheckSpawnBall(); //zudem wird versucht, einen Ball zu spawnen. (Trifft ein, wenn ein Ball spawnen könnte, der Spawner allerdings durch einen Spieler blockiert wurde und daraufhin wieder frei wurde)
+            }
         }
-        //wenn kein Objekt mit dem Spawner kollidiert
-        if (collidingObjects.Count == 0)
-        {
-            spawnBlocked = false;   //wird der Spawner als frei angesehen
-            bs.SetSpawnBlocked(spawnBlocked); //und dies dem BlockSpawner mitgeteilt
-            bs.SpawnBall(); //zudem wird versucht, einen Ball zu spawnen. (Trifft ein, wenn ein Ball spawnen könnte, der Spawner allerdings durch einen Spieler blockiert wurde und daraufhin wieder frei wurde)
-        }
+       
     }
 
 }

@@ -1768,6 +1768,7 @@ MonoBehaviour:
   centerCircleBlocked: 0
   spawnBlocked: 0
   ballPrefab: {fileID: 1243154274409858, guid: 520c5f0e330cc1045842f946757ba2ab, type: 2}
+  ballSpawnDelay: 3
 --- !u!58 &1893410628
 CircleCollider2D:
   m_ObjectHideFlags: 0
