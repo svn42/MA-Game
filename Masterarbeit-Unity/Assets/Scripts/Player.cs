@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 
     [Range(1, 2)]
     public int playerTeam;    //Teamzugehörigkeit (1 oder 2)
+    string playerAcronym;
     public int subjectNr;   //VersuchspersonenNummer aus nem Menü rausziehen
     public float brakingForce;  //Stärke des Abbremsens
     public float maxSpeed;
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
     public bool stunned;    //Wenn der Spieler betäubt wurde, wird die Variable true
     public float stunBlinkEffect;   //Zeitliches Intervall (in Sekunden), in dem das Blinken beim Stun stattfindet
     public float stunDurationBall;  //Die Zeit in Sekunden, die der Spieler gestunnt wird, sofern er den Ball berührt
+    public float stunDurationShot;  //Die Zeit in Sekunden, die der Spieler gestunnt wird, sofern er den Ball berührt
 
     public GameObject exhaustPrefab; //das Prefab des Abgaspartikels wird über den Inspector bekannt gemacht   
     public GameObject exSpawner;    // der Spawner für die Abgaspartikel wird ebenfalls über den Inspektor bekannt gemacht
@@ -39,6 +41,7 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        playerAcronym = "P" + playerTeam;
         CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
         blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
         shotSpawn.GetComponent<ShotSpawner>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
@@ -97,14 +100,30 @@ public class Player : MonoBehaviour
             StartCoroutine(StunPlayer(stunDurationBall));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
             blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
             shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
-        }
+        }  
 
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Shot")
+        {
+            speedX /= 2;    //wird die Geschwindigkeit reduziert
+            speedY /= 2;
+            this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            StartCoroutine(StunPlayer(stunDurationShot));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
+            blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
+            shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
+            other.gameObject.GetComponent<Shot>().DestroyShot();
+        }
     }
 
     public void CheckInput()
     {
+
+        
         //sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
-        if ((Mathf.Abs(Input.GetAxis("Horizontal")) > 0.0f))
+        if ((Mathf.Abs(Input.GetAxis("Horizontal"+playerAcronym)) > 0.0f))
         {
             //wird die Accelerate-Methode mit dem Argument X aufgerufen
             Accelerate("X");
@@ -117,7 +136,7 @@ public class Player : MonoBehaviour
 
 
         //das gleiche geschieht mit der Vertikalen Achse (hoch oder runter Pfeiltaste sowie W und S)
-        if ((Mathf.Abs(Input.GetAxis("Vertical")) > 0.0f))
+        if ((Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.0f))
         {
             Accelerate("Y");
         }
@@ -127,7 +146,7 @@ public class Player : MonoBehaviour
         }
 
         //die BewegungsZeit wird erhöht, sofern mindestens eine der beiden Achsen eine Bewegung zurückliefern
-        if ((Mathf.Abs(Input.GetAxis("Vertical")) > 0.0f) || Mathf.Abs(Input.GetAxis("Horizontal")) > 0.0f)
+        if ((Mathf.Abs(Input.GetAxis("Vertical"+playerAcronym)) > 0.0f) || Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.0f)
         {
             exhaustTime++;
         }
@@ -138,18 +157,18 @@ public class Player : MonoBehaviour
         }
 
         //wenn der Block-Button (B) gedrückt wird
-        if (Input.GetButton("Block"))
+        if (Input.GetButton("Block" + playerAcronym))
         {
             blockSpawn.AddBlockChargeTime();    //wird die Zeit zum Spawnen des Blocks hochgezählt
         }
         //wenn der Block-Button (B) losgelassen wird
-        if (Input.GetButtonUp("Block"))
+        if (Input.GetButtonUp("Block" + playerAcronym))
         {
             blockSpawn.SpawnBlock();    //wird überprüft, ob der Block gespawnt werden kann (wenn die Zeit groß genug ist)
         }
 
         //wenn der Schuss-Button (A) gedrückt wird
-        if (Input.GetButton("Shoot"))
+        if (Input.GetButton("Shoot" + playerAcronym))
         {
             if (shotTimer > shotDelay)  //und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen
             {
@@ -157,7 +176,7 @@ public class Player : MonoBehaviour
             }
         }
         //wenn der Schuss-Button (A) losgelassen wird und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen 
-        if (Input.GetButtonUp("Shoot") && shotTimer > shotDelay)
+        if (Input.GetButtonUp("Shoot" + playerAcronym) && shotTimer > shotDelay)
         {
             shotSpawn.SpawnShot();  //wird der Schuss gespawnt 
         }
@@ -168,23 +187,22 @@ public class Player : MonoBehaviour
          * 
          * */
 
-        if (Input.GetButtonUp("LB") && emoteTimer > emoteDelay)
+        if (Input.GetButtonUp("LB" + playerAcronym) && emoteTimer > emoteDelay)
         {
             CastEmote("haha");
         }
-        if (Input.GetButtonUp("RB") && emoteTimer > emoteDelay)
+        if (Input.GetButtonUp("RB" + playerAcronym) && emoteTimer > emoteDelay)
         {
             CastEmote("gg");
         }
-        if (Input.GetAxis("RT") != 0 && emoteTimer > emoteDelay)
+        if (Input.GetAxis("RT" + playerAcronym) != 0 && emoteTimer > emoteDelay)
         {
             CastEmote("oops");
         }
-        if (Input.GetAxis("LT") != 0 && emoteTimer > emoteDelay)
+        if (Input.GetAxis("LT" + playerAcronym) != 0 && emoteTimer > emoteDelay)
         {
             CastEmote("superior");
         }
-
 
     }
 
@@ -213,7 +231,7 @@ public class Player : MonoBehaviour
         if (axis.Equals("X"))
         {
             //erhöht sich die Geschwindigkeit auf der X-Achse um den Wert des Inputs, multipliziert mit der Beschleunigung
-            speedX += Input.GetAxis("Horizontal") * acceleration;
+            speedX += Input.GetAxis("Horizontal" + playerAcronym) * acceleration;
         }
         //else if (axis.Equals("X") && (Mathf.Abs(speedX) < 25 && Mathf.Abs(speedX) >= 0))
         //{
@@ -234,7 +252,7 @@ public class Player : MonoBehaviour
         //Sofern das Argument Y übergeben wird, wird die Ermittlung der Geschwindigkeit genauso ermittelt wie für die X-Achse
         else if (axis.Equals("Y"))
         {
-            speedY += Input.GetAxis("Vertical") * acceleration;
+            speedY += Input.GetAxis("Vertical" + playerAcronym) * acceleration;
         }
         //else if (axis.Equals("Y") && (Mathf.Abs(speedY) < 25 && Mathf.Abs(speedY) >= 0))
         //{

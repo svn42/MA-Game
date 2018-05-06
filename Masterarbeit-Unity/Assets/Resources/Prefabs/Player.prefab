@@ -368,6 +368,7 @@ MonoBehaviour:
   stunned: 0
   stunBlinkEffect: 0.2
   stunDurationBall: 1
+  stunDurationShot: 0.4
   exhaustPrefab: {fileID: 1608806251640764, guid: e6e0204d311283740a88d93bb97183aa,
     type: 2}
   exSpawner: {fileID: 1530333346363798}
@@ -377,6 +378,7 @@ MonoBehaviour:
   shotSpawn: {fileID: 114237265526856248}
   shotDelay: 0.16
   shotTimer: 0
+  emoteTimer: 0
   emoteDelay: 3
 --- !u!114 &114237265526856248
 MonoBehaviour:

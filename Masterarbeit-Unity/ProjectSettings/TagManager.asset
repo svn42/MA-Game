@@ -9,6 +9,7 @@ TagManager:
   - Goal
   - Boundary
   - Block
+  - Shot
   layers:
   - Default
   - TransparentFX
