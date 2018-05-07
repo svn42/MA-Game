@@ -14,6 +14,8 @@ public class BlockSpawner : MonoBehaviour
     List<GameObject> collidingObjects = new List<GameObject>(); //Liste der GameObjects, die mit dem Spawner kollidieren
     public GameObject blockSpawnSprite; //Sprite des charging-Blocks (Child)
 
+    private int playerTeam;
+
     private Color blockColor;
 
 
@@ -125,6 +127,9 @@ public class BlockSpawner : MonoBehaviour
         {
             GameObject block = Instantiate(blockPrefab, this.transform.position, this.transform.rotation);  //wird der Block aus dem Prefab instanziiert
             block.GetComponent<Block>().SetColor(blockColor); //und entsprechend der Teamfarbe eingefärbt
+            block.GetComponent<Block>().SetPlayerTeam(playerTeam);
+            block.name = "Block_Player_" + playerTeam;
+
         }
         ResetBlockChargeTime();
 

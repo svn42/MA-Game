@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameState : MonoBehaviour {
 
     public int maximumBalls;
+    public int goalLimit;
     private List<Ball> ballList = new List<Ball>();
     bool maximumBallsReached = false;
     public int goalsTeam1 = 0;
@@ -74,8 +75,9 @@ public class GameState : MonoBehaviour {
         {
             goalsTeam1++;
             SetGoalCount("Team1");
-
         }
+
+        CheckGoalLimit();
     }
 
     //Hiermit kann die Anzeige für die Tore bearbeitet werden
@@ -90,4 +92,20 @@ public class GameState : MonoBehaviour {
         }
 
     }
+
+    private void CheckGoalLimit()
+    {
+        if (goalsTeam1 == goalLimit)
+        {
+            Debug.Log("Team 1 wins with " + goalsTeam1 + " - " + goalsTeam2);
+            Time.timeScale = 0.0f;
+        } else if (goalsTeam2 == goalLimit)
+            {
+                Debug.Log("Team 2 wins with " + goalsTeam2 + " - " + goalsTeam1);
+            Time.timeScale = 0.0f;
+        }
+        
+
+    }
+
 }

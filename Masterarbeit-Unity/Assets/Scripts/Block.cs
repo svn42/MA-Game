@@ -11,6 +11,8 @@ public class Block : MonoBehaviour
     public Sprite twoHealthBlock;
     public Sprite oneHealthBlock;
     private SpriteRenderer sr;
+    private int playerTeam;
+
 
     // Use this for initialization
     void Start()
@@ -57,4 +59,13 @@ public class Block : MonoBehaviour
         spriteRenderer.color = col;
     }
 
+    public void SetPlayerTeam(int i)
+    {
+        playerTeam = i;
+    }
+
+    public int GetPlayerTeam()
+    {
+        return playerTeam;
+    }
 }

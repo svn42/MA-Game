@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public float speedY;    //Geschwindigkeit auf der Y-Achse
     public float acceleration;  //Beschleunigungsvariable
     private Vector3 movementVector; //Bewegungsvektor
+    private Quaternion startingRotation;
 
     public bool stunned;    //Wenn der Spieler betäubt wurde, wird die Variable true
     public float stunBlinkEffect;   //Zeitliches Intervall (in Sekunden), in dem das Blinken beim Stun stattfindet
@@ -42,6 +43,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerAcronym = "P" + playerTeam;
+        startingRotation = this.transform.localRotation;
         CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
         blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
         shotSpawn.GetComponent<ShotSpawner>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
@@ -103,31 +105,19 @@ public class Player : MonoBehaviour
         }
         if (coll.gameObject.tag == "Shot")
         {
-            speedX /= 2;    //wird die Geschwindigkeit reduziert
-            speedY /= 2;
-            this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            StartCoroutine(StunPlayer(stunDurationShot));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
-            blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
-            shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
-            coll.gameObject.GetComponent<Shot>().DestroyShot();
+            if (coll.gameObject.GetComponent<Shot>().GetPlayerTeam() != playerTeam) //wenn der Schuss vom gegenerischen Spieler ist
+            {
+                speedX /= 2;    //wird die Geschwindigkeit reduziert
+                speedY /= 2;
+                this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                StartCoroutine(StunPlayer(stunDurationShot));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
+                blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
+                shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
+                coll.gameObject.GetComponent<Shot>().DestroyShot();
+            }
         }
 
     }
-
-  /*  public void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Shot")
-        {
-            speedX /= 2;    //wird die Geschwindigkeit reduziert
-            speedY /= 2;
-            this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            StartCoroutine(StunPlayer(stunDurationShot));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
-            blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
-            shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
-            other.gameObject.GetComponent<Shot>().DestroyShot();
-            Debug.Log("haha ");
-        }
-    } */
 
     public void CheckInput()
     {
@@ -226,12 +216,16 @@ public class Player : MonoBehaviour
         //der Spieler bewegt sich dann mit Hilfe deses Vektors auf dem Spielfeld. Die Bewegung ist immer relativ zur Spielwelt 
         transform.Translate(movementVector * Time.deltaTime, Space.World);
 
-        //   float angleHorizontal = Input.GetAxis("Horizontal");
-        //  float angVertical = Input.GetAxis("Vertical");
-        // transform.localEulerAngles = new Vector3(angleHorizontal, angVertical, angleHorizontal*360);
 
-        //Vector3 lookDirection = new Vector3(0, 0, Input.GetAxisRaw("Vertical"));
-        //transform.rotation = Quaternion.LookRotation(lookDirection);
+        //reference: https://answers.unity.com/questions/307150/rotate-an-object-toward-the-direction-the-joystick.html
+        
+            float yEuler = Mathf.Atan2(Input.GetAxis("Horizontal" + playerAcronym) * -1, Input.GetAxis("Vertical" + playerAcronym)) * Mathf.Rad2Deg; //Horizontal *1
+            yEuler -= 270;   //Korrektur durch das gedrehte Sprite
+            Vector3 direction = new Vector3(0, 0, yEuler);
+        if (Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.1f || Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.1f)   //Damit die Richtung nicht durch die "Nullstellung" des Sticks genullt wird
+        {
+            transform.eulerAngles = direction;
+        }
 
     }
 

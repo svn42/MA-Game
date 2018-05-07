@@ -460,7 +460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 50
   strength: 3
-  ballImpact: 4000
+  ballImpact: 3000
 --- !u!212 &212764447594908098
 SpriteRenderer:
   m_ObjectHideFlags: 1

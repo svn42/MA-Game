@@ -21,6 +21,8 @@ public class ShotSpawner : MonoBehaviour
 
     public GameObject chargingShotSprite; //Sprite des charging-Shots (Child)
     private Player player;
+    private int playerTeam;
+    public int shotCount = 0;
 
     private Color shotColor;
 
@@ -32,7 +34,7 @@ public class ShotSpawner : MonoBehaviour
         spawnTimerLimit *= 60;
         chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f);  //und die Visualisierung des ChargingShots "unsichtbar" gemacht
         player = transform.parent.GetComponent<Player>();
-
+        playerTeam = player.playerTeam;
 
     }
 
@@ -113,8 +115,12 @@ public class ShotSpawner : MonoBehaviour
 
         if (shotFired)
         {
+            shotCount++;
             shot.GetComponent<Shot>().SetDirection(this.transform.rotation);    //Der Schuss bekommt die Rotation des Spielers übergeben
-            shot.GetComponent<Shot>().SetColor(shotColor);                      //und dessen Farbe
+            shot.GetComponent<Shot>().SetColor(shotColor);                      //dessen Farbe
+            shot.GetComponent<Shot>().SetPlayerTeam(playerTeam);                //dessen Team
+            shot.GetComponent<Shot>().SetShotID(shotCount);                     //sowie seine ID
+            shot.name = "Shot_"+ shotCount + "_Player_" + playerTeam;       //der Name wird aus dem Count und der PlayerID gebaut.
         }
         ResetShotChargeTime();
 

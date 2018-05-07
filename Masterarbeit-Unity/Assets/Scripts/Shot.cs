@@ -9,6 +9,8 @@ public class Shot : MonoBehaviour
     [Range(1, 3)]
     public int strength;    //Stärke des Schusses. Normaler Schuss =1, Mittlerer Schuss = 2, Großer Schuss = 3.
     public int ballImpact;     //Wirkung des Schusses auf den Ball bei einer Kollision
+    private int playerTeam;
+    private int shotID;
 
 
     // Use this for initialization
@@ -53,7 +55,16 @@ public class Shot : MonoBehaviour
                 DestroyShot();
                 break;
             case "Shot":
-                DestroyShot();
+                if (collidingObject.GetComponent<Shot>().GetPlayerTeam() != this.playerTeam)
+                {
+                    DestroyShot();
+                } else
+                {
+                    if (shotID > collidingObject.GetComponent<Shot>().GetShotID())
+                    {
+                        DestroyShot();
+                    }
+                }
                 break;
             case "Ball":
                 // reference: https://answers.unity.com/questions/1100879/push-object-in-opposite-direction-of-collision.html
@@ -77,6 +88,26 @@ public class Shot : MonoBehaviour
     {
         SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.color = col;
+    }
+
+    public void SetPlayerTeam(int i)
+    {
+         playerTeam = i;
+    }
+
+    public int GetPlayerTeam()
+    {
+        return playerTeam;
+    }
+
+    public void SetShotID(int i)
+    {
+        shotID = i;
+    }
+
+    public int GetShotID()
+    {
+        return shotID;
     }
 
 }
