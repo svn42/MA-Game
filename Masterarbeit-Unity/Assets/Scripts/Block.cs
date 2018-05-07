@@ -12,6 +12,7 @@ public class Block : MonoBehaviour
     public Sprite oneHealthBlock;
     private SpriteRenderer sr;
     private int playerTeam;
+    private int blockID;
 
 
     // Use this for initialization
@@ -67,5 +68,15 @@ public class Block : MonoBehaviour
     public int GetPlayerTeam()
     {
         return playerTeam;
+    }
+
+    public void SetBlockID(int i)
+    {
+        blockID = i;
+    }
+
+    public int GetBlockID()
+    {
+        return blockID;
     }
 }

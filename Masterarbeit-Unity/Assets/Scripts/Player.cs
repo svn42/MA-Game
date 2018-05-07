@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
     public float speedY;    //Geschwindigkeit auf der Y-Achse
     public float acceleration;  //Beschleunigungsvariable
     private Vector3 movementVector; //Bewegungsvektor
-    private Quaternion startingRotation;
 
     public bool stunned;    //Wenn der Spieler betäubt wurde, wird die Variable true
     public float stunBlinkEffect;   //Zeitliches Intervall (in Sekunden), in dem das Blinken beim Stun stattfindet
@@ -43,7 +42,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerAcronym = "P" + playerTeam;
-        startingRotation = this.transform.localRotation;
         CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
         blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
         shotSpawn.GetComponent<ShotSpawner>().SetColor(teamColor);      //ShotSpawner bekannt gemacht

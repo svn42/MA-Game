@@ -13,10 +13,13 @@ public class BlockSpawner : MonoBehaviour
     public bool spawnable = true;  //sofern ein Block spawnen darf (nicht kollidiert), ist die Variable true
     List<GameObject> collidingObjects = new List<GameObject>(); //Liste der GameObjects, die mit dem Spawner kollidieren
     public GameObject blockSpawnSprite; //Sprite des charging-Blocks (Child)
+    private Player player;
 
     private int playerTeam;
 
     private Color blockColor;
+    public int blockCount = 0;
+
 
 
     // Use this for initialization
@@ -26,6 +29,8 @@ public class BlockSpawner : MonoBehaviour
         standardScale = blockSpawnSprite.transform.localScale;
         SetSpawnerSize(0);            //und die Transparenz auf 0 gesetzt
         spawnTimer *= 60;               //der SpawnTimer wird in Frames umgerechnet (60 fps)
+        player = transform.parent.GetComponent<Player>();
+        playerTeam = player.playerTeam;
     }
 
     // Update is called once per frame
@@ -125,10 +130,13 @@ public class BlockSpawner : MonoBehaviour
         //wenn das Ziel erreicht wurde und der Blockspawner nicht kollidiert
         if (blockChargeTime == spawnTimer && spawnable)
         {
+            blockCount++;
             GameObject block = Instantiate(blockPrefab, this.transform.position, this.transform.rotation);  //wird der Block aus dem Prefab instanziiert
             block.GetComponent<Block>().SetColor(blockColor); //und entsprechend der Teamfarbe eingefärbt
             block.GetComponent<Block>().SetPlayerTeam(playerTeam);
-            block.name = "Block_Player_" + playerTeam;
+            block.GetComponent<Block>().SetBlockID(blockCount);
+
+            block.name = "Block_" + blockCount + "_Player_" + playerTeam;
 
         }
         ResetBlockChargeTime();
