@@ -29,9 +29,9 @@ public class ShotSpawner : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        spawnTimerMedium *= 60;               //die SpawnTimer werden in Frames umgerechnet (60 fps)
-        spawnTimerLarge *= 60;
-        spawnTimerLimit *= 60;
+        //spawnTimerMedium *= 60;               //die SpawnTimer werden in Frames umgerechnet (60 fps)
+       // spawnTimerLarge *= 60;
+      //  spawnTimerLimit *= 60;
         chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f);  //und die Visualisierung des ChargingShots "unsichtbar" gemacht
         player = transform.parent.GetComponent<Player>();
         playerTeam = player.playerTeam;
@@ -50,9 +50,9 @@ public class ShotSpawner : MonoBehaviour
     }
 
     //Die Methode wird beim Festhalten des A-Buttons in jedem Frame aufgerufen und erhöht die shotChargeTime.
-    public void AddShotChargeTime()
+    public void AddShotChargeTime(float i)
     {
-        shotChargeTime++;
+        shotChargeTime+=i;
         if (shotChargeTime != 0 && shotChargeTime < spawnTimerMedium)
         {
             spawnNormalShot = true;

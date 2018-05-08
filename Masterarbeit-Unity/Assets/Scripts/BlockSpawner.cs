@@ -28,7 +28,7 @@ public class BlockSpawner : MonoBehaviour
         spawnColor = Color.white;           //Zu Beginn wird die Farbe des spawnenden Blocks weiß
         standardScale = blockSpawnSprite.transform.localScale;
         SetSpawnerSize(0);            //und die Transparenz auf 0 gesetzt
-        spawnTimer *= 60;               //der SpawnTimer wird in Frames umgerechnet (60 fps)
+     //   spawnTimer *= 60;               //der SpawnTimer wird in Frames umgerechnet (60 fps)
         player = transform.parent.GetComponent<Player>();
         playerTeam = player.playerTeam;
     }
@@ -87,14 +87,14 @@ public class BlockSpawner : MonoBehaviour
 
 
     //Die Methode wird beim Festhalten des B-Buttons in jedem Frame aufgerufen und erhöht die blockChargeTime.
-    public void AddBlockChargeTime()
+    public void AddBlockChargeTime(float i)
     {
         GetComponent<SpriteRenderer>().enabled = true;
         //sofern die Zeit noch geringer ist als die zu erreichende SpawnZeit
         if (blockChargeTime < spawnTimer)
         {
-            blockChargeTime++;  //wird die Zeit erhöht
-            SetSpawnerSize(blockChargeTime);  //und die Transparenz an den Block übergeben, sofern dieser nicht mit anderen Objekten kollidiert
+            blockChargeTime+= i;  //wird die Zeit erhöht
+            SetSpawnerSize(blockChargeTime);  //und die Größe an den Block übergeben, sofern dieser nicht mit anderen Objekten kollidiert
 
             if (spawnable)
             {
@@ -104,14 +104,22 @@ public class BlockSpawner : MonoBehaviour
                 SetBlockTransparency(0.33f, spawnColor);
             }
         }
-        else if (blockChargeTime == spawnTimer && spawnable)   //wenn das Ziel erreicht wurde und spawenbar ist
-        {
-            //TODO: An die Farbe des Spielers anpassen
-            blockSpawnSprite.GetComponent<SpriteRenderer>().color = blockColor;    //wird der BlockSpawner in der Farbe des Spielers eingefärbt.
-        }
-        else if (blockChargeTime == spawnTimer && !spawnable)     //wenn das Ziel erreicht wurde und kollidiert
-        {
-            SetBlockTransparency(0.33f, blockColor); //wird der Block in der Farbe des Spielers und transparent gefärbt
+        if (blockChargeTime >= spawnTimer) {
+            blockChargeTime = 3;
+            SetSpawnerSize(blockChargeTime);
+
+            if (spawnable)   //wenn das Ziel erreicht wurde und spawenbar ist
+            {
+                blockChargeTime = 3;
+                SetSpawnerSize(blockChargeTime);
+
+                //TODO: An die Farbe des Spielers anpassen
+                blockSpawnSprite.GetComponent<SpriteRenderer>().color = blockColor;    //wird der BlockSpawner in der Farbe des Spielers eingefärbt.
+            }
+            else if (!spawnable)     //wenn das Ziel erreicht wurde und kollidiert
+            {
+                SetBlockTransparency(0.33f, blockColor); //wird der Block in der Farbe des Spielers und transparent gefärbt
+            }
         }
     }
 

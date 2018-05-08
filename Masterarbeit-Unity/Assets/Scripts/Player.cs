@@ -49,8 +49,8 @@ public class Player : MonoBehaviour
         playerLogging = this.gameObject.GetComponent<PlayerLogging>();  //der PlayerLogger wird verknüpft
         playerLogging.SetPlayerTeam(playerTeam);
 
-        shotDelay *= 60;    //der ShotDelay wird an die Frames angepasst
-        emoteDelay *= 60;    //der emoteDelay wird an die Frames angepasst
+       // shotDelay *= 60;    //der ShotDelay wird an die Frames angepasst
+       // emoteDelay *= 60;    //der emoteDelay wird an die Frames angepasst
         emoteTimer = emoteDelay;
     }
 
@@ -63,8 +63,8 @@ public class Player : MonoBehaviour
             Move(); //dann der Spieler bewegt
             CheckExhaust(); //sowie überprüft, ob das Abgas erzeugt werden soll
         }
-        shotTimer++;
-        emoteTimer++;
+        shotTimer+= Time.deltaTime;
+        emoteTimer+= Time.deltaTime;
 
     }
 
@@ -158,7 +158,7 @@ public class Player : MonoBehaviour
         //wenn der Block-Button (B) gedrückt wird
         if (Input.GetButton("Block" + playerAcronym))
         {
-            blockSpawn.AddBlockChargeTime();    //wird die Zeit zum Spawnen des Blocks hochgezählt
+            blockSpawn.AddBlockChargeTime(Time.deltaTime);    //wird die Zeit zum Spawnen des Blocks hochgezählt
         }
         //wenn der Block-Button (B) losgelassen wird
         if (Input.GetButtonUp("Block" + playerAcronym))
@@ -171,7 +171,7 @@ public class Player : MonoBehaviour
         {
             if (shotTimer > shotDelay)  //und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen
             {
-                shotSpawn.AddShotChargeTime();  //wird die Zeit zum Aufladen des Schuss hochgezählt
+                shotSpawn.AddShotChargeTime(Time.deltaTime);  //wird die Zeit zum Aufladen des Schuss hochgezählt
             }
         }
         //wenn der Schuss-Button (A) losgelassen wird und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen 
@@ -344,9 +344,9 @@ public class Player : MonoBehaviour
     //Methode zum Übermitteln der Betäubung an den Spieler. Als Argument wird die Zeit übergeben
     IEnumerator StunPlayer(float time)
     {
-        StartCoroutine(StunEffect(time));   //Es wird eine Coroutine für den Blinkeffekt gestartet und die Zeit der Betäubung übergeben.
+        StartCoroutine(StunEffect(time* Time.deltaTime));   //Es wird eine Coroutine für den Blinkeffekt gestartet und die Zeit der Betäubung übergeben.
         stunned = true;                     //die Stun-Variable auf True gesetzt
-        yield return new WaitForSeconds(time);  //Die Zeit der Betäubung abgewartet 
+        yield return new WaitForSeconds(time*Time.deltaTime);  //Die Zeit der Betäubung abgewartet 
         stunned = false;                        //und daraufhin die Stun-Variable auf false gesetzt
 
     }
@@ -360,9 +360,9 @@ public class Player : MonoBehaviour
         for (int i = 0; i < blinkAmount; i++)   //solange die Anzahl der Blinkeffekte nicht erreicht wurde
         {
             spriteRenderer.color = Color.white;     //wird der Renderer im Wechsel weiß und daraufhin in der ursprünglichen Farbe des Spielers eingefärbt
-            yield return new WaitForSeconds(stunBlinkEffect);
+            yield return new WaitForSeconds(stunBlinkEffect * Time.deltaTime);
             spriteRenderer.color = teamColor;
-            yield return new WaitForSeconds(stunBlinkEffect);
+            yield return new WaitForSeconds(stunBlinkEffect * Time.deltaTime);
         }
     }
 

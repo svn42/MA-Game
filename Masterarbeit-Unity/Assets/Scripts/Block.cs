@@ -6,7 +6,7 @@ public class Block : MonoBehaviour
 {
 
     [Range(0, 3)]
-    private int health;
+    public int health;
 
     public Sprite twoHealthBlock;
     public Sprite oneHealthBlock;
