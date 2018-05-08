@@ -19,7 +19,6 @@ public class Player : MonoBehaviour
     public bool stunned;    //Wenn der Spieler betäubt wurde, wird die Variable true
     public float stunBlinkEffect;   //Zeitliches Intervall (in Sekunden), in dem das Blinken beim Stun stattfindet
     public float stunDurationBall;  //Die Zeit in Sekunden, die der Spieler gestunnt wird, sofern er den Ball berührt
-    public float stunDurationShot;  //Die Zeit in Sekunden, die der Spieler gestunnt wird, sofern er den Ball berührt
 
     public GameObject exhaustPrefab; //das Prefab des Abgaspartikels wird über den Inspector bekannt gemacht   
     public GameObject exSpawner;    // der Spawner für die Abgaspartikel wird ebenfalls über den Inspektor bekannt gemacht
@@ -107,11 +106,9 @@ public class Player : MonoBehaviour
             {
                 speedX /= 2;    //wird die Geschwindigkeit reduziert
                 speedY /= 2;
-                this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-                StartCoroutine(StunPlayer(stunDurationShot));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
+                StartCoroutine(StunPlayer(coll.gameObject.GetComponent<Shot>().GetStunDuration()));  //und der Spieler für die Zeit "GetStunDuration" gestunnt
                 blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
                 shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
-                coll.gameObject.GetComponent<Shot>().DestroyShot();
             }
         }
 
@@ -344,9 +341,9 @@ public class Player : MonoBehaviour
     //Methode zum Übermitteln der Betäubung an den Spieler. Als Argument wird die Zeit übergeben
     IEnumerator StunPlayer(float time)
     {
-        StartCoroutine(StunEffect(time* Time.deltaTime));   //Es wird eine Coroutine für den Blinkeffekt gestartet und die Zeit der Betäubung übergeben.
+        StartCoroutine(StunEffect(time));   //Es wird eine Coroutine für den Blinkeffekt gestartet und die Zeit der Betäubung übergeben.
         stunned = true;                     //die Stun-Variable auf True gesetzt
-        yield return new WaitForSeconds(time*Time.deltaTime);  //Die Zeit der Betäubung abgewartet 
+        yield return new WaitForSeconds(time);  //Die Zeit der Betäubung abgewartet 
         stunned = false;                        //und daraufhin die Stun-Variable auf false gesetzt
 
     }
@@ -355,14 +352,14 @@ public class Player : MonoBehaviour
     IEnumerator StunEffect(float time)
     {
         SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();  //der spriteRenderer Des Spielers wird der lokalen Variable zugewiesen
-        int blinkAmount = (int)Mathf.Floor(time / stunBlinkEffect / 2);      //und die Anzahl der Blinkeffekte ermittelt. Die Anzahl ergibt sich aus der Zeit, dividiert durch die Dauer des Blinkeffektes / 2.
+        int blinkAmount = (int)Mathf.Floor(time / stunBlinkEffect);      //und die Anzahl der Blinkeffekte ermittelt. Die Anzahl ergibt sich aus der Zeit, dividiert durch die Dauer des Blinkeffektes / 2.
 
-        for (int i = 0; i < blinkAmount; i++)   //solange die Anzahl der Blinkeffekte nicht erreicht wurde
+        for (float i = 0; i < blinkAmount; i++)   //solange die Anzahl der Blinkeffekte nicht erreicht wurde
         {
             spriteRenderer.color = Color.white;     //wird der Renderer im Wechsel weiß und daraufhin in der ursprünglichen Farbe des Spielers eingefärbt
-            yield return new WaitForSeconds(stunBlinkEffect * Time.deltaTime);
+            yield return new WaitForSeconds(stunBlinkEffect / 2);
             spriteRenderer.color = teamColor;
-            yield return new WaitForSeconds(stunBlinkEffect * Time.deltaTime);
+            yield return new WaitForSeconds(stunBlinkEffect / 2);
         }
     }
 

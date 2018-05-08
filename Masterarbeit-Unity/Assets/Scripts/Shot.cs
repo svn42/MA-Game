@@ -11,6 +11,7 @@ public class Shot : MonoBehaviour
     public int ballImpact;     //Wirkung des Schusses auf den Ball bei einer Kollision
     private int playerTeam;
     private int shotID;
+    public float stunDuration;
 
 
     // Use this for initialization
@@ -47,9 +48,14 @@ public class Shot : MonoBehaviour
                 collidingObject.GetComponent<Block>().ReduceHealth(this.strength);
                 DestroyShot();
                 break;
-            case "player":
+            case "Player":
+                // calculate force vector
+                
+                Vector3 force = coll.transform.position - transform.position;
+                // normalize force vector to get direction only and trim magnitude
+                force.Normalize();
+                coll.rigidbody.AddForce(force * ballImpact); 
                 DestroyShot();
-                //Stun player
                 break;
             case "Boundary":
                 DestroyShot();
@@ -69,7 +75,7 @@ public class Shot : MonoBehaviour
             case "Ball":
                 // reference: https://answers.unity.com/questions/1100879/push-object-in-opposite-direction-of-collision.html
                 // calculate force vector
-                Vector3 force = coll.transform.position - transform.position;
+                force = coll.transform.position - transform.position;
                 // normalize force vector to get direction only and trim magnitude
                 force.Normalize();
                 coll.rigidbody.AddForce(force * ballImpact);
@@ -110,4 +116,8 @@ public class Shot : MonoBehaviour
         return shotID;
     }
 
+    public float GetStunDuration()
+    {
+        return stunDuration;
+    }
 }

@@ -90,7 +90,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instanceID: 0
-  brakingForce: 0.5
 --- !u!212 &212396067172114184
 SpriteRenderer:
   m_ObjectHideFlags: 1

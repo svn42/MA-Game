@@ -7,6 +7,7 @@ public class GameState : MonoBehaviour {
 
     public int maximumBalls;
     public int goalLimit;
+    public float timePlayed = 0;
     private List<Ball> ballList = new List<Ball>();
     bool maximumBallsReached = false;
     public int goalsTeam1 = 0;
@@ -23,8 +24,8 @@ public class GameState : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
-	}
+        timePlayed += Time.unscaledDeltaTime;
+    }
 
     //Über diese Methode werden neue Bälle an die ballList übergeben
     public void RegisterBallList(Ball ball)

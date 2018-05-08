@@ -35,19 +35,19 @@ public class PlayerLogging : MonoBehaviour
             switch (zone)
             {
                 case "Zone_Center":
-                    timeCenterZone++;
+                    timeCenterZone+= Time.deltaTime;
                     break;
                 case "Zone_Team1":
-                    timeOwnZone++;
+                    timeOwnZone += Time.deltaTime;
                     break;
                 case "Zone_Team1_Goal":
-                    timeOwnGoalZone++;
+                    timeOwnGoalZone += Time.deltaTime;
                     break;
                 case "Zone_Team2":
-                    timeOpponentZone++;
+                    timeOpponentZone += Time.deltaTime;
                     break;
                 case "Zone_Team2_Goal":
-                    timeOpponentGoalZone++;
+                    timeOpponentGoalZone += Time.deltaTime;
                     break;
             }
         } else if (playerTeam == 2)
@@ -55,19 +55,19 @@ public class PlayerLogging : MonoBehaviour
             switch (zone)
             {
                 case "Zone_Center":
-                    timeCenterZone++;
+                    timeCenterZone += Time.deltaTime;
                     break;
                 case "Zone_Team1":
-                    timeOpponentZone++;
+                    timeOpponentZone += Time.deltaTime;
                     break;
                 case "Zone_Team1_Goal":
-                    timeOpponentGoalZone++;
+                    timeOpponentGoalZone += Time.deltaTime;
                     break;
                 case "Zone_Team2":
-                    timeOwnZone++;
+                    timeOwnZone += Time.deltaTime;
                     break;
                 case "Zone_Team2_Goal":
-                    timeOwnGoalZone++;
+                    timeOwnGoalZone += Time.deltaTime;
                     break;
             }
         }
