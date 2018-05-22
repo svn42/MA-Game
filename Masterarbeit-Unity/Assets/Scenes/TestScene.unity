@@ -236,6 +236,8 @@ MonoBehaviour:
   greenCheckP1: {fileID: 143103482}
   greenCheckP2: {fileID: 21191284}
   depauseCountdown: 3
+  player1: {fileID: 1425252146}
+  player2: {fileID: 1677116220}
 --- !u!114 &40496160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2088,6 +2090,11 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1416237461}
+--- !u!1 &1425252146 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1686076418383510, guid: b79f309cebcdff441a93b0c0de8cdf6b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1331494839}
 --- !u!1 &1427681990
 GameObject:
   m_ObjectHideFlags: 0
@@ -2282,6 +2289,11 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1643028853}
+--- !u!1 &1677116220 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1470042193171084, guid: 4a464419b3763fe4ebd5f165027b1af9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1028885657}
 --- !u!1 &1685277302
 GameObject:
   m_ObjectHideFlags: 0

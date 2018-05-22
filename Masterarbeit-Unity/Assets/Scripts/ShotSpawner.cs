@@ -21,6 +21,7 @@ public class ShotSpawner : MonoBehaviour
 
     public GameObject chargingShotSprite; //Sprite des charging-Shots (Child)
     private Player player;
+    private PlayerLogging playerLogging;
     private int playerTeam;
     public int shotCount = 0;
 
@@ -29,12 +30,10 @@ public class ShotSpawner : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //spawnTimerMedium *= 60;               //die SpawnTimer werden in Frames umgerechnet (60 fps)
-       // spawnTimerLarge *= 60;
-      //  spawnTimerLimit *= 60;
         chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f);  //und die Visualisierung des ChargingShots "unsichtbar" gemacht
         player = transform.parent.GetComponent<Player>();
         playerTeam = player.playerTeam;
+        playerLogging = transform.parent.GetComponent<PlayerLogging>();
 
     }
 
@@ -99,18 +98,23 @@ public class ShotSpawner : MonoBehaviour
             shot = Instantiate(normalShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
             shotFired = true;
             spawnNormalShot = false;
+            playerLogging.AddShot("normal");
         }
         else if (spawnMediumShot && spawnable)
         {
             shot = Instantiate(mediumShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
             shotFired = true;
             spawnMediumShot = false;
+            playerLogging.AddShot("medium");
+
         }
         else if (spawnLargeShot && spawnable)
         {
             shot = Instantiate(largeShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
             shotFired = true;
             spawnLargeShot = false;
+            playerLogging.AddShot("large");
+
         }
 
         if (shotFired)

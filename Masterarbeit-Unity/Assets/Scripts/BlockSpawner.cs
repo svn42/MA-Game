@@ -14,6 +14,7 @@ public class BlockSpawner : MonoBehaviour
     List<GameObject> collidingObjects = new List<GameObject>(); //Liste der GameObjects, die mit dem Spawner kollidieren
     public GameObject blockSpawnSprite; //Sprite des charging-Blocks (Child)
     private Player player;
+    private PlayerLogging playerLogging;
 
     private int playerTeam;
 
@@ -28,9 +29,10 @@ public class BlockSpawner : MonoBehaviour
         spawnColor = Color.white;           //Zu Beginn wird die Farbe des spawnenden Blocks weiß
         standardScale = blockSpawnSprite.transform.localScale;
         SetSpawnerSize(0);            //und die Transparenz auf 0 gesetzt
-     //   spawnTimer *= 60;               //der SpawnTimer wird in Frames umgerechnet (60 fps)
         player = transform.parent.GetComponent<Player>();
         playerTeam = player.playerTeam;
+        playerLogging = transform.parent.GetComponent<PlayerLogging>();
+
     }
 
     // Update is called once per frame
@@ -143,6 +145,7 @@ public class BlockSpawner : MonoBehaviour
             block.GetComponent<Block>().SetColor(blockColor); //und entsprechend der Teamfarbe eingefärbt
             block.GetComponent<Block>().SetPlayerTeam(playerTeam);
             block.GetComponent<Block>().SetBlockID(blockCount);
+            playerLogging.AddBlock();
 
             block.name = "Block_" + blockCount + "_Player_" + playerTeam;
 

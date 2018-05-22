@@ -79,6 +79,7 @@ public class Shot : MonoBehaviour
                 // normalize force vector to get direction only and trim magnitude
                 force.Normalize();
                 coll.rigidbody.AddForce(force * ballImpact);
+                collidingObject.GetComponent<Ball>().SetLastHitBy(playerTeam);
                 DestroyShot();
                 break;
         }

@@ -26,6 +26,11 @@ public class GameState : MonoBehaviour
     public int depauseCountdown;
     private Text pauseCountdownText;
 
+    public GameObject player1;
+    public GameObject player2;
+    private PlayerLogging playerLoggingP1;
+    private PlayerLogging playerLoggingP2;
+
     private void Awake()
     {
 
@@ -36,7 +41,10 @@ public class GameState : MonoBehaviour
     {
         SetGoalCount("Team1");
         SetGoalCount("Team2");
-        pauseCountdownText = (Text) pauseCountdownScreen.transform.Find("TransparentScreen").transform.Find("Countdown").GetComponent<Text>();
+        pauseCountdownText = (Text)pauseCountdownScreen.transform.Find("TransparentScreen").transform.Find("Countdown").GetComponent<Text>();
+        playerLoggingP1 = player1.GetComponent<PlayerLogging>();
+        playerLoggingP2 = player2.GetComponent<PlayerLogging>();
+
     }
 
     // Update is called once per frame
@@ -85,19 +93,37 @@ public class GameState : MonoBehaviour
     }
 
     //Wenn ein Ball mit dem entsprechendem Goal-Collider in Berührung kommt, wird dem anderen Team ein Tor zugeschrieben.
-    public void GoalScored(string goal)
+    public void GoalScored(string goal, int scoredByTeamNr)
     {
         if (goal.Equals("Goal1"))
         {
             goalsTeam2++;
             SetGoalCount("Team2");
+            //Logging
+            if (scoredByTeamNr == 1)
+            {
+                playerLoggingP1.AddGoal("owngoal");
+            }
+            else if (scoredByTeamNr == 2)
+            {
+                playerLoggingP2.AddGoal("goal");
+            }
         }
         else if (goal.Equals("Goal2"))
         {
             goalsTeam1++;
             SetGoalCount("Team1");
-        }
 
+            //Logging
+            if (scoredByTeamNr == 1)
+            {
+                playerLoggingP1.AddGoal("goal");
+            }
+            else if (scoredByTeamNr == 2)
+            {
+                playerLoggingP2.AddGoal("owngoal");
+            }
+        }
         CheckGoalLimit();
         StartCoroutine(GoalFreeze());
     }
@@ -140,15 +166,20 @@ public class GameState : MonoBehaviour
             }
         }
         //sofern das Spiel pausiert wird
-        if (gamePaused){
+        if (gamePaused)
+        {
             //überprüfe, ob die einzelnen Spieler bereit sind
-            if (Input.GetButtonUp("ShootP1")){
+            if (Input.GetButtonUp("ShootP1"))
+            {
                 SetPlayerReady(true, 1);
-            } else if (Input.GetButtonUp("ShootP2")){
+            }
+            else if (Input.GetButtonUp("ShootP2"))
+            {
                 SetPlayerReady(true, 2);
             }
 
-            if (player1Ready && player2Ready) {
+            if (player1Ready && player2Ready)
+            {
                 StartCoroutine(StartDepauseCountdown());
             }
         }
@@ -166,7 +197,8 @@ public class GameState : MonoBehaviour
         {
             Time.timeScale = 0.0001f;
             pauseScreen.enabled = true;
-        } else
+        }
+        else
         {
             Time.timeScale = 1;
             pauseScreen.enabled = false;
@@ -179,7 +211,8 @@ public class GameState : MonoBehaviour
         {
             player1Ready = b;
             greenCheckP1.enabled = b;
-        } else if (playerNr == 2)
+        }
+        else if (playerNr == 2)
         {
             player2Ready = b;
             greenCheckP2.enabled = b;
@@ -190,7 +223,7 @@ public class GameState : MonoBehaviour
     IEnumerator GoalFreeze()
     {
         Time.timeScale = 0.1f;
-        yield return new WaitForSeconds(goalFreezeTime* Time.timeScale);
+        yield return new WaitForSeconds(goalFreezeTime * Time.timeScale);
         Time.timeScale = 1;
     }
 

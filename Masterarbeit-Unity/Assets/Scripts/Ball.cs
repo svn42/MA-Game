@@ -10,6 +10,7 @@ public class Ball : MonoBehaviour {
 
     public static int globalId;    //statische ID, um jedem Ball eine eindeutige ID zuzuweisen.
     public int instanceID;     //instanceID, um die ID des Balles zwischenzuspeichern
+    public int lastHitBy;
 
     // Use this for initialization
     void Start () {
@@ -41,7 +42,7 @@ public class Ball : MonoBehaviour {
         if (other.gameObject.tag.Equals("Goal"))
         {
             //wird dem GameState mitgeteilt, welches Tor betroffen ist
-            gameState.GoalScored(other.gameObject.name);
+            gameState.GoalScored(other.gameObject.name, lastHitBy);
             //und der Ball zerstört
             DestroyBall();
         } 
@@ -70,5 +71,10 @@ public class Ball : MonoBehaviour {
         ballSpawner.CheckSpawnBall();
         //Der Ball wird zerstört
         Destroy(this.gameObject);
+    }
+
+    public void SetLastHitBy(int playerTeam)
+    {
+        lastHitBy = playerTeam;
     }
 }
