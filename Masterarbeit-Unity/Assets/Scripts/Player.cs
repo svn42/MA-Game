@@ -52,8 +52,6 @@ public class Player : MonoBehaviour
 
         gameState = (GameState)FindObjectOfType(typeof(GameState));
 
-        // shotDelay *= 60;    //der ShotDelay wird an die Frames angepasst
-        // emoteDelay *= 60;    //der emoteDelay wird an die Frames angepasst
         emoteTimer = emoteDelay;
     }
 
@@ -151,7 +149,7 @@ public class Player : MonoBehaviour
         //die BewegungsZeit wird erhöht, sofern mindestens eine der beiden Achsen eine Bewegung zurückliefern
         if ((Mathf.Abs(Input.GetAxis("Vertical"+playerAcronym)) > 0.0f) || Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.0f)
         {
-            exhaustTime++;
+            exhaustTime+= Time.deltaTime;
         }
         else
         {
@@ -320,7 +318,7 @@ public class Player : MonoBehaviour
     public void CheckExhaust()
     {
         //sofern sich der Spieler eine bestimmte Zeit bewegt und diese Zeit über der festgelegten Zeit bis zum Spawnen eines Abgaspartikels liegt
-        if (exhaustTime > exhaustSpawnTime * 60)
+        if (exhaustTime > exhaustSpawnTime )
         {
             //wird ein Abgaspartikel an der Position des ExhaustSpawners erstellt
             GameObject exhaust = Instantiate(exhaustPrefab, exSpawner.transform.position, exSpawner.transform.rotation);

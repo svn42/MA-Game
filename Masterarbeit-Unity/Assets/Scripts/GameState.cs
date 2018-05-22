@@ -33,7 +33,6 @@ public class GameState : MonoBehaviour
 
     private void Awake()
     {
-
     }
 
     // Use this for initialization
@@ -44,7 +43,6 @@ public class GameState : MonoBehaviour
         pauseCountdownText = (Text)pauseCountdownScreen.transform.Find("TransparentScreen").transform.Find("Countdown").GetComponent<Text>();
         playerLoggingP1 = player1.GetComponent<PlayerLogging>();
         playerLoggingP2 = player2.GetComponent<PlayerLogging>();
-
     }
 
     // Update is called once per frame
