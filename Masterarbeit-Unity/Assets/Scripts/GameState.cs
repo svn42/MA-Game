@@ -3,28 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameState : MonoBehaviour {
+public class GameState : MonoBehaviour
+{
 
     public int maximumBalls;
     public int goalLimit;
-    public float timePlayed = 0;
+    public float goalFreezeTime;
     private List<Ball> ballList = new List<Ball>();
     bool maximumBallsReached = false;
     public int goalsTeam1 = 0;
     public int goalsTeam2 = 0;
     public Text scoreTeam1;
     public Text scoreTeam2;
+    private bool gamePaused;
 
+    public Canvas pauseScreen;
+    public Canvas pauseCountdownScreen;
+    public Image greenCheckP1;
+    public Image greenCheckP2;
+    private bool player1Ready;
+    private bool player2Ready;
+    public int depauseCountdown;
+    private Text pauseCountdownText;
+
+    private void Awake()
+    {
+
+    }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         SetGoalCount("Team1");
         SetGoalCount("Team2");
+        pauseCountdownText = (Text) pauseCountdownScreen.transform.Find("TransparentScreen").transform.Find("Countdown").GetComponent<Text>();
     }
 
     // Update is called once per frame
-    void Update () {
-        timePlayed += Time.unscaledDeltaTime;
+    void Update()
+    {
+        CheckPause();
     }
 
     //Über diese Methode werden neue Bälle an die ballList übergeben
@@ -57,7 +75,8 @@ public class GameState : MonoBehaviour {
         if (ballList.Count < maximumBalls)
         {
             maximumBallsReached = false;
-        } else
+        }
+        else
         {
             maximumBallsReached = true;
         }
@@ -72,13 +91,15 @@ public class GameState : MonoBehaviour {
         {
             goalsTeam2++;
             SetGoalCount("Team2");
-        } else if (goal.Equals("Goal2"))
+        }
+        else if (goal.Equals("Goal2"))
         {
             goalsTeam1++;
             SetGoalCount("Team1");
         }
 
         CheckGoalLimit();
+        StartCoroutine(GoalFreeze());
     }
 
     //Hiermit kann die Anzeige für die Tore bearbeitet werden
@@ -87,7 +108,8 @@ public class GameState : MonoBehaviour {
         if (s.Equals("Team1"))
         {
             scoreTeam1.text = goalsTeam1.ToString();
-        } else if (s.Equals("Team2"))
+        }
+        else if (s.Equals("Team2"))
         {
             scoreTeam2.text = goalsTeam2.ToString();
         }
@@ -99,13 +121,92 @@ public class GameState : MonoBehaviour {
         if (goalsTeam1 == goalLimit)
         {
             Debug.Log("Team 1 wins with " + goalsTeam1 + " - " + goalsTeam2);
-            Time.timeScale = 0.0f;
-        } else if (goalsTeam2 == goalLimit)
-            {
-                Debug.Log("Team 2 wins with " + goalsTeam2 + " - " + goalsTeam1);
-            Time.timeScale = 0.0f;
+            Time.timeScale = 0;
         }
-        
+        else if (goalsTeam2 == goalLimit)
+        {
+            Debug.Log("Team 2 wins with " + goalsTeam2 + " - " + goalsTeam1);
+            Time.timeScale = 0;
+        }
+    }
+
+    private void CheckPause()
+    {
+        if (Input.GetButtonUp("Start"))
+        {
+            if (!gamePaused)
+            {
+                SetGamePaused(true);
+            }
+        }
+        //sofern das Spiel pausiert wird
+        if (gamePaused){
+            //überprüfe, ob die einzelnen Spieler bereit sind
+            if (Input.GetButtonUp("ShootP1")){
+                SetPlayerReady(true, 1);
+            } else if (Input.GetButtonUp("ShootP2")){
+                SetPlayerReady(true, 2);
+            }
+
+            if (player1Ready && player2Ready) {
+                StartCoroutine(StartDepauseCountdown());
+            }
+        }
+    }
+
+    public bool GetGamePaused()
+    {
+        return gamePaused;
+    }
+
+    public void SetGamePaused(bool b)
+    {
+        gamePaused = b;
+        if (gamePaused)
+        {
+            Time.timeScale = 0.0001f;
+            pauseScreen.enabled = true;
+        } else
+        {
+            Time.timeScale = 1;
+            pauseScreen.enabled = false;
+        }
+    }
+
+    private void SetPlayerReady(bool b, int playerNr)
+    {
+        if (playerNr == 1)
+        {
+            player1Ready = b;
+            greenCheckP1.enabled = b;
+        } else if (playerNr == 2)
+        {
+            player2Ready = b;
+            greenCheckP2.enabled = b;
+        }
+
+    }
+
+    IEnumerator GoalFreeze()
+    {
+        Time.timeScale = 0.1f;
+        yield return new WaitForSeconds(goalFreezeTime* Time.timeScale);
+        Time.timeScale = 1;
+    }
+
+    IEnumerator StartDepauseCountdown()
+    {
+        pauseScreen.enabled = false;
+        pauseCountdownScreen.enabled = true;
+        for (int i = depauseCountdown; i > 0; i--)
+        {
+            pauseCountdownText.text = i.ToString();
+            yield return new WaitForSeconds(1 * Time.timeScale);
+        }
+        SetGamePaused(false);
+        SetPlayerReady(false, 1);
+        SetPlayerReady(false, 2);
+        pauseCountdownScreen.enabled = false;
 
     }
 

@@ -8,20 +8,25 @@ public class Exhaust : MonoBehaviour
     public float destroyTime; //Zeit bis zur Zerstörung des Abgaspartikels in Sekunden
     private Vector3 movementVector; //Der Bewegungsvektor des Partikels, der in jedem Update verwendet wird
     public float acceleration;  //der Beschleunigungswert des Partikels
+    private GameState gameState;
 
 
     // Use this for initialization
     void Start()
     {
-        //die Zerstörung des Objektes in "destroyTime" Sekunden in Auftrag gegeben
+        gameState = (GameState)FindObjectOfType(typeof(GameState));
+        //die Zerstörung des Objektes in "destroyTime" Sekunden wird in Auftrag gegeben
         Destroy(gameObject, destroyTime);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();        //mit jedem Frame wird das Objekt bewegt
-        Fade();        //und das Objekt durchsichtiger
+        if (!gameState.GetGamePaused())
+        {
+            Move();        //mit jedem Frame wird das Objekt bewegt
+            Fade();        //und das Objekt durchsichtiger
+        }
     }
 
     //Methode zum Bewegen

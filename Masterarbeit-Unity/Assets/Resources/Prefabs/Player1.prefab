@@ -197,7 +197,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1530333346363798}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.75, y: 0, z: 0}
+  m_LocalPosition: {x: -1.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4200608554275742}
@@ -337,8 +337,8 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 1.4984607, y: 0}
-      - {x: -1.455663, y: -1.9693645}
-      - {x: -1.4530816, y: 1.9667852}
+      - {x: -1.2503432, y: -1.6956031}
+      - {x: -1.250343, y: 1.695603}
 --- !u!61 &61854273117028674
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -389,13 +389,14 @@ MonoBehaviour:
   playerTeam: 1
   subjectNr: 0
   brakingForce: 1
-  maxSpeed: 60
+  maxSpeed: 50
   speedX: 0
   speedY: 0
   acceleration: 1.75
   stunned: 0
   stunBlinkEffect: 0.2
   stunDurationBall: 1
+  stunnableByBall: 0
   exhaustPrefab: {fileID: 1608806251640764, guid: e6e0204d311283740a88d93bb97183aa,
     type: 2}
   exSpawner: {fileID: 1530333346363798}
@@ -403,7 +404,7 @@ MonoBehaviour:
   exhaustSpawnTime: 0.12
   blockSpawn: {fileID: 114277257188751900}
   shotSpawn: {fileID: 114237265526856248}
-  shotDelay: 0.16
+  shotDelay: 0.2
   shotTimer: 0
   emoteTimer: 0
   emoteDelay: 3

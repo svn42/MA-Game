@@ -21,6 +21,7 @@ public class BallSpawner : MonoBehaviour
     public Vector3 ballInflaterMaxSize;
 
 
+
     // Use this for initialization
     void Start()
     {
@@ -45,9 +46,10 @@ public class BallSpawner : MonoBehaviour
         //sofern der Mittelkreis nicht mehr vom letzten Ball geblockt wird und das Ball-Maximum noch nicht ereicht wurde && nicht von einem Block oder Spieler Blockiert wird
         if (!(gameState.MaximumBallsReached()) && !centerCircleBlocked)
         {
-            if (!spawnBlocked)
+            if (!spawnBlocked) //und der spawner nicht durch einen anderen Ball belegt wird
             {
-                StartCoroutine(SpawnBall(ballSpawnDelay));
+                StartCoroutine(SpawnBall(ballSpawnDelay)); //wird ein neuer Ball gespawnt
+                SetSpawnBlocked(true);      //und der spawner als belegt markiert
             } 
         }
     }
@@ -73,7 +75,7 @@ public class BallSpawner : MonoBehaviour
         lastSpawnedBall = Instantiate(ballPrefab, ballPosition, ballRotation);
         //der Mittelkreis wird zudem als vom neuesten Ball blockiert markiert
         centerCircleBlocked = true;
-        SetSpawnBlocked(true);
+        SetSpawnBlocked(false);
     }
 
     public void SetSpawnBlocked(bool b)

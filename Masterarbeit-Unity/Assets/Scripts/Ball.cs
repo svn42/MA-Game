@@ -51,9 +51,7 @@ public class Ball : MonoBehaviour {
     {
         if (other.gameObject.tag.Equals("Player"))   //bei Berührung mit dem Spieler
         {
-            rb.velocity = new Vector2(0, 0);    //wird die Bewegung des Balles gestoppt
-            Debug.Log("ball hits player");
-
+            rb.velocity = new Vector2( 0, 0);    //wird die Bewegung des Balles gestoppt
         }
     }
 

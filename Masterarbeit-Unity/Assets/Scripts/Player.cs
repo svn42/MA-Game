@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     public bool stunned;    //Wenn der Spieler betäubt wurde, wird die Variable true
     public float stunBlinkEffect;   //Zeitliches Intervall (in Sekunden), in dem das Blinken beim Stun stattfindet
     public float stunDurationBall;  //Die Zeit in Sekunden, die der Spieler gestunnt wird, sofern er den Ball berührt
+    public bool stunnableByBall;
 
     public GameObject exhaustPrefab; //das Prefab des Abgaspartikels wird über den Inspector bekannt gemacht   
     public GameObject exSpawner;    // der Spawner für die Abgaspartikel wird ebenfalls über den Inspektor bekannt gemacht
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour
     public float shotTimer; //der shotTimer gibt die Zeit in Frames wieder, die bereits auf den nächsten Schuss gewartet wurde.
 
     private PlayerLogging playerLogging;
+    private GameState gameState;
     private Color teamColor;    //Die Farbe des Spielers, die anhand der Teamzugehörigkeit ermittelt wird
 
     public float emoteTimer; 
@@ -48,23 +50,27 @@ public class Player : MonoBehaviour
         playerLogging = this.gameObject.GetComponent<PlayerLogging>();  //der PlayerLogger wird verknüpft
         playerLogging.SetPlayerTeam(playerTeam);
 
-       // shotDelay *= 60;    //der ShotDelay wird an die Frames angepasst
-       // emoteDelay *= 60;    //der emoteDelay wird an die Frames angepasst
+        gameState = (GameState)FindObjectOfType(typeof(GameState));
+
+        // shotDelay *= 60;    //der ShotDelay wird an die Frames angepasst
+        // emoteDelay *= 60;    //der emoteDelay wird an die Frames angepasst
         emoteTimer = emoteDelay;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!stunned)
+        if (!gameState.GetGamePaused())
         {
-            CheckInput();   //zunächst wird der Input überprüft
-            Move(); //dann der Spieler bewegt
-            CheckExhaust(); //sowie überprüft, ob das Abgas erzeugt werden soll
+            if (!stunned)
+            {
+                CheckInput();   //zunächst wird der Input überprüft
+                Move(); //dann der Spieler bewegt
+                CheckExhaust(); //sowie überprüft, ob das Abgas erzeugt werden soll
+            }
+            shotTimer += Time.deltaTime;
+            emoteTimer += Time.deltaTime;
         }
-        shotTimer+= Time.deltaTime;
-        emoteTimer+= Time.deltaTime;
-
     }
 
     //Sofern es zu einer Collision kommt
@@ -99,7 +105,8 @@ public class Player : MonoBehaviour
             StartCoroutine(StunPlayer(stunDurationBall));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
             blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
             shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
-        }
+            StartCoroutine(SetStunnableByBall(stunDurationBall));
+        } 
         if (coll.gameObject.tag == "Shot")
         {
             if (coll.gameObject.GetComponent<Shot>().GetPlayerTeam() != playerTeam) //wenn der Schuss vom gegenerischen Spieler ist
@@ -156,6 +163,7 @@ public class Player : MonoBehaviour
         if (Input.GetButton("Block" + playerAcronym))
         {
             blockSpawn.AddBlockChargeTime(Time.deltaTime);    //wird die Zeit zum Spawnen des Blocks hochgezählt
+            shotSpawn.ResetShotChargeTime();
         }
         //wenn der Block-Button (B) losgelassen wird
         if (Input.GetButtonUp("Block" + playerAcronym))
@@ -169,6 +177,7 @@ public class Player : MonoBehaviour
             if (shotTimer > shotDelay)  //und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen
             {
                 shotSpawn.AddShotChargeTime(Time.deltaTime);  //wird die Zeit zum Aufladen des Schuss hochgezählt
+                blockSpawn.ResetBlockChargeTime();
             }
         }
         //wenn der Schuss-Button (A) losgelassen wird und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen 
@@ -345,7 +354,6 @@ public class Player : MonoBehaviour
         stunned = true;                     //die Stun-Variable auf True gesetzt
         yield return new WaitForSeconds(time);  //Die Zeit der Betäubung abgewartet 
         stunned = false;                        //und daraufhin die Stun-Variable auf false gesetzt
-
     }
 
     //Blinkeffekt des Stuns
@@ -362,6 +370,14 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(stunBlinkEffect / 2);
         }
     }
+
+    IEnumerator SetStunnableByBall(float time)
+    {
+        stunnableByBall = false;
+        yield return new WaitForSeconds(time * 2);
+        stunnableByBall = true;
+    }
+
 
     //Methode, um den ShotTimer von außerhalb zu setzen. (Geschieht in der ShotSpawner-Klasse nach dem Schießen)
     public void SetShotTimer(int i)
