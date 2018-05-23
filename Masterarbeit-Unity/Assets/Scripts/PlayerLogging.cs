@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerLogging : MonoBehaviour
 {
-    public int playerTeam;
-    public string currentZone;  //aktuelle Zone des Spielers
+    private int playerTeam;
+    private string currentZone;  //aktuelle Zone des Spielers
+
+    public float distanceTravelled;
 
     //time per Zone
     public float timeCenterZone;
@@ -15,41 +17,46 @@ public class PlayerLogging : MonoBehaviour
     public float timeOpponentGoalZone;
 
     //Shots
+    public int totalShotsFired; 
     public int normalShotsFired;
     public int mediumShotsFired;
     public int largeShotsFired;
-    public int totalShotsFired;    //am Ende alle types addieren
 
-    //Precision
-    //aufteilen nach Schusstyp?
-    // public int shotsHitBlock;   //
+    //Accuracy
+    //public int shotsHitBlock;   //
     //public int shotsHitBall;   //
     //public int shotsHitPlayer;   //
     //public int shotsHitEnemyShot;   //
 
     //Blocks
+    public int totalBlocksPlaced;
     public int blocksInOwnZone;
     public int blocksInOwnGoalZone;
     public int blocksInCenterZone;
     public int blocksInOpponentZone;
     public int blocksInOpponentGoalZone;
-    public int totalBlocksPlaced;       //am Ende alle types addieren
 
+    //goals Scored
     public int goalsScored;
     public int ownGoalsScored;
-    public float distanceTravelled;   
 
     //Stun
-    public int totalEnemyStunned;   //
-    public int normalEnemyStunned;   //
-    public int mediumEnemyStunned;   //
-    public int largeEnemyStunned;   //
-    public float enemyStunnedTotalTime;   //
+    public int totalEnemyStunned;   
+    public int normalEnemyStunned;   
+    public int mediumEnemyStunned;   
+    public int largeEnemyStunned;   
+    public float enemyStunnedTotalTime;   
 
     //Stunned by ball
-    public int stunnedByBall;   
+    public int stunnedByBall;
 
-
+    //Emotes
+    public int totalEmotes;
+    public int emoteNice;
+    public int emoteAngry;
+    public int emoteCry;
+    public int emoteHaha;
+    
     // Use this for initialization
     void Start()
     {
@@ -137,13 +144,9 @@ public class PlayerLogging : MonoBehaviour
                 largeShotsFired++;
                 break;
         }
+        totalShotsFired++;
     }
-
-    public void CalculateTotalShots()
-    {
-        totalShotsFired = normalShotsFired + mediumShotsFired + largeShotsFired;
-    }
-
+    
     public void AddBlock()
     {
         switch (currentZone)
@@ -164,12 +167,9 @@ public class PlayerLogging : MonoBehaviour
                 blocksInOpponentGoalZone++;
                 break;
         }
+        totalBlocksPlaced++;
     }
 
-    public void CalculateTotalBlocks()
-    {
-        totalBlocksPlaced = blocksInCenterZone + blocksInOwnZone + blocksInOwnGoalZone + blocksInOpponentZone + blocksInOpponentGoalZone;
-    }
     public void AddGoal(string goalType)
     {
         switch (goalType)
@@ -209,11 +209,27 @@ public class PlayerLogging : MonoBehaviour
                 break;
         }
         enemyStunnedTotalTime += stunDuration;
+        totalEnemyStunned++;
     }
-
-    public void CalculateTotalStunsByEnemy()
+    
+    public void AddEmote(string type)
     {
-        totalEnemyStunned = normalEnemyStunned + mediumEnemyStunned + largeEnemyStunned;
+        switch (type)
+        {
+            case "nice":
+                emoteNice++;
+                break;
+            case "angry":
+                emoteAngry++;
+                break;
+            case "cry":
+                emoteCry++;
+                break;
+            case "haha":
+                emoteHaha++;
+                break;
+        }
+        totalEmotes++;
     }
 
 }

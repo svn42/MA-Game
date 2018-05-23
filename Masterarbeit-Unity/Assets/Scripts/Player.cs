@@ -202,19 +202,19 @@ public class Player : MonoBehaviour
 
         if (Input.GetButtonUp("LB" + playerAcronym) && emoteTimer > emoteDelay)
         {
-            CastEmote("haha");
+            CastEmote("nice");
         }
         if (Input.GetButtonUp("RB" + playerAcronym) && emoteTimer > emoteDelay)
         {
-            CastEmote("gg");
+            CastEmote("angry");
         }
         if (Input.GetAxis("RT" + playerAcronym) != 0 && emoteTimer > emoteDelay)
         {
-            CastEmote("oops");
+            CastEmote("cry");
         }
         if (Input.GetAxis("LT" + playerAcronym) != 0 && emoteTimer > emoteDelay)
         {
-            CastEmote("superior");
+            CastEmote("haha");
         }
 
     }
@@ -397,23 +397,22 @@ public class Player : MonoBehaviour
     //Methode fürs Benutzen der Emotes
     public void CastEmote(string type)
     {
-        
         if (playerTeam == 1) {
             switch (type)
             {
-                case ("gg"): Debug.Log("Player "+playerTeam+": Gut gespielt!");
+                case ("nice"): Debug.Log("Player "+playerTeam+": Nice!");
                     //spawn UI an Position für Player1 für emoteDelay
                     break;
                 case ("haha"):
                     Debug.Log("Player " + playerTeam + ": Haha!");
                     //spawn UI an Position für Player1
                     break;
-                case ("superior"):
-                    Debug.Log("Player " + playerTeam + ": Ich werde dich besiegen");
+                case ("cry"):
+                    Debug.Log("Player " + playerTeam + ": Oh nein");
                     //spawn UI an Position für Player1
                     break;
-                case ("oops"):
-                    Debug.Log("Player " + playerTeam + ": Mist!");
+                case ("angry"):
+                    Debug.Log("Player " + playerTeam + ": Argh!");
                     //spawn UI an Position für Player1
                     break;
             }
@@ -421,24 +420,25 @@ public class Player : MonoBehaviour
         {
             switch (type)
             {
-                case ("gg"):
-                    Debug.Log("Player " + playerTeam + ": Gut gespielt!");
+                case ("nice"):
+                    Debug.Log("Player " + playerTeam + ": Nice!");
                     //spawn UI an Position für Player2
                     break;
                 case ("haha"):
                     Debug.Log("Player " + playerTeam + ": Haha!");
                     //spawn UI an Position für Player2
                     break;
-                case ("superior"):
-                    Debug.Log("Player " + playerTeam + ": Ich werde dich besiegen");
+                case ("cry"):
+                    Debug.Log("Player " + playerTeam + ": Oh nein");
                     //spawn UI an Position für Player2
                     break;
-                case ("oops"):
-                    Debug.Log("Player " + playerTeam + ": Mist!");
+                case ("angry"):
+                    Debug.Log("Player " + playerTeam + ": Argh!");
                     //spawn UI an Position für Player2
                     break;
             }
         }
+        playerLogging.AddEmote(type);   //dem Logging wird die Art des Emotes mitgeteilt    
         emoteTimer = 0;
 
     }
@@ -446,9 +446,6 @@ public class Player : MonoBehaviour
     public void CalculateLogData()
     {
         positionTracker.CalculateWalkedDistance();
-        playerLogging.CalculateTotalBlocks();
-        playerLogging.CalculateTotalShots();
-        playerLogging.CalculateTotalStunsByEnemy();
     }
 
 }
