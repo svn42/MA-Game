@@ -31,7 +31,9 @@ public class Player : MonoBehaviour
     public float shotDelay; //der shotDelay gibt die Zeit in Sekunden wieder, die nach einem Schuss vergehen muss, damit ein neuer Schuss gespawnt werden kann. (damit der normalShot nicht gespammt werden kann)
     public float shotTimer; //der shotTimer gibt die Zeit in Frames wieder, die bereits auf den nächsten Schuss gewartet wurde.
 
-    private PlayerLogging playerLogging;
+    public GameObject enemyPlayer;
+    private PlayerLogging playerLogging;    //das eigene PlayerLogging
+    private PlayerLogging playerLoggingEnemy;
     private PositionTracker positionTracker;
     private GameState gameState;
     private Color teamColor;    //Die Farbe des Spielers, die anhand der Teamzugehörigkeit ermittelt wird
@@ -53,8 +55,9 @@ public class Player : MonoBehaviour
 
         //Logging
         playerLogging = this.gameObject.GetComponent<PlayerLogging>();  //der PlayerLogger wird verknüpft
-        playerLogging.SetPlayerTeam(playerTeam);
-                
+        playerLogging.SetPlayerTeam(playerTeam);                        //dem playerLogging wird mitgeteilt, zu welchem Team sein Spieler gehört
+        playerLoggingEnemy = enemyPlayer.GetComponent<PlayerLogging>(); //das playerLogging-Skript des Gegners wird verknüpft, um die Betäubungen abzuspeichern.
+
         positionTracker = gameObject.GetComponent<PositionTracker>();
         positionTracker.StartTracking(); //das Tracken der Position wird gestartet
 
@@ -109,17 +112,20 @@ public class Player : MonoBehaviour
             StartCoroutine(StunPlayer(stunDurationBall));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
             blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
             shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
-            StartCoroutine(SetStunnableByBall(stunDurationBall));
+            StartCoroutine(SetStunnableByBall(stunDurationBall));   //der Spieler wird für die Zeit "stunDurationBall" nicht mehr für Bälle stunnable
+            playerLogging.AddStunnedByBall();   //und der PLogger bekommt mitgeteilt, dass der Spieler von einem Ball betäubt wurde
         } 
         if (coll.gameObject.tag == "Shot")
         {
             if (coll.gameObject.GetComponent<Shot>().GetPlayerTeam() != playerTeam) //wenn der Schuss vom gegenerischen Spieler ist
             {
+                Shot collidingShot = coll.gameObject.GetComponent<Shot>();
                 speedX /= 2;    //wird die Geschwindigkeit reduziert
                 speedY /= 2;
-                StartCoroutine(StunPlayer(coll.gameObject.GetComponent<Shot>().GetStunDuration()));  //und der Spieler für die Zeit "GetStunDuration" gestunnt
+                StartCoroutine(StunPlayer(collidingShot.GetStunDuration()));  //und der Spieler für die Zeit "GetStunDuration" gestunnt
                 blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
                 shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
+                playerLoggingEnemy.AddStunnedByEnemy(collidingShot.GetShotType(), collidingShot.GetStunDuration());
             }
         }
 
@@ -134,6 +140,7 @@ public class Player : MonoBehaviour
             positionTracker.CalculateWalkedDistance();
             playerLogging.CalculateTotalBlocks();
             playerLogging.CalculateTotalShots();
+            playerLogging.CalculateTotalStunsByEnemy();
         }
 
         //sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
@@ -382,6 +389,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //die Methode sorgt dafür, dass der Spieler nicht direkt nachdem er vom Ball gestunnt wurde, erneut gestunnt wird.
     IEnumerator SetStunnableByBall(float time)
     {
         stunnableByBall = false;

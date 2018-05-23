@@ -10,7 +10,7 @@ public class Ball : MonoBehaviour {
 
     public static int globalId;    //statische ID, um jedem Ball eine eindeutige ID zuzuweisen.
     public int instanceID;     //instanceID, um die ID des Balles zwischenzuspeichern
-    public int lastHitBy;
+    public int lastHitBy;   //beinhaltet die Team Nummer des Spielers, der als letztes diesen Ball mit einem Schuss getroffen hat. So kann festgestellt werden, durch wen das Tor erzielt wurde.
 
     // Use this for initialization
     void Start () {

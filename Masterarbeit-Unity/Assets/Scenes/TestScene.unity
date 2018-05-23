@@ -1544,6 +1544,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114027812939503456, guid: 4a464419b3763fe4ebd5f165027b1af9,
+        type: 2}
+      propertyPath: enemyPlayer
+      value: 
+      objectReference: {fileID: 1425252146}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4a464419b3763fe4ebd5f165027b1af9, type: 2}
   m_IsPrefabParent: 0
@@ -1871,6 +1876,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114202835746117058, guid: b79f309cebcdff441a93b0c0de8cdf6b,
+        type: 2}
+      propertyPath: enemyPlayer
+      value: 
+      objectReference: {fileID: 1677116220}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b79f309cebcdff441a93b0c0de8cdf6b, type: 2}
   m_IsPrefabParent: 0
@@ -2095,21 +2105,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1686076418383510, guid: b79f309cebcdff441a93b0c0de8cdf6b,
     type: 2}
   m_PrefabInternal: {fileID: 1331494839}
---- !u!114 &1425252147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1425252146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b1173877515bfb42892b6690691751c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trackingIntervall: 0.25
-  positionList: []
-  positionListWithoutDuplicates: []
-  walkedDistance: 0
 --- !u!1 &1427681990
 GameObject:
   m_ObjectHideFlags: 0
@@ -2309,21 +2304,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1470042193171084, guid: 4a464419b3763fe4ebd5f165027b1af9,
     type: 2}
   m_PrefabInternal: {fileID: 1028885657}
---- !u!114 &1677116221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1677116220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b1173877515bfb42892b6690691751c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trackingIntervall: 0.25
-  positionList: []
-  positionListWithoutDuplicates: []
-  walkedDistance: 0
 --- !u!1 &1685277302
 GameObject:
   m_ObjectHideFlags: 0

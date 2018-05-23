@@ -40,14 +40,14 @@ public class PlayerLogging : MonoBehaviour
     public float distanceTravelled;   
 
     //Stun
-    //public int totalEnemyStunned;   //
-    //public int normalEnemyStunned;   //
-    //public int mediumEnemyStunned;   //
-    //public int largeEnemyStunned;   //
-    //public float EnemyStunnedTotalTime;   //
+    public int totalEnemyStunned;   //
+    public int normalEnemyStunned;   //
+    public int mediumEnemyStunned;   //
+    public int largeEnemyStunned;   //
+    public float enemyStunnedTotalTime;   //
 
     //Stunned by ball
-    //public int stunnedByBall;   //
+    public int stunnedByBall;   
 
 
     // Use this for initialization
@@ -188,4 +188,32 @@ public class PlayerLogging : MonoBehaviour
     {
         distanceTravelled = walkedDistance;
     }
+
+    public void AddStunnedByBall()
+    {
+        stunnedByBall++;
+    }
+
+    public void AddStunnedByEnemy(string shotType, float stunDuration)
+    {
+        switch (shotType)
+        {
+            case "normal":
+                normalEnemyStunned++;
+                break;
+            case "medium":
+                mediumEnemyStunned++;
+                break;
+            case "large":
+                largeEnemyStunned++;
+                break;
+        }
+        enemyStunnedTotalTime += stunDuration;
+    }
+
+    public void CalculateTotalStunsByEnemy()
+    {
+        totalEnemyStunned = normalEnemyStunned + mediumEnemyStunned + largeEnemyStunned;
+    }
+
 }

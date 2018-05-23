@@ -8,6 +8,7 @@ public class Shot : MonoBehaviour
     public float acceleration;  //der Beschleunigungswert des Partikels
     [Range(1, 3)]
     public int strength;    //Stärke des Schusses. Normaler Schuss =1, Mittlerer Schuss = 2, Großer Schuss = 3.
+    private string shotType;    //Typ des Schusses
     public int ballImpact;     //Wirkung des Schusses auf den Ball bei einer Kollision
     private int playerTeam;
     private int shotID;
@@ -17,6 +18,18 @@ public class Shot : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        switch (strength)
+        {
+            case 1:
+                shotType = "normal";
+                break;
+            case 2:
+                shotType = "medium";
+                break;
+            case 3:
+                shotType = "large";
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -121,4 +134,10 @@ public class Shot : MonoBehaviour
     {
         return stunDuration;
     }
+
+    public string GetShotType()
+    {
+        return shotType;
+    }
+
 }

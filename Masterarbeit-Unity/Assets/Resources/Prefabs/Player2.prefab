@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 50613450637642608}
   - component: {fileID: 114582703678987356}
   - component: {fileID: 60282889375884266}
+  - component: {fileID: 114138379414981514}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
@@ -395,8 +396,23 @@ MonoBehaviour:
   shotSpawn: {fileID: 114762918378175166}
   shotDelay: 0.2
   shotTimer: 0
+  enemyPlayer: {fileID: 0}
   emoteTimer: 0
   emoteDelay: 3
+--- !u!114 &114138379414981514
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1470042193171084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b1173877515bfb42892b6690691751c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackingIntervall: 0.25
+  positionList: []
+  positionListWithoutDuplicates: []
 --- !u!114 &114198506297395242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -420,11 +436,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTeam: 0
+  currentZone: 
   timeCenterZone: 0
   timeOwnZone: 0
   timeOwnGoalZone: 0
   timeOpponentZone: 0
   timeOpponentGoalZone: 0
+  normalShotsFired: 0
+  mediumShotsFired: 0
+  largeShotsFired: 0
+  totalShotsFired: 0
+  blocksInOwnZone: 0
+  blocksInOwnGoalZone: 0
+  blocksInCenterZone: 0
+  blocksInOpponentZone: 0
+  blocksInOpponentGoalZone: 0
+  totalBlocksPlaced: 0
+  goalsScored: 0
+  ownGoalsScored: 0
+  distanceTravelled: 0
+  stunnedByBall: 0
 --- !u!114 &114762918378175166
 MonoBehaviour:
   m_ObjectHideFlags: 1
