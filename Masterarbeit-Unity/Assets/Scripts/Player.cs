@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     public float shotTimer; //der shotTimer gibt die Zeit in Frames wieder, die bereits auf den nächsten Schuss gewartet wurde.
 
     private PlayerLogging playerLogging;
+    private PositionTracker positionTracker;
     private GameState gameState;
     private Color teamColor;    //Die Farbe des Spielers, die anhand der Teamzugehörigkeit ermittelt wird
 
@@ -42,17 +43,22 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        gameState = (GameState)FindObjectOfType(typeof(GameState));
+
         playerAcronym = "P" + playerTeam;
         CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
         blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
         shotSpawn.GetComponent<ShotSpawner>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
+        emoteTimer = emoteDelay; //sorgt dafür, dass sofor ein Emote benutzt werden kann
 
+        //Logging
         playerLogging = this.gameObject.GetComponent<PlayerLogging>();  //der PlayerLogger wird verknüpft
         playerLogging.SetPlayerTeam(playerTeam);
+                
+        positionTracker = gameObject.GetComponent<PositionTracker>();
+        positionTracker.StartTracking(); //das Tracken der Position wird gestartet
 
-        gameState = (GameState)FindObjectOfType(typeof(GameState));
 
-        emoteTimer = emoteDelay;
     }
 
     // Update is called once per frame
@@ -123,8 +129,15 @@ public class Player : MonoBehaviour
     {
 
         
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            positionTracker.CalculateWalkedDistance();
+            playerLogging.CalculateTotalBlocks();
+            playerLogging.CalculateTotalShots();
+        }
+
         //sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
-        if ((Mathf.Abs(Input.GetAxis("Horizontal"+playerAcronym)) > 0.0f))
+        if ((Mathf.Abs(Input.GetAxis("Horizontal"+playerAcronym)) > 0.2f))
         {
             //wird die Accelerate-Methode mit dem Argument X aufgerufen
             Accelerate("X");
@@ -137,7 +150,7 @@ public class Player : MonoBehaviour
 
 
         //das gleiche geschieht mit der Vertikalen Achse (hoch oder runter Pfeiltaste sowie W und S)
-        if ((Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.0f))
+        if ((Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.2f))
         {
             Accelerate("Y");
         }
@@ -147,7 +160,7 @@ public class Player : MonoBehaviour
         }
 
         //die BewegungsZeit wird erhöht, sofern mindestens eine der beiden Achsen eine Bewegung zurückliefern
-        if ((Mathf.Abs(Input.GetAxis("Vertical"+playerAcronym)) > 0.0f) || Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.0f)
+        if ((Mathf.Abs(Input.GetAxis("Vertical"+playerAcronym)) > 0.2f) || Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.2f)
         {
             exhaustTime+= Time.deltaTime;
         }

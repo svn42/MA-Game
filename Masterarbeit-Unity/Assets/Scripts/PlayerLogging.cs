@@ -37,7 +37,7 @@ public class PlayerLogging : MonoBehaviour
 
     public int goalsScored;
     public int ownGoalsScored;
-    //public float distanceTravelled;   //
+    public float distanceTravelled;   
 
     //Stun
     //public int totalEnemyStunned;   //
@@ -139,6 +139,11 @@ public class PlayerLogging : MonoBehaviour
         }
     }
 
+    public void CalculateTotalShots()
+    {
+        totalShotsFired = normalShotsFired + mediumShotsFired + largeShotsFired;
+    }
+
     public void AddBlock()
     {
         switch (currentZone)
@@ -161,6 +166,10 @@ public class PlayerLogging : MonoBehaviour
         }
     }
 
+    public void CalculateTotalBlocks()
+    {
+        totalBlocksPlaced = blocksInCenterZone + blocksInOwnZone + blocksInOwnGoalZone + blocksInOpponentZone + blocksInOpponentGoalZone;
+    }
     public void AddGoal(string goalType)
     {
         switch (goalType)
@@ -173,5 +182,10 @@ public class PlayerLogging : MonoBehaviour
                 break;
         }
 
+    }
+
+    public void AddWalkedDistance(float walkedDistance)
+    {
+        distanceTravelled = walkedDistance;
     }
 }
