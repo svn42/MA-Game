@@ -236,7 +236,7 @@ MonoBehaviour:
   player1Box: {fileID: 0}
   player2Box: {fileID: 0}
   depauseCountdown: 3
-  startCountdownActivated: 1
+  startCountdownActivated: 0
   player1: {fileID: 1425252146}
   player2: {fileID: 1677116220}
 --- !u!114 &40496160

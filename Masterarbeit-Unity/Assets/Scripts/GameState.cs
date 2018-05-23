@@ -51,12 +51,12 @@ public class GameState : MonoBehaviour
         SetGoalCount("Team1");
         SetGoalCount("Team2");
 
-        topText = (Text)pauseScreen.transform.Find("TransparentScreen").transform.Find("topText").GetComponent<Text>();
-        middleText = (Text)pauseScreen.transform.Find("TransparentScreen").transform.Find("middleText").GetComponent<Text>();
-        player1Box = (Canvas)pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler1").GetComponent<Canvas>();
-        player2Box = (Canvas)pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler2").GetComponent<Canvas>();
-        greenCheckP1 = (Image)pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler1").transform.Find("Spieler1_Check").GetComponent<Image>();
-        greenCheckP2 = (Image)pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler2").transform.Find("Spieler2_Check").GetComponent<Image>();
+        topText = pauseScreen.transform.Find("TransparentScreen").transform.Find("topText").GetComponent<Text>();
+        middleText = pauseScreen.transform.Find("TransparentScreen").transform.Find("middleText").GetComponent<Text>();
+        player1Box = pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler1").GetComponent<Canvas>();
+        player2Box = pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler2").GetComponent<Canvas>();
+        greenCheckP1 = pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler1").transform.Find("Spieler1_Check").GetComponent<Image>();
+        greenCheckP2 = pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler2").transform.Find("Spieler2_Check").GetComponent<Image>();
 
         playerLoggingP1 = player1.GetComponent<PlayerLogging>();
         playerLoggingP2 = player2.GetComponent<PlayerLogging>();

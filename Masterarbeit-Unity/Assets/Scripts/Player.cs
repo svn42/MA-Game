@@ -446,6 +446,7 @@ public class Player : MonoBehaviour
     public void CalculateLogData()
     {
         positionTracker.CalculateWalkedDistance();
+        playerLogging.CalculateAccuracy();
     }
 
 }

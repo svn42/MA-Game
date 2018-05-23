@@ -23,10 +23,16 @@ public class PlayerLogging : MonoBehaviour
     public int largeShotsFired;
 
     //Accuracy
-    //public int shotsHitBlock;   //
-    //public int shotsHitBall;   //
-    //public int shotsHitPlayer;   //
-    //public int shotsHitEnemyShot;   //
+    public int shotsHitBlock;   
+    public int shotsHitBall;   
+    public int shotsHitPlayer;   
+    public int shotsHitEnemyShot;   
+    public int shotsDestroyed;
+    public float shotsHitBlockPercent;
+    public float shotsHitBallPercent;
+    public float shotsHitPlayerPercent;
+    public float shotsHitEnemyShotPercent;
+    public float shotsDestroyedPercent;
 
     //Blocks
     public int totalBlocksPlaced;
@@ -146,7 +152,40 @@ public class PlayerLogging : MonoBehaviour
         }
         totalShotsFired++;
     }
-    
+
+    public void AddAccuracy(string action)
+    {
+        switch (action)
+        {
+            case "ball":
+                shotsHitBall++;
+                break;
+            case "player":
+                shotsHitPlayer++;
+                break;
+            case "block":
+                shotsHitBlock++;
+                break;
+            case "shot":
+                shotsHitEnemyShot++;
+                break;
+            case "destroy":
+                shotsDestroyed++;
+                break;
+        }
+    }
+
+    public void CalculateAccuracy()
+    {
+        if (totalShotsFired > 0)
+        {
+            shotsHitBlockPercent = (float)shotsHitBlock / totalShotsFired;
+            shotsDestroyedPercent = (float)shotsDestroyed / totalShotsFired;
+            shotsHitBallPercent = (float)shotsHitBall / totalShotsFired;
+            shotsHitEnemyShotPercent = (float)shotsHitEnemyShot / totalShotsFired;
+            shotsHitPlayerPercent = (float)shotsHitPlayer / totalShotsFired;
+        }
+    }
     public void AddBlock()
     {
         switch (currentZone)

@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1563098449693252}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40.17969, y: -4.364474, z: 0}
+  m_LocalPosition: {x: -51.193504, y: -25.405964, z: 0}
   m_LocalScale: {x: 4.3, y: 4.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,6 +106,8 @@ MonoBehaviour:
   strength: 3
   ballImpact: 3500
   stunDuration: 1
+  player1: {fileID: 0}
+  player2: {fileID: 0}
 --- !u!212 &212764447594908098
 SpriteRenderer:
   m_ObjectHideFlags: 1

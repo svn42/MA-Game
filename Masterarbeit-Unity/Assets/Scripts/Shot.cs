@@ -13,11 +13,14 @@ public class Shot : MonoBehaviour
     private int playerTeam;
     private int shotID;
     public float stunDuration;
+    public GameObject player;
+    public PlayerLogging playerLogging;
 
 
     // Use this for initialization
     void Start()
     {
+        //zuweisen des shotTypes in abhängigkeit zur Stärke
         switch (strength)
         {
             case 1:
@@ -30,7 +33,19 @@ public class Shot : MonoBehaviour
                 shotType = "large";
                 break;
         }
+        //zuweisen des Spielers, der den Schuss abgegeben hat
+        GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < playerList.Length; i++)
+        {
+            if (playerList[i].GetComponent<Player>().playerTeam == this.playerTeam)
+            {
+                player = playerList[i];
+                playerLogging = player.GetComponent<PlayerLogging>();
+            }
+        }
+
     }
+
 
     // Update is called once per frame
     void Update()
@@ -60,40 +75,50 @@ public class Shot : MonoBehaviour
             case "Block":
                 collidingObject.GetComponent<Block>().ReduceHealth(this.strength);
                 DestroyShot();
+                playerLogging.AddAccuracy("block");
                 break;
             case "Player":
-                // calculate force vector
-                
-                Vector3 force = coll.transform.position - transform.position;
-                // normalize force vector to get direction only and trim magnitude
-                force.Normalize();
-                coll.rigidbody.AddForce(force * ballImpact); 
-                DestroyShot();
+                if (collidingObject.GetComponent<Player>().playerTeam != this.playerTeam)   //wenn der Schuss den gegnerischen Spieler trifft
+                {
+                    // reference: https://answers.unity.com/questions/1100879/push-object-in-opposite-direction-of-collision.html
+                    // calculate force vector
+                    Vector3 force = coll.transform.position - transform.position;
+                    // normalize force vector to get direction only and trim magnitude
+                    force.Normalize();
+                    coll.rigidbody.AddForce(force * ballImpact);
+                    DestroyShot();
+                    playerLogging.AddAccuracy("player");
+                } 
                 break;
             case "Boundary":
                 DestroyShot();
+                playerLogging.AddAccuracy("destroy");
                 break;
             case "Shot":
                 if (collidingObject.GetComponent<Shot>().GetPlayerTeam() != this.playerTeam)
                 {
                     DestroyShot();
-                } else
+                    playerLogging.AddAccuracy("shot");
+                }
+                else
                 {
                     if (shotID > collidingObject.GetComponent<Shot>().GetShotID())
                     {
                         DestroyShot();
+                        playerLogging.AddAccuracy("destroy");
                     }
                 }
                 break;
             case "Ball":
                 // reference: https://answers.unity.com/questions/1100879/push-object-in-opposite-direction-of-collision.html
                 // calculate force vector
-                force = coll.transform.position - transform.position;
+                Vector3 forceBall = coll.transform.position - transform.position;
                 // normalize force vector to get direction only and trim magnitude
-                force.Normalize();
-                coll.rigidbody.AddForce(force * ballImpact);
+                forceBall.Normalize();
+                coll.rigidbody.AddForce(forceBall * ballImpact);
                 collidingObject.GetComponent<Ball>().SetLastHitBy(playerTeam);
                 DestroyShot();
+                playerLogging.AddAccuracy("ball");
                 break;
         }
 
@@ -112,7 +137,7 @@ public class Shot : MonoBehaviour
 
     public void SetPlayerTeam(int i)
     {
-         playerTeam = i;
+        playerTeam = i;
     }
 
     public int GetPlayerTeam()
