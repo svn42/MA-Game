@@ -24,26 +24,26 @@ public class GlobalTimer : MonoBehaviour
     void Start()
     {
         //Für die Spielzeiten
-        startTime = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss-fff");
+        startTime = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
     }
 
     // Update is called once per frame
     void Update()
     {
-        setPlayTime();
-        setTotalTime();
+        SetPlayTime();
+        SetTotalTime();
     }
 
-    public void setEndTime()
+    public void SetEndTime()
     {
-        endTime = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss-fff");
+        endTime = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
     }
 
-    void setPlayTime()
+    void SetPlayTime()
     {
         playTime += Time.deltaTime;
     }
-    void setTotalTime()
+    void SetTotalTime()
     {
         totalTime += Time.unscaledDeltaTime;
     }

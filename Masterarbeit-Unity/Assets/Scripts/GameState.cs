@@ -32,7 +32,6 @@ public class GameState : MonoBehaviour
     private Text middleText;
     public bool startCountdownActivated;    //regelt, ob der Startbildschirm mit dem Countdown angezeigt werden soll
 
-
     public GameObject player1;
     public GameObject player2;
     private Player player1Script;
@@ -40,6 +39,7 @@ public class GameState : MonoBehaviour
 
     private PlayerLogging playerLoggingP1;
     private PlayerLogging playerLoggingP2;
+    public GlobalTimer globalTimer;
 
     private void Awake()
     {
@@ -58,6 +58,7 @@ public class GameState : MonoBehaviour
         greenCheckP1 = pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler1").transform.Find("Spieler1_Check").GetComponent<Image>();
         greenCheckP2 = pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler2").transform.Find("Spieler2_Check").GetComponent<Image>();
 
+        globalTimer = (GlobalTimer)FindObjectOfType(typeof(GlobalTimer));
         playerLoggingP1 = player1.GetComponent<PlayerLogging>();
         playerLoggingP2 = player2.GetComponent<PlayerLogging>();
         player1Script = player1.GetComponent<Player>();
@@ -166,10 +167,7 @@ public class GameState : MonoBehaviour
     {
         if (goalsTeam1 == goalLimit || goalsTeam2 == goalLimit)
         {
-            BuildPauseScreen("end");
-            Time.timeScale = 0;
-            player1Script.CalculateLogData();
-            player2Script.CalculateLogData();
+            EndScene();
         }
         else
         {
@@ -318,5 +316,14 @@ public class GameState : MonoBehaviour
                 middleText.text = "Drücke A zum Fortfahren!";
                 break;
         }
+    }
+
+    public void EndScene()
+    {
+        BuildPauseScreen("end");
+        Time.timeScale = 0;
+        player1Script.CalculateLogData();
+        player2Script.CalculateLogData();
+        globalTimer.SetEndTime();
     }
 }

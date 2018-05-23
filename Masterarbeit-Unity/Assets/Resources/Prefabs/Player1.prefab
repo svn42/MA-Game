@@ -405,7 +405,7 @@ MonoBehaviour:
   exhaustSpawnTime: 0.12
   blockSpawn: {fileID: 114277257188751900}
   shotSpawn: {fileID: 114237265526856248}
-  shotDelay: 0.2
+  shotDelay: 0.25
   shotTimer: 0
   enemyPlayer: {fileID: 0}
   emoteTimer: 0
@@ -477,27 +477,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ab0a314532aa1748b980a0afadb0594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTeam: 0
-  currentZone: 
+  distanceTravelled: 0
   timeCenterZone: 0
   timeOwnZone: 0
   timeOwnGoalZone: 0
   timeOpponentZone: 0
   timeOpponentGoalZone: 0
+  totalShotsFired: 0
   normalShotsFired: 0
   mediumShotsFired: 0
   largeShotsFired: 0
-  totalShotsFired: 0
+  shotsHitBlock: 0
+  shotsHitBall: 0
+  shotsHitPlayer: 0
+  shotsHitEnemyShot: 0
+  shotsDestroyed: 0
+  shotsHitBlockPercent: 0
+  shotsHitBallPercent: 0
+  shotsHitPlayerPercent: 0
+  shotsHitEnemyShotPercent: 0
+  shotsDestroyedPercent: 0
+  totalBlocksPlaced: 0
   blocksInOwnZone: 0
   blocksInOwnGoalZone: 0
   blocksInCenterZone: 0
   blocksInOpponentZone: 0
   blocksInOpponentGoalZone: 0
-  totalBlocksPlaced: 0
   goalsScored: 0
   ownGoalsScored: 0
-  distanceTravelled: 0
+  totalEnemyStunned: 0
+  normalEnemyStunned: 0
+  mediumEnemyStunned: 0
+  largeEnemyStunned: 0
+  enemyStunnedTotalTime: 0
   stunnedByBall: 0
+  totalEmotes: 0
+  emoteNice: 0
+  emoteAngry: 0
+  emoteCry: 0
+  emoteHaha: 0
 --- !u!212 &212022828006754914
 SpriteRenderer:
   m_ObjectHideFlags: 1
