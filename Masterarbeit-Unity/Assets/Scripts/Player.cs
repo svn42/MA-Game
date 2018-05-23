@@ -46,7 +46,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         gameState = (GameState)FindObjectOfType(typeof(GameState));
-
         playerAcronym = "P" + playerTeam;
         CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
         blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
@@ -133,15 +132,6 @@ public class Player : MonoBehaviour
 
     public void CheckInput()
     {
-
-        
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            positionTracker.CalculateWalkedDistance();
-            playerLogging.CalculateTotalBlocks();
-            playerLogging.CalculateTotalShots();
-            playerLogging.CalculateTotalStunsByEnemy();
-        }
 
         //sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
         if ((Mathf.Abs(Input.GetAxis("Horizontal"+playerAcronym)) > 0.2f))
@@ -451,6 +441,14 @@ public class Player : MonoBehaviour
         }
         emoteTimer = 0;
 
+    }
+
+    public void CalculateLogData()
+    {
+        positionTracker.CalculateWalkedDistance();
+        playerLogging.CalculateTotalBlocks();
+        playerLogging.CalculateTotalShots();
+        playerLogging.CalculateTotalStunsByEnemy();
     }
 
 }

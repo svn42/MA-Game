@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class GameState : MonoBehaviour
 {
@@ -15,19 +17,27 @@ public class GameState : MonoBehaviour
     public int goalsTeam2 = 0;
     public Text scoreTeam1;
     public Text scoreTeam2;
-    private bool gamePaused;
+    public bool gamePaused;
 
     public Canvas pauseScreen;
-    public Canvas pauseCountdownScreen;
-    public Image greenCheckP1;
-    public Image greenCheckP2;
+    public Canvas player1Box;
+    public Canvas player2Box;
+    private Image greenCheckP1;
+    private Image greenCheckP2;
+
     private bool player1Ready;
     private bool player2Ready;
     public int depauseCountdown;
-    private Text pauseCountdownText;
+    private Text topText;
+    private Text middleText;
+    public bool startCountdownActivated;    //regelt, ob der Startbildschirm mit dem Countdown angezeigt werden soll
+
 
     public GameObject player1;
     public GameObject player2;
+    private Player player1Script;
+    private Player player2Script;
+
     private PlayerLogging playerLoggingP1;
     private PlayerLogging playerLoggingP2;
 
@@ -40,9 +50,22 @@ public class GameState : MonoBehaviour
     {
         SetGoalCount("Team1");
         SetGoalCount("Team2");
-        pauseCountdownText = (Text)pauseCountdownScreen.transform.Find("TransparentScreen").transform.Find("Countdown").GetComponent<Text>();
+
+        topText = (Text)pauseScreen.transform.Find("TransparentScreen").transform.Find("topText").GetComponent<Text>();
+        middleText = (Text)pauseScreen.transform.Find("TransparentScreen").transform.Find("middleText").GetComponent<Text>();
+        player1Box = (Canvas)pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler1").GetComponent<Canvas>();
+        player2Box = (Canvas)pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler2").GetComponent<Canvas>();
+        greenCheckP1 = (Image)pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler1").transform.Find("Spieler1_Check").GetComponent<Image>();
+        greenCheckP2 = (Image)pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler2").transform.Find("Spieler2_Check").GetComponent<Image>();
+
         playerLoggingP1 = player1.GetComponent<PlayerLogging>();
         playerLoggingP2 = player2.GetComponent<PlayerLogging>();
+        player1Script = player1.GetComponent<Player>();
+        player2Script = player2.GetComponent<Player>();
+        if (startCountdownActivated)
+        {
+            SetGamePaused(true, "start");    //zu Beginn wird das Spiel pausiert 
+        }
     }
 
     // Update is called once per frame
@@ -123,7 +146,6 @@ public class GameState : MonoBehaviour
             }
         }
         CheckGoalLimit();
-        StartCoroutine(GoalFreeze());
     }
 
     //Hiermit kann die Anzeige für die Tore bearbeitet werden
@@ -142,15 +164,16 @@ public class GameState : MonoBehaviour
 
     private void CheckGoalLimit()
     {
-        if (goalsTeam1 == goalLimit)
+        if (goalsTeam1 == goalLimit || goalsTeam2 == goalLimit)
         {
-            Debug.Log("Team 1 wins with " + goalsTeam1 + " - " + goalsTeam2);
+            BuildPauseScreen("end");
             Time.timeScale = 0;
+            player1Script.CalculateLogData();
+            player2Script.CalculateLogData();
         }
-        else if (goalsTeam2 == goalLimit)
+        else
         {
-            Debug.Log("Team 2 wins with " + goalsTeam2 + " - " + goalsTeam1);
-            Time.timeScale = 0;
+            StartCoroutine(GoalFreeze());
         }
     }
 
@@ -160,7 +183,7 @@ public class GameState : MonoBehaviour
         {
             if (!gamePaused)
             {
-                SetGamePaused(true);
+                SetGamePaused(true, "pause");
             }
         }
         //sofern das Spiel pausiert wird
@@ -178,7 +201,7 @@ public class GameState : MonoBehaviour
 
             if (player1Ready && player2Ready)
             {
-                StartCoroutine(StartDepauseCountdown());
+                StartCoroutine(StartDepauseCountdown(depauseCountdown));
             }
         }
     }
@@ -188,18 +211,27 @@ public class GameState : MonoBehaviour
         return gamePaused;
     }
 
-    public void SetGamePaused(bool b)
+    public void SetGamePaused(bool b, string screenType)
     {
         gamePaused = b;
         if (gamePaused)
         {
             Time.timeScale = 0.0001f;
-            pauseScreen.enabled = true;
+            switch (screenType)
+            {
+                case "pause":
+                    BuildPauseScreen("pause");
+                    break;
+                case "start":
+                    BuildPauseScreen("start");
+                    break;
+            }
         }
         else
         {
             Time.timeScale = 1;
             pauseScreen.enabled = false;
+
         }
     }
 
@@ -215,7 +247,6 @@ public class GameState : MonoBehaviour
             player2Ready = b;
             greenCheckP2.enabled = b;
         }
-
     }
 
     IEnumerator GoalFreeze()
@@ -225,20 +256,67 @@ public class GameState : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    IEnumerator StartDepauseCountdown()
+    IEnumerator StartDepauseCountdown(int countdown)
     {
-        pauseScreen.enabled = false;
-        pauseCountdownScreen.enabled = true;
-        for (int i = depauseCountdown; i > 0; i--)
+        BuildPauseScreen("countdown");
+        for (int i = countdown; i > 0; i--)
         {
-            pauseCountdownText.text = i.ToString();
+            topText.text = i.ToString();
             yield return new WaitForSeconds(1 * Time.timeScale);
         }
-        SetGamePaused(false);
+        SetGamePaused(false, "pause");
         SetPlayerReady(false, 1);
         SetPlayerReady(false, 2);
-        pauseCountdownScreen.enabled = false;
-
+        pauseScreen.enabled = false;
     }
 
+    public void BuildPauseScreen(string screenType)
+    {
+        pauseScreen.enabled = true;
+        switch (screenType)
+        {
+            case "pause":
+                player1Box.enabled = true;
+                player2Box.enabled = true;
+                topText.text = "Pause";
+                topText.fontSize = 50;
+                middleText.text = "Drücke A zum Fortsetzen!";
+                break;
+            case "start":
+                player1Box.enabled = true;
+                player2Box.enabled = true;
+                topText.text = "Mach dich bereit für " + SceneManager.GetActiveScene().name + "!";
+                topText.fontSize = 45;
+                middleText.text = "Drücke A zum Starten!";
+                break;
+            case "countdown":
+                player1Box.enabled = false;
+                player2Box.enabled = false;
+                topText.text = "";
+                topText.fontSize = 80;
+                middleText.text = "";
+
+                break;
+            case "end":
+                player1Box.enabled = true;
+                player2Box.enabled = true;
+
+                if (goalsTeam1 > goalsTeam2)
+                {
+                    Debug.Log("Team 1 wins with " + goalsTeam1 + " - " + goalsTeam2);
+                    topText.text = "Spieler 1 gewinnt mit " + goalsTeam1 + " - " + goalsTeam2 + "!";
+                } else if (goalsTeam1 < goalsTeam2)
+                {
+                    Debug.Log("Team 2 wins with " + goalsTeam2 + " - " + goalsTeam1);
+                    topText.text = "Spieler 1 gewinnt mit " + goalsTeam2 + " - " + goalsTeam1 + "!";
+                } else
+                {
+                    Debug.Log("Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 +" unentschieden!");
+                    topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
+                }
+                topText.fontSize = 45;
+                middleText.text = "Drücke A zum Fortfahren!";
+                break;
+        }
+    }
 }
