@@ -6,8 +6,11 @@ public class PlayerLogging : MonoBehaviour
 {
     public int playerTeam;
     private string currentZone;  //aktuelle Zone des Spielers
-
     public float distanceTravelled;
+
+    //goals Scored
+    public int correctGoalsScored;
+    public int ownGoalsScored;
 
     //time per Zone
     public float timeCenterZone;
@@ -15,18 +18,27 @@ public class PlayerLogging : MonoBehaviour
     public float timeOwnGoalZone;
     public float timeOpponentZone;
     public float timeOpponentGoalZone;
+    public float timeCenterZonePercent;
+    public float timeOwnZonePercent;
+    public float timeOwnGoalZonePercent;
+    public float timeOpponentZonePercent;
+    public float timeOpponentGoalZonePercent;
 
     //Shots
-    public int totalShotsFired; 
+    public int totalShotsFired;
     public int normalShotsFired;
     public int mediumShotsFired;
     public int largeShotsFired;
+    public float normalShotsFiredPercent;
+    public float mediumShotsFiredPercent;
+    public float largeShotsFiredPercent;
 
     //Accuracy
-    public int shotsHitBlock;   
-    public int shotsHitBall;   
-    public int shotsHitPlayer;   
-    public int shotsHitEnemyShot;   
+    public int totalObjectsHit;
+    public int shotsHitBlock;
+    public int shotsHitBall;
+    public int shotsHitPlayer;
+    public int shotsHitEnemyShot;
     public int shotsDestroyed;
     public float shotsHitBlockPercent;
     public float shotsHitBallPercent;
@@ -41,17 +53,26 @@ public class PlayerLogging : MonoBehaviour
     public int blocksInCenterZone;
     public int blocksInOpponentZone;
     public int blocksInOpponentGoalZone;
-
-    //goals Scored
-    public int goalsScored;
-    public int ownGoalsScored;
+    public float blocksInOwnZonePercent;
+    public float blocksInOwnGoalZonePercent;
+    public float blocksInCenterZonePercent;
+    public float blocksInOpponentZonePercent;
+    public float blocksInOpponentGoalZonePercent;
 
     //Stun
-    public int totalEnemyStunned;   
-    public int normalEnemyStunned;   
-    public int mediumEnemyStunned;   
-    public int largeEnemyStunned;   
-    public float enemyStunnedTotalTime;   
+    //enemy stunned
+    public int totalEnemyStunned;
+    public int normalEnemyStunned;
+    public int mediumEnemyStunned;
+    public int largeEnemyStunned;
+    public float enemyStunnedTotalTime;
+    //stunned by enemy
+    public int totalStunnedByEnemy;
+    public int normalStunnedByEnemy;
+    public int mediumStunnedByEnemy;
+    public int largeStunnedByEnemy;
+    public float stunnedByEnemyTotalTime;
+
 
     //Stunned by ball
     public int stunnedByBall;
@@ -62,7 +83,12 @@ public class PlayerLogging : MonoBehaviour
     public int emoteAngry;
     public int emoteCry;
     public int emoteHaha;
-    
+    public float emoteNicePercent;
+    public float emoteAngryPercent;
+    public float emoteCryPercent;
+    public float emoteHahaPercent;
+
+
     // Use this for initialization
     void Start()
     {
@@ -136,6 +162,20 @@ public class PlayerLogging : MonoBehaviour
         }
     }
 
+    public void CalculateZonePercentage()
+    {
+
+        float totalZoneTime = timeCenterZone + timeOwnZone + timeOwnGoalZone + timeOpponentZone + timeOpponentGoalZone;
+        if (totalZoneTime > 0)
+        {
+            timeCenterZonePercent = timeCenterZone / totalZoneTime;
+            timeOwnZonePercent = timeOwnZone / totalZoneTime;
+            timeOwnGoalZonePercent = timeOwnGoalZone / totalZoneTime;
+            timeOpponentZonePercent = timeOpponentZone / totalZoneTime;
+            timeOpponentGoalZonePercent = timeOpponentGoalZone / totalZoneTime;
+        }
+    }
+
     public void AddShot(string shotType)
     {
         switch (shotType)
@@ -152,6 +192,17 @@ public class PlayerLogging : MonoBehaviour
         }
         totalShotsFired++;
     }
+
+    public void CalculateShots()
+    {
+        if (totalShotsFired > 0)
+        {
+            normalShotsFiredPercent = (float)normalShotsFired / totalShotsFired;
+            mediumShotsFiredPercent = (float)mediumShotsFired / totalShotsFired;
+            largeShotsFiredPercent = (float)largeShotsFired / totalShotsFired;
+        }
+    }
+
 
     public void AddAccuracy(string action)
     {
@@ -173,17 +224,18 @@ public class PlayerLogging : MonoBehaviour
                 shotsDestroyed++;
                 break;
         }
+        totalObjectsHit++;
     }
 
     public void CalculateAccuracy()
     {
-        if (totalShotsFired > 0)
+        if (totalObjectsHit > 0)
         {
-            shotsHitBlockPercent = (float)shotsHitBlock / totalShotsFired;
-            shotsDestroyedPercent = (float)shotsDestroyed / totalShotsFired;
-            shotsHitBallPercent = (float)shotsHitBall / totalShotsFired;
-            shotsHitEnemyShotPercent = (float)shotsHitEnemyShot / totalShotsFired;
-            shotsHitPlayerPercent = (float)shotsHitPlayer / totalShotsFired;
+            shotsHitBlockPercent = (float)shotsHitBlock / totalObjectsHit;
+            shotsDestroyedPercent = (float)shotsDestroyed / totalObjectsHit;
+            shotsHitBallPercent = (float)shotsHitBall / totalObjectsHit;
+            shotsHitEnemyShotPercent = (float)shotsHitEnemyShot / totalObjectsHit;
+            shotsHitPlayerPercent = (float)shotsHitPlayer / totalObjectsHit;
         }
     }
     public void AddBlock()
@@ -209,6 +261,18 @@ public class PlayerLogging : MonoBehaviour
         totalBlocksPlaced++;
     }
 
+    public void CalculateBlocks()
+    {
+        if (totalBlocksPlaced > 0)
+        {
+            blocksInOwnZonePercent = (float)blocksInOwnZone / totalBlocksPlaced;
+            blocksInOwnGoalZonePercent = (float)blocksInOwnGoalZone / totalBlocksPlaced;
+            blocksInCenterZonePercent = (float)blocksInCenterZone / totalBlocksPlaced;
+            blocksInOpponentZonePercent = (float)blocksInOpponentZone / totalBlocksPlaced;
+            blocksInOpponentGoalZonePercent = (float)blocksInOpponentGoalZone / totalBlocksPlaced;
+        }
+    }
+
     public void AddGoal(string goalType)
     {
         switch (goalType)
@@ -217,7 +281,7 @@ public class PlayerLogging : MonoBehaviour
                 ownGoalsScored++;
                 break;
             case "goal":
-                goalsScored++;
+                correctGoalsScored++;
                 break;
         }
 
@@ -233,7 +297,7 @@ public class PlayerLogging : MonoBehaviour
         stunnedByBall++;
     }
 
-    public void AddStunnedByEnemy(string shotType, float stunDuration)
+    public void AddEnemyStunned(string shotType, float stunDuration)
     {
         switch (shotType)
         {
@@ -250,7 +314,26 @@ public class PlayerLogging : MonoBehaviour
         enemyStunnedTotalTime += stunDuration;
         totalEnemyStunned++;
     }
-    
+
+    public void AddStunnedByEnemy(string shotType, float stunDuration)
+    {
+        switch (shotType)
+        {
+            case "normal":
+                normalStunnedByEnemy++;
+                break;
+            case "medium":
+                mediumStunnedByEnemy++;
+                break;
+            case "large":
+                largeStunnedByEnemy++;
+                break;
+        }
+        stunnedByEnemyTotalTime += stunDuration;
+        totalStunnedByEnemy++;
+    }
+
+
     public void AddEmote(string type)
     {
         switch (type)
@@ -270,5 +353,17 @@ public class PlayerLogging : MonoBehaviour
         }
         totalEmotes++;
     }
+
+    public void CalculateEmotes()
+    {
+        if (totalEmotes > 0)
+        {
+            emoteNicePercent = (float)emoteNice / totalEmotes;
+            emoteAngryPercent = (float)emoteAngry / totalEmotes;
+            emoteCryPercent = (float)emoteCry / totalEmotes;
+            emoteHahaPercent = (float)emoteHaha / totalEmotes;
+        }
+    }
+
 
 }

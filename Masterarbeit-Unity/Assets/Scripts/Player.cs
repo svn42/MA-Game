@@ -132,7 +132,8 @@ public class Player : MonoBehaviour
                 StartCoroutine(StunPlayer(collidingShot.GetStunDuration()));  //und der Spieler für die Zeit "GetStunDuration" gestunnt
                 blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
                 shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
-                playerLoggingEnemy.AddStunnedByEnemy(collidingShot.GetShotType(), collidingShot.GetStunDuration());
+                playerLoggingEnemy.AddEnemyStunned(collidingShot.GetShotType(), collidingShot.GetStunDuration());
+                playerLogging.AddStunnedByEnemy(collidingShot.GetShotType(), collidingShot.GetStunDuration());
             }
         }
 
@@ -443,6 +444,11 @@ public class Player : MonoBehaviour
     {
         positionTracker.CalculateWalkedDistance();
         playerLogging.CalculateAccuracy();
+        playerLogging.CalculateZonePercentage();
+        playerLogging.CalculateShots();
+        playerLogging.CalculateBlocks();
+        playerLogging.CalculateEmotes();
+
     }
 
 }

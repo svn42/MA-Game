@@ -107,8 +107,13 @@ public class Shot : MonoBehaviour
             case "Shot":
                 if (collidingObject.GetComponent<Shot>().GetPlayerTeam() != this.playerTeam)
                 {
-                    if (this.strength <= collidingObject.GetComponent<Shot>().strength)
+                    if (this.strength < collidingObject.GetComponent<Shot>().strength)
                     {
+                        DestroyShot();
+                    }
+                    else if (this.strength == collidingObject.GetComponent<Shot>().strength)
+                    {
+                        playerLogging.AddAccuracy("shot");
                         DestroyShot();
                     }
                     else if (this.strength >= collidingObject.GetComponent<Shot>().strength)
