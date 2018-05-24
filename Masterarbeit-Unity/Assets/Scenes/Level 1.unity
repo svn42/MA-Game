@@ -235,8 +235,9 @@ MonoBehaviour:
   pauseScreen: {fileID: 2070170031}
   player1Box: {fileID: 0}
   player2Box: {fileID: 0}
+  levelEnded: 0
   depauseCountdown: 3
-  startCountdownActivated: 0
+  startCountdownActivated: 1
   player1: {fileID: 1425252146}
   player2: {fileID: 1677116220}
   globalTimer: {fileID: 0}
@@ -281,6 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: 
+  player: {fileID: 0}
 --- !u!1 &55626945
 GameObject:
   m_ObjectHideFlags: 0
