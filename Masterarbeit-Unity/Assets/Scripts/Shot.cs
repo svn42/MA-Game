@@ -93,10 +93,10 @@ public class Shot : MonoBehaviour
                     // normalize force vector to get direction only and trim magnitude
                     force.Normalize();
                     coll.rigidbody.AddForce(force * ballImpact);
-                    if (shotType.Equals("normal"))
-                    {
+             //       if (shotType.Equals("normal"))
+             //       {
                         DestroyShot();
-                    }
+              //      }
                     playerLogging.AddAccuracy("player");
                 } 
                 break;
@@ -130,10 +130,10 @@ public class Shot : MonoBehaviour
                 forceBall.Normalize();
                 coll.rigidbody.AddForce(forceBall * ballImpact);
                 collidingObject.GetComponent<Ball>().SetLastHitBy(playerTeam);
-                if (shotType.Equals("normal"))
-                {
+         //       if (shotType.Equals("normal"))
+         //       {
                     DestroyShot();
-                }
+        //        }
                 playerLogging.AddAccuracy("ball");
                 break;
         }

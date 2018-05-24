@@ -27,6 +27,7 @@ public class GameState : MonoBehaviour
 
     private bool player1Ready;
     private bool player2Ready;
+    public bool levelEnded;
     public int depauseCountdown;
     private Text topText;
     private Text middleText;
@@ -167,7 +168,7 @@ public class GameState : MonoBehaviour
     {
         if (goalsTeam1 == goalLimit || goalsTeam2 == goalLimit)
         {
-            EndScene();
+            SetGamePaused(true, "end");
         }
         else
         {
@@ -187,19 +188,37 @@ public class GameState : MonoBehaviour
         //sofern das Spiel pausiert wird
         if (gamePaused)
         {
-            //überprüfe, ob die einzelnen Spieler bereit sind
-            if (Input.GetButtonUp("ShootP1"))
+            if (!levelEnded)
             {
-                SetPlayerReady(true, 1);
-            }
-            else if (Input.GetButtonUp("ShootP2"))
-            {
-                SetPlayerReady(true, 2);
-            }
+                //überprüfe, ob die einzelnen Spieler bereit sind
+                if (Input.GetButtonUp("ShootP1"))
+                {
+                    SetPlayerReady(true, 1);
+                }
+                else if (Input.GetButtonUp("ShootP2"))
+                {
+                    SetPlayerReady(true, 2);
+                }
 
-            if (player1Ready && player2Ready)
+                if (player1Ready && player2Ready)
+                {
+                    StartCoroutine(StartDepauseCountdown(depauseCountdown));
+                }
+            } else if (levelEnded)
             {
-                StartCoroutine(StartDepauseCountdown(depauseCountdown));
+                //überprüfe, ob die einzelnen Spieler bereit sind
+                if (Input.GetButtonUp("ShootP1"))
+                {
+                    SetPlayerReady(true, 1);
+                }
+                else if (Input.GetButtonUp("ShootP2"))
+                {
+                    SetPlayerReady(true, 2);
+                }
+                if (player1Ready && player2Ready)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
             }
         }
     }
@@ -222,6 +241,9 @@ public class GameState : MonoBehaviour
                     break;
                 case "start":
                     BuildPauseScreen("start");
+                    break;
+                case "end":
+                    EndScene();
                     break;
             }
         }
@@ -320,10 +342,13 @@ public class GameState : MonoBehaviour
 
     public void EndScene()
     {
+        levelEnded = true;
         BuildPauseScreen("end");
-        Time.timeScale = 0;
         player1Script.CalculateLogData();
         player2Script.CalculateLogData();
         globalTimer.SetEndTime();
+
+        ExportData exportData = (ExportData)FindObjectOfType(typeof(ExportData));
+        exportData.ExportAllData();
     }
 }

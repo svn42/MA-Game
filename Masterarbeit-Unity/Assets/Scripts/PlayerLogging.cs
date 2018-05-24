@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerLogging : MonoBehaviour
 {
-    private int playerTeam;
+    public int playerTeam;
     private string currentZone;  //aktuelle Zone des Spielers
 
     public float distanceTravelled;

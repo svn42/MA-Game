@@ -15,22 +15,95 @@ public class ExportData : MonoBehaviour
     public string path;
     private string sceneName;
     private string subjectName;
+    private GlobalTimer globalTimer;
+    PlayerLogging playerLoggingPlayer1;
+    PlayerLogging playerLoggingPlayer2;
+    public GameObject player;
+
 
     void Start()
     {
         sceneName = SceneManager.GetActiveScene().name;
-        path = "ResearchData/csv/";
-        //Erzeugt den Ordner, falls er noch nicht vorhanden
-        if (!Directory.Exists(path))
+        globalTimer = (GlobalTimer)FindObjectOfType(typeof(GlobalTimer));
+
+        GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < playerList.Length; i++)
         {
-            Directory.CreateDirectory(path);
+            if (playerList[i].GetComponent<Player>().playerTeam == 1)
+            {
+                player = playerList[i];
+                playerLoggingPlayer1 = player.GetComponent<PlayerLogging>();
+            }
+            else if (playerList[i].GetComponent<Player>().playerTeam == 2)
+            {
+                player = playerList[i];
+                playerLoggingPlayer2 = player.GetComponent<PlayerLogging>();
+            }
         }
     }
     void Update()
     {
 
     }
+
+    public void ExportAllData()
+    {
+        //Erzeugt den Ordner, falls er noch nicht vorhanden
+        if (!Directory.Exists("ResearchData/csv/"))
+        {
+            Directory.CreateDirectory("ResearchData/csv/");
+        }
+        path = "ResearchData/csv/testData"+sceneName+".csv";
+
+        //Falls noch keine .csv-Datei vorhanden ist
+        if (!File.Exists(path))
+        {
+            //Erzeuge neue .csv-Datei und 
+            using (StreamWriter newFile = File.CreateText(path))
+            {
+                //Schreibe alle Spaltennamen in erste Zeile
+                newFile.Write("VP;");
+                newFile.Write("Szene;");
+                newFile.Write(sceneName + "_Startzeit;");
+                newFile.Write(sceneName + "_Endzeit;");
+                newFile.Write(sceneName + "_PlayTime;");
+                newFile.Write(sceneName + "_TotalTime;");
+                newFile.Write(sceneName + "_ZurueckgelegteDistanz;");
+                newFile.Write(sceneName + "_Zeit_in_eigener_Tor_Zone;");
+                newFile.Write(sceneName + "_Zeit_in_eigener_Zone;");
+                newFile.Write(sceneName + "_Zeit_in_Mittelzone;");
+                newFile.Write(sceneName + "_Zeit_in_gegnerischer_Zone;");
+                newFile.Write(sceneName + "_Zeit_in_gegnerischer_Tor_Zone;");
+            }
+        }
+        //Schreibt Daten in die .csv-Datei
+        using (StreamWriter file = File.AppendText(path))
+        {
+            WritePlayerLoggingData(file, playerLoggingPlayer1);
+            WritePlayerLoggingData(file, playerLoggingPlayer2);
+        }
+
+    }
+
+    public void WritePlayerLoggingData(StreamWriter file, PlayerLogging pL)
+    {
+        file.Write("\n");
+        file.Write(pL.playerTeam + ";");
+        file.Write(sceneName + ";");
+        file.Write(globalTimer.startTime + ";");
+        file.Write(globalTimer.endTime + ";");
+        file.Write(globalTimer.playTime + ";");
+        file.Write(globalTimer.totalTime + ";");
+        file.Write(pL.distanceTravelled + ";");
+        //Zonen
+        file.Write(pL.timeOwnGoalZone + ";");
+        file.Write(pL.timeOwnZone + ";");
+        file.Write(pL.timeCenterZone + ";");
+        file.Write(pL.timeOpponentZone + ";");
+        file.Write(pL.timeOpponentGoalZone + ";");
+    }
 }
+
 
 /*
 public string path;

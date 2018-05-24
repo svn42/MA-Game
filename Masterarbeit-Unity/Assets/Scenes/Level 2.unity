@@ -602,7 +602,7 @@ Transform:
   m_Children:
   - {fileID: 1457040196}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &258564274
 GameObject:
@@ -1034,7 +1034,7 @@ Transform:
   m_Children:
   - {fileID: 631401501}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &497067096
 Prefab:
@@ -2171,7 +2171,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4475890432828630, guid: 4a464419b3763fe4ebd5f165027b1af9, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114027812939503456, guid: 4a464419b3763fe4ebd5f165027b1af9,
         type: 2}
@@ -2835,8 +2835,9 @@ MonoBehaviour:
   pauseScreen: {fileID: 2070170031}
   player1Box: {fileID: 1643028857}
   player2Box: {fileID: 879092684}
+  levelEnded: 0
   depauseCountdown: 3
-  startCountdownActivated: 0
+  startCountdownActivated: 1
   player1: {fileID: 795578152}
   player2: {fileID: 645109564}
   globalTimer: {fileID: 0}
