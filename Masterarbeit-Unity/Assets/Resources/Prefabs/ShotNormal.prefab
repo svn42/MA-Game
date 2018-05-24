@@ -62,7 +62,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!60 &60164384307622140
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -106,6 +106,8 @@ MonoBehaviour:
   strength: 1
   ballImpact: 250
   stunDuration: 0.2
+  player: {fileID: 0}
+  playerLogging: {fileID: 0}
 --- !u!212 &212389046323251184
 SpriteRenderer:
   m_ObjectHideFlags: 1

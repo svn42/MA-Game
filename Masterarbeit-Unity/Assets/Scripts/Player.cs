@@ -38,9 +38,12 @@ public class Player : MonoBehaviour
     private GameState gameState;
     private Color teamColor;    //Die Farbe des Spielers, die anhand der Teamzugehörigkeit ermittelt wird
 
+    public GameObject speechBubble;
+    private SpriteRenderer speechbubbleRenderer;
+    private SpriteRenderer emojiRenderer;
     public float emoteTimer; 
     public float emoteDelay;
-
+    public float emoteDisplayTime;
 
     // Use this for initialization
     void Start()
@@ -50,7 +53,14 @@ public class Player : MonoBehaviour
         CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
         blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
         shotSpawn.GetComponent<ShotSpawner>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
+
+        //Emotes
         emoteTimer = emoteDelay; //sorgt dafür, dass sofor ein Emote benutzt werden kann
+        speechbubbleRenderer = speechBubble.GetComponent<SpriteRenderer>();
+        emojiRenderer = speechBubble.transform.Find("Emoji").GetComponent<SpriteRenderer>();
+        speechbubbleRenderer.enabled = false;
+        emojiRenderer.enabled = false;
+
 
         //Logging
         playerLogging = this.gameObject.GetComponent<PlayerLogging>();  //der PlayerLogger wird verknüpft
@@ -59,8 +69,6 @@ public class Player : MonoBehaviour
 
         positionTracker = gameObject.GetComponent<PositionTracker>();
         positionTracker.StartTracking(); //das Tracken der Position wird gestartet
-
-
     }
 
     // Update is called once per frame
@@ -397,7 +405,7 @@ public class Player : MonoBehaviour
     //Methode fürs Benutzen der Emotes
     public void CastEmote(string type)
     {
-        if (playerTeam == 1) {
+        
             switch (type)
             {
                 case ("nice"): Debug.Log("Player "+playerTeam+": Nice!");
@@ -416,31 +424,19 @@ public class Player : MonoBehaviour
                     //spawn UI an Position für Player1
                     break;
             }
-        } else if (playerTeam == 2)
-        {
-            switch (type)
-            {
-                case ("nice"):
-                    Debug.Log("Player " + playerTeam + ": Nice!");
-                    //spawn UI an Position für Player2
-                    break;
-                case ("haha"):
-                    Debug.Log("Player " + playerTeam + ": Haha!");
-                    //spawn UI an Position für Player2
-                    break;
-                case ("cry"):
-                    Debug.Log("Player " + playerTeam + ": Oh nein");
-                    //spawn UI an Position für Player2
-                    break;
-                case ("angry"):
-                    Debug.Log("Player " + playerTeam + ": Argh!");
-                    //spawn UI an Position für Player2
-                    break;
-            }
-        }
+        StartCoroutine(DisplayEmote(type));
         playerLogging.AddEmote(type);   //dem Logging wird die Art des Emotes mitgeteilt    
         emoteTimer = 0;
+    }
 
+    IEnumerator DisplayEmote(string type)
+    {
+        emojiRenderer.sprite = Resources.Load<Sprite>("Textures/Emojis/"+type);
+        speechbubbleRenderer.enabled = true;
+        emojiRenderer.enabled = true;
+        yield return new WaitForSeconds(emoteDisplayTime);
+        speechbubbleRenderer.enabled = false;
+        emojiRenderer.enabled = false;
     }
 
     public void CalculateLogData()

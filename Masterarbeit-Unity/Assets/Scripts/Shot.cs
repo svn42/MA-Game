@@ -15,6 +15,7 @@ public class Shot : MonoBehaviour
     public float stunDuration;
     public GameObject player;
     public PlayerLogging playerLogging;
+    private TrailRenderer trailRenderer;
 
 
     // Use this for initialization
@@ -42,6 +43,12 @@ public class Shot : MonoBehaviour
                 player = playerList[i];
                 playerLogging = player.GetComponent<PlayerLogging>();
             }
+        }
+
+        if (shotType.Equals("medium") || shotType.Equals("large"))
+        {
+            trailRenderer = gameObject.GetComponent<TrailRenderer>();
+            SetupTrailRenderer();
         }
 
     }
@@ -86,7 +93,10 @@ public class Shot : MonoBehaviour
                     // normalize force vector to get direction only and trim magnitude
                     force.Normalize();
                     coll.rigidbody.AddForce(force * ballImpact);
-                    DestroyShot();
+                    if (shotType.Equals("normal"))
+                    {
+                        DestroyShot();
+                    }
                     playerLogging.AddAccuracy("player");
                 } 
                 break;
@@ -97,8 +107,11 @@ public class Shot : MonoBehaviour
             case "Shot":
                 if (collidingObject.GetComponent<Shot>().GetPlayerTeam() != this.playerTeam)
                 {
-                    DestroyShot();
-                    playerLogging.AddAccuracy("shot");
+                    if (this.strength <= collidingObject.GetComponent<Shot>().strength)
+                    {
+                        DestroyShot();
+                        playerLogging.AddAccuracy("shot");
+                    }
                 }
                 else
                 {
@@ -117,12 +130,41 @@ public class Shot : MonoBehaviour
                 forceBall.Normalize();
                 coll.rigidbody.AddForce(forceBall * ballImpact);
                 collidingObject.GetComponent<Ball>().SetLastHitBy(playerTeam);
-                DestroyShot();
+                if (shotType.Equals("normal"))
+                {
+                    DestroyShot();
+                }
                 playerLogging.AddAccuracy("ball");
                 break;
         }
 
     }
+
+    public void SetupTrailRenderer()
+    {
+        if (playerTeam == 1)
+        {
+            if (shotType.Equals("large"))
+            {
+                trailRenderer.material = Resources.Load<Material>("Materials/TrailRendererLargeShotRed");
+            } else if (shotType.Equals("medium"))
+            {
+                trailRenderer.material = Resources.Load<Material>("Materials/TrailRendererMediumShotRed");
+            }
+        }
+        else if (playerTeam == 2)
+        {
+            if (shotType.Equals("large"))
+            {
+                trailRenderer.material = Resources.Load<Material>("Materials/TrailRendererLargeShotBlue");
+            }
+            else if (shotType.Equals("medium"))
+            {
+                trailRenderer.material = Resources.Load<Material>("Materials/TrailRendererMediumShotBlue");
+            }
+        }
+    }
+
 
     public void DestroyShot()
     {

@@ -33,7 +33,7 @@ public class Block : MonoBehaviour
         health -= damage;
         if (health == 2)
         {
-            sr.sprite = (Sprite)Resources.Load<Sprite>("Textures/Block_2Health");
+            sr.sprite = Resources.Load<Sprite>("Textures/Block_2Health");
         }
         else if (health == 1)
         {

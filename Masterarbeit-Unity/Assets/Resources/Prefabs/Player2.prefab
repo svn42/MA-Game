@@ -397,8 +397,10 @@ MonoBehaviour:
   shotDelay: 0.25
   shotTimer: 0
   enemyPlayer: {fileID: 0}
+  speechBubble: {fileID: 0}
   emoteTimer: 0
   emoteDelay: 3
+  emoteDisplayTime: 3
 --- !u!114 &114138379414981514
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -509,7 +511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5588fbcfdfdda49ab998413c1be042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnTimer: 3
+  spawnTimer: 2
   blockChargeTime: 0
   blockPrefab: {fileID: 1741391209202420, guid: 25ef676e375f016479ecc966bd40cc14,
     type: 2}

@@ -107,12 +107,12 @@ public class BlockSpawner : MonoBehaviour
             }
         }
         if (blockChargeTime >= spawnTimer) {
-            blockChargeTime = 3;
+            blockChargeTime = spawnTimer;
             SetSpawnerSize(blockChargeTime);
 
             if (spawnable)   //wenn das Ziel erreicht wurde und spawenbar ist
             {
-                blockChargeTime = 3;
+                blockChargeTime = spawnTimer;
                 SetSpawnerSize(blockChargeTime);
 
                 //TODO: An die Farbe des Spielers anpassen
