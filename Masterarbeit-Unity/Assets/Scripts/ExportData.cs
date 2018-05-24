@@ -74,6 +74,61 @@ public class ExportData : MonoBehaviour
                 newFile.Write(sceneName + "_Zeit_in_Mittelzone;");
                 newFile.Write(sceneName + "_Zeit_in_gegnerischer_Zone;");
                 newFile.Write(sceneName + "_Zeit_in_gegnerischer_Tor_Zone;");
+                //shots
+                newFile.Write(sceneName + "_Gesamtanzahl_an_Schuessen;");
+                newFile.Write(sceneName + "_Normale_Schuesse;");
+                newFile.Write(sceneName + "_Mittlere_Schuesse;");
+                newFile.Write(sceneName + "_Grosse_Schuesse;");
+                //accuracy
+                newFile.Write(sceneName + "_Bloecke_getroffen;");
+                newFile.Write(sceneName + "_Baelle_getroffen;");
+                newFile.Write(sceneName + "_Gegner_getroffen;");
+                newFile.Write(sceneName + "_gegnerischer_Schuss_zerstoert;");   //wann aufgerufen?
+                newFile.Write(sceneName + "_ohne_Ziel_zerstoert;");
+                /*    
+                
+
+    //Accuracy
+    public int shotsHitBlock;
+    public int shotsHitBall;
+    public int shotsHitPlayer;
+    public int shotsHitEnemyShot;
+    public int shotsDestroyed;
+    public float shotsHitBlockPercent;
+    public float shotsHitBallPercent;
+    public float shotsHitPlayerPercent;
+    public float shotsHitEnemyShotPercent;
+    public float shotsDestroyedPercent;
+
+    //Blocks
+    public int totalBlocksPlaced;
+    public int blocksInOwnZone;
+    public int blocksInOwnGoalZone;
+    public int blocksInCenterZone;
+    public int blocksInOpponentZone;
+    public int blocksInOpponentGoalZone;
+
+    //goals Scored
+    public int goalsScored;
+    public int ownGoalsScored;
+
+    //Stun
+    public int totalEnemyStunned;
+    public int normalEnemyStunned;
+    public int mediumEnemyStunned;
+    public int largeEnemyStunned;
+    public float enemyStunnedTotalTime;
+
+    //Stunned by ball
+    public int stunnedByBall;
+
+    //Emotes
+    public int totalEmotes;
+    public int emoteNice;
+    public int emoteAngry;
+    public int emoteCry;
+    public int emoteHaha;
+*/
             }
         }
         //Schreibt Daten in die .csv-Datei
@@ -101,7 +156,13 @@ public class ExportData : MonoBehaviour
         file.Write(pL.timeCenterZone + ";");
         file.Write(pL.timeOpponentZone + ";");
         file.Write(pL.timeOpponentGoalZone + ";");
-    }
+        //Schüsse
+        file.Write(pL.totalShotsFired + ";");
+        file.Write(pL.normalShotsFired + ";");
+        file.Write(pL.mediumShotsFired + ";");
+        file.Write(pL.largeShotsFired + ";");
+
+}
 }
 
 

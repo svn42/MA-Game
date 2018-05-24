@@ -110,6 +110,9 @@ public class Shot : MonoBehaviour
                     if (this.strength <= collidingObject.GetComponent<Shot>().strength)
                     {
                         DestroyShot();
+                    }
+                    else if (this.strength >= collidingObject.GetComponent<Shot>().strength)
+                    {
                         playerLogging.AddAccuracy("shot");
                     }
                 }
