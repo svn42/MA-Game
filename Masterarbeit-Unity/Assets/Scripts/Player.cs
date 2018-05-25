@@ -449,6 +449,7 @@ public class Player : MonoBehaviour
         playerLogging.CalculateBlocks();
         playerLogging.CalculateEmotes();
         playerLogging.CalculateResultTimePercentage();
+        playerLogging.CalculateResultZonePercentage();
     }
 
 }
