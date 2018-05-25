@@ -121,30 +121,34 @@ public class GameState : MonoBehaviour
         if (goal.Equals("Goal1"))
         {
             goalsTeam2++;
+            playerLoggingP1.AdjustResult("goalConceded");
+            playerLoggingP2.AdjustResult("goalScored");
             SetGoalCount("Team2");
             //Logging
             if (scoredByTeamNr == 1)
             {
-                playerLoggingP1.AddGoal("owngoal");
+                playerLoggingP1.AddGoalType("owngoal");
             }
             else if (scoredByTeamNr == 2)
             {
-                playerLoggingP2.AddGoal("goal");
+                playerLoggingP2.AddGoalType("goal");
             }
         }
         else if (goal.Equals("Goal2"))
         {
             goalsTeam1++;
+            playerLoggingP2.AdjustResult("goalConceded");
+            playerLoggingP1.AdjustResult("goalScored");
             SetGoalCount("Team1");
 
             //Logging
             if (scoredByTeamNr == 1)
             {
-                playerLoggingP1.AddGoal("goal");
+                playerLoggingP1.AddGoalType("goal");
             }
             else if (scoredByTeamNr == 2)
             {
-                playerLoggingP2.AddGoal("owngoal");
+                playerLoggingP2.AddGoalType("owngoal");
             }
         }
         CheckGoalLimit();
@@ -344,10 +348,9 @@ public class GameState : MonoBehaviour
     {
         levelEnded = true;
         BuildPauseScreen("end");
+        globalTimer.SetEndTime();
         player1Script.CalculateLogData();
         player2Script.CalculateLogData();
-        globalTimer.SetEndTime();
-
         ExportData exportData = (ExportData)FindObjectOfType(typeof(ExportData));
         exportData.ExportAllData();
     }

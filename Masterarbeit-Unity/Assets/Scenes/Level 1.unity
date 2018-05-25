@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumBalls: 3
-  goalLimit: 2
+  goalLimit: 1
   goalFreezeTime: 2
   goalsTeam1: 0
   goalsTeam2: 0

@@ -6,11 +6,27 @@ public class PlayerLogging : MonoBehaviour
 {
     public int playerTeam;
     private string currentZone;  //aktuelle Zone des Spielers
+    public string currentResult;
     public float distanceTravelled;
 
+    //result
+    public string finalResult;
+    public int goalsScored;
+    public int goalsConceded;
     //goals Scored
     public int correctGoalsScored;
     public int ownGoalsScored;
+
+    //time per result
+    public float timeInLead;
+    public float timeTied;
+    public float timeInDeficit;
+    public float timeInLeadPercent;
+    public float timeTiedPercent;
+    public float timeInDeficitPercent;
+
+    //alle variablen je nach result. 
+    //in schleife in export?
 
     //time per Zone
     public float timeCenterZone;
@@ -96,14 +112,64 @@ public class PlayerLogging : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-
+        CheckResult();
+        AddResultTime(currentResult);
     }
 
     public void SetPlayerTeam(int team)
     {
         playerTeam = team;
+    }
+
+    private string CheckResult()
+    {
+        if (goalsScored > goalsConceded)
+        {
+            currentResult = "in_lead";
+            finalResult = "Sieg";
+        }
+        else if (goalsScored == goalsConceded)
+        {
+            currentResult = "in_tie";
+            finalResult = "Remis";
+        }
+        else if (goalsScored < goalsConceded)
+        {
+            currentResult = "in_deficit";
+            finalResult = "Niederlage";
+        }
+        return currentResult;
+    }
+
+
+    private void AddResultTime(string result)
+    {
+        switch (result)
+        {
+            case "in_lead":
+                timeInLead += Time.deltaTime;
+                break;
+            case "in_tie":
+                timeTied += Time.deltaTime;
+                break;
+            case "in_deficit":
+                timeInDeficit += Time.deltaTime;
+                break;
+        }
+    }
+
+    public void CalculateResultTimePercentage()
+    {
+
+        float totalTimeResult = timeInLead + timeTied + timeInDeficit;
+        if (totalTimeResult > 0)
+        {
+            timeInLeadPercent = timeInLead / totalTimeResult;
+            timeTiedPercent = timeTied / totalTimeResult;
+            timeInDeficitPercent = timeInDeficit / totalTimeResult;
+        }
     }
 
     public void AddZoneTime(string zone)
@@ -203,7 +269,6 @@ public class PlayerLogging : MonoBehaviour
         }
     }
 
-
     public void AddAccuracy(string action)
     {
         switch (action)
@@ -238,6 +303,7 @@ public class PlayerLogging : MonoBehaviour
             shotsHitPlayerPercent = (float)shotsHitPlayer / totalObjectsHit;
         }
     }
+
     public void AddBlock()
     {
         switch (currentZone)
@@ -273,7 +339,7 @@ public class PlayerLogging : MonoBehaviour
         }
     }
 
-    public void AddGoal(string goalType)
+    public void AddGoalType(string goalType)
     {
         switch (goalType)
         {
@@ -285,6 +351,19 @@ public class PlayerLogging : MonoBehaviour
                 break;
         }
 
+    }
+
+    public void AdjustResult(string type)
+    {
+        switch (type)
+        {
+            case "goalScored":
+                goalsScored++;
+                break;
+            case "goalConceded":
+                goalsConceded++;
+                break;
+        }
     }
 
     public void AddWalkedDistance(float walkedDistance)
@@ -332,7 +411,6 @@ public class PlayerLogging : MonoBehaviour
         stunnedByEnemyTotalTime += stunDuration;
         totalStunnedByEnemy++;
     }
-
 
     public void AddEmote(string type)
     {

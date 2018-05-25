@@ -70,11 +70,22 @@ public class ExportData : MonoBehaviour
                 newFile.Write(sceneName + "_TotalTime;");
                 newFile.Write(sceneName + "_ZurueckgelegteDistanz;");
                 //Resultat
-                //Tore geschossen
-                //Tore kassiert
+                newFile.Write(sceneName + "Resultat;");
+                newFile.Write(sceneName + "_Tore_erzielt;");
+                newFile.Write(sceneName + "_Tore_kassiert;");
                 //Art der Tore
                 newFile.Write(sceneName + "_Richtige_Tore;");
                 newFile.Write(sceneName + "_Eigentore;");
+                //Zeiten
+                //time per result
+                newFile.Write(sceneName + "_Zeit_im_Vorsprung;");
+                newFile.Write(sceneName + "_Zeit_im_Remis;");
+                newFile.Write(sceneName + "_Zeit_im_Rueckstand;");
+                //time per result percent
+                newFile.Write(sceneName + "_Anteil_Zeit_im_Vorsprung;");
+                newFile.Write(sceneName + "_Anteil_Zeit_im_Remis;");
+                newFile.Write(sceneName + "_Anteil_Zeit_im_Rueckstand;");
+
                 //ZoneTime
                 newFile.Write(sceneName + "_Zeit_in_eigener_Tor_Zone;");
                 newFile.Write(sceneName + "_Zeit_in_eigener_Zone;");
@@ -147,12 +158,8 @@ public class ExportData : MonoBehaviour
                 newFile.Write(sceneName + "_Anteil_Emote_Angry;");
                 newFile.Write(sceneName + "_Anteil_Emote_Cry;");
                 newFile.Write(sceneName + "_Anteil_Emote_Haha;");
-
                 /*    
-
-
-
-
+                
             */
             }
         }
@@ -168,7 +175,7 @@ public class ExportData : MonoBehaviour
     public void WritePlayerLoggingData(StreamWriter file, PlayerLogging pL)
     {
         file.Write("\n");
-        file.Write(pL.playerTeam + ";");
+        file.Write(pL.playerTeam + ";");    
         file.Write(sceneName + ";");
         file.Write(globalTimer.startTime + ";");
         file.Write(globalTimer.endTime + ";");
@@ -176,12 +183,22 @@ public class ExportData : MonoBehaviour
         file.Write(globalTimer.totalTime + ";");
         file.Write(pL.distanceTravelled + ";");
         //Resultat
-        //Tore geschossen
-        //Tore kassiert
+        file.Write(pL.finalResult + ";");
+        file.Write(pL.goalsScored + ";");
+        file.Write(pL.goalsConceded + ";");
         //Art der Tore
         file.Write(pL.correctGoalsScored + ";");
         file.Write(pL.ownGoalsScored + ";");
-        //Zonen
+        //Zeit
+        //time per result
+        file.Write(pL.timeInLead + ";");
+        file.Write(pL.timeTied + ";");
+        file.Write(pL.timeInDeficit + ";");
+        //time per result percent
+        file.Write(pL.timeInLeadPercent + ";");
+        file.Write(pL.timeTiedPercent + ";");
+        file.Write(pL.timeInDeficitPercent + ";");
+        //Zonetime
         file.Write(pL.timeOwnGoalZone + ";");
         file.Write(pL.timeOwnZone + ";");
         file.Write(pL.timeCenterZone + ";");
