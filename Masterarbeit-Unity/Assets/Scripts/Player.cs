@@ -443,13 +443,13 @@ public class Player : MonoBehaviour
     public void CalculateLogData()
     {
         positionTracker.CalculateWalkedDistance();
-        playerLogging.CalculateAccuracy();
-        playerLogging.CalculateZonePercentage();
-        playerLogging.CalculateShots();
-        playerLogging.CalculateBlocks();
-        playerLogging.CalculateEmotes();
-        playerLogging.CalculateResultTimePercentage();
-        playerLogging.CalculateResultZonePercentage();
+        //playerLogging.CalculateAccuracy();
+        //playerLogging.CalculateZonePercentage();
+        //playerLogging.CalculateShots();
+        //playerLogging.CalculateBlocks();
+        //playerLogging.CalculateEmotes();
+        //playerLogging.CalculateResultTimePercentage();
+        //playerLogging.CalculateResultZonePercentage();
     }
 
 }

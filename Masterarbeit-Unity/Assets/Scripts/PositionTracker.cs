@@ -17,8 +17,21 @@ public class PositionTracker : MonoBehaviour
     //Bestimmt wie oft die Position des Spielers gespeichert werden soll.
     public float trackingIntervall;
     public List<Vector3> positionList;
+    public List<Vector3> positionListInLead;
+    public List<Vector3> positionListInTie;
+    public List<Vector3> positionListInDeficit;
+
     public List<Vector3> positionListWithoutDuplicates;
+    public List<Vector3> positionListWithoutDuplicatesInLead;
+    public List<Vector3> positionListWithoutDuplicatesInTie;
+    public List<Vector3> positionListWithoutDuplicatesInDeficit;
+
     private float walkedDistance;
+    private float walkedDistanceInLead;
+    private float walkedDistanceInTie;
+    private float walkedDistanceInDeficit;
+
+    private string currentResult;
 
     // Use this for initialization
     void Start()
