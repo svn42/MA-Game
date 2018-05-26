@@ -98,6 +98,48 @@ public class ExportData : MonoBehaviour
                 newFile.Write(sceneName + "_Anteil_Zeit_in_Mittelzone;");
                 newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Zone;");
                 newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Tor_Zone;");
+
+                //time per zone per result
+
+                newFile.Write(sceneName + "_Zeit_in_eigener_Tor_Zone_im_Vorsprung;");
+                newFile.Write(sceneName + "_Zeit_in_eigener_Tor_Zone_im_Remis;");
+                newFile.Write(sceneName + "_Zeit_in_eigener_Tor_Zone_im_Rueckstand;");
+
+                newFile.Write(sceneName + "_Zeit_in_eigener_Zone_im_Vorsprung;");
+                newFile.Write(sceneName + "_Zeit_in_eigener_Zone_im_Remis;");
+                newFile.Write(sceneName + "_Zeit_in_eigener_Zone_im_Rueckstand;");
+
+                newFile.Write(sceneName + "_Zeit_in_Mittelzone_im_Vorsprung;");
+                newFile.Write(sceneName + "_Zeit_in_Mittelzone_im_Remis;");
+                newFile.Write(sceneName + "_Zeit_in_Mittelzone_im_Rueckstand;");
+
+                newFile.Write(sceneName + "_Zeit_in_gegnerischer_Zone_im_Vorsprung;");
+                newFile.Write(sceneName + "_Zeit_in_gegnerischer_Zone_im_Remis;");
+                newFile.Write(sceneName + "_Zeit_in_gegnerischer_Zone_im_Rueckstand;");
+
+                newFile.Write(sceneName + "_Zeit_in_gegnerischer_Tor_Zone_im_Vorsprung;");
+                newFile.Write(sceneName + "_Zeit_in_gegnerischer_Tor_Zone_im_Remis;");
+                newFile.Write(sceneName + "_Zeit_in_gegnerischer_Tor_Zone_im_Rueckstand;");
+
+                //time per zone per result Percent
+                newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Tor_Zone_im_Vorsprung;");
+                newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Zone_im_Vorsprung;");
+                newFile.Write(sceneName + "_Anteil_Zeit_in_Mittelzone_im_Vorsprung;");
+                newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Zone_im_Vorsprung;");
+                newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Tor_Zone_im_Vorsprung;");
+
+                newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Tor_Zone_im_Remis;");
+                newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Zone_im_Remis;");
+                newFile.Write(sceneName + "_Anteil_Zeit_in_Mittelzone_im_Remis;");
+                newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Zone_im_Remis;");
+                newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Tor_Zone_im_Remis;");
+
+                newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Tor_Zone_im_Rueckstand;");
+                newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Zone_im_Rueckstand;");
+                newFile.Write(sceneName + "_Anteil_Zeit_in_Mittelzone_im_Rueckstand;");
+                newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Zone_im_Rueckstand;");
+                newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Tor_Zone_im_Rueckstand;");
+
                 //shots
                 newFile.Write(sceneName + "_Gesamtanzahl_an_Schuessen;");
                 newFile.Write(sceneName + "_Normale_Schuesse;");
@@ -175,7 +217,7 @@ public class ExportData : MonoBehaviour
     public void WritePlayerLoggingData(StreamWriter file, PlayerLogging pL)
     {
         file.Write("\n");
-        file.Write(pL.playerTeam + ";");    
+        file.Write(pL.playerTeam + ";");
         file.Write(sceneName + ";");
         file.Write(globalTimer.startTime + ";");
         file.Write(globalTimer.endTime + ";");
@@ -210,6 +252,45 @@ public class ExportData : MonoBehaviour
         file.Write(pL.timeCenterZonePercent + ";");
         file.Write(pL.timeOpponentZonePercent + ";");
         file.Write(pL.timeOpponentGoalZonePercent + ";");
+        //time per zone per result
+        file.Write(pL.timeOwnGoalZoneInLead + ";");
+        file.Write(pL.timeOwnGoalZoneInTie + ";");
+        file.Write(pL.timeOwnGoalZoneInDeficit + ";");
+
+        file.Write(pL.timeOwnZoneInLead + ";");
+        file.Write(pL.timeOwnZoneInTie + ";");
+        file.Write(pL.timeOwnZoneInDeficit + ";");
+
+        file.Write(pL.timeCenterZoneInLead + ";");
+        file.Write(pL.timeCenterZoneInTie + ";");
+        file.Write(pL.timeCenterZoneInDeficit + ";");
+
+        file.Write(pL.timeOpponentZoneInLead + ";");
+        file.Write(pL.timeOpponentZoneInTie + ";");
+        file.Write(pL.timeOpponentZoneInDeficit + ";");
+
+        file.Write(pL.timeOpponentGoalZoneInLead + ";");
+        file.Write(pL.timeOpponentGoalZoneInTie + ";");
+        file.Write(pL.timeOpponentGoalZoneInDeficit + ";");
+        //time per zone per result Percent
+        file.Write(pL.timeOwnGoalZoneInLeadPercent + ";");
+        file.Write(pL.timeOwnZoneInLeadPercent + ";");
+        file.Write(pL.timeCenterZoneInLeadPercent + ";");
+        file.Write(pL.timeOpponentZoneInLeadPercent + ";");
+        file.Write(pL.timeOpponentGoalZoneInLeadPercent + ";");
+
+        file.Write(pL.timeOwnGoalZoneInTiePercent + ";");
+        file.Write(pL.timeOwnZoneInTiePercent + ";");
+        file.Write(pL.timeCenterZoneInTiePercent + ";");
+        file.Write(pL.timeOpponentZoneInTiePercent + ";");
+        file.Write(pL.timeOpponentGoalZoneInTiePercent + ";");
+
+        file.Write(pL.timeOwnGoalZoneInDeficitPercent + ";");
+        file.Write(pL.timeOwnZoneInDeficitPercent + ";");
+        file.Write(pL.timeCenterZoneInDeficitPercent + ";");
+        file.Write(pL.timeOpponentZoneInDeficitPercent + ";");
+        file.Write(pL.timeOpponentGoalZoneInDeficitPercent + ";");
+        
         //Schüsse
         file.Write(pL.totalShotsFired + ";");
         file.Write(pL.normalShotsFired + ";");
