@@ -14,6 +14,7 @@ public class ExportData : MonoBehaviour
 {
     public string path;
     private string sceneName;
+    private string sceneNameAbbreviation;
     private string subjectName;
     private GlobalTimer globalTimer;
     PlayerLogging playerLoggingPlayer1;
@@ -24,6 +25,19 @@ public class ExportData : MonoBehaviour
     void Start()
     {
         sceneName = SceneManager.GetActiveScene().name;
+
+        switch (sceneName) {
+            case "Level 1": 
+            sceneNameAbbreviation = "L1";
+                break;
+            case "Level 2":
+                sceneNameAbbreviation = "L2";
+                break;
+            case "Level 3":
+                sceneNameAbbreviation = "L3";
+                break;
+        }
+
         globalTimer = (GlobalTimer)FindObjectOfType(typeof(GlobalTimer));
 
         GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
@@ -64,269 +78,269 @@ public class ExportData : MonoBehaviour
                 //Schreibe alle Spaltennamen in erste Zeile
                 newFile.Write("VP;");
                 newFile.Write("Szene;");
-                newFile.Write(sceneName + "_Startzeit;");
-                newFile.Write(sceneName + "_Endzeit;");
+                newFile.Write(sceneNameAbbreviation + "_Startzeit;");
+                newFile.Write(sceneNameAbbreviation + "_Endzeit;");
                 //distance
-                newFile.Write(sceneName + "_Totale_Bewegung;");
-                newFile.Write(sceneName + "_Totale_Bewegung_Fuehrung;");
-                newFile.Write(sceneName + "_Totale_Bewegung_Remis;");
-                newFile.Write(sceneName + "_Totale_Bewegung_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Totale_Bewegung;");
+                newFile.Write(sceneNameAbbreviation + "_Totale_Bewegung_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Totale_Bewegung_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Totale_Bewegung_Rueckstand;");
 
                 //Resultat
-                newFile.Write(sceneName + "_Resultat;");
-                newFile.Write(sceneName + "_Tore;");
-                newFile.Write(sceneName + "_Gegentore;");
+                newFile.Write(sceneNameAbbreviation + "_Resultat;");
+                newFile.Write(sceneNameAbbreviation + "_Tore;");
+                newFile.Write(sceneNameAbbreviation + "_Gegentore;");
                 //Art der Tore
-                newFile.Write(sceneName + "_Richtige_Tore;");
-                newFile.Write(sceneName + "_Eigentore;");
+                newFile.Write(sceneNameAbbreviation + "_Richtige_Tore;");
+                newFile.Write(sceneNameAbbreviation + "_Eigentore;");
                 //Zeiten
-                newFile.Write(sceneName + "_PlayTime;");
-                newFile.Write(sceneName + "_TotalTime;");
+                newFile.Write(sceneNameAbbreviation + "_PlayTime;");
+                newFile.Write(sceneNameAbbreviation + "_TotalTime;");
                 //time per result
-                newFile.Write(sceneName + "_Zeit_Fuehrung;");
-                newFile.Write(sceneName + "_Zeit_Remis;");
-                newFile.Write(sceneName + "_Zeit_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_Rueckstand;");
                 ////time per result percent
-                //newFile.Write(sceneName + "_Anteil_Zeit_im_Vorsprung;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_im_Remis;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_im_Rueckstand;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_im_Vorsprung;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_im_Remis;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_im_Rueckstand;");
 
                 //ZoneTime
-                newFile.Write(sceneName + "_Zeit_eigene_Torzone;");
-                newFile.Write(sceneName + "_Zeit_eigene_Zone;");
-                newFile.Write(sceneName + "_Zeit_Mittelzone;");
-                newFile.Write(sceneName + "_Zeit_gegnerische_Zone;");
-                newFile.Write(sceneName + "_Zeit_gegnerische_Torzone;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_eigene_Torzone;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_eigene_Zone;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_Mittelzone;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_gegnerische_Zone;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_gegnerische_Torzone;");
                 ////ZoneTime Percent
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Tor_Zone;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Zone;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_Mittelzone;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Zone;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Tor_Zone;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_eigener_Tor_Zone;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_eigener_Zone;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_Mittelzone;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_gegnerischer_Zone;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_gegnerischer_Tor_Zone;");
 
                 //time per zone per result
 
-                newFile.Write(sceneName + "_Zeit_in_eigene_Torzone_Vorsprung;");
-                newFile.Write(sceneName + "_Zeit_eigene_Torzone_Remis;");
-                newFile.Write(sceneName + "_Zeit_eigene_Torzone_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_in_eigene_Torzone_Vorsprung;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_eigene_Torzone_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_eigene_Torzone_Rueckstand;");
 
-                newFile.Write(sceneName + "_Zeit_eigene_Zone_Vorsprung;");
-                newFile.Write(sceneName + "_Zeit_eigene_Zone_Remis;");
-                newFile.Write(sceneName + "_Zeit_eigene_Zone_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_eigene_Zone_Vorsprung;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_eigene_Zone_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_eigene_Zone_Rueckstand;");
 
-                newFile.Write(sceneName + "_Zeit_Mittelzone_Vorsprung;");
-                newFile.Write(sceneName + "_Zeit_Mittelzone_Remis;");
-                newFile.Write(sceneName + "_Zeit_Mittelzone_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_Mittelzone_Vorsprung;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_Mittelzone_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_Mittelzone_Rueckstand;");
 
-                newFile.Write(sceneName + "_Zeit_gegnerische_Zone_Vorsprung;");
-                newFile.Write(sceneName + "_Zeit_gegnerische_Zone_Remis;");
-                newFile.Write(sceneName + "_Zeit_gegnerische_Zone_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_gegnerische_Zone_Vorsprung;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_gegnerische_Zone_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_gegnerische_Zone_Rueckstand;");
 
-                newFile.Write(sceneName + "_Zeit_gegnerische_Torzone_Vorsprung;");
-                newFile.Write(sceneName + "_Zeit_gegnerische_Torzone_Remis;");
-                newFile.Write(sceneName + "_Zeit_gegnerische_Torzone_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_gegnerische_Torzone_Vorsprung;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_gegnerische_Torzone_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_gegnerische_Torzone_Rueckstand;");
 
                 ////time per zone per result Percent
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Tor_Zone_im_Vorsprung;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Zone_im_Vorsprung;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_Mittelzone_im_Vorsprung;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Zone_im_Vorsprung;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Tor_Zone_im_Vorsprung;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_eigener_Tor_Zone_im_Vorsprung;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_eigener_Zone_im_Vorsprung;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_Mittelzone_im_Vorsprung;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_gegnerischer_Zone_im_Vorsprung;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_gegnerischer_Tor_Zone_im_Vorsprung;");
 
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Tor_Zone_im_Remis;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Zone_im_Remis;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_Mittelzone_im_Remis;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Zone_im_Remis;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Tor_Zone_im_Remis;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_eigener_Tor_Zone_im_Remis;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_eigener_Zone_im_Remis;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_Mittelzone_im_Remis;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_gegnerischer_Zone_im_Remis;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_gegnerischer_Tor_Zone_im_Remis;");
 
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Tor_Zone_im_Rueckstand;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_eigener_Zone_im_Rueckstand;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_Mittelzone_im_Rueckstand;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Zone_im_Rueckstand;");
-                //newFile.Write(sceneName + "_Anteil_Zeit_in_gegnerischer_Tor_Zone_im_Rueckstand;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_eigener_Tor_Zone_im_Rueckstand;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_eigener_Zone_im_Rueckstand;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_Mittelzone_im_Rueckstand;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_gegnerischer_Zone_im_Rueckstand;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Zeit_in_gegnerischer_Tor_Zone_im_Rueckstand;");
 
                 //shots
-                newFile.Write(sceneName + "_Total_Schuesse;");
-                newFile.Write(sceneName + "_Normale_Schuesse;");
-                newFile.Write(sceneName + "_Mittlere_Schuesse;");
-                newFile.Write(sceneName + "_Grosse_Schuesse;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Schuesse;");
+                newFile.Write(sceneNameAbbreviation + "_Normale_Schuesse;");
+                newFile.Write(sceneNameAbbreviation + "_Mittlere_Schuesse;");
+                newFile.Write(sceneNameAbbreviation + "_Grosse_Schuesse;");
                 ////shots percent
-                //newFile.Write(sceneName + "_Anteil_Normale_Schuesse;");
-                //newFile.Write(sceneName + "_Anteil_Mittlere_Schuesse;");
-                //newFile.Write(sceneName + "_Anteil_Grosse_Schuesse;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Normale_Schuesse;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Mittlere_Schuesse;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Grosse_Schuesse;");
                 //shots per Result
-                newFile.Write(sceneName + "_Total_Schuesse_Fuehrung;");
-                newFile.Write(sceneName + "_Normale_Schuesse_Fuehrung;");
-                newFile.Write(sceneName + "_Mittlere_Schuesse_Fuehrung;");
-                newFile.Write(sceneName + "_Grosse_Schuesse_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Schuesse_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Normale_Schuesse_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Mittlere_Schuesse_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Grosse_Schuesse_Fuehrung;");
 
-                newFile.Write(sceneName + "_Total_Schuesse_Remis;");
-                newFile.Write(sceneName + "_Normale_Schuesse_Remis;");
-                newFile.Write(sceneName + "_Mittlere_Schuesse_Remis;");
-                newFile.Write(sceneName + "_Grosse_Schuesse_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Schuesse_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Normale_Schuesse_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Mittlere_Schuesse_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Grosse_Schuesse_Remis;");
 
-                newFile.Write(sceneName + "_Total_Schuesse_Rueckstand;");
-                newFile.Write(sceneName + "_Normale_Schuesse_Rueckstand;");
-                newFile.Write(sceneName + "_Mittlere_Schuesse_Rueckstand;");
-                newFile.Write(sceneName + "_Grosse_Schuesse_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Schuesse_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Normale_Schuesse_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Mittlere_Schuesse_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Grosse_Schuesse_Rueckstand;");
 
 
 
                 //accuracy
-                newFile.Write(sceneName + "_Total_getroffene_Objekte;");
-                newFile.Write(sceneName + "_getroffen_Bloecke;");
-                newFile.Write(sceneName + "_getroffen_Baelle;");
-                newFile.Write(sceneName + "_getroffen_Gegner;");
-                newFile.Write(sceneName + "_gegnerischer_Schuss_zerstoert;");
-                newFile.Write(sceneName + "_Ziel_verfehlt;");
+                newFile.Write(sceneNameAbbreviation + "_Total_getroffene_Objekte;");
+                newFile.Write(sceneNameAbbreviation + "_getroffen_Bloecke;");
+                newFile.Write(sceneNameAbbreviation + "_getroffen_Baelle;");
+                newFile.Write(sceneNameAbbreviation + "_getroffen_Gegner;");
+                newFile.Write(sceneNameAbbreviation + "_gegnerischer_Schuss_zerstoert;");
+                newFile.Write(sceneNameAbbreviation + "_Ziel_verfehlt;");
                 ////accuracy_percent
-                //newFile.Write(sceneName + "_Anteil_getroffen_Bloecke_getroffen;");
-                //newFile.Write(sceneName + "_Anteil_getroffen_Baelle_getroffen;");
-                //newFile.Write(sceneName + "_Anteil_getroffen_Gegner_getroffen;");
-                //newFile.Write(sceneName + "_Anteil_getroffen__gegnerischer_Schuss_zerstoert;");
-                //newFile.Write(sceneName + "_Anteil_Ziel_verfehlt;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_getroffen_Bloecke_getroffen;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_getroffen_Baelle_getroffen;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_getroffen_Gegner_getroffen;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_getroffen__gegnerischer_Schuss_zerstoert;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Ziel_verfehlt;");
                 //Accuracy per result
-                newFile.Write(sceneName + "_Total_getroffene_Objekte_Fuehrung;");
-                newFile.Write(sceneName + "_getroffen_Bloecke_Fuehrung;");
-                newFile.Write(sceneName + "_getroffen_Baelle_Fuehrung;");
-                newFile.Write(sceneName + "_getroffen_Gegner_Fuehrung;");
-                newFile.Write(sceneName + "_gegnerischer_Schuss_zerstoert_Fuehrung;");
-                newFile.Write(sceneName + "_Ziel_verfehlt_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Total_getroffene_Objekte_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_getroffen_Bloecke_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_getroffen_Baelle_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_getroffen_Gegner_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_gegnerischer_Schuss_zerstoert_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Ziel_verfehlt_Fuehrung;");
 
-                newFile.Write(sceneName + "_Total_getroffene_Objekte_Remis;");
-                newFile.Write(sceneName + "_getroffen_Bloecke_Remis;");
-                newFile.Write(sceneName + "_getroffen_Baelle_Remis;");
-                newFile.Write(sceneName + "_getroffen_Gegner_Remis;");
-                newFile.Write(sceneName + "_gegnerischer_Schuss_zerstoert_Remis;");
-                newFile.Write(sceneName + "_Ziel_verfehlt_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Total_getroffene_Objekte_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_getroffen_Bloecke_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_getroffen_Baelle_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_getroffen_Gegner_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_gegnerischer_Schuss_zerstoert_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Ziel_verfehlt_Remis;");
 
-                newFile.Write(sceneName + "_Total_getroffene_Objekte_Rueckstand;");
-                newFile.Write(sceneName + "_getroffen_Bloecke_Rueckstand;");
-                newFile.Write(sceneName + "_getroffen_Baelle_Rueckstand;");
-                newFile.Write(sceneName + "_getroffen_Gegner_Rueckstand;");
-                newFile.Write(sceneName + "_gegnerischer_Schuss_zerstoert_Rueckstand;");
-                newFile.Write(sceneName + "_Ziel_verfehlt_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Total_getroffene_Objekte_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_getroffen_Bloecke_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_getroffen_Baelle_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_getroffen_Gegner_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_gegnerischer_Schuss_zerstoert_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Ziel_verfehlt_Rueckstand;");
 
                 //Blocks
-                newFile.Write(sceneName + "_Total_Bloecke;");
-                newFile.Write(sceneName + "_Bloecke_eigene_Torzone;");
-                newFile.Write(sceneName + "_Bloecke_eigene_Zone;");
-                newFile.Write(sceneName + "_Bloecke_Mittelzone;");
-                newFile.Write(sceneName + "_Bloecke_gegnerische_Zone;");
-                newFile.Write(sceneName + "_Bloecke_gegnerische_Torzone;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Bloecke;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_eigene_Torzone;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_eigene_Zone;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_Mittelzone;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_gegnerische_Zone;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_gegnerische_Torzone;");
                 ////Blocks percent
-                //newFile.Write(sceneName + "_Anteil_Bloecke_eigene_Torzone;");
-                //newFile.Write(sceneName + "_Anteil_Bloecke_eigene_Zone;");
-                //newFile.Write(sceneName + "_Anteil_Bloecke_Mittelzone;");
-                //newFile.Write(sceneName + "_Anteil_Bloecke_gegnerische_Zone;");
-                //newFile.Write(sceneName + "_Anteil_Bloecke_gegnerische_Torzone;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Bloecke_eigene_Torzone;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Bloecke_eigene_Zone;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Bloecke_Mittelzone;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Bloecke_gegnerische_Zone;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Bloecke_gegnerische_Torzone;");
                 //blocks per result
-                newFile.Write(sceneName + "_Total_Bloecke_Fuehrung;");
-                newFile.Write(sceneName + "_Bloecke_eigene_Torzone_Fuehrung;");
-                newFile.Write(sceneName + "_Bloecke_eigene_Zone_Fuehrung;");
-                newFile.Write(sceneName + "_Bloecke_Mittelzone_Fuehrung;");
-                newFile.Write(sceneName + "_Bloecke_gegnerische_Zone_Fuehrung;");
-                newFile.Write(sceneName + "_Bloecke_gegnerische_Torzone_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Bloecke_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_eigene_Torzone_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_eigene_Zone_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_Mittelzone_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_gegnerische_Zone_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_gegnerische_Torzone_Fuehrung;");
 
-                newFile.Write(sceneName + "_Total_Bloecke_Remis;");
-                newFile.Write(sceneName + "_Bloecke_eigene_Torzone_Remis;");
-                newFile.Write(sceneName + "_Bloecke_eigene_Zone_Remis;");
-                newFile.Write(sceneName + "_Bloecke_Mittelzone_Remis;");
-                newFile.Write(sceneName + "_Bloecke_gegnerische_Zone_Remis;");
-                newFile.Write(sceneName + "_Bloecke_gegnerische_Torzone_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Bloecke_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_eigene_Torzone_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_eigene_Zone_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_Mittelzone_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_gegnerische_Zone_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_gegnerische_Torzone_Remis;");
 
-                newFile.Write(sceneName + "_Total_Bloecke_Rueckstand;");
-                newFile.Write(sceneName + "_Bloecke_eigene_Torzone_Rueckstand;");
-                newFile.Write(sceneName + "_Bloecke_eigene_Zone_Rueckstand;");
-                newFile.Write(sceneName + "_Bloecke_Mittelzone_Rueckstand;");
-                newFile.Write(sceneName + "_Bloecke_gegnerische_Zone_Rueckstand;");
-                newFile.Write(sceneName + "_Bloecke_gegnerische_Torzone_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Bloecke_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_eigene_Torzone_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_eigene_Zone_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_Mittelzone_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_gegnerische_Zone_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Bloecke_gegnerische_Torzone_Rueckstand;");
 
                 //Opponent Stunned
-                newFile.Write(sceneName + "_Total_Stuns;");
-                newFile.Write(sceneName + "_Dauer_Stuns;");
-                newFile.Write(sceneName + "_normale_Stuns;");
-                newFile.Write(sceneName + "_mittlere_Stuns;");
-                newFile.Write(sceneName + "_grosse_Stuns;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Stuns;");
+                newFile.Write(sceneNameAbbreviation + "_Dauer_Stuns;");
+                newFile.Write(sceneNameAbbreviation + "_normale_Stuns;");
+                newFile.Write(sceneNameAbbreviation + "_mittlere_Stuns;");
+                newFile.Write(sceneNameAbbreviation + "_grosse_Stuns;");
                 //enemy stunned per result
-                newFile.Write(sceneName + "_Total_Stuns_Fuehrung;");
-                newFile.Write(sceneName + "_Dauer_Stuns_Fuehrung;");
-                newFile.Write(sceneName + "_normale_Stuns_Fuehrung;");
-                newFile.Write(sceneName + "_mittlere_Stuns_Fuehrung;");
-                newFile.Write(sceneName + "_grosse_Stuns_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Stuns_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Dauer_Stuns_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_normale_Stuns_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_mittlere_Stuns_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_grosse_Stuns_Fuehrung;");
 
-                newFile.Write(sceneName + "_Total_Stuns_Remis;");
-                newFile.Write(sceneName + "_Dauer_Stuns_Remis;");
-                newFile.Write(sceneName + "_normale_Stuns_Remis;");
-                newFile.Write(sceneName + "_mittlere_Stuns_Remis;");
-                newFile.Write(sceneName + "_grosse_Stuns_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Stuns_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Dauer_Stuns_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_normale_Stuns_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_mittlere_Stuns_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_grosse_Stuns_Remis;");
 
-                newFile.Write(sceneName + "_Total_Stuns_Rueckstand;");
-                newFile.Write(sceneName + "_Dauer_Stuns_Rueckstand;");
-                newFile.Write(sceneName + "_normale_Stuns_Rueckstand;");
-                newFile.Write(sceneName + "_mittlere_Stuns_Rueckstand;");
-                newFile.Write(sceneName + "_grosse_Stuns_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Stuns_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Dauer_Stuns_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_normale_Stuns_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_mittlere_Stuns_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_grosse_Stuns_Rueckstand;");
 
                 //Stunned By Opponent
-                newFile.Write(sceneName + "_Total_erhaltene_Stuns;");
-                newFile.Write(sceneName + "_Dauer_erhaltene_Stuns;");
-                newFile.Write(sceneName + "_erhaltene_normale_Stuns;");
-                newFile.Write(sceneName + "_erhaltene_mittlere_Stuns;");
-                newFile.Write(sceneName + "_erhaltene_grosse_Stuns;");
+                newFile.Write(sceneNameAbbreviation + "_Total_erhaltene_Stuns;");
+                newFile.Write(sceneNameAbbreviation + "_Dauer_erhaltene_Stuns;");
+                newFile.Write(sceneNameAbbreviation + "_erhaltene_normale_Stuns;");
+                newFile.Write(sceneNameAbbreviation + "_erhaltene_mittlere_Stuns;");
+                newFile.Write(sceneNameAbbreviation + "_erhaltene_grosse_Stuns;");
 
-                newFile.Write(sceneName + "_Total_erhaltene_Stuns_Fuehrung;");
-                newFile.Write(sceneName + "_Dauer_erhaltene_Stuns_Fuehrung;");
-                newFile.Write(sceneName + "_erhaltene_normale_Stuns_Fuehrung;");
-                newFile.Write(sceneName + "_erhaltene_mittlere_Stuns_Fuehrung;");
-                newFile.Write(sceneName + "_erhaltene_grosse_Stuns_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Total_erhaltene_Stuns_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Dauer_erhaltene_Stuns_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_erhaltene_normale_Stuns_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_erhaltene_mittlere_Stuns_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_erhaltene_grosse_Stuns_Fuehrung;");
 
-                newFile.Write(sceneName + "_Total_erhaltene_Stuns_Remis;");
-                newFile.Write(sceneName + "_Dauer_erhaltene_Stuns_Remis;");
-                newFile.Write(sceneName + "_erhaltene_normale_Stuns_Remis;");
-                newFile.Write(sceneName + "_erhaltene_mittlere_Stuns_Remis;");
-                newFile.Write(sceneName + "_erhaltene_grosse_Stuns_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Total_erhaltene_Stuns_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Dauer_erhaltene_Stuns_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_erhaltene_normale_Stuns_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_erhaltene_mittlere_Stuns_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_erhaltene_grosse_Stuns_Remis;");
 
-                newFile.Write(sceneName + "_Total_erhaltene_Stuns_Rueckstand;");
-                newFile.Write(sceneName + "_Dauer_erhaltene_Stuns_Rueckstand;");
-                newFile.Write(sceneName + "_erhaltene_normale_Stuns_Rueckstand;");
-                newFile.Write(sceneName + "_erhaltene_mittlere_Stuns_Rueckstand;");
-                newFile.Write(sceneName + "_erhaltene_grosse_Stuns_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Total_erhaltene_Stuns_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Dauer_erhaltene_Stuns_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_erhaltene_normale_Stuns_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_erhaltene_mittlere_Stuns_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_erhaltene_grosse_Stuns_Rueckstand;");
 
                 //Stunned By Ball
-                newFile.Write(sceneName + "_Stunned_durch_Ball;");
-                newFile.Write(sceneName + "_Stunned_durch_Ball_Fuehrung;");
-                newFile.Write(sceneName + "_Stunned_durch_Ball_Remis;");
-                newFile.Write(sceneName + "_Stunned_durch_Ball_Deficit;");
+                newFile.Write(sceneNameAbbreviation + "_Stunned_durch_Ball;");
+                newFile.Write(sceneNameAbbreviation + "_Stunned_durch_Ball_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Stunned_durch_Ball_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Stunned_durch_Ball_Deficit;");
 
                 //Emotes
-                newFile.Write(sceneName + "_Total_Emotes;");
-                newFile.Write(sceneName + "_Emote_Nice;");
-                newFile.Write(sceneName + "_Emote_Angry;");
-                newFile.Write(sceneName + "_Emote_Cry;");
-                newFile.Write(sceneName + "_Emote_Haha;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Emotes;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Nice;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Angry;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Cry;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Haha;");
                 ////Emotes Percent
-                //newFile.Write(sceneName + "_Anteil_Emote_Nice;");
-                //newFile.Write(sceneName + "_Anteil_Emote_Angry;");
-                //newFile.Write(sceneName + "_Anteil_Emote_Cry;");
-                //newFile.Write(sceneName + "_Anteil_Emote_Haha;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Emote_Nice;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Emote_Angry;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Emote_Cry;");
+                //newFile.Write(sceneNameAbbreviation + "_Anteil_Emote_Haha;");
                 //Emotes per result
-                newFile.Write(sceneName + "_Total_Emotes_Fuehrung;");
-                newFile.Write(sceneName + "_Emote_Nice_Fuehrung;");
-                newFile.Write(sceneName + "_Emote_Angry_Fuehrung;");
-                newFile.Write(sceneName + "_Emote_Cry_Fuehrung;");
-                newFile.Write(sceneName + "_Emote_Haha_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Emotes_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Nice_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Angry_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Cry_Fuehrung;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Haha_Fuehrung;");
 
-                newFile.Write(sceneName + "_Total_Emotes_Remis;");
-                newFile.Write(sceneName + "_Emote_Nice_Remis;");
-                newFile.Write(sceneName + "_Emote_Angry_Remis;");
-                newFile.Write(sceneName + "_Emote_Cry_Remis;");
-                newFile.Write(sceneName + "_Emote_Haha_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Emotes_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Nice_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Angry_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Cry_Remis;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Haha_Remis;");
 
-                newFile.Write(sceneName + "_Total_Emotes_Rueckstand;");
-                newFile.Write(sceneName + "_Emote_Nice_Rueckstand;");
-                newFile.Write(sceneName + "_Emote_Angry_Rueckstand;");
-                newFile.Write(sceneName + "_Emote_Cry_Rueckstand;");
-                newFile.Write(sceneName + "_Emote_Haha_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Total_Emotes_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Nice_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Angry_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Cry_Rueckstand;");
+                newFile.Write(sceneNameAbbreviation + "_Emote_Haha_Rueckstand;");
             }
         }
 

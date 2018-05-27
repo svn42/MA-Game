@@ -20,6 +20,7 @@ public class GameState : MonoBehaviour
     public bool gamePaused;
 
     public Canvas pauseScreen;
+    public GameObject transparentScreen;
     public Canvas player1Box;
     public Canvas player2Box;
     private Image greenCheckP1;
@@ -27,10 +28,16 @@ public class GameState : MonoBehaviour
 
     private bool player1Ready;
     private bool player2Ready;
+    private bool playerHelp;
+    
     public bool levelEnded;
+    public bool nextLevelReady;
+    public int timeUntilNextLevel;
     public int depauseCountdown;
     private Text topText;
     private Text middleText;
+    private Text observerText;
+    private Text helpText;
     public bool startCountdownActivated;    //regelt, ob der Startbildschirm mit dem Countdown angezeigt werden soll
 
     public GameObject player1;
@@ -52,12 +59,15 @@ public class GameState : MonoBehaviour
         SetGoalCount("Team1");
         SetGoalCount("Team2");
 
-        topText = pauseScreen.transform.Find("TransparentScreen").transform.Find("topText").GetComponent<Text>();
-        middleText = pauseScreen.transform.Find("TransparentScreen").transform.Find("middleText").GetComponent<Text>();
-        player1Box = pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler1").GetComponent<Canvas>();
-        player2Box = pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler2").GetComponent<Canvas>();
-        greenCheckP1 = pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler1").transform.Find("Spieler1_Check").GetComponent<Image>();
-        greenCheckP2 = pauseScreen.transform.Find("TransparentScreen").transform.Find("Spieler2").transform.Find("Spieler2_Check").GetComponent<Image>();
+        transparentScreen = pauseScreen.transform.Find("TransparentScreen").gameObject;
+        topText = transparentScreen.transform.Find("topText").GetComponent<Text>();
+        middleText = transparentScreen.transform.Find("middleText").GetComponent<Text>();
+        observerText = transparentScreen.transform.Find("observerText").GetComponent<Text>();
+        helpText = transparentScreen.transform.Find("helpText").GetComponent<Text>();
+        player1Box = transparentScreen.transform.Find("Spieler1").GetComponent<Canvas>();
+        player2Box = transparentScreen.transform.Find("Spieler2").GetComponent<Canvas>();
+        greenCheckP1 = transparentScreen.transform.Find("Spieler1").transform.Find("Spieler1_Check").GetComponent<Image>();
+        greenCheckP2 = transparentScreen.transform.Find("Spieler2").transform.Find("Spieler2_Check").GetComponent<Image>();
 
         globalTimer = (GlobalTimer)FindObjectOfType(typeof(GlobalTimer));
         playerLoggingP1 = player1.GetComponent<PlayerLogging>();
@@ -200,34 +210,55 @@ public class GameState : MonoBehaviour
         {
             if (!levelEnded)
             {
-                //überprüfe, ob die einzelnen Spieler bereit sind
-                if (Input.GetButtonUp("ShootP1"))
-                {
-                    SetPlayerReady(true, 1);
-                }
-                else if (Input.GetButtonUp("ShootP2"))
-                {
-                    SetPlayerReady(true, 2);
-                }
 
-                if (player1Ready && player2Ready)
+                if (Input.GetButtonUp("Help"))
                 {
-                    StartCoroutine(StartDepauseCountdown(depauseCountdown));
+                    playerHelp = true;
+                    observerText.enabled = true;
+                    observerText.text = "Gib dem Versuchsleiter Bescheid, \nwenn du mit ihm im selben Raum sitzt.";
+                    observerText.color = Color.red;
                 }
-            } else if (levelEnded)
-            {
-                //überprüfe, ob die einzelnen Spieler bereit sind
-                if (Input.GetButtonUp("ShootP1"))
+                if (playerHelp)
                 {
-                    SetPlayerReady(true, 1);
+                    if (Input.GetKeyUp(KeyCode.H))
+                    {
+                        playerHelp = false;
+                        observerText.text = "Ihr könnt das Spiel fortsetzen! :)";
+                        observerText.color = Color.green;
+                    }
                 }
-                else if (Input.GetButtonUp("ShootP2"))
+                if (!playerHelp)
                 {
-                    SetPlayerReady(true, 2);
+                    //überprüfe, ob die einzelnen Spieler bereit sind
+                    if (Input.GetButtonUp("ShootP1"))
+                    {
+                        SetPlayerReady(true, 1);
+                    }
+                    else if (Input.GetButtonUp("ShootP2"))
+                    {
+                        SetPlayerReady(true, 2);
+                    }
+
+                    if (player1Ready && player2Ready)
+                    {
+                        StartCoroutine(StartDepauseCountdown(depauseCountdown));
+                    }
                 }
-                if (player1Ready && player2Ready)
+                else if (levelEnded && nextLevelReady)
                 {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                    //überprüfe, ob die einzelnen Spieler bereit sind
+                    if (Input.GetButtonUp("ShootP1"))
+                    {
+                        SetPlayerReady(true, 1);
+                    }
+                    else if (Input.GetButtonUp("ShootP2"))
+                    {
+                        SetPlayerReady(true, 2);
+                    }
+                    if (player1Ready && player2Ready)
+                    {
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                    }
                 }
             }
         }
@@ -254,6 +285,7 @@ public class GameState : MonoBehaviour
                     break;
                 case "end":
                     EndScene();
+                    StartCoroutine(SetNextLevelReady());
                     break;
             }
         }
@@ -288,6 +320,7 @@ public class GameState : MonoBehaviour
 
     IEnumerator StartDepauseCountdown(int countdown)
     {
+        yield return new WaitForSeconds(1 * Time.timeScale);
         BuildPauseScreen("countdown");
         for (int i = countdown; i > 0; i--)
         {
@@ -300,12 +333,27 @@ public class GameState : MonoBehaviour
         pauseScreen.enabled = false;
     }
 
+    IEnumerator SetNextLevelReady()
+    {
+        Debug.Log("asdasdas");
+        yield return new WaitForSeconds(timeUntilNextLevel * Time.timeScale);
+        BuildPauseScreen("endLevelReady");
+        nextLevelReady = true;
+    }
+
+
+
     public void BuildPauseScreen(string screenType)
     {
         pauseScreen.enabled = true;
+        observerText.enabled = false;
+
         switch (screenType)
         {
+          
             case "pause":
+                helpText.enabled = true;
+                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
                 player1Box.enabled = true;
                 player2Box.enabled = true;
                 topText.text = "Pause";
@@ -313,6 +361,8 @@ public class GameState : MonoBehaviour
                 middleText.text = "Drücke A zum Fortsetzen!";
                 break;
             case "start":
+                helpText.enabled = true;
+                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
                 player1Box.enabled = true;
                 player2Box.enabled = true;
                 topText.text = "Mach dich bereit für " + SceneManager.GetActiveScene().name + "!";
@@ -320,6 +370,8 @@ public class GameState : MonoBehaviour
                 middleText.text = "Drücke A zum Starten!";
                 break;
             case "countdown":
+                helpText.enabled = false;
+                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.66f);
                 player1Box.enabled = false;
                 player2Box.enabled = false;
                 topText.text = "";
@@ -327,33 +379,54 @@ public class GameState : MonoBehaviour
                 middleText.text = "";
 
                 break;
-            case "end":
+            case "endWait":
+                helpText.enabled = true;
+                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
+                player1Box.enabled = false;
+                player2Box.enabled = false;
+
+                if (goalsTeam1 > goalsTeam2)
+                {
+                    topText.text = "Spieler 1 gewinnt mit " + goalsTeam1 + " - " + goalsTeam2 + "!";
+                } else if (goalsTeam1 < goalsTeam2)
+                {
+                    topText.text = "Spieler 1 gewinnt mit " + goalsTeam2 + " - " + goalsTeam1 + "!";
+                } else
+                {
+                    topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
+                }
+                topText.fontSize = 45;
+                middleText.text = "";
+                break;
+            case "endLevelReady":
+                helpText.enabled = true;
+                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
                 player1Box.enabled = true;
                 player2Box.enabled = true;
 
                 if (goalsTeam1 > goalsTeam2)
                 {
-                    Debug.Log("Team 1 wins with " + goalsTeam1 + " - " + goalsTeam2);
                     topText.text = "Spieler 1 gewinnt mit " + goalsTeam1 + " - " + goalsTeam2 + "!";
-                } else if (goalsTeam1 < goalsTeam2)
+                }
+                else if (goalsTeam1 < goalsTeam2)
                 {
-                    Debug.Log("Team 2 wins with " + goalsTeam2 + " - " + goalsTeam1);
                     topText.text = "Spieler 1 gewinnt mit " + goalsTeam2 + " - " + goalsTeam1 + "!";
-                } else
+                }
+                else
                 {
-                    Debug.Log("Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 +" unentschieden!");
                     topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
                 }
                 topText.fontSize = 45;
                 middleText.text = "Drücke A zum Fortfahren!";
                 break;
+
         }
     }
 
     public void EndScene()
     {
         levelEnded = true;
-        BuildPauseScreen("end");
+        BuildPauseScreen("endWait");
         globalTimer.SetEndTime();
         player1Script.CalculateLogData();
         player2Script.CalculateLogData();

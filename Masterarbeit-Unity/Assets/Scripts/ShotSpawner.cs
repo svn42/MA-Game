@@ -90,43 +90,40 @@ public class ShotSpawner : MonoBehaviour
     //die Methode wird aufgerufen, sofern der A-Button losgelassen wird 
     public void SpawnShot()
     {
-        bool shotFired = false;
-        GameObject shot = new GameObject();
         //wenn das Ziel erreicht wurde und der ShotSpawner nicht kollidiert
         if (spawnNormalShot && spawnable)
         {
-            shot = Instantiate(normalShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
-            shotFired = true;
+            GameObject shot = Instantiate(normalShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
             spawnNormalShot = false;
             playerLogging.AddShot("normal");
+            SetShotProperties(shot);
         }
         else if (spawnMediumShot && spawnable)
         {
-            shot = Instantiate(mediumShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
-            shotFired = true;
+            GameObject shot = Instantiate(mediumShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
             spawnMediumShot = false;
             playerLogging.AddShot("medium");
-
+            SetShotProperties(shot);
         }
         else if (spawnLargeShot && spawnable)
         {
-            shot = Instantiate(largeShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
-            shotFired = true;
+            GameObject shot = Instantiate(largeShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
             spawnLargeShot = false;
             playerLogging.AddShot("large");
-
+            SetShotProperties(shot);
         }
 
-        if (shotFired)
-        {
-            shotCount++;
-            shot.GetComponent<Shot>().SetDirection(this.transform.rotation);    //Der Schuss bekommt die Rotation des Spielers übergeben
-            shot.GetComponent<Shot>().SetColor(shotColor);                      //dessen Farbe
-            shot.GetComponent<Shot>().SetPlayerTeam(playerTeam);                //dessen Team
-            shot.GetComponent<Shot>().SetShotID(shotCount);                     //sowie seine ID
-            shot.name = "Shot_"+ shotCount + "_Player_" + playerTeam;       //der Name wird aus dem Count und der PlayerID gebaut.
-        }
         ResetShotChargeTime();
+
+    }
+
+    private void SetShotProperties(GameObject shot){
+        shotCount++;
+        shot.GetComponent<Shot>().SetDirection(this.transform.rotation);    //Der Schuss bekommt die Rotation des Spielers übergeben
+        shot.GetComponent<Shot>().SetColor(shotColor);                      //dessen Farbe
+        shot.GetComponent<Shot>().SetPlayerTeam(playerTeam);                //dessen Team
+        shot.GetComponent<Shot>().SetShotID(shotCount);                     //sowie seine ID
+        shot.name = "Shot_" + shotCount + "_Player_" + playerTeam;       //der Name wird aus dem Count und der PlayerID gebaut.
 
     }
 
