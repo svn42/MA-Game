@@ -425,7 +425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnTimerMedium: 1
   spawnTimerLarge: 2
-  spawnTimerLimit: 3
+  spawnTimerLimit: 4
   shotChargeTime: 0
   normalShotPrefab: {fileID: 1605120989468744, guid: e247b1f41739b8f4b87c929aaa7f07a2,
     type: 2}
@@ -467,7 +467,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trackingIntervall: 0.25
   positionList: []
+  positionListInLead: []
+  positionListInTie: []
+  positionListInDeficit: []
   positionListWithoutDuplicates: []
+  positionListWithoutDuplicatesInLead: []
+  positionListWithoutDuplicatesInTie: []
+  positionListWithoutDuplicatesInDeficit: []
 --- !u!114 &114964997798165938
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -479,45 +485,165 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ab0a314532aa1748b980a0afadb0594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTeam: 0
+  currentResult: 
   distanceTravelled: 0
+  finalResult: 
+  goalsScored: 0
+  goalsConceded: 0
+  correctGoalsScored: 0
+  ownGoalsScored: 0
+  timeInLead: 0
+  timeTied: 0
+  timeInDeficit: 0
   timeCenterZone: 0
   timeOwnZone: 0
   timeOwnGoalZone: 0
   timeOpponentZone: 0
   timeOpponentGoalZone: 0
+  timeCenterZoneInLead: 0
+  timeCenterZoneInTie: 0
+  timeCenterZoneInDeficit: 0
+  timeOwnZoneInLead: 0
+  timeOwnZoneInTie: 0
+  timeOwnZoneInDeficit: 0
+  timeOwnGoalZoneInLead: 0
+  timeOwnGoalZoneInTie: 0
+  timeOwnGoalZoneInDeficit: 0
+  timeOpponentZoneInLead: 0
+  timeOpponentZoneInTie: 0
+  timeOpponentZoneInDeficit: 0
+  timeOpponentGoalZoneInLead: 0
+  timeOpponentGoalZoneInTie: 0
+  timeOpponentGoalZoneInDeficit: 0
   totalShotsFired: 0
   normalShotsFired: 0
   mediumShotsFired: 0
   largeShotsFired: 0
+  totalShotsFiredInLead: 0
+  normalShotsFiredInLead: 0
+  mediumShotsFiredInLead: 0
+  largeShotsFiredInLead: 0
+  totalShotsFiredInTie: 0
+  normalShotsFiredInTie: 0
+  mediumShotsFiredInTie: 0
+  largeShotsFiredInTie: 0
+  totalShotsFiredInDeficit: 0
+  normalShotsFiredInDeficit: 0
+  mediumShotsFiredInDeficit: 0
+  largeShotsFiredInDeficit: 0
+  totalObjectsHit: 0
   shotsHitBlock: 0
   shotsHitBall: 0
   shotsHitPlayer: 0
   shotsHitEnemyShot: 0
   shotsDestroyed: 0
-  shotsHitBlockPercent: 0
-  shotsHitBallPercent: 0
-  shotsHitPlayerPercent: 0
-  shotsHitEnemyShotPercent: 0
-  shotsDestroyedPercent: 0
+  totalObjectsHitInLead: 0
+  shotsHitBlockInLead: 0
+  shotsHitBallInLead: 0
+  shotsHitPlayerInLead: 0
+  shotsHitEnemyShotInLead: 0
+  shotsDestroyedInLead: 0
+  totalObjectsHitInTie: 0
+  shotsHitBlockInTie: 0
+  shotsHitBallInTie: 0
+  shotsHitPlayerInTie: 0
+  shotsHitEnemyShotInTie: 0
+  shotsDestroyedInTie: 0
+  totalObjectsHitInDeficit: 0
+  shotsHitBlockInDeficit: 0
+  shotsHitBallInDeficit: 0
+  shotsHitPlayerInDeficit: 0
+  shotsHitEnemyShotInDeficit: 0
+  shotsDestroyedInDeficit: 0
   totalBlocksPlaced: 0
   blocksInOwnZone: 0
   blocksInOwnGoalZone: 0
   blocksInCenterZone: 0
   blocksInOpponentZone: 0
   blocksInOpponentGoalZone: 0
-  goalsScored: 0
-  ownGoalsScored: 0
+  totalBlocksPlacedInLead: 0
+  blocksInOwnZoneInLead: 0
+  blocksInOwnGoalZoneInLead: 0
+  blocksInCenterZoneInLead: 0
+  blocksInOpponentZoneInLead: 0
+  blocksInOpponentGoalZoneInLead: 0
+  totalBlocksPlacedInTie: 0
+  blocksInOwnZoneInTie: 0
+  blocksInOwnGoalZoneInTie: 0
+  blocksInCenterZoneInTie: 0
+  blocksInOpponentZoneInTie: 0
+  blocksInOpponentGoalZoneInTie: 0
+  totalBlocksPlacedInDeficit: 0
+  blocksInOwnZoneInDeficit: 0
+  blocksInOwnGoalZoneInDeficit: 0
+  blocksInCenterZoneInDeficit: 0
+  blocksInOpponentZoneInDeficit: 0
+  blocksInOpponentGoalZoneInDeficit: 0
   totalEnemyStunned: 0
   normalEnemyStunned: 0
   mediumEnemyStunned: 0
   largeEnemyStunned: 0
   enemyStunnedTotalTime: 0
+  totalEnemyStunnedInLead: 0
+  normalEnemyStunnedInLead: 0
+  mediumEnemyStunnedInLead: 0
+  largeEnemyStunnedInLead: 0
+  enemyStunnedTotalTimeInLead: 0
+  totalEnemyStunnedInTie: 0
+  normalEnemyStunnedInTie: 0
+  mediumEnemyStunnedInTie: 0
+  largeEnemyStunnedInTie: 0
+  enemyStunnedTotalTimeInTie: 0
+  totalEnemyStunnedInDeficit: 0
+  normalEnemyStunnedInDeficit: 0
+  mediumEnemyStunnedInDeficit: 0
+  largeEnemyStunnedInDeficit: 0
+  enemyStunnedTotalTimeInDeficit: 0
+  totalStunnedByEnemy: 0
+  normalStunnedByEnemy: 0
+  mediumStunnedByEnemy: 0
+  largeStunnedByEnemy: 0
+  stunnedByEnemyTotalTime: 0
+  totalStunnedByEnemyInLead: 0
+  normalStunnedByEnemyInLead: 0
+  mediumStunnedByEnemyInLead: 0
+  largeStunnedByEnemyInLead: 0
+  stunnedByEnemyTotalTimeInLead: 0
+  totalStunnedByEnemyInTie: 0
+  normalStunnedByEnemyInTie: 0
+  mediumStunnedByEnemyInTie: 0
+  largeStunnedByEnemyInTie: 0
+  stunnedByEnemyTotalTimeInTie: 0
+  totalStunnedByEnemyInDeficit: 0
+  normalStunnedByEnemyInDeficit: 0
+  mediumStunnedByEnemyInDeficit: 0
+  largeStunnedByEnemyInDeficit: 0
+  stunnedByEnemyTotalTimeInDeficit: 0
   stunnedByBall: 0
+  stunnedByBallInLead: 0
+  stunnedByBallInTie: 0
+  stunnedByBallInDeficit: 0
   totalEmotes: 0
   emoteNice: 0
   emoteAngry: 0
   emoteCry: 0
   emoteHaha: 0
+  totalEmotesInLead: 0
+  emoteNiceInLead: 0
+  emoteAngryInLead: 0
+  emoteCryInLead: 0
+  emoteHahaInLead: 0
+  totalEmotesInTie: 0
+  emoteNiceInTie: 0
+  emoteAngryInTie: 0
+  emoteCryInTie: 0
+  emoteHahaInTie: 0
+  totalEmotesInDeficit: 0
+  emoteNiceInDeficit: 0
+  emoteAngryInDeficit: 0
+  emoteCryInDeficit: 0
+  emoteHahaInDeficit: 0
 --- !u!212 &212022828006754914
 SpriteRenderer:
   m_ObjectHideFlags: 1

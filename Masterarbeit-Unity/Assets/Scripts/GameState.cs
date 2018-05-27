@@ -64,6 +64,10 @@ public class GameState : MonoBehaviour
         playerLoggingP2 = player2.GetComponent<PlayerLogging>();
         player1Script = player1.GetComponent<Player>();
         player2Script = player2.GetComponent<Player>();
+
+        playerLoggingP1.CheckResult();  //Die Playerloggings bekommen das Result zum Start mitgeteilt
+        playerLoggingP2.CheckResult();
+
         if (startCountdownActivated)
         {
             SetGamePaused(true, "start");    //zu Beginn wird das Spiel pausiert 
@@ -151,6 +155,8 @@ public class GameState : MonoBehaviour
                 playerLoggingP2.AddGoalType("owngoal");
             }
         }
+        playerLoggingP1.CheckResult();
+        playerLoggingP2.CheckResult();
         CheckGoalLimit();
     }
 

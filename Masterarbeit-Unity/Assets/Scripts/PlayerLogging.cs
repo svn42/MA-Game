@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class PlayerLogging : MonoBehaviour
 {
+    PositionTracker positionTracker;
+
     public int playerTeam;
     private string currentZone;  //aktuelle Zone des Spielers
     public string currentResult;
+
     public float distanceTravelled;
+    public float distanceTravelledInLead;
+    public float distanceTravelledInTie;
+    public float distanceTravelledInDeficit;
 
     //result
     public string finalResult;
@@ -97,7 +103,7 @@ public class PlayerLogging : MonoBehaviour
     public int largeShotsFiredInTie;
 
     public int totalShotsFiredInDeficit;
-    public int normalShotsFireInDeficit;
+    public int normalShotsFiredInDeficit;
     public int mediumShotsFiredInDeficit;
     public int largeShotsFiredInDeficit;
 
@@ -214,7 +220,7 @@ public class PlayerLogging : MonoBehaviour
     public float stunnedByEnemyTotalTimeInLead;
 
     public int totalStunnedByEnemyInTie;
-    public int normalStunnedByEneInTiemy;
+    public int normalStunnedByEnemyInTie;
     public int mediumStunnedByEnemyInTie;
     public int largeStunnedByEnemyInTie;
     public float stunnedByEnemyTotalTimeInTie;
@@ -266,13 +272,12 @@ public class PlayerLogging : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        positionTracker = this.gameObject.GetComponent<PositionTracker>();
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        CheckResult();
         AddResultTime(currentResult);
     }
 
@@ -281,22 +286,25 @@ public class PlayerLogging : MonoBehaviour
         playerTeam = team;
     }
 
-    private string CheckResult()
+    public string CheckResult()
     {
         if (goalsScored > goalsConceded)
         {
             currentResult = "in_lead";
             finalResult = "Sieg";
+            positionTracker.ChangeResult("in_lead");
         }
         else if (goalsScored == goalsConceded)
         {
             currentResult = "in_tie";
             finalResult = "Remis";
+            positionTracker.ChangeResult("in_tie");
         }
         else if (goalsScored < goalsConceded)
         {
             currentResult = "in_deficit";
             finalResult = "Niederlage";
+            positionTracker.ChangeResult("in_deficit");
         }
         return currentResult;
     }
@@ -557,7 +565,7 @@ public class PlayerLogging : MonoBehaviour
                         normalShotsFiredInTie++;
                         break;
                     case "in_deficit":
-                        normalShotsFireInDeficit++;
+                        normalShotsFiredInDeficit++;
                         break;
                 }
 
@@ -827,7 +835,7 @@ public class PlayerLogging : MonoBehaviour
                 break;
         }
     }
-    
+
     //public void CalculateBlocks()
     //{
     //    if (totalBlocksPlaced > 0)
@@ -867,9 +875,24 @@ public class PlayerLogging : MonoBehaviour
         }
     }
 
+    public void AddWalkedDistance(string result, float walkedDistance)
+    {
+        switch (result)
+        {
+            case "in_lead":
+                distanceTravelledInLead += walkedDistance;
+                break;
+            case "in_tie":
+                distanceTravelledInTie += walkedDistance;
+                break;
+            case "in_deficit":
+                distanceTravelledInDeficit += walkedDistance;
+                break;
+        }
+    }
     public void AddWalkedDistance(float walkedDistance)
     {
-        distanceTravelled = walkedDistance;
+        distanceTravelled += walkedDistance;
     }
 
     public void AddStunnedByBall()
@@ -888,7 +911,7 @@ public class PlayerLogging : MonoBehaviour
                 break;
         }
 
-}
+    }
 
     public void AddEnemyStunned(string shotType, float stunDuration)
     {
@@ -975,7 +998,7 @@ public class PlayerLogging : MonoBehaviour
                         normalStunnedByEnemyInLead++;
                         break;
                     case "in_tie":
-                        normalStunnedByEneInTie++;
+                        normalStunnedByEnemyInTie++;
                         break;
                     case "in_deficit":
                         normalStunnedByEnemyInDeficit++;
@@ -1035,7 +1058,7 @@ public class PlayerLogging : MonoBehaviour
         }
 
     }
-    
+
     public void AddEmote(string type)
     {
         switch (type)
