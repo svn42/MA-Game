@@ -440,9 +440,10 @@ public class Player : MonoBehaviour
         emojiRenderer.enabled = false;
     }
 
-    public void CalculateLogData()
+    public void CalculateLogData(string endingCondition)
     {
         positionTracker.CalculateWalkedDistance();
+        playerLogging.SetEndingCondition(endingCondition);
         //playerLogging.CalculateAccuracy();
         //playerLogging.CalculateZonePercentage();
         //playerLogging.CalculateShots();

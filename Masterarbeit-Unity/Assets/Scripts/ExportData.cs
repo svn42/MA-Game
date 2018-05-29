@@ -88,6 +88,7 @@ public class ExportData : MonoBehaviour
 
                 //Resultat
                 newFile.Write(sceneNameAbbreviation + "_Resultat;");
+                newFile.Write(sceneNameAbbreviation + "_Endbedingung;");
                 newFile.Write(sceneNameAbbreviation + "_Tore;");
                 newFile.Write(sceneNameAbbreviation + "_Gegentore;");
                 //Art der Tore
@@ -368,6 +369,7 @@ public class ExportData : MonoBehaviour
 
         //Resultat
         file.Write(pL.finalResult + ";");
+        file.Write(pL.endingCondition + ";");
         file.Write(pL.goalsScored + ";");
         file.Write(pL.goalsConceded + ";");
         //Art der Tore

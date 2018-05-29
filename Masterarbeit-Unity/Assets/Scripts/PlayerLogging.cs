@@ -17,6 +17,7 @@ public class PlayerLogging : MonoBehaviour
 
     //result
     public string finalResult;
+    public string endingCondition;
     public int goalsScored;
     public int goalsConceded;
     //goals Scored
@@ -1144,7 +1145,10 @@ public class PlayerLogging : MonoBehaviour
 
     }
 
-
+    public void SetEndingCondition(string condition)
+    {
+        endingCondition = condition;
+    }
 
     //public void CalculateEmotes()
     //{

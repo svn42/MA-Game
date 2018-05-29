@@ -10,6 +10,7 @@ public class GameState : MonoBehaviour
 
     public int maximumBalls;
     public int goalLimit;
+    public float timeLeft;
     public float goalFreezeTime;
     private List<Ball> ballList = new List<Ball>();
     bool maximumBallsReached = false;
@@ -17,6 +18,7 @@ public class GameState : MonoBehaviour
     public int goalsTeam2 = 0;
     public Text scoreTeam1;
     public Text scoreTeam2;
+    public Text timer;
     public bool gamePaused;
 
     public Canvas pauseScreen;
@@ -29,7 +31,7 @@ public class GameState : MonoBehaviour
     private bool player1Ready;
     private bool player2Ready;
     private bool playerHelp;
-    
+
     public bool levelEnded;
     public bool nextLevelReady;
     public int timeUntilNextLevel;
@@ -40,6 +42,7 @@ public class GameState : MonoBehaviour
     private Text helpText;
     public bool startCountdownActivated;    //regelt, ob der Startbildschirm mit dem Countdown angezeigt werden soll
 
+    private string endingCondition;
     public GameObject player1;
     public GameObject player2;
     private Player player1Script;
@@ -58,6 +61,8 @@ public class GameState : MonoBehaviour
     {
         SetGoalCount("Team1");
         SetGoalCount("Team2");
+
+        timeLeft += 0.02f;
 
         transparentScreen = pauseScreen.transform.Find("TransparentScreen").gameObject;
         topText = transparentScreen.transform.Find("topText").GetComponent<Text>();
@@ -87,6 +92,7 @@ public class GameState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckTimer();
         CheckPause();
     }
 
@@ -184,10 +190,24 @@ public class GameState : MonoBehaviour
 
     }
 
+    private void CheckTimer()
+    {
+        timeLeft -= Time.deltaTime;
+        timer.text = Mathf.RoundToInt(timeLeft).ToString();
+
+        if (timeLeft <= 0)
+        {
+            endingCondition = "Time";
+            SetGamePaused(true, "end");
+        }
+    }
+
+
     private void CheckGoalLimit()
     {
         if (goalsTeam1 == goalLimit || goalsTeam2 == goalLimit)
         {
+            endingCondition = "Goals";
             SetGamePaused(true, "end");
         }
         else
@@ -244,24 +264,25 @@ public class GameState : MonoBehaviour
                         StartCoroutine(StartDepauseCountdown(depauseCountdown));
                     }
                 }
-                else if (levelEnded && nextLevelReady)
+            }
+            else if (levelEnded && nextLevelReady)
+            {
+                //überprüfe, ob die einzelnen Spieler bereit sind
+                if (Input.GetButtonUp("ShootP1"))
                 {
-                    //überprüfe, ob die einzelnen Spieler bereit sind
-                    if (Input.GetButtonUp("ShootP1"))
-                    {
-                        SetPlayerReady(true, 1);
-                    }
-                    else if (Input.GetButtonUp("ShootP2"))
-                    {
-                        SetPlayerReady(true, 2);
-                    }
-                    if (player1Ready && player2Ready)
-                    {
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-                    }
+                    SetPlayerReady(true, 1);
+                }
+                else if (Input.GetButtonUp("ShootP2"))
+                {
+                    SetPlayerReady(true, 2);
+                }
+                if (player1Ready && player2Ready)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 }
             }
-        }
+            }
+        
     }
 
     public bool GetGamePaused()
@@ -335,7 +356,6 @@ public class GameState : MonoBehaviour
 
     IEnumerator SetNextLevelReady()
     {
-        Debug.Log("asdasdas");
         yield return new WaitForSeconds(timeUntilNextLevel * Time.timeScale);
         BuildPauseScreen("endLevelReady");
         nextLevelReady = true;
@@ -350,7 +370,7 @@ public class GameState : MonoBehaviour
 
         switch (screenType)
         {
-          
+
             case "pause":
                 helpText.enabled = true;
                 transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
@@ -388,10 +408,12 @@ public class GameState : MonoBehaviour
                 if (goalsTeam1 > goalsTeam2)
                 {
                     topText.text = "Spieler 1 gewinnt mit " + goalsTeam1 + " - " + goalsTeam2 + "!";
-                } else if (goalsTeam1 < goalsTeam2)
+                }
+                else if (goalsTeam1 < goalsTeam2)
                 {
                     topText.text = "Spieler 1 gewinnt mit " + goalsTeam2 + " - " + goalsTeam1 + "!";
-                } else
+                }
+                else
                 {
                     topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
                 }
@@ -423,13 +445,14 @@ public class GameState : MonoBehaviour
         }
     }
 
+
     public void EndScene()
     {
         levelEnded = true;
         BuildPauseScreen("endWait");
         globalTimer.SetEndTime();
-        player1Script.CalculateLogData();
-        player2Script.CalculateLogData();
+        player1Script.CalculateLogData(endingCondition);
+        player2Script.CalculateLogData(endingCondition);
         ExportData exportData = (ExportData)FindObjectOfType(typeof(ExportData));
         exportData.ExportAllData();
     }
