@@ -16,15 +16,16 @@ public class GameState : MonoBehaviour
     bool maximumBallsReached = false;
     public int goalsTeam1 = 0;
     public int goalsTeam2 = 0;
-    public Text scoreTeam1;
-    public Text scoreTeam2;
-    public Text timer;
     public bool gamePaused;
 
+    public GameObject gui;
+    private Text scoreTeam1;
+    private Text scoreTeam2;
+    private Text timer;
     public Canvas pauseScreen;
-    public GameObject transparentScreen;
-    public Canvas player1Box;
-    public Canvas player2Box;
+    private GameObject transparentScreen;
+    private Canvas player1Box;
+    private Canvas player2Box;
     private Image greenCheckP1;
     private Image greenCheckP2;
 
@@ -36,6 +37,8 @@ public class GameState : MonoBehaviour
     public bool nextLevelReady;
     public int timeUntilNextLevel;
     public int depauseCountdown;
+    private bool depauseCountdownStarted;
+    private bool timerBlink;
     private Text topText;
     private Text middleText;
     private Text observerText;
@@ -51,6 +54,12 @@ public class GameState : MonoBehaviour
     private PlayerLogging playerLoggingP1;
     private PlayerLogging playerLoggingP2;
     public GlobalTimer globalTimer;
+    //Audios
+    private AudioSource audioSource;
+    public AudioClip countdownRegular;
+    public AudioClip countdownEnd;
+    public AudioClip goalHorn;
+
 
     private void Awake()
     {
@@ -59,8 +68,6 @@ public class GameState : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        SetGoalCount("Team1");
-        SetGoalCount("Team2");
 
         timeLeft += 0.02f;
 
@@ -74,11 +81,24 @@ public class GameState : MonoBehaviour
         greenCheckP1 = transparentScreen.transform.Find("Spieler1").transform.Find("Spieler1_Check").GetComponent<Image>();
         greenCheckP2 = transparentScreen.transform.Find("Spieler2").transform.Find("Spieler2_Check").GetComponent<Image>();
 
+        scoreTeam1 = gui.transform.Find("UI_Spielstand").transform.Find("Spielstand Team 1").transform.Find("Score Team 1").GetComponent<Text>();
+        scoreTeam2 = gui.transform.Find("UI_Spielstand").transform.Find("Spielstand Team 2").transform.Find("Score Team 2").GetComponent<Text>();
+        timer = gui.transform.Find("UI_Spielstand").transform.Find("Timer_Background").transform.Find("Time").GetComponent<Text>();
+
         globalTimer = (GlobalTimer)FindObjectOfType(typeof(GlobalTimer));
         playerLoggingP1 = player1.GetComponent<PlayerLogging>();
         playerLoggingP2 = player2.GetComponent<PlayerLogging>();
         player1Script = player1.GetComponent<Player>();
         player2Script = player2.GetComponent<Player>();
+
+        audioSource = GetComponent<AudioSource>();
+        countdownRegular = Resources.Load<AudioClip>("Sounds/countdown_regular");
+        countdownEnd = Resources.Load<AudioClip>("Sounds/countdown_ending");
+        goalHorn = Resources.Load<AudioClip>("Sounds/goal_horn");
+
+        SetGoalCount("Team1");
+        SetGoalCount("Team2");
+
 
         playerLoggingP1.CheckResult();  //Die Playerloggings bekommen das Result zum Start mitgeteilt
         playerLoggingP2.CheckResult();
@@ -138,6 +158,7 @@ public class GameState : MonoBehaviour
     //Wenn ein Ball mit dem entsprechendem Goal-Collider in Berührung kommt, wird dem anderen Team ein Tor zugeschrieben.
     public void GoalScored(string goal, int scoredByTeamNr)
     {
+        PlaySound(goalHorn,0.3f);
         if (goal.Equals("Goal1"))
         {
             goalsTeam2++;
@@ -174,6 +195,7 @@ public class GameState : MonoBehaviour
         playerLoggingP1.CheckResult();
         playerLoggingP2.CheckResult();
         CheckGoalLimit();
+
     }
 
     //Hiermit kann die Anzeige für die Tore bearbeitet werden
@@ -194,14 +216,35 @@ public class GameState : MonoBehaviour
     {
         timeLeft -= Time.deltaTime;
         timer.text = Mathf.RoundToInt(timeLeft).ToString();
-
+        if (timeLeft <= 10)
+        {
+            if (!timerBlink)
+            {
+                StartCoroutine(TimerBlinkEffect());
+                timerBlink = true;
+            }
+        }
         if (timeLeft <= 0)
         {
             endingCondition = "Time";
             SetGamePaused(true, "end");
         }
     }
+    
+    //Blinkeffekt des Stuns
+    IEnumerator TimerBlinkEffect()
+    {
+        int blinkAmount = 10;      //und die Anzahl der Blinkeffekte ermittelt. Die Anzahl ergibt sich aus der Zeit, dividiert durch die Dauer des Blinkeffektes / 2.
 
+        for (float i = 0; i < blinkAmount; i++)   //solange die Anzahl der Blinkeffekte nicht erreicht wurde
+        {
+            PlaySound(countdownRegular,(i/10 +0.1f));
+            timer.color = Color.red;     //wird der Renderer im Wechsel weiß und daraufhin in der ursprünglichen Farbe des Spielers eingefärbt
+            yield return new WaitForSeconds(0.5f);
+            timer.color = Color.white;
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
 
     private void CheckGoalLimit()
     {
@@ -261,7 +304,11 @@ public class GameState : MonoBehaviour
 
                     if (player1Ready && player2Ready)
                     {
-                        StartCoroutine(StartDepauseCountdown(depauseCountdown));
+                        if (!depauseCountdownStarted)
+                        {
+                            StartCoroutine(StartDepauseCountdown(depauseCountdown));
+                            depauseCountdownStarted = true;
+                        }
                     }
                 }
             }
@@ -281,8 +328,8 @@ public class GameState : MonoBehaviour
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 }
             }
-            }
-        
+        }
+
     }
 
     public bool GetGamePaused()
@@ -346,12 +393,15 @@ public class GameState : MonoBehaviour
         for (int i = countdown; i > 0; i--)
         {
             topText.text = i.ToString();
+              PlaySound(countdownRegular, 0.5f);
             yield return new WaitForSeconds(1 * Time.timeScale);
         }
+        PlaySound(countdownEnd,0.5f);
         SetGamePaused(false, "pause");
         SetPlayerReady(false, 1);
         SetPlayerReady(false, 2);
         pauseScreen.enabled = false;
+        depauseCountdownStarted = false;
     }
 
     IEnumerator SetNextLevelReady()
@@ -361,7 +411,14 @@ public class GameState : MonoBehaviour
         nextLevelReady = true;
     }
 
+    private void PlaySound(AudioClip ac, float volume)
+    {
+        float lastTimeScale= Time.timeScale;
+        Time.timeScale = 1f;
+        audioSource.PlayOneShot(ac, volume);
+        Time.timeScale = lastTimeScale;
 
+    }
 
     public void BuildPauseScreen(string screenType)
     {

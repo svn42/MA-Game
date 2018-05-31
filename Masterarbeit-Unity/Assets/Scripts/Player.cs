@@ -41,9 +41,12 @@ public class Player : MonoBehaviour
     public GameObject speechBubble;
     private SpriteRenderer speechbubbleRenderer;
     private SpriteRenderer emojiRenderer;
-    public float emoteTimer; 
+    public float emoteTimer;
     public float emoteDelay;
     public float emoteDisplayTime;
+
+
+
 
     // Use this for initialization
     void Start()
@@ -69,6 +72,9 @@ public class Player : MonoBehaviour
 
         positionTracker = gameObject.GetComponent<PositionTracker>();
         positionTracker.StartTracking(); //das Tracken der Position wird gestartet
+
+
+
     }
 
     // Update is called once per frame
@@ -115,13 +121,13 @@ public class Player : MonoBehaviour
         {
             speedX /= 6;    //wird die Geschwindigkeit reduziert
             speedY /= 6;
-            this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
+            this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             StartCoroutine(StunPlayer(stunDurationBall));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
             blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
             shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
             StartCoroutine(SetStunnableByBall(stunDurationBall));   //der Spieler wird für die Zeit "stunDurationBall" nicht mehr für Bälle stunnable
             playerLogging.AddStunnedByBall();   //und der PLogger bekommt mitgeteilt, dass der Spieler von einem Ball betäubt wurde
-        } 
+        }
         if (coll.gameObject.tag == "Shot")
         {
             if (coll.gameObject.GetComponent<Shot>().GetPlayerTeam() != playerTeam) //wenn der Schuss vom gegenerischen Spieler ist
@@ -143,7 +149,7 @@ public class Player : MonoBehaviour
     {
 
         //sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
-        if ((Mathf.Abs(Input.GetAxis("Horizontal"+playerAcronym)) > 0.2f))
+        if ((Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.1f))
         {
             //wird die Accelerate-Methode mit dem Argument X aufgerufen
             Accelerate("X");
@@ -156,7 +162,7 @@ public class Player : MonoBehaviour
 
 
         //das gleiche geschieht mit der Vertikalen Achse (hoch oder runter Pfeiltaste sowie W und S)
-        if ((Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.2f))
+        if ((Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.1f))
         {
             Accelerate("Y");
         }
@@ -166,9 +172,9 @@ public class Player : MonoBehaviour
         }
 
         //die BewegungsZeit wird erhöht, sofern mindestens eine der beiden Achsen eine Bewegung zurückliefern
-        if ((Mathf.Abs(Input.GetAxis("Vertical"+playerAcronym)) > 0.2f) || Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.2f)
+        if ((Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.1f) || Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.1f)
         {
-            exhaustTime+= Time.deltaTime;
+            exhaustTime += Time.deltaTime;
         }
         else
         {
@@ -239,10 +245,10 @@ public class Player : MonoBehaviour
 
 
         //reference: https://answers.unity.com/questions/307150/rotate-an-object-toward-the-direction-the-joystick.html
-        
-            float yEuler = Mathf.Atan2(Input.GetAxis("Horizontal" + playerAcronym) * -1, Input.GetAxis("Vertical" + playerAcronym)) * Mathf.Rad2Deg; //Horizontal *1
-            yEuler -= 270;   //Korrektur durch das gedrehte Sprite
-            Vector3 direction = new Vector3(0, 0, yEuler);
+
+        float yEuler = Mathf.Atan2(Input.GetAxis("Horizontal" + playerAcronym) * -1, Input.GetAxis("Vertical" + playerAcronym)) * Mathf.Rad2Deg; //Horizontal *1
+        yEuler -= 270;   //Korrektur durch das gedrehte Sprite
+        Vector3 direction = new Vector3(0, 0, yEuler);
         if (Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.1f || Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.1f)   //Damit die Richtung nicht durch die "Nullstellung" des Sticks genullt wird
         {
             transform.eulerAngles = direction;
@@ -337,7 +343,7 @@ public class Player : MonoBehaviour
     public void CheckExhaust()
     {
         //sofern sich der Spieler eine bestimmte Zeit bewegt und diese Zeit über der festgelegten Zeit bis zum Spawnen eines Abgaspartikels liegt
-        if (exhaustTime > exhaustSpawnTime )
+        if (exhaustTime > exhaustSpawnTime)
         {
             //wird ein Abgaspartikel an der Position des ExhaustSpawners erstellt
             GameObject exhaust = Instantiate(exhaustPrefab, exSpawner.transform.position, exSpawner.transform.rotation);
@@ -406,25 +412,26 @@ public class Player : MonoBehaviour
     //Methode fürs Benutzen der Emotes
     public void CastEmote(string type)
     {
-        
-            switch (type)
-            {
-                case ("nice"): Debug.Log("Player "+playerTeam+": Nice!");
-                    //spawn UI an Position für Player1 für emoteDelay
-                    break;
-                case ("haha"):
-                    Debug.Log("Player " + playerTeam + ": Haha!");
-                    //spawn UI an Position für Player1
-                    break;
-                case ("cry"):
-                    Debug.Log("Player " + playerTeam + ": Oh nein");
-                    //spawn UI an Position für Player1
-                    break;
-                case ("angry"):
-                    Debug.Log("Player " + playerTeam + ": Argh!");
-                    //spawn UI an Position für Player1
-                    break;
-            }
+
+        switch (type)
+        {
+            case ("nice"):
+                Debug.Log("Player " + playerTeam + ": Nice!");
+                //spawn UI an Position für Player1 für emoteDelay
+                break;
+            case ("haha"):
+                Debug.Log("Player " + playerTeam + ": Haha!");
+                //spawn UI an Position für Player1
+                break;
+            case ("cry"):
+                Debug.Log("Player " + playerTeam + ": Oh nein");
+                //spawn UI an Position für Player1
+                break;
+            case ("angry"):
+                Debug.Log("Player " + playerTeam + ": Argh!");
+                //spawn UI an Position für Player1
+                break;
+        }
         StartCoroutine(DisplayEmote(type));
         playerLogging.AddEmote(type);   //dem Logging wird die Art des Emotes mitgeteilt    
         emoteTimer = 0;
@@ -432,13 +439,16 @@ public class Player : MonoBehaviour
 
     IEnumerator DisplayEmote(string type)
     {
-        emojiRenderer.sprite = Resources.Load<Sprite>("Textures/Emojis/"+type);
+        emojiRenderer.sprite = Resources.Load<Sprite>("Textures/Emojis/" + type);
         speechbubbleRenderer.enabled = true;
         emojiRenderer.enabled = true;
         yield return new WaitForSeconds(emoteDisplayTime);
         speechbubbleRenderer.enabled = false;
         emojiRenderer.enabled = false;
     }
+
+    
+
 
     public void CalculateLogData(string endingCondition)
     {

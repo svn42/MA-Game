@@ -26,6 +26,12 @@ public class ShotSpawner : MonoBehaviour
     public int shotCount = 0;
 
     private Color shotColor;
+    //Audios
+    private AudioSource audioSource;
+    public AudioClip audioShotNormal;
+    public AudioClip audioShotMedium;
+    public AudioClip audioShotLarge;
+
 
     // Use this for initialization
     void Start()
@@ -34,6 +40,12 @@ public class ShotSpawner : MonoBehaviour
         player = transform.parent.GetComponent<Player>();
         playerTeam = player.playerTeam;
         playerLogging = transform.parent.GetComponent<PlayerLogging>();
+
+        //Audio
+        audioSource = GetComponent<AudioSource>();
+        audioShotNormal = Resources.Load<AudioClip>("Sounds/normal_shot");
+        audioShotMedium = Resources.Load<AudioClip>("Sounds/medium_shot");
+        audioShotLarge = Resources.Load<AudioClip>("Sounds/large_shot");
 
     }
 
@@ -97,6 +109,7 @@ public class ShotSpawner : MonoBehaviour
             spawnNormalShot = false;
             playerLogging.AddShot("normal");
             SetShotProperties(shot);
+            PlaySound(audioShotNormal,0.5f);
         }
         else if (spawnMediumShot && spawnable)
         {
@@ -104,6 +117,7 @@ public class ShotSpawner : MonoBehaviour
             spawnMediumShot = false;
             playerLogging.AddShot("medium");
             SetShotProperties(shot);
+            PlaySound(audioShotMedium, 0.5f);
         }
         else if (spawnLargeShot && spawnable)
         {
@@ -111,8 +125,8 @@ public class ShotSpawner : MonoBehaviour
             spawnLargeShot = false;
             playerLogging.AddShot("large");
             SetShotProperties(shot);
+            PlaySound(audioShotLarge, 0.4f);
         }
-
         ResetShotChargeTime();
 
     }
@@ -125,6 +139,14 @@ public class ShotSpawner : MonoBehaviour
         shot.GetComponent<Shot>().SetShotID(shotCount);                     //sowie seine ID
         shot.name = "Shot_" + shotCount + "_Player_" + playerTeam;       //der Name wird aus dem Count und der PlayerID gebaut.
 
+    }
+
+    private void PlaySound(AudioClip ac, float volume)
+    {
+        float lastTimeScale = Time.timeScale;
+        Time.timeScale = 1f;
+        audioSource.PlayOneShot(ac, volume);
+        Time.timeScale = lastTimeScale;
     }
 
     //Methode, um die Farbe des Schusses zu setzen
