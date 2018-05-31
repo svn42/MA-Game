@@ -232,7 +232,6 @@ public class PlayerLogging : MonoBehaviour
     public int largeStunnedByEnemyInDeficit;
     public float stunnedByEnemyTotalTimeInDeficit;
 
-
     //Stunned by ball
     public int stunnedByBall;
     public int stunnedByBallInLead;

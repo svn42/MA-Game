@@ -31,6 +31,13 @@ public class ShotSpawner : MonoBehaviour
     public AudioClip audioShotNormal;
     public AudioClip audioShotMedium;
     public AudioClip audioShotLarge;
+    public AudioClip shotCharge;
+    private bool normalShotChargingSound;
+    private bool mediumShotChargingSound;
+    private bool largeShotChargingSound;
+    public AudioClip shotAbort;
+    private bool shotAborted;
+
 
 
     // Use this for initialization
@@ -40,12 +47,13 @@ public class ShotSpawner : MonoBehaviour
         player = transform.parent.GetComponent<Player>();
         playerTeam = player.playerTeam;
         playerLogging = transform.parent.GetComponent<PlayerLogging>();
-
         //Audio
         audioSource = GetComponent<AudioSource>();
         audioShotNormal = Resources.Load<AudioClip>("Sounds/normal_shot");
         audioShotMedium = Resources.Load<AudioClip>("Sounds/medium_shot");
         audioShotLarge = Resources.Load<AudioClip>("Sounds/large_shot");
+        shotCharge = Resources.Load<AudioClip>("Sounds/shot_charge");
+        shotAbort = Resources.Load<AudioClip>("Sounds/shot_abort");
 
     }
 
@@ -71,6 +79,14 @@ public class ShotSpawner : MonoBehaviour
             spawnLargeShot = false;
             chargingShotSprite.transform.localScale = new Vector3(0.8f, 0.8f, 1f);
             chargingShotSprite.transform.localPosition = new Vector3(-1f, 0f, 0f);
+
+            if (!normalShotChargingSound)
+            {
+                normalShotChargingSound = true;
+                audioSource.loop = true;
+                PlaySound(shotCharge, 0.1f);
+            }
+
         }
         //sofern die Zeit noch geringer ist als die zu erreichende SpawnZeit
         else if (shotChargeTime > spawnTimerMedium && shotChargeTime < spawnTimerLarge)
@@ -80,6 +96,13 @@ public class ShotSpawner : MonoBehaviour
             spawnLargeShot = false;
             chargingShotSprite.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
             chargingShotSprite.transform.localPosition = new Vector3(-0.6f, 0f, 0f);
+            if (!mediumShotChargingSound)
+            {
+                mediumShotChargingSound = true;
+                audioSource.loop = true;
+                PlaySound(shotCharge, 0.2f);
+            }
+
         }
         else if (shotChargeTime > spawnTimerLarge && shotChargeTime < spawnTimerLimit)
         {
@@ -88,14 +111,30 @@ public class ShotSpawner : MonoBehaviour
             spawnLargeShot = true;
             chargingShotSprite.transform.localScale = new Vector3(1.8f, 1.8f, 1f);
             chargingShotSprite.transform.localPosition = new Vector3(0f, 0f, 0f);
+            if (!largeShotChargingSound)
+            {
+                largeShotChargingSound = true;
+                audioSource.loop = true;
+                PlaySound(shotCharge, 0.4f);
+            }
+
         }
         else if (shotChargeTime > spawnTimerLimit)
         {
-            spawnNormalShot = false;
-            spawnMediumShot = false;
-            spawnLargeShot = false;
-            chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f);
-
+            if (!shotAborted)
+            {
+                shotAborted = true;
+                spawnNormalShot = false;
+                spawnMediumShot = false;
+                spawnLargeShot = false;
+                chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f);
+                audioSource.Stop();
+                audioSource.loop = false;
+                PlaySound(shotAbort, 0.4f);
+                normalShotChargingSound = false;
+                mediumShotChargingSound = false;
+                largeShotChargingSound = false;
+            }
         }
     }
 
@@ -128,7 +167,12 @@ public class ShotSpawner : MonoBehaviour
             PlaySound(audioShotLarge, 0.4f);
         }
         ResetShotChargeTime();
+        normalShotChargingSound = false;
+        mediumShotChargingSound = false;
+        largeShotChargingSound = false;
+        shotAborted = false;
 
+        audioSource.loop = false;
     }
 
     private void SetShotProperties(GameObject shot){
@@ -145,7 +189,9 @@ public class ShotSpawner : MonoBehaviour
     {
         float lastTimeScale = Time.timeScale;
         Time.timeScale = 1f;
-        audioSource.PlayOneShot(ac, volume);
+        audioSource.clip = ac;
+        audioSource.volume = volume;
+        audioSource.Play();
         Time.timeScale = lastTimeScale;
     }
 

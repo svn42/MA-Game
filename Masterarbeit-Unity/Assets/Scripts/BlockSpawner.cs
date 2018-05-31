@@ -20,6 +20,10 @@ public class BlockSpawner : MonoBehaviour
 
     private Color blockColor;
     public int blockCount = 0;
+    private AudioSource audioSource;
+    public AudioClip placeBlock;
+    public AudioClip chargeBlock;
+    private bool blockChargingSound;
 
 
 
@@ -32,6 +36,9 @@ public class BlockSpawner : MonoBehaviour
         player = transform.parent.GetComponent<Player>();
         playerTeam = player.playerTeam;
         playerLogging = transform.parent.GetComponent<PlayerLogging>();
+        audioSource = GetComponent<AudioSource>();
+        placeBlock = Resources.Load<AudioClip>("Sounds/place_block");
+        chargeBlock = Resources.Load<AudioClip>("Sounds/charge_block");
 
     }
 
@@ -91,6 +98,11 @@ public class BlockSpawner : MonoBehaviour
     //Die Methode wird beim Festhalten des B-Buttons in jedem Frame aufgerufen und erhöht die blockChargeTime.
     public void AddBlockChargeTime(float i)
     {
+        if (!blockChargingSound)
+        {
+            PlaySound(chargeBlock, 0.4f);
+            blockChargingSound = true;
+        }
         GetComponent<SpriteRenderer>().enabled = true;
         //sofern die Zeit noch geringer ist als die zu erreichende SpawnZeit
         if (blockChargeTime < spawnTimer)
@@ -127,6 +139,7 @@ public class BlockSpawner : MonoBehaviour
 
     public void ResetBlockChargeTime()
     {
+        blockChargingSound = false;
         blockChargeTime = 0;    //die Zeit des Aufladens wird zurückgesetzt
         SetSpawnerSize(blockChargeTime);  //ebenfalls die Größe des Spawners 
         SetBlockTransparency(0, spawnColor);
@@ -137,6 +150,7 @@ public class BlockSpawner : MonoBehaviour
     //die Methode wird aufgerufen, sofern der B-Button losgelassen wird 
     public void SpawnBlock()
     {
+        audioSource.Stop();
         //wenn das Ziel erreicht wurde und der Blockspawner nicht kollidiert
         if (blockChargeTime == spawnTimer && spawnable)
         {
@@ -146,6 +160,7 @@ public class BlockSpawner : MonoBehaviour
             block.GetComponent<Block>().SetPlayerTeam(playerTeam);
             block.GetComponent<Block>().SetBlockID(blockCount);
             playerLogging.AddBlock();
+            PlaySound(placeBlock, 0.8f);
 
             block.name = "Block_" + blockCount + "_Player_" + playerTeam;
 
@@ -161,5 +176,16 @@ public class BlockSpawner : MonoBehaviour
         spriteRenderer.color = col; //sowohl das Sprite bekommt die Farbe des Spielers 
         blockColor = col;       //als auch die Variable für das Erstellen der neuen Blöcke
     }
+
+    private void PlaySound(AudioClip ac, float volume)
+    {
+        float lastTimeScale = Time.timeScale;
+        Time.timeScale = 1f;
+        audioSource.clip = ac;
+        audioSource.volume = volume;
+        audioSource.Play();
+        Time.timeScale = lastTimeScale;
+    }
+
 
 }

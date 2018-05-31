@@ -13,6 +13,7 @@ public class Block : MonoBehaviour
     private SpriteRenderer sr;
     private int playerTeam;
     private int blockID;
+    private GameState gameState;
 
 
     // Use this for initialization
@@ -20,6 +21,8 @@ public class Block : MonoBehaviour
     {
         health = 3;
         sr = gameObject.GetComponent<SpriteRenderer>();
+        gameState = (GameState)FindObjectOfType(typeof(GameState));
+
     }
 
     // Update is called once per frame
@@ -34,13 +37,17 @@ public class Block : MonoBehaviour
         if (health == 2)
         {
             sr.sprite = Resources.Load<Sprite>("Textures/Block_2Health");
+            gameState.PlaySound("slap", 0.8f);
         }
         else if (health == 1)
         {
-                sr.sprite = Resources.Load<Sprite>("Textures/Block_1Health");
+            sr.sprite = Resources.Load<Sprite>("Textures/Block_1Health");
+            gameState.PlaySound("slap", 0.8f);
+
         }
         else if (health <= 0)
         {
+            gameState.PlaySound("plop", 0.5f);
             DestroyBlock();
         }
 

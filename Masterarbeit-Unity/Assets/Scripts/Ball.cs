@@ -76,5 +76,11 @@ public class Ball : MonoBehaviour {
     public void SetLastHitBy(int playerTeam)
     {
         lastHitBy = playerTeam;
+}
+
+    public void PlayHitSound(float vol)
+    {
+        gameState.PlaySound("ball_hit", vol);  
     }
+
 }

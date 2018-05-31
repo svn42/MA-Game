@@ -22,8 +22,10 @@ public class GameState : MonoBehaviour
     private Text scoreTeam1;
     private Text scoreTeam2;
     private Text timer;
-    public Canvas pauseScreen;
+    private GameObject pauseScreenGO;
+    private Canvas pauseScreen;
     private GameObject transparentScreen;
+    private GameObject popUp;
     private Canvas player1Box;
     private Canvas player2Box;
     private Image greenCheckP1;
@@ -39,6 +41,8 @@ public class GameState : MonoBehaviour
     public int depauseCountdown;
     private bool depauseCountdownStarted;
     private bool timerBlink;
+    private bool popUp120Showed;
+    private bool popUp60Showed;
     private Text topText;
     private Text middleText;
     private Text observerText;
@@ -59,6 +63,12 @@ public class GameState : MonoBehaviour
     public AudioClip countdownRegular;
     public AudioClip countdownEnd;
     public AudioClip goalHorn;
+    public AudioClip slap;
+    public AudioClip plop;
+    public AudioClip ballHit;
+    public AudioClip whistle;
+    public AudioClip popup;
+
 
 
     private void Awake()
@@ -70,8 +80,19 @@ public class GameState : MonoBehaviour
     {
 
         timeLeft += 0.02f;
+        if (timeLeft < 120)
+        {
+            popUp120Showed = true;
+        }
+        else if (timeLeft < 60)
+        {
+            popUp60Showed = true;
+        }
 
-        transparentScreen = pauseScreen.transform.Find("TransparentScreen").gameObject;
+        popUp = gui.transform.Find("PopUp").gameObject;
+        pauseScreenGO = gui.transform.Find("PauseScreen").gameObject;
+        pauseScreen = pauseScreenGO.GetComponent<Canvas>();
+        transparentScreen = pauseScreenGO.transform.Find("TransparentScreen").gameObject;
         topText = transparentScreen.transform.Find("topText").GetComponent<Text>();
         middleText = transparentScreen.transform.Find("middleText").GetComponent<Text>();
         observerText = transparentScreen.transform.Find("observerText").GetComponent<Text>();
@@ -95,6 +116,11 @@ public class GameState : MonoBehaviour
         countdownRegular = Resources.Load<AudioClip>("Sounds/countdown_regular");
         countdownEnd = Resources.Load<AudioClip>("Sounds/countdown_ending");
         goalHorn = Resources.Load<AudioClip>("Sounds/goal_horn");
+        slap = Resources.Load<AudioClip>("Sounds/slap");
+        plop = Resources.Load<AudioClip>("Sounds/plop");
+        ballHit = Resources.Load<AudioClip>("Sounds/ball_hit");
+        whistle = Resources.Load<AudioClip>("Sounds/whistle");
+        popup = Resources.Load<AudioClip>("Sounds/popup");
 
         SetGoalCount("Team1");
         SetGoalCount("Team2");
@@ -158,7 +184,7 @@ public class GameState : MonoBehaviour
     //Wenn ein Ball mit dem entsprechendem Goal-Collider in Berührung kommt, wird dem anderen Team ein Tor zugeschrieben.
     public void GoalScored(string goal, int scoredByTeamNr)
     {
-        PlaySound(goalHorn,0.3f);
+        PlaySound(goalHorn, 0.3f);
         if (goal.Equals("Goal1"))
         {
             goalsTeam2++;
@@ -216,7 +242,18 @@ public class GameState : MonoBehaviour
     {
         timeLeft -= Time.deltaTime;
         timer.text = Mathf.RoundToInt(timeLeft).ToString();
-        if (timeLeft <= 10)
+
+        if (timeLeft <= 120 && !popUp120Showed)
+        {
+            StartCoroutine(ShowPopUp("2 Minuten"));
+            popUp120Showed = true;
+        }
+        else if (timeLeft <= 60 && !popUp60Showed)
+        {
+            StartCoroutine(ShowPopUp("1 Minute"));
+            popUp60Showed = true;
+        }
+        else if (timeLeft <= 10)
         {
             if (!timerBlink)
             {
@@ -224,13 +261,17 @@ public class GameState : MonoBehaviour
                 timerBlink = true;
             }
         }
-        if (timeLeft <= 0)
+        else if (timeLeft <= 0)
         {
-            endingCondition = "Time";
-            SetGamePaused(true, "end");
+            if (!levelEnded)
+            {
+                PlaySound(whistle, 0.4f);
+                endingCondition = "Time";
+                SetGamePaused(true, "end");
+            }
         }
     }
-    
+
     //Blinkeffekt des Stuns
     IEnumerator TimerBlinkEffect()
     {
@@ -238,7 +279,7 @@ public class GameState : MonoBehaviour
 
         for (float i = 0; i < blinkAmount; i++)   //solange die Anzahl der Blinkeffekte nicht erreicht wurde
         {
-            PlaySound(countdownRegular,(i/10 +0.1f));
+            PlaySound(countdownRegular, (i + 1 / 10));   //mit jeder Sekunde wird der Sound um 10% lauter. 
             timer.color = Color.red;     //wird der Renderer im Wechsel weiß und daraufhin in der ursprünglichen Farbe des Spielers eingefärbt
             yield return new WaitForSeconds(0.5f);
             timer.color = Color.white;
@@ -393,10 +434,10 @@ public class GameState : MonoBehaviour
         for (int i = countdown; i > 0; i--)
         {
             topText.text = i.ToString();
-              PlaySound(countdownRegular, 0.5f);
+            PlaySound(countdownRegular, 0.5f);
             yield return new WaitForSeconds(1 * Time.timeScale);
         }
-        PlaySound(countdownEnd,0.5f);
+        PlaySound(countdownEnd, 0.5f);
         SetGamePaused(false, "pause");
         SetPlayerReady(false, 1);
         SetPlayerReady(false, 2);
@@ -411,14 +452,7 @@ public class GameState : MonoBehaviour
         nextLevelReady = true;
     }
 
-    private void PlaySound(AudioClip ac, float volume)
-    {
-        float lastTimeScale= Time.timeScale;
-        Time.timeScale = 1f;
-        audioSource.PlayOneShot(ac, volume);
-        Time.timeScale = lastTimeScale;
 
-    }
 
     public void BuildPauseScreen(string screenType)
     {
@@ -502,6 +536,14 @@ public class GameState : MonoBehaviour
         }
     }
 
+    IEnumerator ShowPopUp(string timeleft)
+    {
+        popUp.GetComponent<Canvas>().enabled = true;
+        PlaySound(popup, 0.3f);
+        popUp.transform.Find("TransparentScreen").transform.Find("topText").GetComponent<Text>().text = "Nur noch " + timeleft + "!";
+        yield return new WaitForSeconds(3 * Time.timeScale);
+        popUp.GetComponent<Canvas>().enabled = false;
+    }
 
     public void EndScene()
     {
@@ -513,4 +555,38 @@ public class GameState : MonoBehaviour
         ExportData exportData = (ExportData)FindObjectOfType(typeof(ExportData));
         exportData.ExportAllData();
     }
+
+    public void PlaySound(AudioClip ac, float volume)
+    {
+        float lastTimeScale = Time.timeScale;
+        Time.timeScale = 1f;
+        audioSource.PlayOneShot(ac, volume);
+        Time.timeScale = lastTimeScale;
+
+    }
+
+    public void PlaySound(string file, float volume)
+    {
+        float lastTimeScale = Time.timeScale;
+        Time.timeScale = 1f;
+        switch (file)
+        {
+            case "slap":
+                audioSource.PlayOneShot(slap, volume);
+                break;
+            case "plop":
+                audioSource.PlayOneShot(plop, volume);
+                break;
+            case "ball_hit":
+                audioSource.PlayOneShot(ballHit, volume);
+                break;
+                
+        }
+
+        Time.timeScale = lastTimeScale;
+
+    }
+
+
+
 }

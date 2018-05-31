@@ -21,6 +21,7 @@ public class Shot : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         //zuweisen des shotTypes in abhängigkeit zur Stärke
         switch (strength)
         {
@@ -80,12 +81,12 @@ public class Shot : MonoBehaviour
         switch (collidingObject.tag)
         {
             case "Block":
-                collidingObject.GetComponent<Block>().ReduceHealth(this.strength);
+                collidingObject.GetComponent<Block>().ReduceHealth(strength);
                 DestroyShot();
                 playerLogging.AddAccuracy("block");
                 break;
             case "Player":
-                if (collidingObject.GetComponent<Player>().playerTeam != this.playerTeam)   //wenn der Schuss den gegnerischen Spieler trifft
+                if (collidingObject.GetComponent<Player>().playerTeam != playerTeam)   //wenn der Schuss den gegnerischen Spieler trifft
                 {
                     // reference: https://answers.unity.com/questions/1100879/push-object-in-opposite-direction-of-collision.html
                     // calculate force vector
@@ -93,30 +94,27 @@ public class Shot : MonoBehaviour
                     // normalize force vector to get direction only and trim magnitude
                     force.Normalize();
                     coll.rigidbody.AddForce(force * ballImpact);
-             //       if (shotType.Equals("normal"))
-             //       {
-                        DestroyShot();
-              //      }
+                    DestroyShot();
                     playerLogging.AddAccuracy("player");
-                } 
+                }
                 break;
             case "Boundary":
                 DestroyShot();
                 playerLogging.AddAccuracy("destroy");
                 break;
             case "Shot":
-                if (collidingObject.GetComponent<Shot>().GetPlayerTeam() != this.playerTeam)
+                if (collidingObject.GetComponent<Shot>().GetPlayerTeam() != playerTeam)
                 {
-                    if (this.strength < collidingObject.GetComponent<Shot>().strength)
+                    if (strength < collidingObject.GetComponent<Shot>().strength)
                     {
                         DestroyShot();
                     }
-                    else if (this.strength == collidingObject.GetComponent<Shot>().strength)
+                    else if (strength == collidingObject.GetComponent<Shot>().strength)
                     {
                         playerLogging.AddAccuracy("shot");
                         DestroyShot();
                     }
-                    else if (this.strength >= collidingObject.GetComponent<Shot>().strength)
+                    else if (strength >= collidingObject.GetComponent<Shot>().strength)
                     {
                         playerLogging.AddAccuracy("shot");
                     }
@@ -138,10 +136,19 @@ public class Shot : MonoBehaviour
                 forceBall.Normalize();
                 coll.rigidbody.AddForce(forceBall * ballImpact);
                 collidingObject.GetComponent<Ball>().SetLastHitBy(playerTeam);
-         //       if (shotType.Equals("normal"))
-         //       {
-                    DestroyShot();
-        //        }
+                switch (strength)
+                {
+                    case 1:
+                        collidingObject.GetComponent<Ball>().PlayHitSound(0.3f);
+                        break;
+                    case 2:
+                        collidingObject.GetComponent<Ball>().PlayHitSound(0.5f);
+                        break;
+                    case 3:
+                        collidingObject.GetComponent<Ball>().PlayHitSound(0.8f);
+                        break;
+                }
+                DestroyShot();
                 playerLogging.AddAccuracy("ball");
                 break;
         }
@@ -155,7 +162,8 @@ public class Shot : MonoBehaviour
             if (shotType.Equals("large"))
             {
                 trailRenderer.material = Resources.Load<Material>("Materials/TrailRendererLargeShotRed");
-            } else if (shotType.Equals("medium"))
+            }
+            else if (shotType.Equals("medium"))
             {
                 trailRenderer.material = Resources.Load<Material>("Materials/TrailRendererMediumShotRed");
             }
