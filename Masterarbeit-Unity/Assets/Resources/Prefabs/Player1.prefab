@@ -717,7 +717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnTimerMedium: 1
   spawnTimerLarge: 2
-  spawnTimerLimit: 4
+  spawnTimerLimit: 5
   shotChargeTime: 0
   normalShotPrefab: {fileID: 1605120989468744, guid: e247b1f41739b8f4b87c929aaa7f07a2,
     type: 2}
@@ -733,6 +733,7 @@ MonoBehaviour:
   soundShotLarge: {fileID: 0}
   soundShotCharge: {fileID: 0}
   soundShotAbort: {fileID: 0}
+  shotBlinkEffectStarted: 0
 --- !u!114 &114277257188751900
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -169,7 +169,6 @@ public class BlockSpawner : MonoBehaviour
         } else if (blockChargeTime == spawnTimer && !spawnable)
         {
             PlaySound(soundPlacementBlocked, 0.6f);
-
         }
         ResetBlockChargeTime();
 
@@ -193,5 +192,8 @@ public class BlockSpawner : MonoBehaviour
         Time.timeScale = lastTimeScale;
     }
 
-
+    public void StopSoundByStun()
+    {
+        audioSource.Stop();
+    }
 }

@@ -535,14 +535,13 @@ public class GameState : MonoBehaviour
                 topText.fontSize = 45;
                 middleText.text = "Drücke A zum Fortfahren!";
                 break;
-
         }
     }
 
     IEnumerator ShowPopUp(string timeleft)
     {
         popUp.GetComponent<Canvas>().enabled = true;
-        PlaySound(soundPopup, 0.3f);
+        PlaySound(soundPopup, 0.2f);
         popUp.transform.Find("TransparentScreen").transform.Find("topText").GetComponent<Text>().text = "Nur noch " + timeleft + "!";
         yield return new WaitForSeconds(3 * Time.timeScale);
         popUp.GetComponent<Canvas>().enabled = false;
@@ -565,7 +564,6 @@ public class GameState : MonoBehaviour
         Time.timeScale = 1f;
         audioSource.PlayOneShot(ac, volume);
         Time.timeScale = lastTimeScale;
-
     }
 
     public void PlaySound(string file, float volume)

@@ -47,26 +47,12 @@ public class Player : MonoBehaviour
 
     //Audios
     private AudioSource audioSource;
+    private AudioClip soundBoing;
     public List<AudioClip> soundsEmoteNice = new List<AudioClip>();
     public List<AudioClip> soundsEmoteCry = new List<AudioClip>();
     public List<AudioClip> soundsEmoteHaha = new List<AudioClip>();
     public List<AudioClip> soundsEmoteAngry = new List<AudioClip>();
-    //private AudioClip soundEmoteNice1;
-    //private AudioClip soundEmoteNice2;
-    //private AudioClip soundEmoteNice3;
-    //private AudioClip soundEmoteNice4;
-    //private AudioClip soundEmoteCry1;
-    //private AudioClip soundEmoteCry2;
-    //private AudioClip soundEmoteCry3;
-    //private AudioClip soundEmoteCry4;
-    //private AudioClip soundEmoteHaha1;
-    //private AudioClip soundEmoteHaha2;
-    //private AudioClip soundEmoteHaha3;
-    //private AudioClip soundEmoteHaha4;
-    //private AudioClip soundEmoteAngry1;
-    //private AudioClip soundEmoteAngry2;
-    //private AudioClip soundEmoteAngry3;
-    //private AudioClip soundEmoteAngry4;
+
 
 
     // Use this for initialization
@@ -95,25 +81,8 @@ public class Player : MonoBehaviour
         positionTracker.StartTracking(); //das Tracken der Position wird gestartet
 
         audioSource = GetComponent<AudioSource>();
-        //soundEmoteNice1 = Resources.Load<AudioClip>("Sounds/Emotes/emote_nice_1");
-        //soundEmoteNice2 = Resources.Load<AudioClip>("Sounds/Emotes/emote_nice_2");
-        //soundEmoteNice3 = Resources.Load<AudioClip>("Sounds/Emotes/emote_nice_3");
-        //soundEmoteNice4 = Resources.Load<AudioClip>("Sounds/Emotes/emote_nice_4");
-        //soundEmoteCry1 = Resources.Load<AudioClip>("Sounds/Emotes/emote_cry_1");
-        //soundEmoteCry2 = Resources.Load<AudioClip>("Sounds/Emotes/emote_cry_2");
-        //soundEmoteCry3 = Resources.Load<AudioClip>("Sounds/Emotes/emote_cry_3");
-        //soundEmoteCry4 = Resources.Load<AudioClip>("Sounds/Emotes/emote_cry_4");
-        //soundEmoteHaha1 = Resources.Load<AudioClip>("Sounds/Emotes/emote_haha_1");
-        //soundEmoteHaha2 = Resources.Load<AudioClip>("Sounds/Emotes/emote_haha_2");
-        //soundEmoteHaha3 = Resources.Load<AudioClip>("Sounds/Emotes/emote_haha_3");
-        //soundEmoteHaha4 = Resources.Load<AudioClip>("Sounds/Emotes/emote_haha_4");
-        //soundEmoteAngry1 = Resources.Load<AudioClip>("Sounds/Emotes/emote_angry_1");
-        //soundEmoteAngry2 = Resources.Load<AudioClip>("Sounds/Emotes/emote_angry_2");
-        //soundEmoteAngry3 = Resources.Load<AudioClip>("Sounds/Emotes/emote_angry_3");
-        //soundEmoteAngry4 = Resources.Load<AudioClip>("Sounds/Emotes/emote_angry_4");
+        soundBoing = Resources.Load<AudioClip>("Sounds/boing");
         AddEmoteSounds();
-        
-
     }
 
 
@@ -432,6 +401,8 @@ void Update()
     {
         StartCoroutine(StunEffect(time));   //Es wird eine Coroutine für den Blinkeffekt gestartet und die Zeit der Betäubung übergeben.
         stunned = true;                     //die Stun-Variable auf True gesetzt
+        StopSound();
+        PlaySound(soundBoing, time/2);
         yield return new WaitForSeconds(time);  //Die Zeit der Betäubung abgewartet 
         stunned = false;                        //und daraufhin die Stun-Variable auf false gesetzt
     }
@@ -448,6 +419,7 @@ void Update()
             yield return new WaitForSeconds(stunBlinkEffect / 2);
             spriteRenderer.color = teamColor;
             yield return new WaitForSeconds(stunBlinkEffect / 2);
+
         }
     }
 
@@ -473,16 +445,16 @@ void Update()
         switch (type)
         {
             case ("nice"):
-                PlaySound(soundsEmoteNice[randomInt], 0.2f);             
+                PlaySound(soundsEmoteNice[randomInt], 0.1f);             
                 break;
             case ("haha"):
-                PlaySound(soundsEmoteHaha[randomInt], 0.2f);
+                PlaySound(soundsEmoteHaha[randomInt], 0.1f);
                 break;
             case ("cry"):
-                PlaySound(soundsEmoteCry[randomInt], 0.2f);
+                PlaySound(soundsEmoteCry[randomInt], 0.1f);
                 break;
             case ("angry"):
-                PlaySound(soundsEmoteAngry[randomInt], 0.2f);
+                PlaySound(soundsEmoteAngry[randomInt], 0.1f);
                 break;
         }
         StartCoroutine(DisplayEmote(type));
@@ -510,6 +482,12 @@ void Update()
         Time.timeScale = lastTimeScale;
     }
 
+    public void StopSound()
+    {
+        audioSource.Stop();
+        shotSpawn.StopSoundByStun();
+        blockSpawn.StopSoundByStun();
+    }
 
     public void CalculateLogData(string endingCondition)
     {

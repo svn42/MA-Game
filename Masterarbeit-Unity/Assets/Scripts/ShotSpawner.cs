@@ -37,7 +37,7 @@ public class ShotSpawner : MonoBehaviour
     private bool largeShotChargingSound;
     public AudioClip soundShotAbort;
     private bool shotAborted;
-
+    public bool shotBlinkEffectStarted;
 
 
     // Use this for initialization
@@ -117,6 +117,15 @@ public class ShotSpawner : MonoBehaviour
                 audioSource.loop = true;
                 PlaySound(soundShotCharge, 0.25f);
             }
+            if (shotChargeTime > 3)  //größer als die Hälfte der Differenz zwischen dem Limit und dem größten Schuss
+            {
+                if (!shotBlinkEffectStarted)
+                {
+                    Debug.Log("sdada");
+                    shotBlinkEffectStarted = true;
+                    StartCoroutine(ShotBlinkEffect(3));
+                }
+            }
 
         }
         else if (shotChargeTime > spawnTimerLimit)
@@ -134,6 +143,7 @@ public class ShotSpawner : MonoBehaviour
                 normalShotChargingSound = false;
                 mediumShotChargingSound = false;
                 largeShotChargingSound = false;
+                shotBlinkEffectStarted = false;
             }
         }
     }
@@ -148,7 +158,7 @@ public class ShotSpawner : MonoBehaviour
             spawnNormalShot = false;
             playerLogging.AddShot("normal");
             SetShotProperties(shot);
-            PlaySound(soundShotNormal,0.4f);
+            PlaySound(soundShotNormal, 0.4f);
         }
         else if (spawnMediumShot && spawnable)
         {
@@ -171,18 +181,17 @@ public class ShotSpawner : MonoBehaviour
         mediumShotChargingSound = false;
         largeShotChargingSound = false;
         shotAborted = false;
-
         audioSource.loop = false;
     }
 
-    private void SetShotProperties(GameObject shot){
+    private void SetShotProperties(GameObject shot)
+    {
         shotCount++;
         shot.GetComponent<Shot>().SetDirection(this.transform.rotation);    //Der Schuss bekommt die Rotation des Spielers übergeben
         shot.GetComponent<Shot>().SetColor(shotColor);                      //dessen Farbe
         shot.GetComponent<Shot>().SetPlayerTeam(playerTeam);                //dessen Team
         shot.GetComponent<Shot>().SetShotID(shotCount);                     //sowie seine ID
         shot.name = "Shot_" + shotCount + "_Player_" + playerTeam;       //der Name wird aus dem Count und der PlayerID gebaut.
-
     }
 
     private void PlaySound(AudioClip ac, float volume)
@@ -193,6 +202,40 @@ public class ShotSpawner : MonoBehaviour
         audioSource.volume = volume;
         audioSource.Play();
         Time.timeScale = lastTimeScale;
+    }
+
+    //Blinkeffekt des Stuns
+    IEnumerator ShotBlinkEffect(float time)
+    {
+        Color col = Color.white;
+        SpriteRenderer spriteRenderer = chargingShotSprite.GetComponent<SpriteRenderer>();  //der spriteRenderer Des Spielers wird der lokalen Variable zugewiesen
+        int blinkAmount = 6;      //und die Anzahl der Blinkeffekte ermittelt. Die Anzahl ergibt sich aus der Zeit, dividiert durch die Dauer des Blinkeffektes / 2.
+
+        for (float i = 0; i < blinkAmount; i++)   //solange die Anzahl der Blinkeffekte nicht erreicht wurde
+        {
+            col.a = 0.3f;
+            spriteRenderer.color = col;     //wird der Renderer im Wechsel weiß und daraufhin in der ursprünglichen Farbe des Spielers eingefärbt
+            yield return new WaitForSeconds(time / blinkAmount / 2);
+            spriteRenderer.color = Color.white;
+            yield return new WaitForSeconds(time / blinkAmount / 2);
+            if (player.stunned) //wenn der Spieler gestunnt ist, soll der nächste Schuss wieder ohne blinken gecharget werden.
+            {
+                spriteRenderer.color = Color.white; //dazu wird der Renderer wieder weiß 
+                break;  //und die Coroutine verlassen
+            }
+        }
+    }
+
+    public void StopSoundByStun()
+    {
+        audioSource.Stop();
+        normalShotChargingSound = false;
+        mediumShotChargingSound = false;
+        largeShotChargingSound = false;
+        shotAborted = false;
+        audioSource.loop = false;
+        shotBlinkEffectStarted = false;
+
     }
 
     //Methode, um die Farbe des Schusses zu setzen
