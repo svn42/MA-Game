@@ -45,7 +45,28 @@ public class Player : MonoBehaviour
     public float emoteDelay;
     public float emoteDisplayTime;
 
-
+    //Audios
+    private AudioSource audioSource;
+    public List<AudioClip> soundsEmoteNice = new List<AudioClip>();
+    public List<AudioClip> soundsEmoteCry = new List<AudioClip>();
+    public List<AudioClip> soundsEmoteHaha = new List<AudioClip>();
+    public List<AudioClip> soundsEmoteAngry = new List<AudioClip>();
+    //private AudioClip soundEmoteNice1;
+    //private AudioClip soundEmoteNice2;
+    //private AudioClip soundEmoteNice3;
+    //private AudioClip soundEmoteNice4;
+    //private AudioClip soundEmoteCry1;
+    //private AudioClip soundEmoteCry2;
+    //private AudioClip soundEmoteCry3;
+    //private AudioClip soundEmoteCry4;
+    //private AudioClip soundEmoteHaha1;
+    //private AudioClip soundEmoteHaha2;
+    //private AudioClip soundEmoteHaha3;
+    //private AudioClip soundEmoteHaha4;
+    //private AudioClip soundEmoteAngry1;
+    //private AudioClip soundEmoteAngry2;
+    //private AudioClip soundEmoteAngry3;
+    //private AudioClip soundEmoteAngry4;
 
 
     // Use this for initialization
@@ -73,12 +94,48 @@ public class Player : MonoBehaviour
         positionTracker = gameObject.GetComponent<PositionTracker>();
         positionTracker.StartTracking(); //das Tracken der Position wird gestartet
 
-
+        audioSource = GetComponent<AudioSource>();
+        //soundEmoteNice1 = Resources.Load<AudioClip>("Sounds/Emotes/emote_nice_1");
+        //soundEmoteNice2 = Resources.Load<AudioClip>("Sounds/Emotes/emote_nice_2");
+        //soundEmoteNice3 = Resources.Load<AudioClip>("Sounds/Emotes/emote_nice_3");
+        //soundEmoteNice4 = Resources.Load<AudioClip>("Sounds/Emotes/emote_nice_4");
+        //soundEmoteCry1 = Resources.Load<AudioClip>("Sounds/Emotes/emote_cry_1");
+        //soundEmoteCry2 = Resources.Load<AudioClip>("Sounds/Emotes/emote_cry_2");
+        //soundEmoteCry3 = Resources.Load<AudioClip>("Sounds/Emotes/emote_cry_3");
+        //soundEmoteCry4 = Resources.Load<AudioClip>("Sounds/Emotes/emote_cry_4");
+        //soundEmoteHaha1 = Resources.Load<AudioClip>("Sounds/Emotes/emote_haha_1");
+        //soundEmoteHaha2 = Resources.Load<AudioClip>("Sounds/Emotes/emote_haha_2");
+        //soundEmoteHaha3 = Resources.Load<AudioClip>("Sounds/Emotes/emote_haha_3");
+        //soundEmoteHaha4 = Resources.Load<AudioClip>("Sounds/Emotes/emote_haha_4");
+        //soundEmoteAngry1 = Resources.Load<AudioClip>("Sounds/Emotes/emote_angry_1");
+        //soundEmoteAngry2 = Resources.Load<AudioClip>("Sounds/Emotes/emote_angry_2");
+        //soundEmoteAngry3 = Resources.Load<AudioClip>("Sounds/Emotes/emote_angry_3");
+        //soundEmoteAngry4 = Resources.Load<AudioClip>("Sounds/Emotes/emote_angry_4");
+        AddEmoteSounds();
+        
 
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void AddEmoteSounds()
+    {
+        AudioClip a;
+        for (int i = 1; i < 5; i++)
+        {
+            a = Resources.Load<AudioClip>("Sounds/Emotes/emote_nice_" + i);
+            soundsEmoteNice.Add(a);
+            a = Resources.Load<AudioClip>("Sounds/Emotes/emote_cry_" + i);
+            soundsEmoteCry.Add(a);
+            a = Resources.Load<AudioClip>("Sounds/Emotes/emote_haha_" + i);
+            soundsEmoteHaha.Add(a);
+            a = Resources.Load<AudioClip>("Sounds/Emotes/emote_angry_" + i);
+            soundsEmoteAngry.Add(a);
+        }
+
+    }
+
+// Update is called once per frame
+void Update()
     {
         if (!gameState.GetGamePaused())
         {
@@ -412,24 +469,20 @@ public class Player : MonoBehaviour
     //Methode fürs Benutzen der Emotes
     public void CastEmote(string type)
     {
-
+        int randomInt = Random.Range(0, 3);
         switch (type)
         {
             case ("nice"):
-                Debug.Log("Player " + playerTeam + ": Nice!");
-                //spawn UI an Position für Player1 für emoteDelay
+                PlaySound(soundsEmoteNice[randomInt], 0.2f);             
                 break;
             case ("haha"):
-                Debug.Log("Player " + playerTeam + ": Haha!");
-                //spawn UI an Position für Player1
+                PlaySound(soundsEmoteHaha[randomInt], 0.2f);
                 break;
             case ("cry"):
-                Debug.Log("Player " + playerTeam + ": Oh nein");
-                //spawn UI an Position für Player1
+                PlaySound(soundsEmoteCry[randomInt], 0.2f);
                 break;
             case ("angry"):
-                Debug.Log("Player " + playerTeam + ": Argh!");
-                //spawn UI an Position für Player1
+                PlaySound(soundsEmoteAngry[randomInt], 0.2f);
                 break;
         }
         StartCoroutine(DisplayEmote(type));
@@ -447,7 +500,15 @@ public class Player : MonoBehaviour
         emojiRenderer.enabled = false;
     }
 
-    
+    private void PlaySound(AudioClip ac, float volume)
+    {
+        float lastTimeScale = Time.timeScale;
+        Time.timeScale = 1f;
+        audioSource.clip = ac;
+        audioSource.volume = volume;
+        audioSource.Play();
+        Time.timeScale = lastTimeScale;
+    }
 
 
     public void CalculateLogData(string endingCondition)

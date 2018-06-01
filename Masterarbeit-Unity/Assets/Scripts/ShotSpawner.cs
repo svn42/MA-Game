@@ -28,14 +28,14 @@ public class ShotSpawner : MonoBehaviour
     private Color shotColor;
     //Audios
     private AudioSource audioSource;
-    public AudioClip audioShotNormal;
-    public AudioClip audioShotMedium;
-    public AudioClip audioShotLarge;
-    public AudioClip shotCharge;
+    public AudioClip soundShotNormal;
+    public AudioClip soundShotMedium;
+    public AudioClip soundShotLarge;
+    public AudioClip soundShotCharge;
     private bool normalShotChargingSound;
     private bool mediumShotChargingSound;
     private bool largeShotChargingSound;
-    public AudioClip shotAbort;
+    public AudioClip soundShotAbort;
     private bool shotAborted;
 
 
@@ -49,11 +49,11 @@ public class ShotSpawner : MonoBehaviour
         playerLogging = transform.parent.GetComponent<PlayerLogging>();
         //Audio
         audioSource = GetComponent<AudioSource>();
-        audioShotNormal = Resources.Load<AudioClip>("Sounds/normal_shot");
-        audioShotMedium = Resources.Load<AudioClip>("Sounds/medium_shot");
-        audioShotLarge = Resources.Load<AudioClip>("Sounds/large_shot");
-        shotCharge = Resources.Load<AudioClip>("Sounds/shot_charge");
-        shotAbort = Resources.Load<AudioClip>("Sounds/shot_abort");
+        soundShotNormal = Resources.Load<AudioClip>("Sounds/normal_shot");
+        soundShotMedium = Resources.Load<AudioClip>("Sounds/medium_shot");
+        soundShotLarge = Resources.Load<AudioClip>("Sounds/large_shot");
+        soundShotCharge = Resources.Load<AudioClip>("Sounds/shot_charge");
+        soundShotAbort = Resources.Load<AudioClip>("Sounds/shot_abort");
 
     }
 
@@ -68,10 +68,10 @@ public class ShotSpawner : MonoBehaviour
     {
     }
 
-    //Die Methode wird beim Festhalten des A-Buttons in jedem Frame aufgerufen und erhöht die shotChargeTime.
+    //Die Methode wird beim Festhalten des A-Buttons in jedem Frame aufgerufen und erhöht die soundShotChargeTime.
     public void AddShotChargeTime(float i)
     {
-        shotChargeTime+=i;
+        shotChargeTime += i;
         if (shotChargeTime != 0 && shotChargeTime < spawnTimerMedium)
         {
             spawnNormalShot = true;
@@ -84,7 +84,7 @@ public class ShotSpawner : MonoBehaviour
             {
                 normalShotChargingSound = true;
                 audioSource.loop = true;
-                PlaySound(shotCharge, 0.1f);
+                PlaySound(soundShotCharge, 0.1f);
             }
 
         }
@@ -100,7 +100,7 @@ public class ShotSpawner : MonoBehaviour
             {
                 mediumShotChargingSound = true;
                 audioSource.loop = true;
-                PlaySound(shotCharge, 0.2f);
+                PlaySound(soundShotCharge, 0.15f);
             }
 
         }
@@ -115,7 +115,7 @@ public class ShotSpawner : MonoBehaviour
             {
                 largeShotChargingSound = true;
                 audioSource.loop = true;
-                PlaySound(shotCharge, 0.4f);
+                PlaySound(soundShotCharge, 0.25f);
             }
 
         }
@@ -130,7 +130,7 @@ public class ShotSpawner : MonoBehaviour
                 chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f);
                 audioSource.Stop();
                 audioSource.loop = false;
-                PlaySound(shotAbort, 0.4f);
+                PlaySound(soundShotAbort, 0.35f);
                 normalShotChargingSound = false;
                 mediumShotChargingSound = false;
                 largeShotChargingSound = false;
@@ -148,7 +148,7 @@ public class ShotSpawner : MonoBehaviour
             spawnNormalShot = false;
             playerLogging.AddShot("normal");
             SetShotProperties(shot);
-            PlaySound(audioShotNormal,0.5f);
+            PlaySound(soundShotNormal,0.4f);
         }
         else if (spawnMediumShot && spawnable)
         {
@@ -156,7 +156,7 @@ public class ShotSpawner : MonoBehaviour
             spawnMediumShot = false;
             playerLogging.AddShot("medium");
             SetShotProperties(shot);
-            PlaySound(audioShotMedium, 0.5f);
+            PlaySound(soundShotMedium, 0.4f);
         }
         else if (spawnLargeShot && spawnable)
         {
@@ -164,7 +164,7 @@ public class ShotSpawner : MonoBehaviour
             spawnLargeShot = false;
             playerLogging.AddShot("large");
             SetShotProperties(shot);
-            PlaySound(audioShotLarge, 0.4f);
+            PlaySound(soundShotLarge, 0.3f);
         }
         ResetShotChargeTime();
         normalShotChargingSound = false;

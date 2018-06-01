@@ -10,6 +10,7 @@ TagManager:
   - Boundary
   - Block
   - Shot
+  - Music
   layers:
   - Default
   - TransparentFX

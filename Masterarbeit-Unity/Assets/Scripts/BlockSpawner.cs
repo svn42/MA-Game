@@ -21,8 +21,9 @@ public class BlockSpawner : MonoBehaviour
     private Color blockColor;
     public int blockCount = 0;
     private AudioSource audioSource;
-    public AudioClip placeBlock;
-    public AudioClip chargeBlock;
+    public AudioClip soundPlaceBlock;
+    public AudioClip soundChargeBlock;
+    public AudioClip soundPlacementBlocked;
     private bool blockChargingSound;
 
 
@@ -37,8 +38,9 @@ public class BlockSpawner : MonoBehaviour
         playerTeam = player.playerTeam;
         playerLogging = transform.parent.GetComponent<PlayerLogging>();
         audioSource = GetComponent<AudioSource>();
-        placeBlock = Resources.Load<AudioClip>("Sounds/place_block");
-        chargeBlock = Resources.Load<AudioClip>("Sounds/charge_block");
+        soundPlaceBlock = Resources.Load<AudioClip>("Sounds/place_block");
+        soundChargeBlock = Resources.Load<AudioClip>("Sounds/charge_block");
+        soundPlacementBlocked = Resources.Load<AudioClip>("Sounds/placement_blocked");
 
     }
 
@@ -100,7 +102,7 @@ public class BlockSpawner : MonoBehaviour
     {
         if (!blockChargingSound)
         {
-            PlaySound(chargeBlock, 0.4f);
+            PlaySound(soundChargeBlock, 0.4f);
             blockChargingSound = true;
         }
         GetComponent<SpriteRenderer>().enabled = true;
@@ -160,9 +162,13 @@ public class BlockSpawner : MonoBehaviour
             block.GetComponent<Block>().SetPlayerTeam(playerTeam);
             block.GetComponent<Block>().SetBlockID(blockCount);
             playerLogging.AddBlock();
-            PlaySound(placeBlock, 0.8f);
+            PlaySound(soundPlaceBlock, 0.8f);
 
             block.name = "Block_" + blockCount + "_Player_" + playerTeam;
+
+        } else if (blockChargeTime == spawnTimer && !spawnable)
+        {
+            PlaySound(soundPlacementBlocked, 0.6f);
 
         }
         ResetBlockChargeTime();

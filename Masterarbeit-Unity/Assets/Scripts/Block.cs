@@ -37,17 +37,17 @@ public class Block : MonoBehaviour
         if (health == 2)
         {
             sr.sprite = Resources.Load<Sprite>("Textures/Block_2Health");
-            gameState.PlaySound("slap", 0.8f);
+            gameState.PlaySound("soundSlap", 0.5f);
         }
         else if (health == 1)
         {
             sr.sprite = Resources.Load<Sprite>("Textures/Block_1Health");
-            gameState.PlaySound("slap", 0.8f);
+            gameState.PlaySound("soundSlap", 0.5f);
 
         }
         else if (health <= 0)
         {
-            gameState.PlaySound("plop", 0.5f);
+            gameState.PlaySound("soundPlop", 0.4f);
             DestroyBlock();
         }
 

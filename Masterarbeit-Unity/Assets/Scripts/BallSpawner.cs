@@ -19,6 +19,9 @@ public class BallSpawner : MonoBehaviour
 
     public float ballSpawnDelay;
     public Vector3 ballInflaterMaxSize;
+    private AudioSource audioSource;
+    public AudioClip soundSpawnBall;
+    public AudioClip soundInflateBall;
 
 
 
@@ -32,7 +35,10 @@ public class BallSpawner : MonoBehaviour
         ballPosition = this.transform.position - new Vector3(0,0,0.01f);
         ballRotation = new Quaternion(0, 0, 0, 0);
         //Zu Beginn einer Partie wird der erste Ball gespawnt
-        StartCoroutine(SpawnBall(0));
+        StartCoroutine(SpawnBall(0, false));    //der erste Ball wird ohne Sound gespawnt
+        audioSource = GetComponent<AudioSource>();
+        soundSpawnBall = Resources.Load<AudioClip>("Sounds/ball_spawn");
+        soundInflateBall = Resources.Load<AudioClip>("Sounds/inflate_ball");
     }
 
     // Update is called once per frame
@@ -48,7 +54,7 @@ public class BallSpawner : MonoBehaviour
         {
             if (!spawnBlocked) //und der spawner nicht durch einen anderen Ball belegt wird
             {
-                StartCoroutine(SpawnBall(ballSpawnDelay)); //wird ein neuer Ball gespawnt
+                StartCoroutine(SpawnBall(ballSpawnDelay, true)); //wird ein neuer Ball gespawnt
                 SetSpawnBlocked(true);      //und der spawner als belegt markiert
             } 
         }
@@ -67,12 +73,20 @@ public class BallSpawner : MonoBehaviour
 
     }
 
-    public IEnumerator SpawnBall(float time)
+    public IEnumerator SpawnBall(float time, bool soundOn)
     {
         StartCoroutine(InflateBall(time));
+        if (soundOn)
+        {
+            PlaySound(soundInflateBall, 0.3f);
+        }
         yield return new WaitForSeconds(time);
         //wird ein neuer Ball gespawnt und als "neuester Ball" markiert
         lastSpawnedBall = Instantiate(ballPrefab, ballPosition, ballRotation);
+        if (soundOn)
+        {
+            PlaySound(soundSpawnBall, 0.4f);
+        }
         //der Mittelkreis wird zudem als vom neuesten Ball blockiert markiert
         centerCircleBlocked = true;
         SetSpawnBlocked(false);
@@ -93,6 +107,16 @@ public class BallSpawner : MonoBehaviour
         }
         ballInflater.transform.localScale = new Vector3(0, 0, 0);
 
+    }
+
+    private void PlaySound(AudioClip ac, float volume)
+    {
+        float lastTimeScale = Time.timeScale;
+        Time.timeScale = 1f;
+        audioSource.clip = ac;
+        audioSource.volume = volume;
+        audioSource.Play();
+        Time.timeScale = lastTimeScale;
     }
 
 

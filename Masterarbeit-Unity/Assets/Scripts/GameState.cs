@@ -60,16 +60,16 @@ public class GameState : MonoBehaviour
     public GlobalTimer globalTimer;
     //Audios
     private AudioSource audioSource;
-    public AudioClip countdownRegular;
-    public AudioClip countdownEnd;
-    public AudioClip goalHorn;
-    public AudioClip slap;
-    public AudioClip plop;
-    public AudioClip ballHit;
-    public AudioClip whistle;
-    public AudioClip popup;
+    public AudioClip soundCountdownRegular;
+    public AudioClip soundCountdownEnd;
+    public AudioClip soundGoalHorn;
+    public AudioClip soundSlap;
+    public AudioClip soundPlop;
+    public AudioClip soundBallHit;
+    public AudioClip soundWhistle;
+    public AudioClip soundPopup;
 
-
+    public AudioSource musicPlayer;
 
     private void Awake()
     {
@@ -101,6 +101,7 @@ public class GameState : MonoBehaviour
         player2Box = transparentScreen.transform.Find("Spieler2").GetComponent<Canvas>();
         greenCheckP1 = transparentScreen.transform.Find("Spieler1").transform.Find("Spieler1_Check").GetComponent<Image>();
         greenCheckP2 = transparentScreen.transform.Find("Spieler2").transform.Find("Spieler2_Check").GetComponent<Image>();
+        musicPlayer = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
 
         scoreTeam1 = gui.transform.Find("UI_Spielstand").transform.Find("Spielstand Team 1").transform.Find("Score Team 1").GetComponent<Text>();
         scoreTeam2 = gui.transform.Find("UI_Spielstand").transform.Find("Spielstand Team 2").transform.Find("Score Team 2").GetComponent<Text>();
@@ -113,14 +114,14 @@ public class GameState : MonoBehaviour
         player2Script = player2.GetComponent<Player>();
 
         audioSource = GetComponent<AudioSource>();
-        countdownRegular = Resources.Load<AudioClip>("Sounds/countdown_regular");
-        countdownEnd = Resources.Load<AudioClip>("Sounds/countdown_ending");
-        goalHorn = Resources.Load<AudioClip>("Sounds/goal_horn");
-        slap = Resources.Load<AudioClip>("Sounds/slap");
-        plop = Resources.Load<AudioClip>("Sounds/plop");
-        ballHit = Resources.Load<AudioClip>("Sounds/ball_hit");
-        whistle = Resources.Load<AudioClip>("Sounds/whistle");
-        popup = Resources.Load<AudioClip>("Sounds/popup");
+        soundCountdownRegular = Resources.Load<AudioClip>("Sounds/countdown_regular");
+        soundCountdownEnd = Resources.Load<AudioClip>("Sounds/countdown_ending");
+        soundGoalHorn = Resources.Load<AudioClip>("Sounds/goal_horn");
+        soundSlap = Resources.Load<AudioClip>("Sounds/slap");
+        soundPlop = Resources.Load<AudioClip>("Sounds/plop");
+        soundBallHit = Resources.Load<AudioClip>("Sounds/ball_hit");
+        soundWhistle = Resources.Load<AudioClip>("Sounds/soundWhistle");
+        soundPopup = Resources.Load<AudioClip>("Sounds/popup");
 
         SetGoalCount("Team1");
         SetGoalCount("Team2");
@@ -184,7 +185,7 @@ public class GameState : MonoBehaviour
     //Wenn ein Ball mit dem entsprechendem Goal-Collider in Berührung kommt, wird dem anderen Team ein Tor zugeschrieben.
     public void GoalScored(string goal, int scoredByTeamNr)
     {
-        PlaySound(goalHorn, 0.3f);
+        PlaySound(soundGoalHorn, 0.3f);
         if (goal.Equals("Goal1"))
         {
             goalsTeam2++;
@@ -265,7 +266,7 @@ public class GameState : MonoBehaviour
         {
             if (!levelEnded)
             {
-                PlaySound(whistle, 0.4f);
+                PlaySound(soundWhistle, 0.4f);
                 endingCondition = "Time";
                 SetGamePaused(true, "end");
             }
@@ -279,7 +280,7 @@ public class GameState : MonoBehaviour
 
         for (float i = 0; i < blinkAmount; i++)   //solange die Anzahl der Blinkeffekte nicht erreicht wurde
         {
-            PlaySound(countdownRegular, (i + 1 / 10));   //mit jeder Sekunde wird der Sound um 10% lauter. 
+            PlaySound(soundCountdownRegular, (i + 1 / 10));   //mit jeder Sekunde wird der Sound um 10% lauter. 
             timer.color = Color.red;     //wird der Renderer im Wechsel weiß und daraufhin in der ursprünglichen Farbe des Spielers eingefärbt
             yield return new WaitForSeconds(0.5f);
             timer.color = Color.white;
@@ -384,6 +385,7 @@ public class GameState : MonoBehaviour
         if (gamePaused)
         {
             Time.timeScale = 0.0001f;
+            musicPlayer.Pause();
             switch (screenType)
             {
                 case "pause":
@@ -402,6 +404,7 @@ public class GameState : MonoBehaviour
         {
             Time.timeScale = 1;
             pauseScreen.enabled = false;
+            musicPlayer.Play();
 
         }
     }
@@ -434,10 +437,10 @@ public class GameState : MonoBehaviour
         for (int i = countdown; i > 0; i--)
         {
             topText.text = i.ToString();
-            PlaySound(countdownRegular, 0.5f);
+            PlaySound(soundCountdownRegular, 0.5f);
             yield return new WaitForSeconds(1 * Time.timeScale);
         }
-        PlaySound(countdownEnd, 0.5f);
+        PlaySound(soundCountdownEnd, 0.5f);
         SetGamePaused(false, "pause");
         SetPlayerReady(false, 1);
         SetPlayerReady(false, 2);
@@ -539,7 +542,7 @@ public class GameState : MonoBehaviour
     IEnumerator ShowPopUp(string timeleft)
     {
         popUp.GetComponent<Canvas>().enabled = true;
-        PlaySound(popup, 0.3f);
+        PlaySound(soundPopup, 0.3f);
         popUp.transform.Find("TransparentScreen").transform.Find("topText").GetComponent<Text>().text = "Nur noch " + timeleft + "!";
         yield return new WaitForSeconds(3 * Time.timeScale);
         popUp.GetComponent<Canvas>().enabled = false;
@@ -571,14 +574,14 @@ public class GameState : MonoBehaviour
         Time.timeScale = 1f;
         switch (file)
         {
-            case "slap":
-                audioSource.PlayOneShot(slap, volume);
+            case "soundSlap":
+                audioSource.PlayOneShot(soundSlap, volume);
                 break;
-            case "plop":
-                audioSource.PlayOneShot(plop, volume);
+            case "soundPlop":
+                audioSource.PlayOneShot(soundPlop, volume);
                 break;
             case "ball_hit":
-                audioSource.PlayOneShot(ballHit, volume);
+                audioSource.PlayOneShot(soundBallHit, volume);
                 break;
                 
         }
