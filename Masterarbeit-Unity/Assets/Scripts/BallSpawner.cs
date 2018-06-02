@@ -78,14 +78,14 @@ public class BallSpawner : MonoBehaviour
         StartCoroutine(InflateBall(time));
         if (soundOn)
         {
-            PlaySound(soundInflateBall, 0.3f);
+            PlaySound(soundInflateBall, 0.2f);
         }
         yield return new WaitForSeconds(time);
         //wird ein neuer Ball gespawnt und als "neuester Ball" markiert
         lastSpawnedBall = Instantiate(ballPrefab, ballPosition, ballRotation);
         if (soundOn)
         {
-            PlaySound(soundSpawnBall, 0.4f);
+            PlaySound(soundSpawnBall, 0.25f);
         }
         //der Mittelkreis wird zudem als vom neuesten Ball blockiert markiert
         centerCircleBlocked = true;

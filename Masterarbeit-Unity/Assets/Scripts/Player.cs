@@ -8,7 +8,8 @@ public class Player : MonoBehaviour
     [Range(1, 2)]
     public int playerTeam;    //Teamzugehörigkeit (1 oder 2)
     string playerAcronym;
-    public int subjectNr;   //VersuchspersonenNummer aus nem Menü rausziehen
+    public int subjectNr1;   //VersuchspersonenNummer aus nem Menü rausziehen
+    public int subjectNr2;   //VersuchspersonenNummer aus nem Menü rausziehen
     public float brakingForce;  //Stärke des Abbremsens
     public float maxSpeed;
     public float speedX;    //Geschwindigkeit auf der X-Achse
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         playerAcronym = "P" + playerTeam;
         CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
