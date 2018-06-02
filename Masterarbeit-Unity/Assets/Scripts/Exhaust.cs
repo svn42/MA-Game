@@ -10,7 +10,6 @@ public class Exhaust : MonoBehaviour
     public float acceleration;  //der Beschleunigungswert des Partikels
     private GameState gameState;
 
-
     // Use this for initialization
     void Start()
     {

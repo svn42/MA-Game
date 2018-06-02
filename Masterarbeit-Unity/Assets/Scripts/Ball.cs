@@ -7,6 +7,7 @@ public class Ball : MonoBehaviour {
     private GameState gameState;
     private BallSpawner ballSpawner;
     private Rigidbody2D rb;
+    public GameObject ballExplosion;
 
     public static int globalId;    //statische ID, um jedem Ball eine eindeutige ID zuzuweisen.
     public int instanceID;     //instanceID, um die ID des Balles zwischenzuspeichern
@@ -59,12 +60,13 @@ public class Ball : MonoBehaviour {
     //Die Methode gibt die instanceID des Balles wider
     public int GetBallID()
     {
-        return this.instanceID;
+        return instanceID;
     }
 
     //zerstört den Ball, entfernt den Ball aus der Liste und spawnt u.U. einen neuen Ball
     public void DestroyBall()
     {
+        Instantiate(ballExplosion, transform.position, transform.rotation);  //Die BallExplosion wird dabei instanziiert
         //Der Ball wird aus der Liste der GameState entfernt
         gameState.RemoveBall(instanceID);
         //Ein neuer Ball wird gespawnt, sofern der Spawn nicht geblockt wird

@@ -122,7 +122,6 @@ public class ShotSpawner : MonoBehaviour
             {
                 if (!shotBlinkEffectStarted)
                 {
-                    Debug.Log("sdada");
                     shotBlinkEffectStarted = true;
                     StartCoroutine(ShotBlinkEffect(3));
                 }

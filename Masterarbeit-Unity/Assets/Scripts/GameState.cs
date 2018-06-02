@@ -120,7 +120,7 @@ public class GameState : MonoBehaviour
         soundSlap = Resources.Load<AudioClip>("Sounds/slap");
         soundPlop = Resources.Load<AudioClip>("Sounds/plop");
         soundBallHit = Resources.Load<AudioClip>("Sounds/ball_hit");
-        soundWhistle = Resources.Load<AudioClip>("Sounds/soundWhistle");
+        soundWhistle = Resources.Load<AudioClip>("Sounds/whistle");
         soundPopup = Resources.Load<AudioClip>("Sounds/popup");
 
         SetGoalCount("Team1");
@@ -311,7 +311,7 @@ public class GameState : MonoBehaviour
             }
         }
         //sofern das Spiel pausiert wird
-        if (gamePaused)
+        if (gamePaused && !depauseCountdownStarted)
         {
             if (Input.GetButtonUp("Help"))
             {
