@@ -204,6 +204,8 @@ MonoBehaviour:
   stunDuration: 0.2
   player: {fileID: 0}
   playerLogging: {fileID: 0}
+  shotDestructionPrefab: {fileID: 1605120989468744, guid: 323ba470511f17f4eab27329fb6332fe,
+    type: 2}
 --- !u!212 &212389046323251184
 SpriteRenderer:
   m_ObjectHideFlags: 1

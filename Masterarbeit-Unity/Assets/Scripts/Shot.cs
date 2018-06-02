@@ -16,11 +16,14 @@ public class Shot : MonoBehaviour
     public GameObject player;
     public PlayerLogging playerLogging;
     private TrailRenderer trailRenderer;
-
+    public GameObject shotDestructionPrefab;
+    private GameState gameState;
+    SpriteRenderer spriteRenderer;
 
     // Use this for initialization
     void Start()
     {
+        gameState = (GameState)FindObjectOfType(typeof(GameState));
 
         //zuweisen des shotTypes in abhängigkeit zur Stärke
         switch (strength)
@@ -101,10 +104,13 @@ public class Shot : MonoBehaviour
             case "Boundary":
                 DestroyShot();
                 playerLogging.AddAccuracy("destroy");
+                gameState.PlaySound("soundSlap", 0.2f);
                 break;
             case "Shot":
                 if (collidingObject.GetComponent<Shot>().GetPlayerTeam() != playerTeam)
                 {
+                    gameState.PlaySound("soundSlap", 0.2f);
+
                     if (strength < collidingObject.GetComponent<Shot>().strength)
                     {
                         DestroyShot();
@@ -184,14 +190,22 @@ public class Shot : MonoBehaviour
 
     public void DestroyShot()
     {
-        Destroy(this.gameObject);
+        GameObject go = Instantiate(shotDestructionPrefab, transform.position, transform.rotation);  //Die Zerstörungsanimation des Shots wird  instanziiert
+        go.GetComponent<ShotDestruction>().SetColor(spriteRenderer.color);
+        Destroy(gameObject);
     }
 
     public void SetColor(Color col)
     {
-        SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.color = col;
     }
+
+    public Color GetColor()
+    {
+        return spriteRenderer.color;
+    }
+
 
     public void SetPlayerTeam(int i)
     {
