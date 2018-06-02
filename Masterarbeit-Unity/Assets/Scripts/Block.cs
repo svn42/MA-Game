@@ -14,7 +14,8 @@ public class Block : MonoBehaviour
     private int playerTeam;
     private int blockID;
     private GameState gameState;
-
+    SpriteRenderer spriteRenderer;
+    public GameObject blockDestructionPrefab;
 
     // Use this for initialization
     void Start()
@@ -55,13 +56,20 @@ public class Block : MonoBehaviour
 
     public void DestroyBlock()
     {
-        Destroy(this.gameObject);
+        GameObject go = Instantiate(blockDestructionPrefab, transform.position, transform.rotation);  //Die Zerstörungsanimation des Shots wird  instanziiert
+        go.GetComponent<BlockDestruction>().SetColor(spriteRenderer.color);
+        Destroy(gameObject);
     }
 
     public void SetColor(Color col)
     {
-        SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.color = col;
+    }
+
+    public Color GetColor()
+    {
+        return spriteRenderer.color;
     }
 
     public void SetPlayerTeam(int i)

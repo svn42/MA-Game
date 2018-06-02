@@ -104,12 +104,12 @@ public class Shot : MonoBehaviour
             case "Boundary":
                 DestroyShot();
                 playerLogging.AddAccuracy("destroy");
-                gameState.PlaySound("soundSlap", 0.2f);
+                gameState.PlaySound("soundSlap", 0.1f);
                 break;
             case "Shot":
                 if (collidingObject.GetComponent<Shot>().GetPlayerTeam() != playerTeam)
                 {
-                    gameState.PlaySound("soundSlap", 0.2f);
+                    gameState.PlaySound("soundSlap", 0.1f);
 
                     if (strength < collidingObject.GetComponent<Shot>().strength)
                     {
