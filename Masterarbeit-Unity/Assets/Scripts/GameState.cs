@@ -313,25 +313,26 @@ public class GameState : MonoBehaviour
         //sofern das Spiel pausiert wird
         if (gamePaused)
         {
+            if (Input.GetButtonUp("Help"))
+            {
+                playerHelp = true;
+                observerText.enabled = true;
+                observerText.text = "Gib dem Versuchsleiter Bescheid, \nwenn du mit ihm im selben Raum sitzt.";
+                observerText.color = Color.red;
+            }
+            if (playerHelp)
+            {
+                if (Input.GetKeyUp(KeyCode.H))
+                {
+                    playerHelp = false;
+                    observerText.text = "Ihr könnt das Spiel fortsetzen! :)";
+                    observerText.color = Color.green;
+                }
+            }
             if (!levelEnded)
             {
 
-                if (Input.GetButtonUp("Help"))
-                {
-                    playerHelp = true;
-                    observerText.enabled = true;
-                    observerText.text = "Gib dem Versuchsleiter Bescheid, \nwenn du mit ihm im selben Raum sitzt.";
-                    observerText.color = Color.red;
-                }
-                if (playerHelp)
-                {
-                    if (Input.GetKeyUp(KeyCode.H))
-                    {
-                        playerHelp = false;
-                        observerText.text = "Ihr könnt das Spiel fortsetzen! :)";
-                        observerText.color = Color.green;
-                    }
-                }
+
                 if (!playerHelp)
                 {
                     //überprüfe, ob die einzelnen Spieler bereit sind
@@ -356,18 +357,21 @@ public class GameState : MonoBehaviour
             }
             else if (levelEnded && nextLevelReady)
             {
-                //überprüfe, ob die einzelnen Spieler bereit sind
-                if (Input.GetButtonUp("ShootP1"))
+                if (!playerHelp)
                 {
-                    SetPlayerReady(true, 1);
-                }
-                else if (Input.GetButtonUp("ShootP2"))
-                {
-                    SetPlayerReady(true, 2);
-                }
-                if (player1Ready && player2Ready)
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                    //überprüfe, ob die einzelnen Spieler bereit sind
+                    if (Input.GetButtonUp("ShootP1"))
+                    {
+                        SetPlayerReady(true, 1);
+                    }
+                    else if (Input.GetButtonUp("ShootP2"))
+                    {
+                        SetPlayerReady(true, 2);
+                    }
+                    if (player1Ready && player2Ready)
+                    {
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                    }
                 }
             }
         }

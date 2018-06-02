@@ -18,6 +18,7 @@ public class ShotSpawner : MonoBehaviour
     bool spawnNormalShot = false;
     bool spawnMediumShot = false;
     bool spawnLargeShot = false;
+    private bool shotFired;
 
     public GameObject chargingShotSprite; //Sprite des charging-Shots (Child)
     private Player player;
@@ -218,9 +219,9 @@ public class ShotSpawner : MonoBehaviour
             yield return new WaitForSeconds(time / blinkAmount / 2);
             spriteRenderer.color = Color.white;
             yield return new WaitForSeconds(time / blinkAmount / 2);
-            if (player.stunned) //wenn der Spieler gestunnt ist, soll der nächste Schuss wieder ohne blinken gecharget werden.
+            if (shotChargeTime == 0) //wenn ein neuer Schuss aufgeladen wird.
             {
-                spriteRenderer.color = Color.white; //dazu wird der Renderer wieder weiß 
+                spriteRenderer.color = Color.white; //wird der Renderer wieder weiß 
                 break;  //und die Coroutine verlassen
             }
         }
