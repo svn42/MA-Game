@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Block : MonoBehaviour
+public class BlockTutorial : MonoBehaviour
 {
     [Range(0, 3)]
     public int health;
@@ -13,7 +13,7 @@ public class Block : MonoBehaviour
     private SpriteRenderer sr;
     private int playerTeam;
     private int blockID;
-    private GameState gameState;
+    private TutorialGameState tutorialGameState;
     SpriteRenderer spriteRenderer;
     public GameObject blockDestructionPrefab;
 
@@ -22,7 +22,7 @@ public class Block : MonoBehaviour
     {
         health = 3;
         sr = gameObject.GetComponent<SpriteRenderer>();
-        gameState = (GameState)FindObjectOfType(typeof(GameState));
+        tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
 
     }
 
@@ -38,17 +38,17 @@ public class Block : MonoBehaviour
         if (health == 2)
         {
             sr.sprite = Resources.Load<Sprite>("Textures/Block_2Health");
-            gameState.PlaySound("soundSlap", 0.5f);
+            tutorialGameState.PlaySound("soundSlap", 0.5f);
         }
         else if (health == 1)
         {
             sr.sprite = Resources.Load<Sprite>("Textures/Block_1Health");
-            gameState.PlaySound("soundSlap", 0.5f);
+            tutorialGameState.PlaySound("soundSlap", 0.5f);
 
         }
         else if (health <= 0)
         {
-            gameState.PlaySound("soundPlop", 0.4f);
+            tutorialGameState.PlaySound("soundPlop", 0.4f);
             DestroyBlock();
         }
 

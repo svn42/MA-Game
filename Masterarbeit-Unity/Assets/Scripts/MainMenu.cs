@@ -38,7 +38,8 @@ public class MainMenu : MonoBehaviour
 
     public void StartTutorial()
     {
-        SceneManager.LoadScene("TutorialStart");
+        PlayerPrefs.SetString("GameType", "Tutorial");
+        SceneManager.LoadScene("Tutorial_1");
     }
 
     public void StartLocalGame()

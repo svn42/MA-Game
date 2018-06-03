@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bewegung
+  m_Text: Generelles Spielziel
 --- !u!222 &2418733
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -420,9 +420,9 @@ MonoBehaviour:
   m_Text: "Mit dem linken Analogstick des Controllers kannst du deine Figur bewegen.
     \nBedenke bei der Bewegung, dass sich deine Figur nicht direkt mit der maximalen
     Geschwindigkeit bewegt, sondern zun\xE4chst beschleunigen muss. \n\nDu bremst
-    die Figur ab, indem du den Stick in die sogenannte Nullstellung bringst. Auch
-    hierbei wird die Figur nicht direkt auf 0 abgebremst, sondern bremst langsam ab,
-    bevor sie zum stehen kommt. "
+    die Figur ab, indem du den Stick in nicht mehr in die gew\xFCnschte Bewegungsrichtung
+    dr\xFCckst. Auch hierbei wird die Figur nicht direkt auf 0 abgebremst, sondern
+    bremst langsam ab, bevor sie zum stehen kommt. "
 --- !u!222 &430686465
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -624,7 +624,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 959126514}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a370929263e35cc43aa102561900f3f2, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ced85d65f087a54bb1504252e8e4a1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gui: {fileID: 440384014}

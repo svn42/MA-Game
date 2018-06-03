@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Exhaust : MonoBehaviour
+public class ExhaustTutorial : MonoBehaviour
 {
     Color color; // Variable in der die Farbe verändert wird
     public float destroyTime; //Zeit bis zur Zerstörung des Abgaspartikels in Sekunden
     private Vector3 movementVector; //Der Bewegungsvektor des Partikels, der in jedem Update verwendet wird
     public float acceleration;  //der Beschleunigungswert des Partikels
-    private GameState gameState;
+    private TutorialGameState tutorialGameState;
 
     // Use this for initialization
     void Start()
     {
-        gameState = (GameState)FindObjectOfType(typeof(GameState));
+        tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
         //die Zerstörung des Objektes in "destroyTime" Sekunden wird in Auftrag gegeben
         Destroy(gameObject, destroyTime);
     }
@@ -21,12 +21,12 @@ public class Exhaust : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            if (!gameState.GetGamePaused())
-            {
-                Move();        //mit jedem Frame wird das Objekt bewegt
-                Fade();        //und das Objekt durchsichtiger
-            }
-        
+        if (!tutorialGameState.GetGamePaused())
+        {
+            Move();        //mit jedem Frame wird das Objekt bewegt
+            Fade();        //und das Objekt durchsichtiger
+        }
+
     }
 
     //Methode zum Bewegen

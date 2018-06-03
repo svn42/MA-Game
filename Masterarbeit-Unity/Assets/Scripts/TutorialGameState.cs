@@ -5,58 +5,50 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class GameState : MonoBehaviour
+public class TutorialGameState : MonoBehaviour
 {
     public string gameType;
     public int maximumBalls;
     public int goalLimit;
     public float timeLeft;
+    public float timePlayed;
     public float goalFreezeTime;
-    private List<Ball> ballList = new List<Ball>();
+    private List<BallTutorial> ballList = new List<BallTutorial>();
     bool maximumBallsReached = false;
     public int goalsTeam1 = 0;
     public int goalsTeam2 = 0;
     public bool gamePaused;
 
     public GameObject gui;
-    private Text scoreTeam1;
-    private Text scoreTeam2;
-    private Text timer;
+    public GameObject startScreen;
     private GameObject pauseScreenGO;
     private Canvas pauseScreen;
     private GameObject transparentScreen;
-    private GameObject popUp;
     private Canvas player1Box;
-    private Canvas player2Box;
     private Image greenCheckP1;
-    private Image greenCheckP2;
+    private Text timer;
 
     private bool player1Ready;
-    private bool player2Ready;
-    private bool playerHelp;
 
     public bool levelEnded;
     public bool nextLevelReady;
     public int timeUntilNextLevel;
+    public int timeUntilTutorialStart;
+    public bool tutorialReady;
     public int depauseCountdown;
     private bool depauseCountdownStarted;
     private bool timerBlink;
-    private bool popUp120Showed;
-    private bool popUp60Showed;
     private Text topText;
     private Text middleText;
-    private Text observerText;
-    private Text helpText;
+    // private Text observerText;
+    //private Text helpText;
     public bool startCountdownActivated;    //regelt, ob der Startbildschirm mit dem Countdown angezeigt werden soll
 
     private string endingCondition;
-    public GameObject player1;
-    public GameObject player2;
-    private Player player1Script;
-    private Player player2Script;
+    private PlayerTutorial player1Script;
+    public int rating;
+    public int vpNummer;
 
-    private PlayerLogging playerLoggingP1;
-    private PlayerLogging playerLoggingP2;
     public GlobalTimer globalTimer;
     //Audios
     private AudioSource audioSource;
@@ -71,6 +63,14 @@ public class GameState : MonoBehaviour
 
     public AudioSource musicPlayer;
 
+    public GameObject player1;
+    public string tutorialFinishedText1;
+    public string tutorialFinishedText2;
+
+    public bool inverseTime;
+
+    public string challengeType;
+
     private void Awake()
     {
         gameType = PlayerPrefs.GetString("GameType");
@@ -80,38 +80,26 @@ public class GameState : MonoBehaviour
     void Start()
     {
         timeLeft += 0.02f;
-        if (timeLeft < 120)
-        {
-            popUp120Showed = true;
-        }
-        if (timeLeft < 60)
-        {
-            popUp60Showed = true;
-        }
 
-        popUp = gui.transform.Find("PopUp").gameObject;
+        vpNummer = PlayerPrefs.GetInt("VP");
+        rating = 0;
+
+        timer = gui.transform.Find("UI_Spielstand").transform.Find("Timer_Background").transform.Find("Time").GetComponent<Text>();
+
         pauseScreenGO = gui.transform.Find("PauseScreen").gameObject;
         pauseScreen = pauseScreenGO.GetComponent<Canvas>();
         transparentScreen = pauseScreenGO.transform.Find("TransparentScreen").gameObject;
         topText = transparentScreen.transform.Find("topText").GetComponent<Text>();
         middleText = transparentScreen.transform.Find("middleText").GetComponent<Text>();
-        observerText = transparentScreen.transform.Find("observerText").GetComponent<Text>();
-        helpText = transparentScreen.transform.Find("helpText").GetComponent<Text>();
+        //observerText = transparentScreen.transform.Find("observerText").GetComponent<Text>();
+        //helpText = transparentScreen.transform.Find("helpText").GetComponent<Text>();
         player1Box = transparentScreen.transform.Find("Spieler1").GetComponent<Canvas>();
-        player2Box = transparentScreen.transform.Find("Spieler2").GetComponent<Canvas>();
         greenCheckP1 = transparentScreen.transform.Find("Spieler1").transform.Find("Spieler1_Check").GetComponent<Image>();
-        greenCheckP2 = transparentScreen.transform.Find("Spieler2").transform.Find("Spieler2_Check").GetComponent<Image>();
         musicPlayer = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
 
-        scoreTeam1 = gui.transform.Find("UI_Spielstand").transform.Find("Spielstand Team 1").transform.Find("Score Team 1").GetComponent<Text>();
-        scoreTeam2 = gui.transform.Find("UI_Spielstand").transform.Find("Spielstand Team 2").transform.Find("Score Team 2").GetComponent<Text>();
-        timer = gui.transform.Find("UI_Spielstand").transform.Find("Timer_Background").transform.Find("Time").GetComponent<Text>();
 
         globalTimer = (GlobalTimer)FindObjectOfType(typeof(GlobalTimer));
-        playerLoggingP1 = player1.GetComponent<PlayerLogging>();
-        playerLoggingP2 = player2.GetComponent<PlayerLogging>();
-        player1Script = player1.GetComponent<Player>();
-        player2Script = player2.GetComponent<Player>();
+        //player1Script = player1.GetComponent<PlayerTutorial>();
 
         audioSource = GetComponent<AudioSource>();
         soundCountdownRegular = Resources.Load<AudioClip>("Sounds/countdown_regular");
@@ -122,13 +110,6 @@ public class GameState : MonoBehaviour
         soundBallHit = Resources.Load<AudioClip>("Sounds/ball_hit");
         soundWhistle = Resources.Load<AudioClip>("Sounds/whistle");
         soundPopup = Resources.Load<AudioClip>("Sounds/popup");
-
-        SetGoalCount("Team1");
-        SetGoalCount("Team2");
-
-
-        playerLoggingP1.CheckResult();  //Die Playerloggings bekommen das Result zum Start mitgeteilt
-        playerLoggingP2.CheckResult();
 
         if (startCountdownActivated)
         {
@@ -144,13 +125,13 @@ public class GameState : MonoBehaviour
     }
 
     //Über diese Methode werden neue Bälle an die ballList übergeben
-    public void RegisterBallList(Ball ball)
+    public void RegisterBallList(BallTutorial ball)
     {
         ballList.Add(ball);
     }
 
     //Die Methode liefert als return Wert die aktuelle ballList zurück
-    public List<Ball> GetBalllist()
+    public List<BallTutorial> GetBalllist()
     {
         return ballList;
     }
@@ -189,89 +170,74 @@ public class GameState : MonoBehaviour
         if (goal.Equals("Goal1"))
         {
             goalsTeam2++;
-            playerLoggingP1.AdjustResult("goalConceded");
-            playerLoggingP2.AdjustResult("goalScored");
-            SetGoalCount("Team2");
+            //  SetGoalCount("Team2");
             //Logging
             if (scoredByTeamNr == 1)
             {
-                playerLoggingP1.AddGoalType("owngoal");
             }
             else if (scoredByTeamNr == 2)
             {
-                playerLoggingP2.AddGoalType("goal");
             }
         }
         else if (goal.Equals("Goal2"))
         {
             goalsTeam1++;
-            playerLoggingP2.AdjustResult("goalConceded");
-            playerLoggingP1.AdjustResult("goalScored");
-            SetGoalCount("Team1");
+            // SetGoalCount("Team1");
 
             //Logging
             if (scoredByTeamNr == 1)
             {
-                playerLoggingP1.AddGoalType("goal");
             }
             else if (scoredByTeamNr == 2)
             {
-                playerLoggingP2.AddGoalType("owngoal");
             }
         }
-        playerLoggingP1.CheckResult();
-        playerLoggingP2.CheckResult();
         CheckGoalLimit();
 
     }
 
-    //Hiermit kann die Anzeige für die Tore bearbeitet werden
-    private void SetGoalCount(string s)
-    {
-        if (s.Equals("Team1"))
-        {
-            scoreTeam1.text = goalsTeam1.ToString();
-        }
-        else if (s.Equals("Team2"))
-        {
-            scoreTeam2.text = goalsTeam2.ToString();
-        }
-
-    }
 
     private void CheckTimer()
     {
-        timeLeft -= Time.deltaTime;
-        timer.text = Mathf.RoundToInt(timeLeft).ToString();
+        timePlayed = globalTimer.playTime;
 
-        if (timeLeft <= 120 && !popUp120Showed)
+        timeLeft -= Time.deltaTime;
+
+        if (!inverseTime)
         {
-            StartCoroutine(ShowPopUp("2 Minuten"));
-            popUp120Showed = true;
-        }
-         if (timeLeft <= 60 && !popUp60Showed)
-        {
-            StartCoroutine(ShowPopUp("1 Minute"));
-            popUp60Showed = true;
-        }
-         if (timeLeft <= 10)
-        {
-            if (!timerBlink)
+            timer.text = Mathf.RoundToInt(timeLeft).ToString();
+
+
+            if (timeLeft <= 10)
             {
-                StartCoroutine(TimerBlinkEffect());
-                timerBlink = true;
+                if (!timerBlink)
+                {
+                    StartCoroutine(TimerBlinkEffect());
+                    timerBlink = true;
+                }
             }
-        }
+        } 
          if (timeLeft <= 0)
         {
             if (!levelEnded)
             {
-
                 PlaySound(soundWhistle, 0.4f);
                 endingCondition = "Time";
                 SetGamePaused(true, "end");
             }
         }
+
+         if (inverseTime)
+        {
+            
+            timer.text = Mathf.RoundToInt(timePlayed).ToString();
+
+        }
+    }
+
+    private void StartTimer()
+    {
+
     }
 
     //Blinkeffekt des Stuns
@@ -286,7 +252,7 @@ public class GameState : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             timer.color = Color.white;
             yield return new WaitForSeconds(0.5f);
-            audioSource.Stop();
+
         }
     }
 
@@ -315,66 +281,43 @@ public class GameState : MonoBehaviour
         //sofern das Spiel pausiert wird
         if (gamePaused && !depauseCountdownStarted)
         {
-            if (Input.GetButtonUp("Help"))
-            {
-                playerHelp = true;
-                observerText.enabled = true;
-                observerText.text = "Gib dem Versuchsleiter Bescheid, \nwenn du mit ihm im selben Raum sitzt.";
-                observerText.color = Color.red;
-            }
-            if (playerHelp)
-            {
-                if (Input.GetKeyUp(KeyCode.H))
-                {
-                    playerHelp = false;
-                    observerText.text = "Ihr könnt das Spiel fortsetzen! :)";
-                    observerText.color = Color.green;
-                }
-            }
             if (!levelEnded)
             {
-
-
-                if (!playerHelp)
+                if (tutorialReady)
                 {
                     //überprüfe, ob die einzelnen Spieler bereit sind
                     if (Input.GetButtonUp("ShootP1"))
                     {
                         SetPlayerReady(true, 1);
                     }
-                    else if (Input.GetButtonUp("ShootP2"))
-                    {
-                        SetPlayerReady(true, 2);
-                    }
 
-                    if (player1Ready && player2Ready)
+                    if (player1Ready)
                     {
                         if (!depauseCountdownStarted)
                         {
                             StartCoroutine(StartDepauseCountdown(depauseCountdown));
                             depauseCountdownStarted = true;
+                            player1.gameObject.SetActive(true);
                         }
                     }
+
                 }
             }
             else if (levelEnded && nextLevelReady)
             {
-                if (!playerHelp)
+                //überprüfe, ob die einzelnen Spieler bereit sind
+                if (Input.GetButtonUp("ShootP1"))
                 {
-                    //überprüfe, ob die einzelnen Spieler bereit sind
-                    if (Input.GetButtonUp("ShootP1"))
-                    {
-                        SetPlayerReady(true, 1);
-                    }
-                    else if (Input.GetButtonUp("ShootP2"))
-                    {
-                        SetPlayerReady(true, 2);
-                    }
-                    if (player1Ready && player2Ready)
-                    {
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-                    }
+                    SetPlayerReady(true, 1);
                 }
+
+                if (player1Ready)
+                {
+                    int newRating = PlayerPrefs.GetInt(vpNummer.ToString() + "Rating") + rating;
+                    PlayerPrefs.SetInt(vpNummer.ToString() + "Rating", newRating);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
+
             }
         }
 
@@ -422,11 +365,6 @@ public class GameState : MonoBehaviour
             player1Ready = b;
             greenCheckP1.enabled = b;
         }
-        else if (playerNr == 2)
-        {
-            player2Ready = b;
-            greenCheckP2.enabled = b;
-        }
     }
 
     IEnumerator GoalFreeze()
@@ -439,6 +377,7 @@ public class GameState : MonoBehaviour
     IEnumerator StartDepauseCountdown(int countdown)
     {
         yield return new WaitForSeconds(1 * Time.timeScale);
+        startScreen.GetComponent<Canvas>().enabled = false;
         BuildPauseScreen("countdown");
         for (int i = countdown; i > 0; i--)
         {
@@ -449,7 +388,6 @@ public class GameState : MonoBehaviour
         PlaySound(soundCountdownEnd, 0.5f);
         SetGamePaused(false, "pause");
         SetPlayerReady(false, 1);
-        SetPlayerReady(false, 2);
         pauseScreen.enabled = false;
         depauseCountdownStarted = false;
     }
@@ -461,107 +399,78 @@ public class GameState : MonoBehaviour
         nextLevelReady = true;
     }
 
+    IEnumerator StartTutorial()
+    {
+        yield return new WaitForSeconds(timeUntilTutorialStart * Time.timeScale);
+        startScreen.transform.Find("ReadyText").GetComponent<Text>().enabled = true;
+        tutorialReady = true;
+
+    }
 
 
     public void BuildPauseScreen(string screenType)
     {
-        pauseScreen.enabled = true;
-        observerText.enabled = false;
+        // observerText.enabled = false;
 
         switch (screenType)
         {
 
             case "pause":
-                helpText.enabled = true;
+                //  helpText.enabled = true;
+                pauseScreen.enabled = true;
                 transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
                 player1Box.enabled = true;
-                player2Box.enabled = true;
                 topText.text = "Pause";
                 topText.fontSize = 50;
                 middleText.text = "Drücke A zum Fortsetzen!";
                 break;
             case "start":
-                helpText.enabled = true;
-                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
-                player1Box.enabled = true;
-                player2Box.enabled = true;
-                topText.text = "Mach dich bereit für " + SceneManager.GetActiveScene().name + "!";
-                topText.fontSize = 45;
-                middleText.text = "Drücke A zum Starten!";
+                //   helpText.enabled = true;
+                startScreen.transform.Find("ReadyText").GetComponent<Text>().enabled = false;
+                startScreen.GetComponent<Canvas>().enabled = true;
+                StartCoroutine(StartTutorial());
                 break;
             case "countdown":
-                helpText.enabled = false;
+                pauseScreen.enabled = true;
+
+                // helpText.enabled = false;
                 transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.66f);
                 player1Box.enabled = false;
-                player2Box.enabled = false;
                 topText.text = "";
                 topText.fontSize = 80;
                 middleText.text = "";
 
                 break;
             case "endWait":
-                helpText.enabled = true;
+                pauseScreen.enabled = true;
+
+                // helpText.enabled = true;
                 transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
                 player1Box.enabled = false;
-                player2Box.enabled = false;
-
-                if (goalsTeam1 > goalsTeam2)
-                {
-                    topText.text = "Spieler 1 gewinnt mit " + goalsTeam1 + " - " + goalsTeam2 + "!";
-                }
-                else if (goalsTeam1 < goalsTeam2)
-                {
-                    topText.text = "Spieler 1 gewinnt mit " + goalsTeam2 + " - " + goalsTeam1 + "!";
-                }
-                else
-                {
-                    topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
-                }
-                topText.fontSize = 45;
-                middleText.text = "";
+                topText.fontSize = 30;
+                topText.text = tutorialFinishedText1;
+                middleText.text = tutorialFinishedText2;
                 break;
             case "endLevelReady":
-                helpText.enabled = true;
+                pauseScreen.enabled = true;
+
+                //   helpText.enabled = true;
                 transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
                 player1Box.enabled = true;
-                player2Box.enabled = true;
-
-                if (goalsTeam1 > goalsTeam2)
-                {
-                    topText.text = "Spieler 1 gewinnt mit " + goalsTeam1 + " - " + goalsTeam2 + "!";
-                }
-                else if (goalsTeam1 < goalsTeam2)
-                {
-                    topText.text = "Spieler 1 gewinnt mit " + goalsTeam2 + " - " + goalsTeam1 + "!";
-                }
-                else
-                {
-                    topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
-                }
-                topText.fontSize = 45;
-                middleText.text = "Drücke A zum Fortfahren!";
+                topText.text = tutorialFinishedText1;
+                middleText.text = tutorialFinishedText2;
+                topText.fontSize = 30;
+                //  middleText.text = "Drücke A zum Fortfahren!";
                 break;
         }
     }
 
-    IEnumerator ShowPopUp(string timeleft)
-    {
-        popUp.GetComponent<Canvas>().enabled = true;
-        PlaySound(soundPopup, 0.2f);
-        popUp.transform.Find("TransparentScreen").transform.Find("topText").GetComponent<Text>().text = "Nur noch " + timeleft + "!";
-        yield return new WaitForSeconds(3 * Time.timeScale);
-        popUp.GetComponent<Canvas>().enabled = false;
-    }
 
     public void EndScene()
     {
         levelEnded = true;
         BuildPauseScreen("endWait");
         globalTimer.SetEndTime();
-        player1Script.CalculateLogData(endingCondition);
-        player2Script.CalculateLogData(endingCondition);
-        ExportData exportData = (ExportData)FindObjectOfType(typeof(ExportData));
-        exportData.ExportAllData();
     }
 
     public void PlaySound(AudioClip ac, float volume)
@@ -587,13 +496,18 @@ public class GameState : MonoBehaviour
             case "ball_hit":
                 audioSource.PlayOneShot(soundBallHit, volume);
                 break;
-                
+
         }
 
         Time.timeScale = lastTimeScale;
 
     }
 
-
+    public void EndChallenge(int challengeRating)
+    {
+        PlaySound(soundWhistle, 0.4f);
+        SetGamePaused(true, "end");
+        rating = challengeRating;
+    }
 
 }

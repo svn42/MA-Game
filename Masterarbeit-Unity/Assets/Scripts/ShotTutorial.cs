@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shot : MonoBehaviour
+public class ShotTutorial : MonoBehaviour
 {
 
     public float acceleration;  //der Beschleunigungswert des Partikels
@@ -14,16 +14,15 @@ public class Shot : MonoBehaviour
     private int shotID;
     public float stunDuration;
     public GameObject player;
-    public PlayerLogging playerLogging;
     private TrailRenderer trailRenderer;
     public GameObject shotDestructionPrefab;
-    private GameState gameState;
+    private TutorialGameState tutorialGameState;
     SpriteRenderer spriteRenderer;
 
     // Use this for initialization
     void Start()
     {
-        gameState = (GameState)FindObjectOfType(typeof(GameState));
+        tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
 
         //zuweisen des shotTypes in abhängigkeit zur Stärke
         switch (strength)
@@ -42,10 +41,9 @@ public class Shot : MonoBehaviour
         GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
         for (int i = 0; i < playerList.Length; i++)
         {
-            if (playerList[i].GetComponent<Player>().playerTeam ==  playerTeam)
+            if (playerList[i].GetComponent<PlayerTutorial>().playerTeam == playerTeam)
             {
                 player = playerList[i];
-                playerLogging = player.GetComponent<PlayerLogging>();
             }
         }
 
@@ -84,12 +82,11 @@ public class Shot : MonoBehaviour
         switch (collidingObject.tag)
         {
             case "Block":
-                collidingObject.GetComponent<Block>().ReduceHealth(strength);
+                collidingObject.GetComponent<BlockTutorial>().ReduceHealth(strength);
                 DestroyShot();
-                playerLogging.AddAccuracy("block");
                 break;
             case "Player":
-                if (collidingObject.GetComponent<Player>().playerTeam != playerTeam)   //wenn der Schuss den gegnerischen Spieler trifft
+                if (collidingObject.GetComponent<PlayerTutorial>().playerTeam != playerTeam)   //wenn der Schuss den gegnerischen Spieler trifft
                 {
                     // reference: https://answers.unity.com/questions/1100879/push-object-in-opposite-direction-of-collision.html
                     // calculate force vector
@@ -98,39 +95,34 @@ public class Shot : MonoBehaviour
                     force.Normalize();
                     coll.rigidbody.AddForce(force * ballImpact);
                     DestroyShot();
-                    playerLogging.AddAccuracy("player");
                 }
                 break;
             case "Boundary":
                 DestroyShot();
-                playerLogging.AddAccuracy("destroy");
-                gameState.PlaySound("soundSlap", 0.05f);
+                tutorialGameState.PlaySound("soundSlap", 0.05f);
                 break;
             case "Shot":
-                if (collidingObject.GetComponent<Shot>().GetPlayerTeam() != playerTeam)
+                if (collidingObject.GetComponent<ShotTutorial>().GetPlayerTeam() != playerTeam)
                 {
-                    gameState.PlaySound("soundSlap", 0.05f);
+                    tutorialGameState.PlaySound("soundSlap", 0.05f);
 
-                    if (strength < collidingObject.GetComponent<Shot>().strength)
+                    if (strength < collidingObject.GetComponent<ShotTutorial>().strength)
                     {
                         DestroyShot();
                     }
-                    else if (strength == collidingObject.GetComponent<Shot>().strength)
+                    else if (strength == collidingObject.GetComponent<ShotTutorial>().strength)
                     {
-                        playerLogging.AddAccuracy("shot");
                         DestroyShot();
                     }
-                    else if (strength >= collidingObject.GetComponent<Shot>().strength)
+                    else if (strength >= collidingObject.GetComponent<ShotTutorial>().strength)
                     {
-                        playerLogging.AddAccuracy("shot");
                     }
                 }
                 else
                 {
-                    if (shotID > collidingObject.GetComponent<Shot>().GetShotID())
+                    if (shotID > collidingObject.GetComponent<ShotTutorial>().GetShotID())
                     {
                         DestroyShot();
-                        playerLogging.AddAccuracy("destroy");
                     }
                 }
                 break;
@@ -141,21 +133,20 @@ public class Shot : MonoBehaviour
                 // normalize force vector to get direction only and trim magnitude
                 forceBall.Normalize();
                 coll.rigidbody.AddForce(forceBall * ballImpact);
-                collidingObject.GetComponent<Ball>().SetLastHitBy(playerTeam);
+                collidingObject.GetComponent<BallTutorial>().SetLastHitBy(playerTeam);
                 switch (strength)
                 {
                     case 1:
-                        collidingObject.GetComponent<Ball>().PlayHitSound(0.3f);
+                        collidingObject.GetComponent<BallTutorial>().PlayHitSound(0.3f);
                         break;
                     case 2:
-                        collidingObject.GetComponent<Ball>().PlayHitSound(0.5f);
+                        collidingObject.GetComponent<BallTutorial>().PlayHitSound(0.5f);
                         break;
                     case 3:
-                        collidingObject.GetComponent<Ball>().PlayHitSound(0.8f);
+                        collidingObject.GetComponent<BallTutorial>().PlayHitSound(0.8f);
                         break;
                 }
                 DestroyShot();
-                playerLogging.AddAccuracy("ball");
                 break;
         }
 

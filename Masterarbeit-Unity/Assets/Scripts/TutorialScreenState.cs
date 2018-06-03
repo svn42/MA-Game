@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class TutorialState : MonoBehaviour
+public class TutorialScreenState : MonoBehaviour
 {
     public GameObject gui;
     private Text ratingText;
@@ -14,9 +14,10 @@ public class TutorialState : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
         vpNummer = PlayerPrefs.GetInt("VP");
         greenCheck = gui.transform.Find("PauseScreen").gameObject.transform.Find("Spieler1").transform.Find("Spieler1_Check").GetComponent<Image>(); ;
-        rating = PlayerPrefs.GetInt(vpNummer.ToString()+"Rating");
+        rating = PlayerPrefs.GetInt(vpNummer.ToString() + "Rating");
         if (SceneManager.GetActiveScene().name.Equals("TutorialEnd"))
         {
             ratingText = gui.transform.Find("PauseScreen").gameObject.transform.Find("TransparentScreen").transform.Find("RatingText").GetComponent<Text>(); ;
@@ -40,7 +41,6 @@ public class TutorialState : MonoBehaviour
                 PlayerPrefs.SetString(vpNummer.ToString() + "TutorialSolved", "Yes");
                 PlayerPrefs.SetInt("CurrentVP", vpNummer);
                 StartCoroutine(LoadNextScene("MainMenu"));
-
             }
             else
             {
