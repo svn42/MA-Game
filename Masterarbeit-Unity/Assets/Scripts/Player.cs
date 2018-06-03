@@ -8,8 +8,10 @@ public class Player : MonoBehaviour
     [Range(1, 2)]
     public int playerTeam;    //Teamzugehörigkeit (1 oder 2)
     string playerAcronym;
-    public int subjectNr1;   //VersuchspersonenNummer aus nem Menü rausziehen
-    public int subjectNr2;   //VersuchspersonenNummer aus nem Menü rausziehen
+    public int subjectNr;   
+    public int subjectNrEnemy;
+    public int rating;
+    public int ratingEnemy;
     public float brakingForce;  //Stärke des Abbremsens
     public float maxSpeed;
     public float speedX;    //Geschwindigkeit auf der X-Achse
@@ -61,6 +63,29 @@ public class Player : MonoBehaviour
     {
 
         gameState = (GameState)FindObjectOfType(typeof(GameState));
+
+        if (gameState.gameType.Equals("Online")){
+            subjectNr = PlayerPrefs.GetInt("VP");
+            if (subjectNr % 2 == 0)
+            {
+                playerTeam = 2;
+            } else if (subjectNr % 2 == 1)
+            {
+                playerTeam = 1;
+            }
+        } else if (gameState.gameType.Equals("Local"))
+        {
+            if (playerTeam == 1)
+            {
+                subjectNr = PlayerPrefs.GetInt("VP");
+            }
+            else if (playerTeam == 2)
+            {
+                subjectNr = PlayerPrefs.GetInt("VP") +1;
+            }
+        }
+        rating = PlayerPrefs.GetInt(subjectNr + "Rating");
+
         playerAcronym = "P" + playerTeam;
         CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
         blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
@@ -493,6 +518,10 @@ void Update()
 
     public void CalculateLogData(string endingCondition)
     {
+        playerLogging.SetSubjectNr(subjectNr, subjectNrEnemy);
+        playerLogging.SetRating(rating, ratingEnemy);
+
+
         positionTracker.CalculateWalkedDistance();
         playerLogging.SetEndingCondition(endingCondition);
         //playerLogging.CalculateAccuracy();

@@ -77,6 +77,10 @@ public class ExportData : MonoBehaviour
             {
                 //Schreibe alle Spaltennamen in erste Zeile
                 newFile.Write("VP;");
+                newFile.Write("VP_Gegner;");
+                newFile.Write("Rating;");
+                newFile.Write("Rating_Gegner;");
+
                 newFile.Write("Szene;");
                 newFile.Write(sceneNameAbbreviation + "_Startzeit;");
                 newFile.Write(sceneNameAbbreviation + "_Endzeit;");
@@ -357,7 +361,11 @@ public class ExportData : MonoBehaviour
     public void WritePlayerLoggingData(StreamWriter file, PlayerLogging pL)
     {
         file.Write("\n");
-        file.Write(pL.playerTeam + ";");
+        file.Write(pL.subjectNr + ";");
+        file.Write(pL.subjectNrEnemy + ";");
+        file.Write(pL.rating + ";");
+        file.Write(pL.ratingEnemy + ";");
+
         file.Write(sceneName + ";");
         file.Write(globalTimer.startTime + ";");
         file.Write(globalTimer.endTime + ";");

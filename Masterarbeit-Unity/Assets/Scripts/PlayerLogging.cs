@@ -7,6 +7,11 @@ public class PlayerLogging : MonoBehaviour
     PositionTracker positionTracker;
 
     public int playerTeam;
+    public int subjectNr;
+    public int subjectNrEnemy;
+    public int rating;
+    public int ratingEnemy;
+    
     private string currentZone;  //aktuelle Zone des Spielers
     public string currentResult;
 
@@ -266,13 +271,11 @@ public class PlayerLogging : MonoBehaviour
     public int emoteAngryInDeficit;
     public int emoteCryInDeficit;
     public int emoteHahaInDeficit;
-
-
-
+    
     // Use this for initialization
     void Start()
     {
-        positionTracker = this.gameObject.GetComponent<PositionTracker>();
+        positionTracker = gameObject.GetComponent<PositionTracker>();
     }
 
     // Update is called once per frame
@@ -284,6 +287,19 @@ public class PlayerLogging : MonoBehaviour
     public void SetPlayerTeam(int team)
     {
         playerTeam = team;
+    }
+
+    public void SetSubjectNr(int vp, int vpEnemy)
+    {
+        subjectNr = vp;
+        subjectNrEnemy = vpEnemy;
+    }
+
+    public void SetRating(int rat, int ratEnemy)
+    {
+        rating = rat;
+        ratingEnemy = ratEnemy;
+
     }
 
     public string CheckResult()

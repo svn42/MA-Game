@@ -12,41 +12,52 @@ public class MainMenu : MonoBehaviour
     public GameObject mainMenu;
     public GameObject VLPWMenu;
     public GameObject VLMenu;
+    public Button tutorialButton;
+    public Button loacalGameButton;
+    public Button onlineGameButton;
+
     private GameObject passwortErrorText;
     private GameObject VPErrorText;
     public int VPNummer;
 
-    public bool tutorialSolved;
-
     public void Start()
     {
+        LoadData(PlayerPrefs.GetInt("CurrentVP"));
+
         passwortErrorText = passwortField.gameObject.transform.Find("Error-Text").gameObject;
         VPErrorText = VPInputField.gameObject.transform.Find("Error-Text").gameObject;
+
+
+        if (PlayerPrefs.GetString(VPNummer.ToString()+"TutorialSolved").Equals("Yes"))
+        {
+            loacalGameButton.interactable = true;
+            onlineGameButton.interactable = true;
+            mainMenu.transform.Find("Rating-Text").gameObject.GetComponent<Text>().text = "Rating: " + PlayerPrefs.GetInt(VPNummer.ToString()+"Rating");
+        }
     }
 
     public void StartTutorial()
     {
-
+        SceneManager.LoadScene("TutorialStart");
     }
 
     public void StartLocalGame()
     {
+        PlayerPrefs.SetString("GameType","Local");
         SceneManager.LoadScene("Level 1");
     }
 
     public void StartOnlineGame()
     {
+        PlayerPrefs.SetString("GameType", "Online");
+        SceneManager.LoadScene("Level 1");
 
     }
-
-    public void OpenVLMenu()
-    {
-
-    }
-
+    
     public void QuitGame()
     {
         Application.Quit();
+        PlayerPrefs.SetInt("CurrentVP",0);
     }
 
     public void CheckPassword()
@@ -54,7 +65,7 @@ public class MainMenu : MonoBehaviour
         string enteredPassword = "";
         enteredPassword = passwortField.text;
 
-        if (enteredPassword.Equals("Apu"))
+        if (enteredPassword.Equals("apu"))
         {
             passwortErrorText.SetActive(false);
             VLMenu.SetActive(true);
@@ -70,20 +81,63 @@ public class MainMenu : MonoBehaviour
 
     public void CheckVP()
     {
-        string enteredVP = "";
-        enteredVP = VPInputField.text;
+        string enteredVPStr = "";
+        enteredVPStr = VPInputField.text;
+        int enteredVPInt;
+        if (int.TryParse(enteredVPStr, out enteredVPInt)){
+            if (!enteredVPStr.Equals(""))
+            {
+                VPErrorText.SetActive(false);
+                LoadData(enteredVPInt);
+                PlayerPrefs.SetInt("VP",enteredVPInt);
+            }
+            else
+            {
+                VPErrorText.SetActive(true);
+            }
+            VPInputField.text = "";
+        }
+        
+    }
 
-        if (!enteredVP.Equals(""))
+    public void LoadData(int i)
+    {
+        VPNummer = i;
+        if (VPNummer == 0)
         {
-            VPErrorText.SetActive(false);
-            VLMenu.transform.Find("VP-Text").gameObject.GetComponent<Text>().text = "VP: "+ enteredVP;
-            mainMenu.transform.Find("VP-Text").gameObject.GetComponent<Text>().text = "VP: " + enteredVP;
-        }
-        else
+
+            mainMenu.transform.Find("Rating-Text").gameObject.GetComponent<Text>().text = "Rating: ?";
+            VLMenu.transform.Find("VP-Text").gameObject.GetComponent<Text>().text = "VP: ?";
+            mainMenu.transform.Find("VP-Text").gameObject.GetComponent<Text>().text = "VP: ?";
+
+            tutorialButton.interactable = false;
+            loacalGameButton.interactable = false;
+            onlineGameButton.interactable = false;
+        } else
         {
-            VPErrorText.SetActive(true);
+
+            VLMenu.transform.Find("VP-Text").gameObject.GetComponent<Text>().text = "VP: "+ VPNummer;
+            mainMenu.transform.Find("VP-Text").gameObject.GetComponent<Text>().text = "VP: "+ VPNummer;
+
+            if (PlayerPrefs.GetString(VPNummer.ToString() + "TutorialSolved").Equals("Yes"))
+            {
+                mainMenu.transform.Find("Rating-Text").gameObject.GetComponent<Text>().text = "Rating: " + PlayerPrefs.GetInt(VPNummer.ToString() + "Rating");
+                tutorialButton.interactable = false;
+                loacalGameButton.interactable = true;
+                onlineGameButton.interactable = true;
+            }
+            else
+            {
+                mainMenu.transform.Find("Rating-Text").gameObject.GetComponent<Text>().text = "Rating: ?";
+
+                tutorialButton.interactable = true;
+                loacalGameButton.interactable = false;
+                onlineGameButton.interactable = false;
+
+            }
+
+
         }
-        VPInputField.text = "";
 
     }
 

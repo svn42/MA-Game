@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameState : MonoBehaviour
 {
-
+    public string gameType;
     public int maximumBalls;
     public int goalLimit;
     public float timeLeft;
@@ -73,12 +73,12 @@ public class GameState : MonoBehaviour
 
     private void Awake()
     {
+        gameType = PlayerPrefs.GetString("GameType");
     }
 
     // Use this for initialization
     void Start()
     {
-
         timeLeft += 0.02f;
         if (timeLeft < 120)
         {
