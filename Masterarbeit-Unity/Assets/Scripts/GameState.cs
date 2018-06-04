@@ -79,15 +79,16 @@ public class GameState : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        timeLeft += 0.02f;
-        if (timeLeft < 120)
+        if (timeLeft <= 120)
         {
             popUp120Showed = true;
         }
-        if (timeLeft < 60)
+        if (timeLeft <= 60)
         {
             popUp60Showed = true;
         }
+        timeLeft += 0.02f;
+
 
         popUp = gui.transform.Find("PopUp").gameObject;
         pauseScreenGO = gui.transform.Find("PauseScreen").gameObject;
