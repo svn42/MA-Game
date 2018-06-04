@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Generelles Spielziel
+  m_Text: Generelles Spielziel I
 --- !u!222 &2418733
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -417,12 +417,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Mit dem linken Analogstick des Controllers kannst du deine Figur bewegen.
-    \nBedenke bei der Bewegung, dass sich deine Figur nicht direkt mit der maximalen
-    Geschwindigkeit bewegt, sondern zun\xE4chst beschleunigen muss. \n\nDu bremst
-    die Figur ab, indem du den Stick in nicht mehr in die gew\xFCnschte Bewegungsrichtung
-    dr\xFCckst. Auch hierbei wird die Figur nicht direkt auf 0 abgebremst, sondern
-    bremst langsam ab, bevor sie zum stehen kommt. "
+  m_Text: "Geometry Ball ist eine Mischung aus Air Hockey und Fu\xDFball. Du steuerst
+    eine dreieckige Figur, die 3 unterschiedlich starke Sch\xFCsse abfeuern sowie
+    Bl\xF6cke platzieren kann, und hast das Ziel mehr Tore zu erzielen als dein Gegner.
+    \n\nUm die B\xE4lle in das gegnerische Tor zu bef\xF6rdern, musst du diese mit
+    deinen Sch\xFCssen treffen, damit sich diese in die entsprechende Richtung bewegen. "
 --- !u!222 &430686465
 CanvasRenderer:
   m_ObjectHideFlags: 0
