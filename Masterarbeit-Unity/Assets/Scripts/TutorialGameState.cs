@@ -40,7 +40,7 @@ public class TutorialGameState : MonoBehaviour
     private bool timerBlink;
     private Text topText;
     private Text middleText;
-    // private Text observerText;
+    private Text bottomText;
     //private Text helpText;
     public bool startCountdownActivated;    //regelt, ob der Startbildschirm mit dem Countdown angezeigt werden soll
 
@@ -66,8 +66,10 @@ public class TutorialGameState : MonoBehaviour
     public GameObject player1;
     public string tutorialFinishedText1;
     public string tutorialFinishedText2;
+    public GameObject videoPlayer;
 
     public bool inverseTime;
+    public bool showRatingChange;
 
     public string challengeType;
 
@@ -91,7 +93,7 @@ public class TutorialGameState : MonoBehaviour
         transparentScreen = pauseScreenGO.transform.Find("TransparentScreen").gameObject;
         topText = transparentScreen.transform.Find("topText").GetComponent<Text>();
         middleText = transparentScreen.transform.Find("middleText").GetComponent<Text>();
-        //observerText = transparentScreen.transform.Find("observerText").GetComponent<Text>();
+        bottomText = transparentScreen.transform.Find("bottomText").GetComponent<Text>();
         //helpText = transparentScreen.transform.Find("helpText").GetComponent<Text>();
         player1Box = transparentScreen.transform.Find("Spieler1").GetComponent<Canvas>();
         greenCheckP1 = transparentScreen.transform.Find("Spieler1").transform.Find("Spieler1_Check").GetComponent<Image>();
@@ -378,6 +380,10 @@ public class TutorialGameState : MonoBehaviour
     {
         yield return new WaitForSeconds(1 * Time.timeScale);
         startScreen.GetComponent<Canvas>().enabled = false;
+        if (videoPlayer != null)
+        {
+            videoPlayer.SetActive(false);
+        }
         BuildPauseScreen("countdown");
         for (int i = countdown; i > 0; i--)
         {
@@ -411,18 +417,18 @@ public class TutorialGameState : MonoBehaviour
     public void BuildPauseScreen(string screenType)
     {
         // observerText.enabled = false;
+        Color col = transparentScreen.GetComponent<Image>().color;
 
         switch (screenType)
         {
-
             case "pause":
                 //  helpText.enabled = true;
                 pauseScreen.enabled = true;
-                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
+                transparentScreen.GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.95f);
                 player1Box.enabled = true;
                 topText.text = "Pause";
-                topText.fontSize = 50;
-                middleText.text = "Drücke A zum Fortsetzen!";
+                topText.fontSize = 100;
+                middleText.text = "";
                 break;
             case "start":
                 //   helpText.enabled = true;
@@ -434,10 +440,10 @@ public class TutorialGameState : MonoBehaviour
                 pauseScreen.enabled = true;
 
                 // helpText.enabled = false;
-                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.66f);
+                transparentScreen.GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.8f);
                 player1Box.enabled = false;
                 topText.text = "";
-                topText.fontSize = 80;
+                topText.fontSize = 200;
                 middleText.text = "";
 
                 break;
@@ -445,22 +451,30 @@ public class TutorialGameState : MonoBehaviour
                 pauseScreen.enabled = true;
 
                 // helpText.enabled = true;
-                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
+                transparentScreen.GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.95f);
                 player1Box.enabled = false;
-                topText.fontSize = 30;
+                topText.fontSize = 80;
                 topText.text = tutorialFinishedText1;
                 middleText.text = tutorialFinishedText2;
+                if (showRatingChange)
+                {
+                    bottomText.text = " Rating: +" + rating;
+                }
                 break;
             case "endLevelReady":
                 pauseScreen.enabled = true;
 
                 //   helpText.enabled = true;
-                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
+                transparentScreen.GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.95f);
                 player1Box.enabled = true;
                 topText.text = tutorialFinishedText1;
                 middleText.text = tutorialFinishedText2;
-                topText.fontSize = 30;
-                //  middleText.text = "Drücke A zum Fortfahren!";
+                topText.fontSize = 80;
+                if (showRatingChange)
+                {
+                    bottomText.text = " Rating: +" + rating;
+                }
+
                 break;
         }
     }
@@ -506,8 +520,8 @@ public class TutorialGameState : MonoBehaviour
     public void EndChallenge(int challengeRating)
     {
         PlaySound(soundWhistle, 0.4f);
-        SetGamePaused(true, "end");
         rating = challengeRating;
+        SetGamePaused(true, "end");
     }
 
 }

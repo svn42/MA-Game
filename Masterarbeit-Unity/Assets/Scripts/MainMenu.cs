@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
 
     public void Start()
     {
-        LoadData(PlayerPrefs.GetInt("CurrentVP"));
+        LoadData(PlayerPrefs.GetInt("VP"));
 
         passwortErrorText = passwortField.gameObject.transform.Find("Error-Text").gameObject;
         VPErrorText = VPInputField.gameObject.transform.Find("Error-Text").gameObject;
@@ -58,7 +58,7 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-        PlayerPrefs.SetInt("CurrentVP",0);
+        PlayerPrefs.SetInt("VP",0);
     }
 
     public void CheckPassword()

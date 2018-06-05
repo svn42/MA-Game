@@ -9,14 +9,26 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: ed11cc4347541e946a852884ebad5246
   - enabled: 1
-    path: Assets/Scenes/TutorialStart1.unity
+    path: Assets/Scenes/Tutorial_1.unity
     guid: a290709741a4aca408827487fb3c5674
   - enabled: 1
-    path: Assets/Scenes/TutorialStart2.unity
+    path: Assets/Scenes/Tutorial_2.1.unity
     guid: cca63f0ad3180ab4b8b437fac142c7fc
   - enabled: 1
-    path: Assets/Scenes/Tutorial_1_Bewegung_Intro.unity
+    path: Assets/Scenes/Tutorial_2.2.unity
+    guid: 2350f0d25bfe567428bcd520e921a846
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_2.3.unity
+    guid: c4263507b5a2ca345a1b7b93a1e0fddb
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_2.4.unity
+    guid: 5d51d881e63c58f40a9142f196834eba
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_3_Bewegung_Intro.unity
     guid: 140094a4d4b56654bbb1482a3f8f3749
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_4_Bewegung_Uebung.unity
+    guid: 31749b22538bb764b9794c10672789eb
   - enabled: 1
     path: Assets/Scenes/TutorialEnd.unity
     guid: d454f677c7a1ad84789ff4ac55394a5e

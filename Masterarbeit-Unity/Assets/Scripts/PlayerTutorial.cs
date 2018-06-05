@@ -531,7 +531,7 @@ public class PlayerTutorial : MonoBehaviour
         switch (type)
         {
             case "ZoneStopAndGo": 
-                if (speedX == 0 && speedY == 0 && collidingWithStopAndGoZone)
+                if (Mathf.Abs(speedX) <= 3 && Mathf.Abs(speedY) <= 3  && collidingWithStopAndGoZone)
                 {
                     gameObject.GetComponent<TutorialStopAndGo>().RemoveZone();
                     collidingWithStopAndGoZone = false;

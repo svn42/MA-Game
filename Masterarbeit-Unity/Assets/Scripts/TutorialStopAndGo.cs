@@ -6,17 +6,30 @@ public class TutorialStopAndGo : MonoBehaviour
 {
     public List<GameObject> zones;
     private TutorialGameState tutorialGameState;
-    int rating;
+    public int maxRating;
+    public float bestTime;
     // Use this for initialization
     void Start()
     {
         tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
-        zones[0].SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
+        SetUpZones();
+    }
+
+    public void SetUpZones()
+    {
+        if (zones.Count > 0)
+        {
+            zones[0].SetActive(true);
+            for (int i = 1; i < zones.Count; i++)
+            {
+                zones[i].SetActive(false);
+            }
+        }
 
     }
 
@@ -29,10 +42,22 @@ public class TutorialStopAndGo : MonoBehaviour
             zones[0].SetActive(true);
         } else
         {
-            Debug.Log("Winner");
-            // RatingBerechnen
-
-            tutorialGameState.EndChallenge(rating);
+            tutorialGameState.EndChallenge(CalculateRating());
         }
+
+    }
+
+    public int CalculateRating()
+    {
+        float rating = 0;
+        float timePlayed = tutorialGameState.timePlayed;
+        if (timePlayed < bestTime)
+        {
+            timePlayed = bestTime;
+        }
+
+        rating = ( bestTime / timePlayed) * maxRating;
+        int ratingInt = Mathf.RoundToInt(rating);
+        return ratingInt;
     }
 }

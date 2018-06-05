@@ -21,6 +21,10 @@ public class GameState : MonoBehaviour
     public GameObject gui;
     private Text scoreTeam1;
     private Text scoreTeam2;
+    private Text ratingTeam1;
+    private Text ratingTeam2;
+    private Text vpnTeam1;
+    private Text vpnTeam2;
     private Text timer;
     private GameObject pauseScreenGO;
     private Canvas pauseScreen;
@@ -106,6 +110,12 @@ public class GameState : MonoBehaviour
 
         scoreTeam1 = gui.transform.Find("UI_Spielstand").transform.Find("Spielstand Team 1").transform.Find("Score Team 1").GetComponent<Text>();
         scoreTeam2 = gui.transform.Find("UI_Spielstand").transform.Find("Spielstand Team 2").transform.Find("Score Team 2").GetComponent<Text>();
+
+        ratingTeam1 = gui.transform.Find("UI_Spielstand").transform.Find("BackgroundRating1").transform.Find("Rating Spieler 1").transform.Find("Rating").GetComponent<Text>();
+        ratingTeam2 = gui.transform.Find("UI_Spielstand").transform.Find("BackgroundRating2").transform.Find("Rating Spieler 2").transform.Find("Rating").GetComponent<Text>();
+        vpnTeam1 = gui.transform.Find("UI_Spielstand").transform.Find("VP Spieler 1").transform.Find("VP1").transform.Find("VPN").GetComponent<Text>();
+        vpnTeam2 = gui.transform.Find("UI_Spielstand").transform.Find("VP Spieler 2").transform.Find("VP2").transform.Find("VPN").GetComponent<Text>();
+
         timer = gui.transform.Find("UI_Spielstand").transform.Find("Timer_Background").transform.Find("Time").GetComponent<Text>();
 
         globalTimer = (GlobalTimer)FindObjectOfType(typeof(GlobalTimer));
@@ -126,7 +136,7 @@ public class GameState : MonoBehaviour
 
         SetGoalCount("Team1");
         SetGoalCount("Team2");
-
+        SetPlayerInformation();
 
         playerLoggingP1.CheckResult();  //Die Playerloggings bekommen das Result zum Start mitgeteilt
         playerLoggingP2.CheckResult();
@@ -240,6 +250,20 @@ public class GameState : MonoBehaviour
 
     }
 
+    //Hiermit kann die Anzeige für die Tore bearbeitet werden
+    private void SetPlayerInformation()
+    {
+        int vpteam1 = PlayerPrefs.GetInt("VP");
+        int vpteam2 = vpteam1 + 1;
+
+        vpnTeam1.text = "VP: "+vpteam1.ToString();
+        vpnTeam2.text = "VP: " + vpteam2.ToString();
+
+        ratingTeam1.text = PlayerPrefs.GetInt(vpteam1.ToString() + "Rating").ToString();
+        ratingTeam2.text = PlayerPrefs.GetInt(vpteam2.ToString() + "Rating").ToString();
+
+    }
+
     private void CheckTimer()
     {
         timeLeft -= Time.deltaTime;
@@ -250,12 +274,12 @@ public class GameState : MonoBehaviour
             StartCoroutine(ShowPopUp("2 Minuten"));
             popUp120Showed = true;
         }
-         if (timeLeft <= 60 && !popUp60Showed)
+        if (timeLeft <= 60 && !popUp60Showed)
         {
             StartCoroutine(ShowPopUp("1 Minute"));
             popUp60Showed = true;
         }
-         if (timeLeft <= 10)
+        if (timeLeft <= 10)
         {
             if (!timerBlink)
             {
@@ -263,7 +287,7 @@ public class GameState : MonoBehaviour
                 timerBlink = true;
             }
         }
-         if (timeLeft <= 0)
+        if (timeLeft <= 0)
         {
             if (!levelEnded)
             {
@@ -282,7 +306,7 @@ public class GameState : MonoBehaviour
 
         for (int i = 0; i < blinkAmount; i++)   //solange die Anzahl der Blinkeffekte nicht erreicht wurde
         {
-            PlaySound(soundCountdownRegular, 0.5f);   
+            PlaySound(soundCountdownRegular, 0.5f);
             timer.color = Color.red;     //wird der Renderer im Wechsel weiß und daraufhin in der ursprünglichen Farbe des Spielers eingefärbt
             yield return new WaitForSeconds(0.5f);
             timer.color = Color.white;
@@ -468,41 +492,42 @@ public class GameState : MonoBehaviour
     {
         pauseScreen.enabled = true;
         observerText.enabled = false;
+        Color col = transparentScreen.GetComponent<Image>().color;
 
         switch (screenType)
         {
 
             case "pause":
                 helpText.enabled = true;
-                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
+                transparentScreen.GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.95f);
                 player1Box.enabled = true;
                 player2Box.enabled = true;
                 topText.text = "Pause";
-                topText.fontSize = 50;
+                topText.fontSize = 100;
                 middleText.text = "Drücke A zum Fortsetzen!";
                 break;
             case "start":
                 helpText.enabled = true;
-                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
+                transparentScreen.GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.95f);
                 player1Box.enabled = true;
                 player2Box.enabled = true;
                 topText.text = "Mach dich bereit für " + SceneManager.GetActiveScene().name + "!";
-                topText.fontSize = 45;
+                topText.fontSize = 100;
                 middleText.text = "Drücke A zum Starten!";
                 break;
             case "countdown":
                 helpText.enabled = false;
-                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.66f);
+                transparentScreen.GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.8f);
                 player1Box.enabled = false;
                 player2Box.enabled = false;
                 topText.text = "";
-                topText.fontSize = 80;
+                topText.fontSize = 200;
                 middleText.text = "";
 
                 break;
             case "endWait":
                 helpText.enabled = true;
-                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
+                transparentScreen.GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.95f);
                 player1Box.enabled = false;
                 player2Box.enabled = false;
 
@@ -518,12 +543,12 @@ public class GameState : MonoBehaviour
                 {
                     topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
                 }
-                topText.fontSize = 45;
+                topText.fontSize = 80;
                 middleText.text = "";
                 break;
             case "endLevelReady":
                 helpText.enabled = true;
-                transparentScreen.GetComponent<Image>().color = new Color(0, 0, 0, 0.95f);
+                transparentScreen.GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.95f);
                 player1Box.enabled = true;
                 player2Box.enabled = true;
 
@@ -539,7 +564,7 @@ public class GameState : MonoBehaviour
                 {
                     topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
                 }
-                topText.fontSize = 45;
+                topText.fontSize = 80;
                 middleText.text = "Drücke A zum Fortfahren!";
                 break;
         }
@@ -588,7 +613,7 @@ public class GameState : MonoBehaviour
             case "ball_hit":
                 audioSource.PlayOneShot(soundBallHit, volume);
                 break;
-                
+
         }
 
         Time.timeScale = lastTimeScale;

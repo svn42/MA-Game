@@ -666,7 +666,7 @@ MonoBehaviour:
   subjectNr: 0
   rating: 0
   brakingForce: 1
-  maxSpeed: 50
+  maxSpeed: 55
   speedX: 0
   speedY: 0
   acceleration: 1.75
@@ -691,6 +691,13 @@ MonoBehaviour:
   soundsEmoteCry: []
   soundsEmoteHaha: []
   soundsEmoteAngry: []
+  shootingEnabled: 0
+  blocksEnabled: 0
+  emotesEnabled: 0
+  movingEnabled: 0
+  rotatingEnabled: 0
+  challengeType: 
+  collidingWithStopAndGoZone: 0
 --- !u!114 &114621946213317336
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -753,6 +760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8de0b057ac8a64db379bfef5ed4130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collidingWithStopAndGoZone: 0
 --- !u!212 &212022902264709382
 SpriteRenderer:
   m_ObjectHideFlags: 1

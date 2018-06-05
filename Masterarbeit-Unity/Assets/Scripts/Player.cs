@@ -104,6 +104,9 @@ public class Player : MonoBehaviour
         playerLogging.SetPlayerTeam(playerTeam);                        //dem playerLogging wird mitgeteilt, zu welchem Team sein Spieler gehört
         playerLoggingEnemy = enemyPlayer.GetComponent<PlayerLogging>(); //das playerLogging-Skript des Gegners wird verknüpft, um die Betäubungen abzuspeichern.
 
+        subjectNrEnemy = enemyPlayer.GetComponent<Player>().subjectNr;
+        ratingEnemy = enemyPlayer.GetComponent<Player>().rating;
+
         positionTracker = gameObject.GetComponent<PositionTracker>();
         positionTracker.StartTracking(); //das Tracken der Position wird gestartet
 

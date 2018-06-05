@@ -666,14 +666,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTeam: 2
   subjectNr: 0
+  subjectNrEnemy: 0
+  rating: 0
+  ratingEnemy: 0
   brakingForce: 1
-  maxSpeed: 50
+  maxSpeed: 55
   speedX: 0
   speedY: 0
   acceleration: 1.75
   stunned: 0
   stunBlinkEffect: 0.2
-  stunDurationBall: 1
+  stunDurationBall: 0
   stunnableByBall: 0
   exhaustPrefab: {fileID: 1608806251640764, guid: e6e0204d311283740a88d93bb97183aa,
     type: 2}
@@ -687,7 +690,7 @@ MonoBehaviour:
   enemyPlayer: {fileID: 0}
   speechBubble: {fileID: 0}
   emoteTimer: 0
-  emoteDelay: 3
+  emoteDelay: 4
   emoteDisplayTime: 3
   soundsEmoteNice: []
   soundsEmoteCry: []
@@ -739,6 +742,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTeam: 0
+  subjectNr: 0
+  subjectNrEnemy: 0
+  rating: 0
+  ratingEnemy: 0
   currentResult: 
   distanceTravelled: 0
   distanceTravelledInLead: 0

@@ -11,11 +11,16 @@ public class TutorialScreenState : MonoBehaviour
     private Image greenCheck;
     public int rating;
     public int vpNummer;
+    public bool screenSkipable;
+    public int skipableTime;
+    private GameObject skipBox;
+    private GameObject videoPlayer;
 
     private void Start()
     {
         Time.timeScale = 1f;
         vpNummer = PlayerPrefs.GetInt("VP");
+        skipBox = gui.transform.Find("PauseScreen").gameObject.transform.Find("Spieler1").transform.gameObject;
         greenCheck = gui.transform.Find("PauseScreen").gameObject.transform.Find("Spieler1").transform.Find("Spieler1_Check").GetComponent<Image>(); ;
         rating = PlayerPrefs.GetInt(vpNummer.ToString() + "Rating");
         if (SceneManager.GetActiveScene().name.Equals("TutorialEnd"))
@@ -23,6 +28,8 @@ public class TutorialScreenState : MonoBehaviour
             ratingText = gui.transform.Find("PauseScreen").gameObject.transform.Find("TransparentScreen").transform.Find("RatingText").GetComponent<Text>(); ;
             ratingText.text = rating.ToString();
         }
+        skipBox.SetActive(false);
+
     }
 
     void Update()
@@ -33,20 +40,25 @@ public class TutorialScreenState : MonoBehaviour
 
     public void CheckInput()
     {
-        //wenn der Schuss-Button (A) losgelassen wird und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen 
-        if (Input.GetButtonUp("ShootP1"))
+        StartCoroutine(WaitForSkipable(skipableTime));
+
+        if (screenSkipable)
         {
-            if (SceneManager.GetActiveScene().name.Equals("TutorialEnd"))
+            //wenn der Schuss-Button (A) losgelassen wird und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen 
+            if (Input.GetButtonUp("ShootP1"))
             {
-                PlayerPrefs.SetString(vpNummer.ToString() + "TutorialSolved", "Yes");
-                PlayerPrefs.SetInt("CurrentVP", vpNummer);
-                StartCoroutine(LoadNextScene("MainMenu"));
+                if (SceneManager.GetActiveScene().name.Equals("TutorialEnd"))
+                {
+                    PlayerPrefs.SetString(vpNummer.ToString() + "TutorialSolved", "Yes");
+                    PlayerPrefs.SetInt("CurrentVP", vpNummer);
+                    StartCoroutine(LoadNextScene("MainMenu"));
+                }
+                else
+                {
+                    StartCoroutine(LoadNextScene());
+                }
+                PlayerPrefs.SetInt(vpNummer.ToString() + "Rating", rating);
             }
-            else
-            {
-                StartCoroutine(LoadNextScene());
-            }
-            PlayerPrefs.SetInt(vpNummer.ToString() + "Rating", rating);
         }
 
     }
@@ -64,4 +76,12 @@ public class TutorialScreenState : MonoBehaviour
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene(sceneName);
     }
+
+    IEnumerator WaitForSkipable(int time)
+    {
+        yield return new WaitForSeconds(time);
+        skipBox.SetActive(true);
+        screenSkipable = true;
+    }
+
 }
