@@ -2651,7 +2651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameType: 
   maximumBalls: 3
-  goalLimit: 3
+  goalLimit: 1
   timeLeft: 120
   goalFreezeTime: 3
   goalsTeam1: 0

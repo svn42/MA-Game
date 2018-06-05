@@ -32,13 +32,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/TutorialEnd.unity
     guid: d454f677c7a1ad84789ff4ac55394a5e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Level 1.unity
     guid: 261ebee1927360947ae2442de297bbb6
   - enabled: 0
     path: Assets/Scenes/Level 2.unity
     guid: 210ec3a33d3cbd7449468eb963a651ef
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level 3.unity
     guid: 5b9a664ae643a4f409025aa1587606cf
   - enabled: 0

@@ -136,10 +136,10 @@ public class GameState : MonoBehaviour
 
         SetGoalCount("Team1");
         SetGoalCount("Team2");
-        SetPlayerInformation();
-
-        playerLoggingP1.CheckResult();  //Die Playerloggings bekommen das Result zum Start mitgeteilt
-        playerLoggingP2.CheckResult();
+        if (gameType.Equals("Online"))
+        {
+            SetPlayerInformation();
+        }
 
         if (startCountdownActivated)
         {
@@ -477,6 +477,11 @@ public class GameState : MonoBehaviour
         SetPlayerReady(false, 2);
         pauseScreen.enabled = false;
         depauseCountdownStarted = false;
+
+
+        playerLoggingP1.CheckResult();  //Die Playerloggings bekommen das Result zum Start mitgeteilt
+        playerLoggingP2.CheckResult();
+
     }
 
     IEnumerator SetNextLevelReady()
