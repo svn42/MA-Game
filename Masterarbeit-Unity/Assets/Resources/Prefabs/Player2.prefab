@@ -746,6 +746,7 @@ MonoBehaviour:
   subjectNrEnemy: 0
   rating: 0
   ratingEnemy: 0
+  gameType: 
   currentResult: 
   distanceTravelled: 0
   distanceTravelledInLead: 0
@@ -884,10 +885,6 @@ MonoBehaviour:
   mediumStunnedByEnemyInDeficit: 0
   largeStunnedByEnemyInDeficit: 0
   stunnedByEnemyTotalTimeInDeficit: 0
-  stunnedByBall: 0
-  stunnedByBallInLead: 0
-  stunnedByBallInTie: 0
-  stunnedByBallInDeficit: 0
   totalEmotes: 0
   emoteNice: 0
   emoteAngry: 0
@@ -919,9 +916,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe2cd61fa89c0f54b84d8a2188e5818c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnTimerMedium: 0.75
-  spawnTimerLarge: 1.75
-  spawnTimerLimit: 4.75
+  spawnTimerMedium: 0.5
+  spawnTimerLarge: 2
+  spawnTimerLimit: 5
   shotChargeTime: 0
   normalShotPrefab: {fileID: 1605120989468744, guid: e247b1f41739b8f4b87c929aaa7f07a2,
     type: 2}

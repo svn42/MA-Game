@@ -4701,6 +4701,11 @@ Prefab:
       propertyPath: speechBubble
       value: 
       objectReference: {fileID: 761191848}
+    - target: {fileID: 114237265526856248, guid: b79f309cebcdff441a93b0c0de8cdf6b,
+        type: 2}
+      propertyPath: spawnTimerMedium
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b79f309cebcdff441a93b0c0de8cdf6b, type: 2}
   m_IsPrefabParent: 0

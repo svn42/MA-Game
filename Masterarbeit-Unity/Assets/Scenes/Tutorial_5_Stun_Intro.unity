@@ -479,7 +479,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bewegung
+  m_Text: "Bet\xE4ubungen"
 --- !u!222 &319451912
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2148,7 +2148,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Dr\xFCcke A, um die Bewegung zu testen"
+  m_Text: "Dr\xFCcke A, um fortzufahren"
 --- !u!222 &1096885119
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2222,9 +2222,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Mit dem linken Analogstick des Controllers kannst du deine Figur bewegen.
-    \nBedenke bei der Bewegung, dass sich deine Figur nicht direkt mit der maximalen
-    Geschwindigkeit bewegt und beim Abbremsen ebenfalls nicht direkt stehen bleibt!"
+  m_Text: "Wenn ein Spieler von einem Schuss getroffen wird, wird seine Spielfigur
+    f\xFCr eine bestimmte Zeit bet\xE4ubt und vom Schuss weggesto\xDFen. Die Dauer
+    der Bet\xE4ubung sowie die Kraft des Sto\xDFes steigt mit der St\xE4rke des Schusses!\n\nIm
+    Ausschnitt unten kannst du die Auswirkungen der verschiedenen Sch\xFCsse auf einen
+    Spieler sehen."
 --- !u!222 &1110715079
 CanvasRenderer:
   m_ObjectHideFlags: 0
