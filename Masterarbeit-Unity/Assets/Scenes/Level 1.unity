@@ -2652,7 +2652,7 @@ MonoBehaviour:
   gameType: 
   maximumBalls: 3
   goalLimit: 3
-  timeLeft: 12
+  timeLeft: 120
   goalFreezeTime: 3
   goalsTeam1: 0
   goalsTeam2: 0

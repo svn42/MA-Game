@@ -5708,7 +5708,7 @@ GameObject:
   - component: {fileID: 2065764985}
   - component: {fileID: 2065764984}
   m_Layer: 5
-  m_Name: 'Rating Spieler 2 '
+  m_Name: Rating Spieler 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

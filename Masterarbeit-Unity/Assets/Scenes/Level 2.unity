@@ -4220,7 +4220,7 @@ MonoBehaviour:
   gameType: 
   maximumBalls: 3
   goalLimit: 3
-  timeLeft: 120
+  timeLeft: 20
   goalFreezeTime: 2
   goalsTeam1: 0
   goalsTeam2: 0
@@ -4503,7 +4503,7 @@ GameObject:
   - component: {fileID: 1638613352}
   - component: {fileID: 1638613351}
   m_Layer: 5
-  m_Name: 'Rating Spieler 2 '
+  m_Name: Rating Spieler 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
