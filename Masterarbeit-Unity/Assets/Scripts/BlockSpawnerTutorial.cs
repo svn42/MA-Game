@@ -38,7 +38,7 @@ public class BlockSpawnerTutorial : MonoBehaviour
         playerTeam = player.playerTeam;
         audioSource = GetComponent<AudioSource>();
         soundPlaceBlock = Resources.Load<AudioClip>("Sounds/place_block");
-        soundChargeBlock = Resources.Load<AudioClip>("Sounds/charge_block");
+        soundChargeBlock = Resources.Load<AudioClip>("Sounds/charge_block_1-5");
         soundPlacementBlocked = Resources.Load<AudioClip>("Sounds/placement_blocked");
 
     }

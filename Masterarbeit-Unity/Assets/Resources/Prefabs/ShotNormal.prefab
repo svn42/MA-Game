@@ -200,7 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 80
   strength: 1
-  ballImpact: 300
+  ballImpact: 350
   stunDuration: 0.2
   player: {fileID: 0}
   playerLogging: {fileID: 0}

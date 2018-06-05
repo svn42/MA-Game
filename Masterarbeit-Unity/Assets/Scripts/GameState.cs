@@ -110,13 +110,13 @@ public class GameState : MonoBehaviour
 
         scoreTeam1 = gui.transform.Find("UI_Spielstand").transform.Find("Spielstand Team 1").transform.Find("Score Team 1").GetComponent<Text>();
         scoreTeam2 = gui.transform.Find("UI_Spielstand").transform.Find("Spielstand Team 2").transform.Find("Score Team 2").GetComponent<Text>();
-
-        ratingTeam1 = gui.transform.Find("UI_Spielstand").transform.Find("BackgroundRating1").transform.Find("Rating Spieler 1").transform.Find("Rating").GetComponent<Text>();
-        ratingTeam2 = gui.transform.Find("UI_Spielstand").transform.Find("BackgroundRating2").transform.Find("Rating Spieler 2").transform.Find("Rating").GetComponent<Text>();
-        vpnTeam1 = gui.transform.Find("UI_Spielstand").transform.Find("VP Spieler 1").transform.Find("VP1").transform.Find("VPN").GetComponent<Text>();
-        vpnTeam2 = gui.transform.Find("UI_Spielstand").transform.Find("VP Spieler 2").transform.Find("VP2").transform.Find("VPN").GetComponent<Text>();
-
         timer = gui.transform.Find("UI_Spielstand").transform.Find("Timer_Background").transform.Find("Time").GetComponent<Text>();
+
+        ratingTeam1 = gui.transform.Find("PlayerInformation").transform.Find("BackgroundRating1").transform.Find("Rating Spieler 1").transform.Find("Rating").GetComponent<Text>();
+        ratingTeam2 = gui.transform.Find("PlayerInformation").transform.Find("BackgroundRating2").transform.Find("Rating Spieler 2").transform.Find("Rating").GetComponent<Text>();
+        vpnTeam1 = gui.transform.Find("PlayerInformation").transform.Find("VP Spieler 1").transform.Find("VP1").transform.Find("VPN").GetComponent<Text>();
+        vpnTeam2 = gui.transform.Find("PlayerInformation").transform.Find("VP Spieler 2").transform.Find("VP2").transform.Find("VPN").GetComponent<Text>();
+
 
         globalTimer = (GlobalTimer)FindObjectOfType(typeof(GlobalTimer));
         playerLoggingP1 = player1.GetComponent<PlayerLogging>();
@@ -136,10 +136,7 @@ public class GameState : MonoBehaviour
 
         SetGoalCount("Team1");
         SetGoalCount("Team2");
-        if (gameType.Equals("Online"))
-        {
-            SetPlayerInformation();
-        }
+        SetPlayerInformation();
 
         if (startCountdownActivated)
         {
@@ -253,14 +250,23 @@ public class GameState : MonoBehaviour
     //Hiermit kann die Anzeige für die Tore bearbeitet werden
     private void SetPlayerInformation()
     {
-        int vpteam1 = PlayerPrefs.GetInt("VP");
-        int vpteam2 = vpteam1 + 1;
 
-        vpnTeam1.text = "VP: "+vpteam1.ToString();
-        vpnTeam2.text = "VP: " + vpteam2.ToString();
+        if (gameType.Equals("Online"))
+        {
+            gui.transform.Find("PlayerInformation").GetComponent<Canvas>().enabled = true;
 
-        ratingTeam1.text = PlayerPrefs.GetInt(vpteam1.ToString() + "Rating").ToString();
-        ratingTeam2.text = PlayerPrefs.GetInt(vpteam2.ToString() + "Rating").ToString();
+
+            int vpteam1 = PlayerPrefs.GetInt("VP");
+            int vpteam2 = vpteam1 + 1;
+
+            vpnTeam1.text = "VP: " + vpteam1.ToString();
+            vpnTeam2.text = "VP: " + vpteam2.ToString();
+
+            ratingTeam1.text = PlayerPrefs.GetInt(vpteam1.ToString() + "Rating").ToString();
+            ratingTeam2.text = PlayerPrefs.GetInt(vpteam2.ToString() + "Rating").ToString();
+        } else if (gameType.Equals("Local"))
+        {
+        }
 
     }
 
@@ -593,6 +599,7 @@ public class GameState : MonoBehaviour
         player2Script.CalculateLogData(endingCondition);
         ExportData exportData = (ExportData)FindObjectOfType(typeof(ExportData));
         exportData.ExportAllData();
+
     }
 
     public void PlaySound(AudioClip ac, float volume)

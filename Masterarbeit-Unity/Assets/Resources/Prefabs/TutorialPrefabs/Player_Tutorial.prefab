@@ -709,7 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9017c5047c1503947ae56b63a751c8a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnTimer: 2
+  spawnTimer: 1.5
   blockChargeTime: 0
   blockPrefab: {fileID: 1741391209202420, guid: 66b5917af8947e54f8ac95cffa9de3e3,
     type: 2}

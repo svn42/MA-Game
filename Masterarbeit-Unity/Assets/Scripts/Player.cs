@@ -178,11 +178,11 @@ void Update()
             speedX /= 6;    //wird die Geschwindigkeit reduziert
             speedY /= 6;
             this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            StartCoroutine(StunPlayer(stunDurationBall));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
-            blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
-            shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
-            StartCoroutine(SetStunnableByBall(stunDurationBall));   //der Spieler wird für die Zeit "stunDurationBall" nicht mehr für Bälle stunnable
-            playerLogging.AddStunnedByBall();   //und der PLogger bekommt mitgeteilt, dass der Spieler von einem Ball betäubt wurde
+          //  StartCoroutine(StunPlayer(stunDurationBall));  //und der Spieler für die Zeit "stunDurationBall" gestunnt
+          //  blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
+          //  shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
+           // StartCoroutine(SetStunnableByBall(stunDurationBall));   //der Spieler wird für die Zeit "stunDurationBall" nicht mehr für Bälle stunnable
+           // playerLogging.AddStunnedByBall();   //und der PLogger bekommt mitgeteilt, dass der Spieler von einem Ball betäubt wurde
         }
         if (coll.gameObject.tag == "Shot")
         {
@@ -453,13 +453,13 @@ void Update()
         }
     }
 
-    //die Methode sorgt dafür, dass der Spieler nicht direkt nachdem er vom Ball gestunnt wurde, erneut gestunnt wird.
-    IEnumerator SetStunnableByBall(float time)
-    {
-        stunnableByBall = false;
-        yield return new WaitForSeconds(time * 2);
-        stunnableByBall = true;
-    }
+    ////die Methode sorgt dafür, dass der Spieler nicht direkt nachdem er vom Ball gestunnt wurde, erneut gestunnt wird.
+    //IEnumerator SetStunnableByBall(float time)
+    //{
+    //    stunnableByBall = false;
+    //    yield return new WaitForSeconds(time * 2);
+    //    stunnableByBall = true;
+    //}
 
 
     //Methode, um den ShotTimer von außerhalb zu setzen. (Geschieht in der ShotSpawner-Klasse nach dem Schießen)

@@ -77,7 +77,7 @@ public class ShotSpawnerTutorial : MonoBehaviour
             spawnMediumShot = false;
             spawnLargeShot = false;
             chargingShotSprite.transform.localScale = new Vector3(0.8f, 0.8f, 1f);
-            chargingShotSprite.transform.localPosition = new Vector3(-1f, 0f, 0f);
+            chargingShotSprite.transform.localPosition = new Vector3(-1.5f, 0f, 0f);
 
             if (!normalShotChargingSound)
             {
@@ -94,7 +94,7 @@ public class ShotSpawnerTutorial : MonoBehaviour
             spawnMediumShot = true;
             spawnLargeShot = false;
             chargingShotSprite.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
-            chargingShotSprite.transform.localPosition = new Vector3(-0.6f, 0f, 0f);
+            chargingShotSprite.transform.localPosition = new Vector3(-1f, 0f, 0f);
             if (!mediumShotChargingSound)
             {
                 mediumShotChargingSound = true;
@@ -109,7 +109,7 @@ public class ShotSpawnerTutorial : MonoBehaviour
             spawnMediumShot = false;
             spawnLargeShot = true;
             chargingShotSprite.transform.localScale = new Vector3(1.8f, 1.8f, 1f);
-            chargingShotSprite.transform.localPosition = new Vector3(0f, 0f, 0f);
+            chargingShotSprite.transform.localPosition = new Vector3(-0.8f, 0f, 0f);
             if (!largeShotChargingSound)
             {
                 largeShotChargingSound = true;

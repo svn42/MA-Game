@@ -718,9 +718,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe2cd61fa89c0f54b84d8a2188e5818c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnTimerMedium: 1
-  spawnTimerLarge: 2
-  spawnTimerLimit: 5
+  spawnTimerMedium: 0.75
+  spawnTimerLarge: 1.75
+  spawnTimerLimit: 4.75
   shotChargeTime: 0
   normalShotPrefab: {fileID: 1605120989468744, guid: e247b1f41739b8f4b87c929aaa7f07a2,
     type: 2}
@@ -748,7 +748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5588fbcfdfdda49ab998413c1be042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnTimer: 2
+  spawnTimer: 1.5
   blockChargeTime: 0
   blockPrefab: {fileID: 1741391209202420, guid: 25ef676e375f016479ecc966bd40cc14,
     type: 2}

@@ -292,7 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 60
   strength: 2
-  ballImpact: 1250
+  ballImpact: 1400
   stunDuration: 0.4
   player: {fileID: 0}
   shotDestructionPrefab: {fileID: 1605120989468744, guid: 5566142819b6853428b33aef31fb4aaa,

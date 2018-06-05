@@ -79,7 +79,7 @@ public class ShotSpawner : MonoBehaviour
             spawnMediumShot = false;
             spawnLargeShot = false;
             chargingShotSprite.transform.localScale = new Vector3(0.8f, 0.8f, 1f);
-            chargingShotSprite.transform.localPosition = new Vector3(-1f, 0f, 0f);
+            chargingShotSprite.transform.localPosition = new Vector3(-1.5f, 0f, 0f);
 
             if (!normalShotChargingSound)
             {
@@ -96,7 +96,7 @@ public class ShotSpawner : MonoBehaviour
             spawnMediumShot = true;
             spawnLargeShot = false;
             chargingShotSprite.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
-            chargingShotSprite.transform.localPosition = new Vector3(-0.6f, 0f, 0f);
+            chargingShotSprite.transform.localPosition = new Vector3(-1f, 0f, 0f);
             if (!mediumShotChargingSound)
             {
                 mediumShotChargingSound = true;
@@ -111,19 +111,19 @@ public class ShotSpawner : MonoBehaviour
             spawnMediumShot = false;
             spawnLargeShot = true;
             chargingShotSprite.transform.localScale = new Vector3(1.8f, 1.8f, 1f);
-            chargingShotSprite.transform.localPosition = new Vector3(0f, 0f, 0f);
+            chargingShotSprite.transform.localPosition = new Vector3(-0.8f, 0f, 0f);
             if (!largeShotChargingSound)
             {
                 largeShotChargingSound = true;
                 audioSource.loop = true;
                 PlaySound(soundShotCharge, 0.25f);
             }
-            if (shotChargeTime > 3)  //größer als die Hälfte der Differenz zwischen dem Limit und dem größten Schuss
+            if (shotChargeTime > spawnTimerLarge + 1)  //größer als die Hälfte der Differenz zwischen dem Limit und dem größten Schuss
             {
                 if (!shotBlinkEffectStarted)
                 {
                     shotBlinkEffectStarted = true;
-                    StartCoroutine(ShotBlinkEffect(3));
+                    StartCoroutine(ShotBlinkEffect(2));
                 }
             }
 
@@ -209,7 +209,7 @@ public class ShotSpawner : MonoBehaviour
     {
         Color col = Color.white;
         SpriteRenderer spriteRenderer = chargingShotSprite.GetComponent<SpriteRenderer>();  //der spriteRenderer Des Spielers wird der lokalen Variable zugewiesen
-        int blinkAmount = 6;      //und die Anzahl der Blinkeffekte ermittelt. Die Anzahl ergibt sich aus der Zeit, dividiert durch die Dauer des Blinkeffektes / 2.
+        int blinkAmount = 4;      //und die Anzahl der Blinkeffekte ermittelt. Die Anzahl ergibt sich aus der Zeit, dividiert durch die Dauer des Blinkeffektes / 2.
 
         for (float i = 0; i < blinkAmount; i++)   //solange die Anzahl der Blinkeffekte nicht erreicht wurde
         {

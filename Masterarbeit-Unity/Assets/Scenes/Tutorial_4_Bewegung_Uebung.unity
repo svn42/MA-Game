@@ -2748,6 +2748,11 @@ Prefab:
       propertyPath: stunDurationBall
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114448604759567942, guid: f6104f43a2e73564bac3fb30907c684c,
+        type: 2}
+      propertyPath: emoteDelay
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f6104f43a2e73564bac3fb30907c684c, type: 2}
   m_IsPrefabParent: 0
