@@ -78,12 +78,15 @@ public class ExportData : MonoBehaviour
                 //Schreibe alle Spaltennamen in erste Zeile
                 newFile.Write("VP;");
                 newFile.Write("VP_Gegner;");
+                newFile.Write("Szene;");
+                newFile.Write("Spielmodus;");
+
+                newFile.Write(sceneNameAbbreviation + "_Startzeit;");
+                newFile.Write(sceneNameAbbreviation + "_Endzeit;");
+
                 newFile.Write("Rating;");
                 newFile.Write("Rating_Gegner;");
 
-                newFile.Write("Szene;");
-                newFile.Write(sceneNameAbbreviation + "_Startzeit;");
-                newFile.Write(sceneNameAbbreviation + "_Endzeit;");
                 //distance
                 newFile.Write(sceneNameAbbreviation + "_Totale_Bewegung;");
                 newFile.Write(sceneNameAbbreviation + "_Totale_Bewegung_Fuehrung;");
@@ -311,11 +314,11 @@ public class ExportData : MonoBehaviour
                 newFile.Write(sceneNameAbbreviation + "_erhaltene_mittlere_Stuns_Rueckstand;");
                 newFile.Write(sceneNameAbbreviation + "_erhaltene_grosse_Stuns_Rueckstand;");
 
-                //Stunned By Ball
-                newFile.Write(sceneNameAbbreviation + "_Stunned_durch_Ball;");
-                newFile.Write(sceneNameAbbreviation + "_Stunned_durch_Ball_Fuehrung;");
-                newFile.Write(sceneNameAbbreviation + "_Stunned_durch_Ball_Remis;");
-                newFile.Write(sceneNameAbbreviation + "_Stunned_durch_Ball_Deficit;");
+                ////Stunned By Ball
+                //newFile.Write(sceneNameAbbreviation + "_Stunned_durch_Ball;");
+                //newFile.Write(sceneNameAbbreviation + "_Stunned_durch_Ball_Fuehrung;");
+                //newFile.Write(sceneNameAbbreviation + "_Stunned_durch_Ball_Remis;");
+                //newFile.Write(sceneNameAbbreviation + "_Stunned_durch_Ball_Deficit;");
 
                 //Emotes
                 newFile.Write(sceneNameAbbreviation + "_Total_Emotes;");
@@ -363,12 +366,15 @@ public class ExportData : MonoBehaviour
         file.Write("\n");
         file.Write(pL.subjectNr + ";");
         file.Write(pL.subjectNrEnemy + ";");
+
+        file.Write(sceneName + ";");
+        file.Write(pL.gameType + ";");
+        file.Write(globalTimer.startTime + ";");
+        file.Write(globalTimer.endTime + ";");
+
         file.Write(pL.rating + ";");
         file.Write(pL.ratingEnemy + ";");
 
-        file.Write(sceneName + ";");
-        file.Write(globalTimer.startTime + ";");
-        file.Write(globalTimer.endTime + ";");
         //Bewegung
         file.Write(pL.distanceTravelled + ";");
         file.Write(pL.distanceTravelledInLead + ";");
@@ -590,12 +596,12 @@ public class ExportData : MonoBehaviour
         file.Write(pL.largeStunnedByEnemyInDeficit + ";");
 
 
-        //Stunned by ball
-        file.Write(pL.stunnedByBall + ";");
+        ////Stunned by ball
+        //file.Write(pL.stunnedByBall + ";");
 
-        file.Write(pL.stunnedByBallInLead + ";");
-        file.Write(pL.stunnedByBallInTie + ";");
-        file.Write(pL.stunnedByBallInDeficit + ";");
+        //file.Write(pL.stunnedByBallInLead + ";");
+        //file.Write(pL.stunnedByBallInTie + ";");
+        //file.Write(pL.stunnedByBallInDeficit + ";");
 
 
         //Emotes

@@ -11,7 +11,8 @@ public class PlayerLogging : MonoBehaviour
     public int subjectNrEnemy;
     public int rating;
     public int ratingEnemy;
-    
+    public string gameType;
+
     private string currentZone;  //aktuelle Zone des Spielers
     public string currentResult;
 
@@ -237,11 +238,11 @@ public class PlayerLogging : MonoBehaviour
     public int largeStunnedByEnemyInDeficit;
     public float stunnedByEnemyTotalTimeInDeficit;
 
-    //Stunned by ball
-    public int stunnedByBall;
-    public int stunnedByBallInLead;
-    public int stunnedByBallInTie;
-    public int stunnedByBallInDeficit;
+    ////Stunned by ball
+    //public int stunnedByBall;
+    //public int stunnedByBallInLead;
+    //public int stunnedByBallInTie;
+    //public int stunnedByBallInDeficit;
 
 
     //Emotes
@@ -911,23 +912,23 @@ public class PlayerLogging : MonoBehaviour
         distanceTravelled += walkedDistance;
     }
 
-    public void AddStunnedByBall()
-    {
-        stunnedByBall++;
-        switch (currentResult)
-        {
-            case "in_lead":
-                stunnedByBallInLead++;
-                break;
-            case "in_tie":
-                stunnedByBallInTie++;
-                break;
-            case "in_deficit":
-                stunnedByBallInDeficit++;
-                break;
-        }
+    //public void AddStunnedByBall()
+    //{
+    //    stunnedByBall++;
+    //    switch (currentResult)
+    //    {
+    //        case "in_lead":
+    //            stunnedByBallInLead++;
+    //            break;
+    //        case "in_tie":
+    //            stunnedByBallInTie++;
+    //            break;
+    //        case "in_deficit":
+    //            stunnedByBallInDeficit++;
+    //            break;
+    //    }
 
-    }
+    //}
 
     public void AddEnemyStunned(string shotType, float stunDuration)
     {
@@ -1165,6 +1166,10 @@ public class PlayerLogging : MonoBehaviour
         endingCondition = condition;
     }
 
+    public void SetGameType(string type)
+    {
+        gameType = type;
+    }
     //public void CalculateEmotes()
     //{
     //    if (totalEmotes > 0)

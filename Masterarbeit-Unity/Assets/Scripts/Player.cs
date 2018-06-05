@@ -321,10 +321,7 @@ void Update()
             //erhöht sich die Geschwindigkeit auf der X-Achse um den Wert des Inputs, multipliziert mit der Beschleunigung
             speedX += Input.GetAxis("Horizontal" + playerAcronym) * acceleration;
         }
-        //else if (axis.Equals("X") && (Mathf.Abs(speedX) < 25 && Mathf.Abs(speedX) >= 0))
-        //{
-        //    speedX += Input.GetAxis("Horizontal") * acceleration;
-        //}
+
 
         //sofern die Geschwindigkeit doch außerhalb der Grenzen von -maxSpeed und maxSpeed liegt, wird der Wert an diese Grenzwerte angepasst
         if (speedX > maxSpeed)
@@ -342,10 +339,7 @@ void Update()
         {
             speedY += Input.GetAxis("Vertical" + playerAcronym) * acceleration;
         }
-        //else if (axis.Equals("Y") && (Mathf.Abs(speedY) < 25 && Mathf.Abs(speedY) >= 0))
-        //{
-        //    speedY += Input.GetAxis("Vertical") * acceleration;
-        //}
+
         if (speedY > maxSpeed)
         {
             speedY = maxSpeed;
@@ -354,6 +348,28 @@ void Update()
         {
             speedY = -maxSpeed;
         }
+
+        //wenn diagonal voll beschleunigt wird, wird der Spieler minimal langsamer
+        if (Mathf.Abs(speedY) >= (maxSpeed - 10) && Mathf.Abs(speedX) >= (maxSpeed - 10))
+        {
+            if (speedY >= (maxSpeed - 10))
+            {
+                speedY = maxSpeed - 10;
+            } else if (speedY <= (-maxSpeed + 10))
+            {
+                speedY = -maxSpeed + 10;
+            }
+
+            if (speedX >= (maxSpeed - 10))
+            {
+                speedX = maxSpeed - 10;
+            }
+            else if (speedX <= (-maxSpeed + 10))
+            {
+                speedX = -maxSpeed + 10;
+            }
+        }
+
 
     }
 
@@ -519,12 +535,11 @@ void Update()
         blockSpawn.StopSoundByStun();
     }
 
-    public void CalculateLogData(string endingCondition)
+    public void CalculateLogData(string endingCondition, string gameType)
     {
         playerLogging.SetSubjectNr(subjectNr, subjectNrEnemy);
         playerLogging.SetRating(rating, ratingEnemy);
-
-
+        playerLogging.SetGameType(gameType);
         positionTracker.CalculateWalkedDistance();
         playerLogging.SetEndingCondition(endingCondition);
         //playerLogging.CalculateAccuracy();

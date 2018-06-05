@@ -112,7 +112,6 @@ public class MainMenu : MonoBehaviour
             mainMenu.transform.Find("VP-Text").gameObject.GetComponent<Text>().text = "VP: ?";
 
             tutorialButton.interactable = false;
-            loacalGameButton.interactable = false;
             onlineGameButton.interactable = false;
         } else
         {
@@ -124,7 +123,6 @@ public class MainMenu : MonoBehaviour
             {
                 mainMenu.transform.Find("Rating-Text").gameObject.GetComponent<Text>().text = "Rating: " + PlayerPrefs.GetInt(VPNummer.ToString() + "Rating");
                 tutorialButton.interactable = false;
-                loacalGameButton.interactable = true;
                 onlineGameButton.interactable = true;
             }
             else
@@ -132,7 +130,6 @@ public class MainMenu : MonoBehaviour
                 mainMenu.transform.Find("Rating-Text").gameObject.GetComponent<Text>().text = "Rating: ?";
 
                 tutorialButton.interactable = true;
-                loacalGameButton.interactable = false;
                 onlineGameButton.interactable = false;
 
             }
