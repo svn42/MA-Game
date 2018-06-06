@@ -10,7 +10,7 @@ public class ShotTutorial : MonoBehaviour
     public int strength;    //Stärke des Schusses. Normaler Schuss =1, Mittlerer Schuss = 2, Großer Schuss = 3.
     private string shotType;    //Typ des Schusses
     public int ballImpact;     //Wirkung des Schusses auf den Ball bei einer Kollision
-    private int playerTeam;
+    public int playerTeam;
     private int shotID;
     public float stunDuration;
     public GameObject player;
@@ -18,6 +18,7 @@ public class ShotTutorial : MonoBehaviour
     public GameObject shotDestructionPrefab;
     private TutorialGameState tutorialGameState;
     SpriteRenderer spriteRenderer;
+    public TutorialLogging tutorialLogging;
 
     // Use this for initialization
     void Start()
@@ -38,14 +39,9 @@ public class ShotTutorial : MonoBehaviour
                 break;
         }
         //zuweisen des Spielers, der den Schuss abgegeben hat
-        GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < playerList.Length; i++)
-        {
-            if (playerList[i].GetComponent<PlayerTutorial>().playerTeam == playerTeam)
-            {
-                player = playerList[i];
-            }
-        }
+        player = GameObject.FindGameObjectWithTag("Player");
+        tutorialLogging = player.GetComponent<TutorialLogging>();
+        //playerTeam = player.GetComponent<PlayerTutorial>().playerTeam;
 
         if (shotType.Equals("medium") || shotType.Equals("large"))
         {
@@ -84,6 +80,8 @@ public class ShotTutorial : MonoBehaviour
             case "Block":
                 collidingObject.GetComponent<BlockTutorial>().ReduceHealth(strength);
                 DestroyShot();
+                tutorialLogging.AddAccuracy("block");
+
                 break;
             case "Player":
                 if (collidingObject.GetComponent<PlayerTutorial>().playerTeam != playerTeam)   //wenn der Schuss den gegnerischen Spieler trifft
@@ -95,11 +93,15 @@ public class ShotTutorial : MonoBehaviour
                     force.Normalize();
                     coll.rigidbody.AddForce(force * ballImpact);
                     DestroyShot();
+                    tutorialLogging.AddAccuracy("player");
+
                 }
                 break;
             case "Boundary":
                 DestroyShot();
                 tutorialGameState.PlaySound("soundSlap", 0.05f);
+                tutorialLogging.AddAccuracy("destroy");
+
                 break;
             case "Shot":
                 if (collidingObject.GetComponent<ShotTutorial>().GetPlayerTeam() != playerTeam)
@@ -109,13 +111,18 @@ public class ShotTutorial : MonoBehaviour
                     if (strength < collidingObject.GetComponent<ShotTutorial>().strength)
                     {
                         DestroyShot();
+
                     }
                     else if (strength == collidingObject.GetComponent<ShotTutorial>().strength)
                     {
                         DestroyShot();
+                        tutorialLogging.AddAccuracy("shot");
+
                     }
                     else if (strength >= collidingObject.GetComponent<ShotTutorial>().strength)
                     {
+                        tutorialLogging.AddAccuracy("shot");
+
                     }
                 }
                 else
@@ -123,6 +130,8 @@ public class ShotTutorial : MonoBehaviour
                     if (shotID > collidingObject.GetComponent<ShotTutorial>().GetShotID())
                     {
                         DestroyShot();
+                        tutorialLogging.AddAccuracy("destroy");
+
                     }
                 }
                 break;
@@ -147,6 +156,8 @@ public class ShotTutorial : MonoBehaviour
                         break;
                 }
                 DestroyShot();
+                tutorialLogging.AddAccuracy("ball");
+
                 break;
         }
 

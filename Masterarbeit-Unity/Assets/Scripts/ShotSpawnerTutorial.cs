@@ -22,7 +22,7 @@ public class ShotSpawnerTutorial : MonoBehaviour
 
     public GameObject chargingShotSprite; //Sprite des charging-Shots (Child)
     private PlayerTutorial player;
-    private int playerTeam;
+    public int playerTeam;
     public int shotCount = 0;
 
     private Color shotColor;
@@ -38,6 +38,7 @@ public class ShotSpawnerTutorial : MonoBehaviour
     public AudioClip soundShotAbort;
     private bool shotAborted;
     public bool shotBlinkEffectStarted;
+    private TutorialLogging tutorialLogging;
 
 
     // Use this for initialization
@@ -45,7 +46,7 @@ public class ShotSpawnerTutorial : MonoBehaviour
     {
         chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f);  //und die Visualisierung des ChargingShots "unsichtbar" gemacht
         player = transform.parent.GetComponent<PlayerTutorial>();
-        playerTeam = player.playerTeam;
+
         //Audio
         audioSource = GetComponent<AudioSource>();
         soundShotNormal = Resources.Load<AudioClip>("Sounds/normal_shot");
@@ -53,20 +54,17 @@ public class ShotSpawnerTutorial : MonoBehaviour
         soundShotLarge = Resources.Load<AudioClip>("Sounds/large_shot");
         soundShotCharge = Resources.Load<AudioClip>("Sounds/shot_charge");
         soundShotAbort = Resources.Load<AudioClip>("Sounds/shot_abort");
+        tutorialLogging = transform.parent.GetComponent<TutorialLogging>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        playerTeam = player.playerTeam;
 
     }
-
-    //In der Methode wird die Transparenz des Blocks gesetzt. Übergeben wird ein Zeit Argument in fps
-    public void SetShotType(GameObject prefab)
-    {
-    }
-
+    
     //Die Methode wird beim Festhalten des A-Buttons in jedem Frame aufgerufen und erhöht die soundShotChargeTime.
     public void AddShotChargeTime(float i)
     {
@@ -155,6 +153,7 @@ public class ShotSpawnerTutorial : MonoBehaviour
             GameObject shot = Instantiate(normalShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
             spawnNormalShot = false;
             SetShotProperties(shot);
+            tutorialLogging.AddShot("normal");
             PlaySound(soundShotNormal, 0.4f);
         }
         else if (spawnMediumShot && spawnable)
@@ -162,6 +161,7 @@ public class ShotSpawnerTutorial : MonoBehaviour
             GameObject shot = Instantiate(mediumShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
             spawnMediumShot = false;
             SetShotProperties(shot);
+            tutorialLogging.AddShot("medium");
             PlaySound(soundShotMedium, 0.4f);
         }
         else if (spawnLargeShot && spawnable)
@@ -169,6 +169,7 @@ public class ShotSpawnerTutorial : MonoBehaviour
             GameObject shot = Instantiate(largeShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
             spawnLargeShot = false;
             SetShotProperties(shot);
+            tutorialLogging.AddShot("large");
             PlaySound(soundShotLarge, 0.3f);
         }
         ResetShotChargeTime();
@@ -239,10 +240,12 @@ public class ShotSpawnerTutorial : MonoBehaviour
         shotColor = col;    //Die Farbvariable für das Erstellen der neuen Schüsse bekommt die Farbe
     }
 
+
     public void ResetShotChargeTime()
     {
         shotChargeTime = 0;    //die Zeit des Aufladens wird zurückgesetzt
         player.SetShotTimer(0);
+
         chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f); //und das Sprite zum aufladen auf 0 gesetzt
     }
 

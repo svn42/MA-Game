@@ -12,6 +12,7 @@ TagManager:
   - Shot
   - Music
   - StopAndGoZone
+  - Cannon
   layers:
   - Default
   - TransparentFX

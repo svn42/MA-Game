@@ -42,7 +42,7 @@ public class Shot : MonoBehaviour
         GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
         for (int i = 0; i < playerList.Length; i++)
         {
-            if (playerList[i].GetComponent<Player>().playerTeam ==  playerTeam)
+            if (playerList[i].GetComponent<Player>().playerTeam == playerTeam)
             {
                 player = playerList[i];
                 playerLogging = player.GetComponent<PlayerLogging>();

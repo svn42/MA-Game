@@ -64,11 +64,6 @@ public class ShotSpawner : MonoBehaviour
 
     }
 
-    //In der Methode wird die Transparenz des Blocks gesetzt. Übergeben wird ein Zeit Argument in fps
-    public void SetShotType(GameObject prefab)
-    {
-    }
-
     //Die Methode wird beim Festhalten des A-Buttons in jedem Frame aufgerufen und erhöht die soundShotChargeTime.
     public void AddShotChargeTime(float i)
     {

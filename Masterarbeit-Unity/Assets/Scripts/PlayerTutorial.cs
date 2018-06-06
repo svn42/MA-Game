@@ -51,6 +51,7 @@ public class PlayerTutorial : MonoBehaviour
     public List<AudioClip> soundsEmoteAngry = new List<AudioClip>();
 
     private TutorialGameState tutorialGameState;
+    private TutorialLogging tutorialLogging;    //das eigene TutorialPlayerLogging
 
     public bool shootingEnabled;
     public bool blocksEnabled;
@@ -62,11 +63,14 @@ public class PlayerTutorial : MonoBehaviour
     public string challengeType;
     public bool collidingWithStopAndGoZone;
 
+    TutorialCannon tutc;
     // Use this for initialization
     void Start()
     {
 
         tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
+        tutorialLogging = gameObject.GetComponent<TutorialLogging>();  //der PlayerLogger wird verknüpft
+
         challengeType = tutorialGameState.challengeType;
             subjectNr = PlayerPrefs.GetInt("VP");
             if (subjectNr % 2 == 0)
@@ -175,14 +179,15 @@ public class PlayerTutorial : MonoBehaviour
         }
         if (coll.gameObject.tag == "Shot")
         {
-            if (coll.gameObject.GetComponent<Shot>().GetPlayerTeam() != playerTeam) //wenn der Schuss vom gegenerischen Spieler ist
+            if (coll.gameObject.GetComponent<ShotTutorial>().GetPlayerTeam() != playerTeam) //wenn der Schuss vom gegenerischen Spieler ist
             {
-                Shot collidingShot = coll.gameObject.GetComponent<Shot>();
+                ShotTutorial collidingShot = coll.gameObject.GetComponent<ShotTutorial>();
                 speedX /= 2;    //wird die Geschwindigkeit reduziert
                 speedY /= 2;
                 StartCoroutine(StunPlayer(collidingShot.GetStunDuration()));  //und der Spieler für die Zeit "GetStunDuration" gestunnt
                 blockSpawn.ResetBlockChargeTime();  //das Spawnen des eines Blockes 
                 shotSpawn.ResetShotChargeTime();    //sowie eines Schusses wird unterbrochen
+                tutorialLogging.AddStunnedByEnemy(collidingShot.GetShotType(), collidingShot.GetStunDuration());
             }
         }
 
@@ -355,6 +360,28 @@ public class PlayerTutorial : MonoBehaviour
         else if (speedY < -maxSpeed)
         {
             speedY = -maxSpeed;
+        }
+
+        //wenn diagonal voll beschleunigt wird, wird der Spieler minimal langsamer
+        if (Mathf.Abs(speedY) >= (maxSpeed - 10) && Mathf.Abs(speedX) >= (maxSpeed - 10))
+        {
+            if (speedY >= (maxSpeed - 10))
+            {
+                speedY = maxSpeed - 10;
+            }
+            else if (speedY <= (-maxSpeed + 10))
+            {
+                speedY = -maxSpeed + 10;
+            }
+
+            if (speedX >= (maxSpeed - 10))
+            {
+                speedX = maxSpeed - 10;
+            }
+            else if (speedX <= (-maxSpeed + 10))
+            {
+                speedX = -maxSpeed + 10;
+            }
         }
 
     }
