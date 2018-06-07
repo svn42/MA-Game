@@ -698,8 +698,8 @@ MonoBehaviour:
   shotSpawn: {fileID: 114237265526856248}
   shotDelay: 0.25
   shotTimer: 0
-  enemyPlayer: {fileID: 0}
-  speechBubble: {fileID: 0}
+  speechBubblePrefab: {fileID: 1599780404292256, guid: 76d6a0e87fd6d0847832da4a5932ae12,
+    type: 2}
   emoteTimer: 0
   emoteDelay: 4
   emoteDisplayTime: 3

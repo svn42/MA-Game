@@ -5,14 +5,11 @@ using UnityEngine;
 public class ZoneColliderTutorial : MonoBehaviour
 {
     GameObject player;
-    TutorialGameState tutorialGameState;
     public bool collidingWithStopAndGoZone;
     // Use this for initialization
     void Start()
     {
         player = gameObject.transform.parent.gameObject;
-        tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
-
     }
 
     // Update is called once per frame

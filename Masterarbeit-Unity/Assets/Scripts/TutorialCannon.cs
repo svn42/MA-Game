@@ -5,11 +5,9 @@ using UnityEngine;
 public class TutorialCannon : MonoBehaviour
 {
 
-    private int playerTeam;
     public int cannonTeam = 55;
     public Color teamColor;    //Die Farbe des Spielers, die anhand der Teamzugehörigkeit ermittelt wird
     private AudioSource audioSource;
-    public GameObject player;
     public float shotIntervall; //der shotDelay gibt das Schussintervall wieder 
     public float startShooting; //der wann soll das schießen beginnen? 
     public GameObject shotPrefab;
@@ -25,8 +23,6 @@ public class TutorialCannon : MonoBehaviour
         //spriteRenderer.enabled = false;  
         teamColor = spriteRenderer.color;
 
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerTeam = player.GetComponent<PlayerTutorial>().playerTeam;
         //Audio
         audioSource = GetComponent<AudioSource>();
         soundShotNormal = Resources.Load<AudioClip>("Sounds/normal_shot");

@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Player : MonoBehaviour
+public class PlayerNetwork : NetworkBehaviour
 {
+
     [Range(1, 2)]
     public int playerTeam;    //Teamzugehörigkeit (1 oder 2)
-    string playerAcronym;
+    private string playerAcronym = "P1";
     private string gameType;
-
     public int subjectNr;
     public int subjectNrEnemy;
     public int rating;
@@ -22,8 +23,8 @@ public class Player : MonoBehaviour
 
     public bool stunned;    //Wenn der Spieler betäubt wurde, wird die Variable true
     public float stunBlinkEffect;   //Zeitliches Intervall (in Sekunden), in dem das Blinken beim Stun stattfindet
-                                    // public float stunDurationBall;  //Die Zeit in Sekunden, die der Spieler gestunnt wird, sofern er den Ball berührt
-                                    // public bool stunnableByBall;
+   // public float stunDurationBall;  //Die Zeit in Sekunden, die der Spieler gestunnt wird, sofern er den Ball berührt
+   // public bool stunnableByBall;
 
     public GameObject exhaustPrefab; //das Prefab des Abgaspartikels wird über den Inspector bekannt gemacht   
     public GameObject exSpawner;    // der Spawner für die Abgaspartikel wird ebenfalls über den Inspektor bekannt gemacht
@@ -63,11 +64,13 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        
         SetUpSpeechBubble();
 
         gameState = (GameState)FindObjectOfType(typeof(GameState));
-        gameType = gameState.gameType;
-        if (gameType.Equals("Online"))
+
+
+        if (gameState.gameType.Equals("Online"))
         {
             subjectNr = PlayerPrefs.GetInt("VP");
             if (subjectNr % 2 == 0)
@@ -79,39 +82,11 @@ public class Player : MonoBehaviour
                 playerTeam = 1;
             }
         }
-        else if (gameType.Equals("Local"))
+        else if (gameState.gameType.Equals("Local"))
         {
-            if (playerTeam == 1)
-            {
-                subjectNr = PlayerPrefs.GetInt("VP");
-            }
-            else if (playerTeam == 2)
-            {
-                subjectNr = PlayerPrefs.GetInt("VP") + 1;
-            }
         }
         rating = PlayerPrefs.GetInt(subjectNr + "Rating");
 
-        //zu testzwecken
-
-        GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
-        Debug.Log("playerList.Length = "+ playerList.Length);
-        if (playerList.Length == 1)
-        {
-            playerTeam = 1;
-        } else {
-            playerTeam = 2;
-        }
-
-
-        if (gameType.Equals("Online"))
-        {
-            playerAcronym = "P1";
-        }
-        else
-        {
-            playerAcronym = "P" + playerTeam;
-        }
         CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
         blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
         shotSpawn.GetComponent<ShotSpawner>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
@@ -158,17 +133,22 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!gameState.GetGamePaused())
+        if (!isLocalPlayer)
         {
-            if (!stunned)
-            {
-                CheckInput();   //zunächst wird der Input überprüft
-                Move(); //dann der Spieler bewegt
-                CheckExhaust(); //sowie überprüft, ob das Abgas erzeugt werden soll
-            }
-            shotTimer += Time.deltaTime;
-            emoteTimer += Time.deltaTime;
+            return;
         }
+            if (!gameState.GetGamePaused())
+            {
+                if (!stunned)
+                {
+                    CheckInput();   //zunächst wird der Input überprüft
+                    Move(); //dann der Spieler bewegt
+                    CheckExhaust(); //sowie überprüft, ob das Abgas erzeugt werden soll
+                }
+                shotTimer += Time.deltaTime;
+                emoteTimer += Time.deltaTime;
+            }
+    
     }
 
     //Sofern es zu einer Collision kommt
@@ -226,6 +206,7 @@ public class Player : MonoBehaviour
     public void CheckInput()
     {
 
+        
         //sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
         if ((Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.1f))
         {
@@ -586,9 +567,7 @@ public class Player : MonoBehaviour
                 enemyPlayer = playerList[i];
             }
         }
-
-        playerLoggingEnemy = enemyPlayer.GetComponent<PlayerLogging>(); //das playerLogging-Skript des Gegners wird verknüpft, um die Betäubungen abzuspeichern.
-
+                playerLoggingEnemy = enemyPlayer.GetComponent<PlayerLogging>(); //das playerLogging-Skript des Gegners wird verknüpft, um die Betäubungen abzuspeichern.
         subjectNrEnemy = enemyPlayer.GetComponent<Player>().subjectNr;
         ratingEnemy = enemyPlayer.GetComponent<Player>().rating;
 

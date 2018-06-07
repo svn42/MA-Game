@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4818706360536916}
   - component: {fileID: 212548194618443062}
   - component: {fileID: 114506948238759134}
+  - component: {fileID: 114569024725228994}
+  - component: {fileID: 114160372636029476}
   m_Layer: 0
   m_Name: Exhaust
   m_TagString: Untagged
@@ -41,6 +43,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114160372636029476
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1608806251640764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114506948238759134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -54,6 +77,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyTime: 0.5
   acceleration: 0.6
+--- !u!114 &114569024725228994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1608806251640764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 230
+    i1: 224
+    i2: 32
+    i3: 77
+    i4: 49
+    i5: 18
+    i6: 131
+    i7: 116
+    i8: 10
+    i9: 136
+    i10: 217
+    i11: 59
+    i12: 185
+    i13: 113
+    i14: 131
+    i15: 170
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!212 &212548194618443062
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -67,6 +122,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:

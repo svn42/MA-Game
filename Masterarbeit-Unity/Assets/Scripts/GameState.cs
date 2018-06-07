@@ -75,9 +75,11 @@ public class GameState : MonoBehaviour
 
     public AudioSource musicPlayer;
 
+    public bool allPlayersLoggedIn;
+
     private void Awake()
     {
-        gameType = PlayerPrefs.GetString("GameType");
+        //gameType = PlayerPrefs.GetString("GameType");
     }
 
     // Use this for initialization
@@ -93,6 +95,7 @@ public class GameState : MonoBehaviour
         }
         timeLeft += 0.02f;
 
+        globalTimer = (GlobalTimer)FindObjectOfType(typeof(GlobalTimer));
 
         popUp = gui.transform.Find("PopUp").gameObject;
         pauseScreenGO = gui.transform.Find("PauseScreen").gameObject;
@@ -118,11 +121,7 @@ public class GameState : MonoBehaviour
         vpnTeam2 = gui.transform.Find("PlayerInformation").transform.Find("VP Spieler 2").transform.Find("VP2").transform.Find("VPN").GetComponent<Text>();
 
 
-        globalTimer = (GlobalTimer)FindObjectOfType(typeof(GlobalTimer));
-        playerLoggingP1 = player1.GetComponent<PlayerLogging>();
-        playerLoggingP2 = player2.GetComponent<PlayerLogging>();
-        player1Script = player1.GetComponent<Player>();
-        player2Script = player2.GetComponent<Player>();
+
 
         audioSource = GetComponent<AudioSource>();
         soundCountdownRegular = Resources.Load<AudioClip>("Sounds/countdown_regular");
@@ -147,8 +146,42 @@ public class GameState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!allPlayersLoggedIn)
+        {
+            CheckPlayerCount();
+        }
         CheckTimer();
         CheckPause();
+    }
+
+    public void CheckPlayerCount()
+    {
+        GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
+
+        if (playerList.Length == 2) {
+
+            Debug.Log("playerlist.lenght" + playerList.Length);
+            for (int i = 0; i < playerList.Length; i++)
+            {
+                if (playerList[i].GetComponent<Player>().playerTeam == 1)
+                {
+                    player1 = playerList[i];
+                }
+                else if (playerList[i].GetComponent<Player>().playerTeam == 2)
+                {
+                    player2 = playerList[i];
+                }
+            }
+            playerLoggingP1 = player1.GetComponent<PlayerLogging>();
+            playerLoggingP2 = player2.GetComponent<PlayerLogging>();
+            player1Script = player1.GetComponent<Player>();
+            player2Script = player2.GetComponent<Player>();
+
+
+            allPlayersLoggedIn = true;
+        }
+
+
     }
 
     //Über diese Methode werden neue Bälle an die ballList übergeben
@@ -598,6 +631,7 @@ public class GameState : MonoBehaviour
         player1Script.CalculateLogData(endingCondition, gameType);
         player2Script.CalculateLogData(endingCondition, gameType);
         ExportData exportData = (ExportData)FindObjectOfType(typeof(ExportData));
+        exportData.StartUpExportData();
         exportData.ExportAllData();
 
     }

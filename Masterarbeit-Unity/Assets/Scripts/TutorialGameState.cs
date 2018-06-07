@@ -44,8 +44,6 @@ public class TutorialGameState : MonoBehaviour
     //private Text helpText;
     public bool startCountdownActivated;    //regelt, ob der Startbildschirm mit dem Countdown angezeigt werden soll
 
-    private string endingCondition;
-    private PlayerTutorial player1Script;
     public int rating;
     public int vpNummer;
 
@@ -59,8 +57,6 @@ public class TutorialGameState : MonoBehaviour
     private AudioClip soundPlop;
     private AudioClip soundBallHit;
     private AudioClip soundWhistle;
-    private AudioClip soundPopup;
-
     public AudioSource musicPlayer;
 
     public GameObject player1;
@@ -111,7 +107,6 @@ public class TutorialGameState : MonoBehaviour
         soundPlop = Resources.Load<AudioClip>("Sounds/plop");
         soundBallHit = Resources.Load<AudioClip>("Sounds/ball_hit");
         soundWhistle = Resources.Load<AudioClip>("Sounds/whistle");
-        soundPopup = Resources.Load<AudioClip>("Sounds/popup");
 
         if (startCountdownActivated)
         {
@@ -224,7 +219,6 @@ public class TutorialGameState : MonoBehaviour
             if (!levelEnded)
             {
                 PlaySound(soundWhistle, 0.4f);
-                endingCondition = "Time";
                 SetGamePaused(true, "end");
             }
         }
@@ -262,7 +256,6 @@ public class TutorialGameState : MonoBehaviour
     {
         if (goalsTeam1 == goalLimit || goalsTeam2 == goalLimit)
         {
-            endingCondition = "Goals";
             SetGamePaused(true, "end");
         }
         else

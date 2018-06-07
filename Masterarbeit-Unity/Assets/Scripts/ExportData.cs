@@ -24,11 +24,21 @@ public class ExportData : MonoBehaviour
 
     void Start()
     {
+        
+    }
+    void Update()
+    {
+
+    }
+
+    public void StartUpExportData()
+    {
         sceneName = SceneManager.GetActiveScene().name;
 
-        switch (sceneName) {
-            case "Level 1": 
-            sceneNameAbbreviation = "L1";
+        switch (sceneName)
+        {
+            case "Level 1":
+                sceneNameAbbreviation = "L1";
                 break;
             case "Level 2":
                 sceneNameAbbreviation = "L2";
@@ -54,10 +64,6 @@ public class ExportData : MonoBehaviour
                 playerLoggingPlayer2 = player.GetComponent<PlayerLogging>();
             }
         }
-    }
-    void Update()
-    {
-
     }
 
     public void ExportAllData()
