@@ -80,7 +80,10 @@ public class ShotTutorial : MonoBehaviour
             case "Block":
                 collidingObject.GetComponent<BlockTutorial>().ReduceHealth(strength);
                 DestroyShot();
-                tutorialLogging.AddAccuracy("block");
+                if (playerTeam != 55)   //wenn der schuss nicht von einer Kanone kam
+                {
+                    tutorialLogging.AddAccuracy("block");
+                }
 
                 break;
             case "Player":
@@ -93,15 +96,19 @@ public class ShotTutorial : MonoBehaviour
                     force.Normalize();
                     coll.rigidbody.AddForce(force * ballImpact);
                     DestroyShot();
-                    tutorialLogging.AddAccuracy("player");
-
+                    if (playerTeam != 55)
+                    {
+                        tutorialLogging.AddAccuracy("player");
+                    }
                 }
                 break;
             case "Boundary":
                 DestroyShot();
                 tutorialGameState.PlaySound("soundSlap", 0.05f);
-                tutorialLogging.AddAccuracy("destroy");
-
+                if (playerTeam != 55)
+                {
+                    tutorialLogging.AddAccuracy("destroy");
+                }
                 break;
             case "Shot":
                 if (collidingObject.GetComponent<ShotTutorial>().GetPlayerTeam() != playerTeam)
@@ -116,13 +123,17 @@ public class ShotTutorial : MonoBehaviour
                     else if (strength == collidingObject.GetComponent<ShotTutorial>().strength)
                     {
                         DestroyShot();
-                        tutorialLogging.AddAccuracy("shot");
-
+                        if (playerTeam != 55)
+                        {
+                            tutorialLogging.AddAccuracy("shot");
+                        }
                     }
                     else if (strength >= collidingObject.GetComponent<ShotTutorial>().strength)
                     {
-                        tutorialLogging.AddAccuracy("shot");
-
+                        if (playerTeam != 55)
+                        {
+                            tutorialLogging.AddAccuracy("shot");
+                        }
                     }
                 }
                 else
@@ -130,8 +141,10 @@ public class ShotTutorial : MonoBehaviour
                     if (shotID > collidingObject.GetComponent<ShotTutorial>().GetShotID())
                     {
                         DestroyShot();
-                        tutorialLogging.AddAccuracy("destroy");
-
+                        if (playerTeam != 55)
+                        {
+                            tutorialLogging.AddAccuracy("destroy");
+                        }
                     }
                 }
                 break;
@@ -156,8 +169,10 @@ public class ShotTutorial : MonoBehaviour
                         break;
                 }
                 DestroyShot();
-                tutorialLogging.AddAccuracy("ball");
-
+                if (playerTeam != 55)
+                {
+                    tutorialLogging.AddAccuracy("ball");
+                }
                 break;
         }
 
@@ -175,6 +190,7 @@ public class ShotTutorial : MonoBehaviour
             {
                 trailRenderer.material = Resources.Load<Material>("Materials/TrailRendererMediumShotRed");
             }
+
         }
         else if (playerTeam == 2)
         {
@@ -185,6 +201,17 @@ public class ShotTutorial : MonoBehaviour
             else if (shotType.Equals("medium"))
             {
                 trailRenderer.material = Resources.Load<Material>("Materials/TrailRendererMediumShotBlue");
+            }
+        }
+        else if (playerTeam == 55)
+        {
+            if (shotType.Equals("large"))
+            {
+                trailRenderer.material = Resources.Load<Material>("Materials/TrailRendererLargeShotCannon");
+            }
+            else if (shotType.Equals("medium"))
+            {
+                trailRenderer.material = Resources.Load<Material>("Materials/TrailRendererMediumShotCannon");
             }
         }
     }

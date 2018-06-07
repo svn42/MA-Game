@@ -60,8 +60,8 @@ public class PlayerTutorial : MonoBehaviour
     public bool rotatingEnabled;
 
     //challenge bools
-    public string challengeType;
-    public bool collidingWithStopAndGoZone;
+    private string challengeType;
+    private bool collidingWithStopAndGoZone;
 
     TutorialCannon tutc;
     // Use this for initialization
@@ -564,6 +564,14 @@ public class PlayerTutorial : MonoBehaviour
                     collidingWithStopAndGoZone = false;
                 }
                 break;
+            case "StunChallenge":
+                if (Mathf.Abs(speedX) <= 3 && Mathf.Abs(speedY) <= 3 && collidingWithStopAndGoZone)
+                {
+                    gameObject.GetComponent<TutorialStunChallenge>().RemoveZone();
+                    collidingWithStopAndGoZone = false;
+                }
+                break;
+
         }
     }
 

@@ -23,6 +23,7 @@ public class TutorialCannon : MonoBehaviour
     {
         SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         //spriteRenderer.enabled = false;  
+        teamColor = spriteRenderer.color;
 
         player = GameObject.FindGameObjectWithTag("Player");
         playerTeam = player.GetComponent<PlayerTutorial>().playerTeam;
@@ -31,7 +32,6 @@ public class TutorialCannon : MonoBehaviour
         soundShotNormal = Resources.Load<AudioClip>("Sounds/normal_shot");
         soundShotMedium = Resources.Load<AudioClip>("Sounds/medium_shot");
         soundShotLarge = Resources.Load<AudioClip>("Sounds/large_shot");
-
         InvokeRepeating("SpawnShot", startShooting, shotIntervall);
 
     }
@@ -47,7 +47,18 @@ public class TutorialCannon : MonoBehaviour
     {
         GameObject shot = Instantiate(shotPrefab, spawnPosition.transform.position, transform.rotation);  //wird der Shot aus dem Prefab instanziiert
         SetShotProperties(shot);
-        PlaySound(soundShotNormal, 0.4f);
+
+        switch (shotPrefab.name){
+            case "ShotNormalTutorial":
+                PlaySound(soundShotNormal, 0.1f);
+                break;
+            case "ShotMediumTutorial":
+                PlaySound(soundShotMedium, 0.2f);
+                break;
+            case "ShotLargeTutorial":
+                PlaySound(soundShotLarge, 0.3f);
+                break;
+        }
     }
 
     private void SetShotProperties(GameObject shot)

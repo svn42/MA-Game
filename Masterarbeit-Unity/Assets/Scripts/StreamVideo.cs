@@ -23,6 +23,7 @@ public class StreamVideo : MonoBehaviour
     private VideoPlayer videoPlayer;
     private VideoSource videoSource;
     public bool loop;
+    public bool playAudio;
 
     private AudioSource audioSource;
 
@@ -30,10 +31,10 @@ public class StreamVideo : MonoBehaviour
     void Start()
     {
         Application.runInBackground = true;
-        StartCoroutine(playVideo());
+        StartCoroutine(PlayVideo());
     }
 
-    IEnumerator playVideo()
+    IEnumerator PlayVideo()
     {
 
         //Add VideoPlayer to the GameObject
@@ -56,8 +57,12 @@ public class StreamVideo : MonoBehaviour
         videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
 
         //Assign the Audio from Video to AudioSource to be played
-        videoPlayer.EnableAudioTrack(0, true);
-        videoPlayer.SetTargetAudioSource(0, audioSource);
+        if (playAudio)
+        {
+
+            videoPlayer.EnableAudioTrack(0, true);
+            videoPlayer.SetTargetAudioSource(0, audioSource);
+        }
 
         //Set video To Play then prepare Audio to prevent Buffering
         videoPlayer.clip = videoToPlay;
@@ -76,8 +81,11 @@ public class StreamVideo : MonoBehaviour
         //Play Video
         videoPlayer.Play();
 
-        //Play Sound
-        audioSource.Play();
+        if (playAudio)
+        {
+            //Play Sound
+            audioSource.Play();
+        }
 
         while (videoPlayer.isPlaying)
         {

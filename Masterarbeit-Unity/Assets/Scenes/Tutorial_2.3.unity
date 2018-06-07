@@ -928,12 +928,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1793856100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 988562508e695d4468ce5fe759bd94d6, type: 3}
+  m_Script: {fileID: 11500000, guid: c5b29ab1c200116488cddd0bbbe631cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1793856103}
   videoToPlay: {fileID: 32900000, guid: 2d413441daf4ca241a0b837840a16e73, type: 3}
   loop: 0
+  playAudio: 1
 --- !u!114 &1793856103
 MonoBehaviour:
   m_ObjectHideFlags: 0
