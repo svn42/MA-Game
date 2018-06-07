@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     [Range(1, 2)]
     public int playerTeam;    //Teamzugehörigkeit (1 oder 2)
@@ -158,6 +159,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
         if (!gameState.GetGamePaused())
         {
             if (!stunned)
