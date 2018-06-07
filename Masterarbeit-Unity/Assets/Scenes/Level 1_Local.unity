@@ -239,7 +239,6 @@ MonoBehaviour:
   goalsTeam1: 0
   goalsTeam2: 0
   gamePaused: 0
-  gui: {fileID: 440384014}
   levelEnded: 0
   nextLevelReady: 0
   timeUntilNextLevel: 5
@@ -249,6 +248,7 @@ MonoBehaviour:
   player2: {fileID: 1677116220}
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
+  allPlayersLoggedIn: 0
 --- !u!114 &40496160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1373,7 +1373,7 @@ GameObject:
   - component: {fileID: 440384015}
   m_Layer: 0
   m_Name: GUI
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

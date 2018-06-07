@@ -59,55 +59,27 @@ public class Player : NetworkBehaviour
     public List<AudioClip> soundsEmoteHaha = new List<AudioClip>();
     public List<AudioClip> soundsEmoteAngry = new List<AudioClip>();
 
-
+    NetworkManager networkManager;
+    Transform spawnPosition;
 
     // Use this for initialization
     void Start()
     {
         SetUpSpeechBubble();
-
+        networkManager = (NetworkManager)FindObjectOfType(typeof(NetworkManager));
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         gameType = gameState.gameType;
-        if (gameType.Equals("Online"))
-        {
-            subjectNr = PlayerPrefs.GetInt("VP");
-            if (subjectNr % 2 == 0)
-            {
-                playerTeam = 2;
-            }
-            else if (subjectNr % 2 == 1)
-            {
-                playerTeam = 1;
-            }
-        }
-        else if (gameType.Equals("Local"))
-        {
-            if (playerTeam == 1)
-            {
-                subjectNr = PlayerPrefs.GetInt("VP");
-            }
-            else if (playerTeam == 2)
-            {
-                subjectNr = PlayerPrefs.GetInt("VP") + 1;
-            }
-        }
+
+        SetPlayerTeam();
+
+
         rating = PlayerPrefs.GetInt(subjectNr + "Rating");
-
-        //zu testzwecken
-
-        GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
-        Debug.Log("playerList.Length = "+ playerList.Length);
-        if (playerList.Length == 1)
-        {
-            playerTeam = 1;
-        } else {
-            playerTeam = 2;
-        }
-
 
         if (gameType.Equals("Online"))
         {
             playerAcronym = "P1";
+            SetPlayerSpawn();
+
         }
         else
         {
@@ -159,9 +131,12 @@ public class Player : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isLocalPlayer)
+        if (gameType.Equals("Online"))
         {
-            return;
+            if (!isLocalPlayer)
+            {
+                return;
+            }
         }
         if (!gameState.GetGamePaused())
         {
@@ -174,6 +149,11 @@ public class Player : NetworkBehaviour
             shotTimer += Time.deltaTime;
             emoteTimer += Time.deltaTime;
         }
+        else if (gameState.GetGamePaused())
+        {
+            CheckPlayerReady();
+        }
+
     }
 
     //Sofern es zu einer Collision kommt
@@ -454,6 +434,15 @@ public class Player : NetworkBehaviour
         }
     }
 
+    public void CheckPlayerReady()
+    {
+        if (Input.GetButtonUp("Shoot" + playerAcronym))
+        {
+            gameState.SetPlayerReady(true, playerTeam);
+        }
+    }
+
+
     //die Methode überprüft die Teamzugehörigkeit und ändert die Farbe des Spielers dementsprechend
     private void CheckTeamColor()
     {
@@ -565,7 +554,6 @@ public class Player : NetworkBehaviour
 
     public void CalculateLogData(string endingCondition, string gameType)
     {
-        FindEnemyPlayer();
 
         playerLogging.SetSubjectNr(subjectNr, subjectNrEnemy);
         playerLogging.SetRating(rating, ratingEnemy);
@@ -581,19 +569,19 @@ public class Player : NetworkBehaviour
         //playerLogging.CalculateResultZonePercentage();
     }
 
-    public void FindEnemyPlayer()
+    public void FindEnemyPlayer(GameObject enePlayer)
     {
-        GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < playerList.Length; i++)
-        {
-            if (playerList[i].gameObject != this.gameObject)
-            {
-                enemyPlayer = playerList[i];
-            }
-        }
+        enemyPlayer = enePlayer;
+        //GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
+        //for (int i = 0; i < playerList.Length; i++)
+        //{
+        //    if (playerList[i].gameObject != this.gameObject)
+        //    {
+        //        enemyPlayer = playerList[i];
+        //    }
+        //}
 
         playerLoggingEnemy = enemyPlayer.GetComponent<PlayerLogging>(); //das playerLogging-Skript des Gegners wird verknüpft, um die Betäubungen abzuspeichern.
-
         subjectNrEnemy = enemyPlayer.GetComponent<Player>().subjectNr;
         ratingEnemy = enemyPlayer.GetComponent<Player>().rating;
 
@@ -604,6 +592,87 @@ public class Player : NetworkBehaviour
     {
         speechBubble = Instantiate(speechBubblePrefab);
         speechBubble.GetComponent<FollowPlayer>().SetFollowPlayer(this.gameObject);
+    }
+
+    public void SetPlayerSpawn()
+    {
+        if (playerTeam == 1)
+        {
+            spawnPosition = networkManager.startPositions[0];
+            gameObject.transform.SetPositionAndRotation(spawnPosition.position, spawnPosition.rotation);
+        }
+        else
+        {
+            spawnPosition = networkManager.startPositions[1];
+            gameObject.transform.SetPositionAndRotation(spawnPosition.position, spawnPosition.rotation);
+        }
+
+    }
+
+    public void SetPlayerTeam()
+    {
+
+        if (gameType.Equals("Online"))
+        {
+            /*            subjectNr = PlayerPrefs.GetInt("VP");
+                        if (subjectNr % 2 == 0)
+                        {
+                            playerTeam = 2;
+                        }
+                        else if (subjectNr % 2 == 1)
+                        {
+                            playerTeam = 1;
+                        }
+                        */
+            GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
+            if (playerList.Length == 1)
+            {
+                playerTeam = 1;
+            }
+            else
+            {
+                playerTeam = 2;
+            }
+        }
+
+        else if (gameType.Equals("Local"))
+        {
+            if (playerTeam == 1)
+            {
+                subjectNr = PlayerPrefs.GetInt("VP");
+            }
+            else if (playerTeam == 2)
+            {
+                subjectNr = PlayerPrefs.GetInt("VP") + 1;
+            }
+        }
+
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+
+
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+
+
+
     }
 
 

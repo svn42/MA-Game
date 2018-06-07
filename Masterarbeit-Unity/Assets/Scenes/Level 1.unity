@@ -190,7 +190,8 @@ CanvasRenderer:
 --- !u!1 &40496157
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 1137083493972708, guid: d14ac845a887cdb409add319a627c7d2,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
@@ -210,7 +211,8 @@ GameObject:
 --- !u!4 &40496158
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 4739280501508480, guid: d14ac845a887cdb409add319a627c7d2,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 40496157}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -223,7 +225,8 @@ Transform:
 --- !u!114 &40496159
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 114056940096749634, guid: d14ac845a887cdb409add319a627c7d2,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 40496157}
   m_Enabled: 1
@@ -253,7 +256,8 @@ MonoBehaviour:
 --- !u!114 &40496160
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 114401785084126902, guid: d14ac845a887cdb409add319a627c7d2,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 40496157}
   m_Enabled: 1
@@ -268,7 +272,8 @@ MonoBehaviour:
 --- !u!114 &40496161
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 114602806044104382, guid: d14ac845a887cdb409add319a627c7d2,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 40496157}
   m_Enabled: 1
@@ -282,7 +287,8 @@ MonoBehaviour:
 --- !u!114 &40496162
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 114481720619688890, guid: d14ac845a887cdb409add319a627c7d2,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 40496157}
   m_Enabled: 1
@@ -295,7 +301,8 @@ MonoBehaviour:
 --- !u!82 &40496163
 AudioSource:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 82914866611113600, guid: d14ac845a887cdb409add319a627c7d2,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 40496157}
   m_Enabled: 1
@@ -1374,7 +1381,7 @@ GameObject:
   - component: {fileID: 440384015}
   m_Layer: 0
   m_Name: GUI
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1819,7 +1826,7 @@ MonoBehaviour:
   m_OfflineScene: 
   m_OnlineScene: 
   m_SpawnPrefabs: []
-  m_CustomConfig: 0
+  m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
     m_PacketSize: 1440
@@ -1861,7 +1868,7 @@ MonoBehaviour:
     m_MaxTimerTimeout: 12000
     m_MinNetSimulatorTimeout: 1
     m_MaxNetSimulatorTimeout: 12000
-  m_Channels: 
+  m_Channels: 0500000000000000
   m_UseWebSockets: 0
   m_UseSimulator: 0
   m_SimulatedLatency: 1

@@ -4188,7 +4188,7 @@ GameObject:
   - component: {fileID: 1237021458}
   m_Layer: 0
   m_Name: GUI
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5440,7 +5440,6 @@ MonoBehaviour:
   goalsTeam1: 0
   goalsTeam2: 0
   gamePaused: 0
-  gui: {fileID: 1237021457}
   levelEnded: 0
   nextLevelReady: 0
   timeUntilNextLevel: 5
@@ -5450,6 +5449,8 @@ MonoBehaviour:
   player2: {fileID: 645109564}
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
+  allPlayersLoggedIn: 0
+  gameStarted: 0
 --- !u!4 &1545081862
 Transform:
   m_ObjectHideFlags: 0

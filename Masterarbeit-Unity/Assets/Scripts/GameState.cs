@@ -18,7 +18,7 @@ public class GameState : MonoBehaviour
     public int goalsTeam2 = 0;
     public bool gamePaused;
 
-    public GameObject gui;
+    private GameObject gui;
     private Text scoreTeam1;
     private Text scoreTeam2;
     private Text ratingTeam1;
@@ -77,6 +77,8 @@ public class GameState : MonoBehaviour
 
     public bool allPlayersLoggedIn;
 
+    public bool gameStarted;
+
     private void Awake()
     {
         //gameType = PlayerPrefs.GetString("GameType");
@@ -96,6 +98,8 @@ public class GameState : MonoBehaviour
         timeLeft += 0.02f;
 
         globalTimer = (GlobalTimer)FindObjectOfType(typeof(GlobalTimer));
+
+        gui = GameObject.FindGameObjectWithTag("GUI");
 
         popUp = gui.transform.Find("PopUp").gameObject;
         pauseScreenGO = gui.transform.Find("PauseScreen").gameObject;
@@ -160,7 +164,6 @@ public class GameState : MonoBehaviour
 
         if (playerList.Length == 2) {
 
-            Debug.Log("playerlist.lenght" + playerList.Length);
             for (int i = 0; i < playerList.Length; i++)
             {
                 if (playerList[i].GetComponent<Player>().playerTeam == 1)
@@ -172,8 +175,8 @@ public class GameState : MonoBehaviour
                     player2 = playerList[i];
                 }
             }
-            playerLoggingP1 = player1.GetComponent<PlayerLogging>();
             playerLoggingP2 = player2.GetComponent<PlayerLogging>();
+            playerLoggingP1 = player1.GetComponent<PlayerLogging>();
             player1Script = player1.GetComponent<Player>();
             player2Script = player2.GetComponent<Player>();
 
@@ -379,6 +382,7 @@ public class GameState : MonoBehaviour
         //sofern das Spiel pausiert wird
         if (gamePaused && !depauseCountdownStarted)
         {
+
             if (Input.GetButtonUp("Help"))
             {
                 playerHelp = true;
@@ -401,7 +405,7 @@ public class GameState : MonoBehaviour
 
                 if (!playerHelp)
                 {
-                    //überprüfe, ob die einzelnen Spieler bereit sind
+                 /*   //überprüfe, ob die einzelnen Spieler bereit sind
                     if (Input.GetButtonUp("ShootP1"))
                     {
                         SetPlayerReady(true, 1);
@@ -410,7 +414,7 @@ public class GameState : MonoBehaviour
                     {
                         SetPlayerReady(true, 2);
                     }
-
+                    */
                     if (player1Ready && player2Ready)
                     {
                         if (!depauseCountdownStarted)
@@ -426,14 +430,14 @@ public class GameState : MonoBehaviour
                 if (!playerHelp)
                 {
                     //überprüfe, ob die einzelnen Spieler bereit sind
-                    if (Input.GetButtonUp("ShootP1"))
+                /*    if (Input.GetButtonUp("ShootP1"))
                     {
                         SetPlayerReady(true, 1);
                     }
                     else if (Input.GetButtonUp("ShootP2"))
                     {
                         SetPlayerReady(true, 2);
-                    }
+                    }*/
                     if (player1Ready && player2Ready)
                     {
                         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -479,7 +483,7 @@ public class GameState : MonoBehaviour
         }
     }
 
-    private void SetPlayerReady(bool b, int playerNr)
+    public void SetPlayerReady(bool b, int playerNr)
     {
         if (playerNr == 1)
         {
@@ -510,13 +514,20 @@ public class GameState : MonoBehaviour
             PlaySound(soundCountdownRegular, 0.5f);
             yield return new WaitForSeconds(1 * Time.timeScale);
         }
+
+        if (!gameStarted)
+        {
+            player1.GetComponent<Player>().FindEnemyPlayer(player2);
+            player2.GetComponent<Player>().FindEnemyPlayer(player1);
+            gameStarted = true;
+        }
+
         PlaySound(soundCountdownEnd, 0.5f);
         SetGamePaused(false, "pause");
         SetPlayerReady(false, 1);
         SetPlayerReady(false, 2);
         pauseScreen.enabled = false;
         depauseCountdownStarted = false;
-
 
         playerLoggingP1.CheckResult();  //Die Playerloggings bekommen das Result zum Start mitgeteilt
         playerLoggingP2.CheckResult();
