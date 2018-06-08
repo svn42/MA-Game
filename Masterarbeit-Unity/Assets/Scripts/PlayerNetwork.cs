@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerNetwork : NetworkBehaviour
-{
+public class PlayerNetwork : NetworkBehaviour {
 
     [Range(1, 2)]
     public int playerTeam;    //Teamzugehörigkeit (1 oder 2)
-    private string playerAcronym = "P1";
+    string playerAcronym;
     private string gameType;
+
     public int subjectNr;
     public int subjectNrEnemy;
     public int rating;
@@ -23,16 +23,16 @@ public class PlayerNetwork : NetworkBehaviour
 
     public bool stunned;    //Wenn der Spieler betäubt wurde, wird die Variable true
     public float stunBlinkEffect;   //Zeitliches Intervall (in Sekunden), in dem das Blinken beim Stun stattfindet
-   // public float stunDurationBall;  //Die Zeit in Sekunden, die der Spieler gestunnt wird, sofern er den Ball berührt
-   // public bool stunnableByBall;
+                                    // public float stunDurationBall;  //Die Zeit in Sekunden, die der Spieler gestunnt wird, sofern er den Ball berührt
+                                    // public bool stunnableByBall;
 
     public GameObject exhaustPrefab; //das Prefab des Abgaspartikels wird über den Inspector bekannt gemacht   
     public GameObject exSpawner;    // der Spawner für die Abgaspartikel wird ebenfalls über den Inspektor bekannt gemacht
     public float exhaustTime;  //Die Zeit der aktuellen Bewegung in Frames. wird erhöht, sofern sich der Spieler bewegt und dient der Überprüfung, ob ein ABgaspartikel gespawnt werden soll
     public float exhaustSpawnTime;  //Die Zeit, die erreicht werden muss, bis ein Abgaspartikel gespawnt werden kann
 
-    public BlockSpawner blockSpawn; //Der Blockspawner des Spielers wird über den Inspector mit dem Spieler verknüpft
-    public ShotSpawner shotSpawn;   //Der Shotspawner des Spielers wird über den Inspector mit dem Spieler verknüpft
+    public BlockSpawnerNetwork blockSpawn; //Der Blockspawner des Spielers wird über den Inspector mit dem Spieler verknüpft
+    public ShotSpawnerNetwork shotSpawn;   //Der Shotspawner des Spielers wird über den Inspector mit dem Spieler verknüpft
     public float shotDelay; //der shotDelay gibt die Zeit in Sekunden wieder, die nach einem Schuss vergehen muss, damit ein neuer Schuss gespawnt werden kann. (damit der normalShot nicht gespammt werden kann)
     public float shotTimer; //der shotTimer gibt die Zeit in Frames wieder, die bereits auf den nächsten Schuss gewartet wurde.
 
@@ -40,7 +40,7 @@ public class PlayerNetwork : NetworkBehaviour
     private PlayerLogging playerLogging;    //das eigene PlayerLogging
     private PlayerLogging playerLoggingEnemy;
     private PositionTracker positionTracker;
-    private GameState gameState;
+    private GameStateNetwork gameState;
     private Color teamColor;    //Die Farbe des Spielers, die anhand der Teamzugehörigkeit ermittelt wird
 
     public GameObject speechBubblePrefab;
@@ -59,37 +59,36 @@ public class PlayerNetwork : NetworkBehaviour
     public List<AudioClip> soundsEmoteHaha = new List<AudioClip>();
     public List<AudioClip> soundsEmoteAngry = new List<AudioClip>();
 
-
+    NetworkManager networkManager;
+    Transform spawnPosition;
 
     // Use this for initialization
     void Start()
     {
-        
         SetUpSpeechBubble();
+        networkManager = (NetworkManager)FindObjectOfType(typeof(NetworkManager));
+        gameState = (GameStateNetwork)FindObjectOfType(typeof(GameStateNetwork));
+        gameType = gameState.gameType;
 
-        gameState = (GameState)FindObjectOfType(typeof(GameState));
+        SetPlayerTeam();
+        gameState.AddPlayer(gameObject);
 
 
-        if (gameState.gameType.Equals("Online"))
-        {
-            subjectNr = PlayerPrefs.GetInt("VP");
-            if (subjectNr % 2 == 0)
-            {
-                playerTeam = 2;
-            }
-            else if (subjectNr % 2 == 1)
-            {
-                playerTeam = 1;
-            }
-        }
-        else if (gameState.gameType.Equals("Local"))
-        {
-        }
         rating = PlayerPrefs.GetInt(subjectNr + "Rating");
 
+        if (gameType.Equals("Online"))
+        {
+            playerAcronym = "P1";
+            SetPlayerSpawn();
+
+        }
+        else
+        {
+            playerAcronym = "P" + playerTeam;
+        }
         CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
-        blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
-        shotSpawn.GetComponent<ShotSpawner>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
+        blockSpawn.GetComponent<BlockSpawnerNetwork>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
+        shotSpawn.GetComponent<ShotSpawnerNetwork>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
 
 
         //Emotes
@@ -133,22 +132,29 @@ public class PlayerNetwork : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isLocalPlayer)
+        if (gameType.Equals("Online"))
         {
-            return;
-        }
-            if (!gameState.GetGamePaused())
+            if (!isLocalPlayer)
             {
-                if (!stunned)
-                {
-                    CheckInput();   //zunächst wird der Input überprüft
-                    Move(); //dann der Spieler bewegt
-                    CheckExhaust(); //sowie überprüft, ob das Abgas erzeugt werden soll
-                }
-                shotTimer += Time.deltaTime;
-                emoteTimer += Time.deltaTime;
+                return;
             }
-    
+        }
+        if (!gameState.GetGamePaused())
+        {
+            if (!stunned)
+            {
+                CheckInput();   //zunächst wird der Input überprüft
+                Move(); //dann der Spieler bewegt
+                CmdCheckExhaust(); //sowie überprüft, ob das Abgas erzeugt werden soll
+            }
+            shotTimer += Time.deltaTime;
+            emoteTimer += Time.deltaTime;
+        }
+        else if (gameState.GetGamePaused())
+        {
+            CheckPlayerReady();
+        }
+
     }
 
     //Sofern es zu einer Collision kommt
@@ -188,9 +194,9 @@ public class PlayerNetwork : NetworkBehaviour
         }
         if (coll.gameObject.tag == "Shot")
         {
-            if (coll.gameObject.GetComponent<Shot>().GetPlayerTeam() != playerTeam) //wenn der Schuss vom gegenerischen Spieler ist
+            if (coll.gameObject.GetComponent<ShotNetwork>().GetPlayerTeam() != playerTeam) //wenn der Schuss vom gegenerischen Spieler ist
             {
-                Shot collidingShot = coll.gameObject.GetComponent<Shot>();
+                ShotNetwork collidingShot = coll.gameObject.GetComponent<ShotNetwork>();
                 speedX /= 2;    //wird die Geschwindigkeit reduziert
                 speedY /= 2;
                 StartCoroutine(StunPlayer(collidingShot.GetStunDuration()));  //und der Spieler für die Zeit "GetStunDuration" gestunnt
@@ -206,7 +212,6 @@ public class PlayerNetwork : NetworkBehaviour
     public void CheckInput()
     {
 
-        
         //sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
         if ((Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.1f))
         {
@@ -265,7 +270,9 @@ public class PlayerNetwork : NetworkBehaviour
         //wenn der Schuss-Button (A) losgelassen wird und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen 
         if (Input.GetButtonUp("Shoot" + playerAcronym) && shotTimer > shotDelay)
         {
+           // shotSpawn.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
             shotSpawn.SpawnShot();  //wird der Schuss gespawnt 
+
         }
 
         /*
@@ -416,19 +423,30 @@ public class PlayerNetwork : NetworkBehaviour
     }
 
     //die Methode überprüft, ob ein Abgaspartikel erzeugt werden soll 
-    public void CheckExhaust()
+    [Command]
+    public void CmdCheckExhaust()
     {
         //sofern sich der Spieler eine bestimmte Zeit bewegt und diese Zeit über der festgelegten Zeit bis zum Spawnen eines Abgaspartikels liegt
         if (exhaustTime > exhaustSpawnTime)
         {
             //wird ein Abgaspartikel an der Position des ExhaustSpawners erstellt
             GameObject exhaust = Instantiate(exhaustPrefab, exSpawner.transform.position, exSpawner.transform.rotation);
-            exhaust.GetComponent<Exhaust>().SetColor(teamColor);    //das Partikel bekommt die Farbe des Spielers
-            exhaust.GetComponent<Exhaust>().SetDirection(new Vector3(speedX, speedY, 0));
+            exhaust.GetComponent<ExhaustNetwork>().SetColor(teamColor);    //das Partikel bekommt die Farbe des Spielers
+            exhaust.GetComponent<ExhaustNetwork>().SetDirection(new Vector3(speedX, speedY, 0));
+            NetworkServer.Spawn(exhaust);
             //und die Zeit zum Spawnen eines Partikels auf null gesetzt
             exhaustTime = 0;
         }
     }
+
+    public void CheckPlayerReady()
+    {
+        if (Input.GetButtonUp("Shoot" + playerAcronym))
+        {
+            gameState.SetPlayerReady(true, playerTeam);
+        }
+    }
+
 
     //die Methode überprüft die Teamzugehörigkeit und ändert die Farbe des Spielers dementsprechend
     private void CheckTeamColor()
@@ -541,7 +559,6 @@ public class PlayerNetwork : NetworkBehaviour
 
     public void CalculateLogData(string endingCondition, string gameType)
     {
-        FindEnemyPlayer();
 
         playerLogging.SetSubjectNr(subjectNr, subjectNrEnemy);
         playerLogging.SetRating(rating, ratingEnemy);
@@ -557,19 +574,21 @@ public class PlayerNetwork : NetworkBehaviour
         //playerLogging.CalculateResultZonePercentage();
     }
 
-    public void FindEnemyPlayer()
+    public void FindEnemyPlayer(GameObject enePlayer)
     {
-        GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < playerList.Length; i++)
-        {
-            if (playerList[i].gameObject != this.gameObject)
-            {
-                enemyPlayer = playerList[i];
-            }
-        }
-                playerLoggingEnemy = enemyPlayer.GetComponent<PlayerLogging>(); //das playerLogging-Skript des Gegners wird verknüpft, um die Betäubungen abzuspeichern.
-        subjectNrEnemy = enemyPlayer.GetComponent<Player>().subjectNr;
-        ratingEnemy = enemyPlayer.GetComponent<Player>().rating;
+        enemyPlayer = enePlayer;
+        //GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
+        //for (int i = 0; i < playerList.Length; i++)
+        //{
+        //    if (playerList[i].gameObject != this.gameObject)
+        //    {
+        //        enemyPlayer = playerList[i];
+        //    }
+        //}
+
+        playerLoggingEnemy = enemyPlayer.GetComponent<PlayerLogging>(); //das playerLogging-Skript des Gegners wird verknüpft, um die Betäubungen abzuspeichern.
+        subjectNrEnemy = enemyPlayer.GetComponent<PlayerNetwork>().subjectNr;
+        ratingEnemy = enemyPlayer.GetComponent<PlayerNetwork>().rating;
 
 
     }
@@ -578,6 +597,51 @@ public class PlayerNetwork : NetworkBehaviour
     {
         speechBubble = Instantiate(speechBubblePrefab);
         speechBubble.GetComponent<FollowPlayer>().SetFollowPlayer(this.gameObject);
+    }
+
+    public void SetPlayerSpawn()
+    {
+        if (playerTeam == 1)
+        {
+            spawnPosition = networkManager.startPositions[0];
+            gameObject.transform.SetPositionAndRotation(spawnPosition.position, spawnPosition.rotation);
+        }
+        else
+        {
+            spawnPosition = networkManager.startPositions[1];
+            gameObject.transform.SetPositionAndRotation(spawnPosition.position, spawnPosition.rotation);
+        }
+
+    }
+
+    public void SetPlayerTeam()
+    {
+
+        if (gameType.Equals("Online"))
+        {
+            /*            subjectNr = PlayerPrefs.GetInt("VP");
+                        if (subjectNr % 2 == 0)
+                        {
+                            playerTeam = 2;
+                        }
+                        else if (subjectNr % 2 == 1)
+                        {
+                            playerTeam = 1;
+                        }
+                        */
+            GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
+            if (playerList.Length == 1)
+            {
+                playerTeam = 1;                
+            }
+            else
+            {
+                playerTeam = 2;
+            }
+        }
+
+        gameObject.name = "Player " + playerTeam;
+
     }
 
 

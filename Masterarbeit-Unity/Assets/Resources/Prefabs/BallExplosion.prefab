@@ -21,11 +21,9 @@ GameObject:
   - component: {fileID: 4072574595456192}
   - component: {fileID: 212396067172114184}
   - component: {fileID: 114260903343312990}
-  - component: {fileID: 114379829850395338}
-  - component: {fileID: 114843386505341946}
   m_Layer: 0
   m_Name: BallExplosion
-  m_TagString: Ball
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,59 +52,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd03f6b4cf856a84b84f4bb1add0616e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114379829850395338
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1243154274409858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 214
-    i1: 184
-    i2: 146
-    i3: 189
-    i4: 234
-    i5: 246
-    i6: 181
-    i7: 180
-    i8: 11
-    i9: 69
-    i10: 60
-    i11: 73
-    i12: 53
-    i13: 227
-    i14: 79
-    i15: 237
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
---- !u!114 &114843386505341946
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1243154274409858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!212 &212396067172114184
 SpriteRenderer:
   m_ObjectHideFlags: 1

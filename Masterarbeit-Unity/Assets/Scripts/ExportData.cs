@@ -12,6 +12,7 @@ using System.IO;
 
 public class ExportData : MonoBehaviour
 {
+    private string gameType;
     public string path;
     private string sceneName;
     private string sceneNameAbbreviation;
@@ -29,6 +30,45 @@ public class ExportData : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void FindPlayerLogging(string type)
+    {
+        if (type.Equals("Online"))
+        {
+            GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
+            for (int i = 0; i < playerList.Length; i++)
+            {
+                if (playerList[i].GetComponent<PlayerNetwork>().playerTeam == 1)
+                {
+                    player = playerList[i];
+                    playerLoggingPlayer1 = player.GetComponent<PlayerLogging>();
+                }
+                else if (playerList[i].GetComponent<PlayerNetwork>().playerTeam == 2)
+                {
+                    player = playerList[i];
+                    playerLoggingPlayer2 = player.GetComponent<PlayerLogging>();
+                }
+            }
+
+        } else if (type.Equals("Local"))
+        {
+            GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
+            for (int i = 0; i < playerList.Length; i++)
+            {
+                if (playerList[i].GetComponent<Player>().playerTeam == 1)
+                {
+                    player = playerList[i];
+                    playerLoggingPlayer1 = player.GetComponent<PlayerLogging>();
+                }
+                else if (playerList[i].GetComponent<Player>().playerTeam == 2)
+                {
+                    player = playerList[i];
+                    playerLoggingPlayer2 = player.GetComponent<PlayerLogging>();
+                }
+            }
+
+        }
     }
 
     public void StartUpExportData()
@@ -50,20 +90,6 @@ public class ExportData : MonoBehaviour
 
         globalTimer = (GlobalTimer)FindObjectOfType(typeof(GlobalTimer));
 
-        GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < playerList.Length; i++)
-        {
-            if (playerList[i].GetComponent<Player>().playerTeam == 1)
-            {
-                player = playerList[i];
-                playerLoggingPlayer1 = player.GetComponent<PlayerLogging>();
-            }
-            else if (playerList[i].GetComponent<Player>().playerTeam == 2)
-            {
-                player = playerList[i];
-                playerLoggingPlayer2 = player.GetComponent<PlayerLogging>();
-            }
-        }
     }
 
     public void ExportAllData()

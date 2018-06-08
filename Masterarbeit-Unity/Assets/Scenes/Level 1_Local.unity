@@ -196,7 +196,6 @@ GameObject:
   m_Component:
   - component: {fileID: 40496158}
   - component: {fileID: 40496159}
-  - component: {fileID: 40496161}
   - component: {fileID: 40496160}
   - component: {fileID: 40496162}
   - component: {fileID: 40496163}
@@ -231,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc9930cef5ef82646ae4d199a7af0f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameType: 
+  gameType: Local
   maximumBalls: 2
   goalLimit: 3
   timeLeft: 120
@@ -249,6 +248,7 @@ MonoBehaviour:
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
   allPlayersLoggedIn: 0
+  gameStarted: 0
 --- !u!114 &40496160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,20 +264,6 @@ MonoBehaviour:
   endTime: 
   playTime: 0
   totalTime: 0
---- !u!114 &40496161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 40496157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faf02b92bb21a2b468b4eff0d4975c79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  globalTimer: {fileID: 0}
-  exportData: {fileID: 0}
-  sceneName: 
 --- !u!114 &40496162
 MonoBehaviour:
   m_ObjectHideFlags: 0

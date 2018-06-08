@@ -302,6 +302,9 @@ public class GameState : MonoBehaviour
             ratingTeam2.text = PlayerPrefs.GetInt(vpteam2.ToString() + "Rating").ToString();
         } else if (gameType.Equals("Local"))
         {
+            int vpteam1 = PlayerPrefs.GetInt("VP");
+            int vpteam2 = vpteam1 + 1;
+
         }
 
     }
@@ -643,6 +646,7 @@ public class GameState : MonoBehaviour
         player2Script.CalculateLogData(endingCondition, gameType);
         ExportData exportData = (ExportData)FindObjectOfType(typeof(ExportData));
         exportData.StartUpExportData();
+        exportData.FindPlayerLogging(gameType);
         exportData.ExportAllData();
 
     }
@@ -677,6 +681,15 @@ public class GameState : MonoBehaviour
 
     }
 
-
+    public void AddPlayer(GameObject player)
+    {
+        if (player.GetComponent<PlayerNetwork>().playerTeam == 1)
+        {
+            player1 = player;
+        } else if (player.GetComponent<PlayerNetwork>().playerTeam == 2)
+        {
+            player2 = player;
+        }
+    }
 
 }

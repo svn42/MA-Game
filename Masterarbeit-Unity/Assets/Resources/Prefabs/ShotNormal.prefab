@@ -24,8 +24,6 @@ GameObject:
   - component: {fileID: 50908490086243248}
   - component: {fileID: 60164384307622140}
   - component: {fileID: 82465200994548046}
-  - component: {fileID: 114812777648472574}
-  - component: {fileID: 114933445697083426}
   m_Layer: 0
   m_Name: ShotNormal
   m_TagString: Shot
@@ -208,59 +206,6 @@ MonoBehaviour:
   playerLogging: {fileID: 0}
   shotDestructionPrefab: {fileID: 1605120989468744, guid: 323ba470511f17f4eab27329fb6332fe,
     type: 2}
---- !u!114 &114812777648472574
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1605120989468744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 226
-    i1: 71
-    i2: 177
-    i3: 244
-    i4: 23
-    i5: 57
-    i6: 184
-    i7: 244
-    i8: 184
-    i9: 124
-    i10: 146
-    i11: 154
-    i12: 170
-    i13: 127
-    i14: 7
-    i15: 162
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
---- !u!114 &114933445697083426
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1605120989468744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 0
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!212 &212389046323251184
 SpriteRenderer:
   m_ObjectHideFlags: 1

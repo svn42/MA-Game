@@ -23,8 +23,6 @@ GameObject:
   - component: {fileID: 212723111244714900}
   - component: {fileID: 50907444293328446}
   - component: {fileID: 114422375439689422}
-  - component: {fileID: 114898398157025316}
-  - component: {fileID: 114987654847293928}
   m_Layer: 0
   m_Name: BlockPrefab
   m_TagString: Block
@@ -104,61 +102,8 @@ MonoBehaviour:
   health: 0
   twoHealthBlock: {fileID: 21300000, guid: 3cb12b8d2a8729d47a0efed397670b4c, type: 3}
   oneHealthBlock: {fileID: 21300000, guid: 7ddbb6b264126b84583dc39b3738cb98, type: 3}
-  blockDestructionPrefab: {fileID: 1741391209202420, guid: ca7bbf3faf0b2144ea8df268927975fa,
+  blockDestructionPrefab: {fileID: 1741391209202420, guid: 5dcc75c4b672ad74ba93e2da0f3d0398,
     type: 2}
---- !u!114 &114898398157025316
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1741391209202420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 37
-    i1: 239
-    i2: 103
-    i3: 110
-    i4: 55
-    i5: 95
-    i6: 1
-    i7: 100
-    i8: 121
-    i9: 236
-    i10: 201
-    i11: 102
-    i12: 189
-    i13: 64
-    i14: 204
-    i15: 20
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
---- !u!114 &114987654847293928
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1741391209202420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 0
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!212 &212723111244714900
 SpriteRenderer:
   m_ObjectHideFlags: 1

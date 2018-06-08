@@ -102,7 +102,7 @@ MonoBehaviour:
   health: 0
   twoHealthBlock: {fileID: 21300000, guid: 3cb12b8d2a8729d47a0efed397670b4c, type: 3}
   oneHealthBlock: {fileID: 21300000, guid: 7ddbb6b264126b84583dc39b3738cb98, type: 3}
-  blockDestructionPrefab: {fileID: 1741391209202420, guid: ca7bbf3faf0b2144ea8df268927975fa,
+  blockDestructionPrefab: {fileID: 1741391209202420, guid: 5dcc75c4b672ad74ba93e2da0f3d0398,
     type: 2}
 --- !u!212 &212723111244714900
 SpriteRenderer:
