@@ -676,8 +676,6 @@ MonoBehaviour:
   acceleration: 1.75
   stunned: 0
   stunBlinkEffect: 0.2
-  stunDurationBall: 0
-  stunnableByBall: 0
   exhaustPrefab: {fileID: 1608806251640764, guid: e6e0204d311283740a88d93bb97183aa,
     type: 2}
   exSpawner: {fileID: 1381912412544384}

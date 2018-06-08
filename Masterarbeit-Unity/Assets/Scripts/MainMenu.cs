@@ -66,6 +66,7 @@ public class MainMenu : MonoBehaviour
 		//SceneManager.LoadScene("Level 1");
 		PhotonNetwork.ConnectUsingSettings ("v01");
 		Debug.Log ("Connect ausgeführt");
+		PhotonNetwork.player.NickName = PlayerPrefs.GetInt ("VP").ToString();
 	}
 
 	void OnConnectedToMaster ()
