@@ -190,18 +190,17 @@ CanvasRenderer:
 --- !u!1 &40496157
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1137083493972708, guid: d14ac845a887cdb409add319a627c7d2,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
   - component: {fileID: 40496158}
-  - component: {fileID: 40496165}
+  - component: {fileID: 40496159}
   - component: {fileID: 40496160}
   - component: {fileID: 40496162}
   - component: {fileID: 40496163}
   m_Layer: 0
-  m_Name: GameStateNetwork
+  m_Name: GameState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210,8 +209,7 @@ GameObject:
 --- !u!4 &40496158
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4739280501508480, guid: d14ac845a887cdb409add319a627c7d2,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 40496157}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -221,11 +219,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &40496159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 40496157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc9930cef5ef82646ae4d199a7af0f8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameType: 
+  maximumBalls: 2
+  goalLimit: 3
+  timeLeft: 120
+  goalFreezeTime: 2
+  goalsTeam1: 0
+  goalsTeam2: 0
+  gamePaused: 0
+  levelEnded: 0
+  nextLevelReady: 0
+  timeUntilNextLevel: 5
+  depauseCountdown: 3
+  startCountdownActivated: 0
+  player1: {fileID: 0}
+  player2: {fileID: 0}
+  globalTimer: {fileID: 0}
+  musicPlayer: {fileID: 0}
+  allPlayersLoggedIn: 0
+  gameStarted: 0
+  spawnPosition1: {fileID: 118221171}
+  spawnPosition2: {fileID: 1072566328}
 --- !u!114 &40496160
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114401785084126902, guid: d14ac845a887cdb409add319a627c7d2,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 40496157}
   m_Enabled: 1
@@ -240,8 +269,7 @@ MonoBehaviour:
 --- !u!114 &40496162
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114481720619688890, guid: d14ac845a887cdb409add319a627c7d2,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 40496157}
   m_Enabled: 1
@@ -254,8 +282,7 @@ MonoBehaviour:
 --- !u!82 &40496163
 AudioSource:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 82914866611113600, guid: d14ac845a887cdb409add319a627c7d2,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 40496157}
   m_Enabled: 1
@@ -347,36 +374,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &40496165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 40496157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 800683bdd65592640b5d5a89e931fcdc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameType: Online
-  maximumBalls: 2
-  goalLimit: 3
-  timeLeft: 120
-  goalFreezeTime: 2
-  goalsTeam1: 0
-  goalsTeam2: 0
-  gamePaused: 0
-  levelEnded: 0
-  nextLevelReady: 0
-  timeUntilNextLevel: 5
-  depauseCountdown: 3
-  startCountdownActivated: 0
-  player1: {fileID: 0}
-  player2: {fileID: 0}
-  globalTimer: {fileID: 0}
-  musicPlayer: {fileID: 0}
-  allPlayersLoggedIn: 0
-  gameStarted: 0
 --- !u!1 &71254087
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +737,36 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 111918567}
+--- !u!1 &118221171
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1686076418383510, guid: b79f309cebcdff441a93b0c0de8cdf6b,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 118221172}
+  m_Layer: 0
+  m_Name: SpawnPlayer1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &118221172
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4200608554275742, guid: b79f309cebcdff441a93b0c0de8cdf6b,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 118221171}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -74.9, y: 0, z: -0.02}
+  m_LocalScale: {x: 2.4, y: 2.4, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &122846217
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,7 +1208,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e6d15a021036beb48b57630f4c811264, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
@@ -2227,7 +2254,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 730877666}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -3416,6 +3443,36 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1064806704}
+--- !u!1 &1072566328
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1686076418383510, guid: b79f309cebcdff441a93b0c0de8cdf6b,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1072566329}
+  m_Layer: 0
+  m_Name: SpawnPlayer2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1072566329
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4200608554275742, guid: b79f309cebcdff441a93b0c0de8cdf6b,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1072566328}
+  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalPosition: {x: 74.9, y: 0, z: -0.02}
+  m_LocalScale: {x: 2.4, y: 2.4, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!1 &1089151501
 GameObject:
   m_ObjectHideFlags: 0
@@ -4194,36 +4251,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1282812465}
---- !u!1 &1308333050
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1686076418383510, guid: b79f309cebcdff441a93b0c0de8cdf6b,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1308333058}
-  m_Layer: 0
-  m_Name: SpawnPlayer1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1308333058
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4200608554275742, guid: b79f309cebcdff441a93b0c0de8cdf6b,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1308333050}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -74.9, y: 0, z: -0.02}
-  m_LocalScale: {x: 2.4, y: 2.4, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1312286830
 GameObject:
   m_ObjectHideFlags: 0
@@ -4443,7 +4470,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1404040365}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.02}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children:
   - {fileID: 1893410626}
@@ -4906,36 +4933,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1538881550}
---- !u!1 &1545302749
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1686076418383510, guid: b79f309cebcdff441a93b0c0de8cdf6b,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1545302751}
-  m_Layer: 0
-  m_Name: SpawnPlayer2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1545302751
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4200608554275742, guid: b79f309cebcdff441a93b0c0de8cdf6b,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1545302749}
-  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 74.9, y: 0, z: -0.02}
-  m_LocalScale: {x: 2.4, y: 2.4, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!1 &1551256028
 GameObject:
   m_ObjectHideFlags: 0
@@ -6330,10 +6327,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1893410626}
+  - component: {fileID: 1893410627}
   - component: {fileID: 1893410628}
   - component: {fileID: 1893410629}
-  - component: {fileID: 1893410631}
-  - component: {fileID: 1893410630}
   m_Layer: 0
   m_Name: Ball_Spawner
   m_TagString: Untagged
@@ -6355,6 +6351,25 @@ Transform:
   m_Father: {fileID: 1404040367}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1893410627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1893410625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9af5cbf874979c242a9cad42ca6aae49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerCircleBlocked: 0
+  spawnBlocked: 0
+  ballInflater: {fileID: 87548213}
+  ballPrefab: {fileID: 1243154274409858, guid: 520c5f0e330cc1045842f946757ba2ab, type: 2}
+  ballSpawnDelay: 3
+  ballInflaterMaxSize: {x: 0, y: 0, z: 0}
+  soundSpawnBall: {fileID: 0}
+  soundInflateBall: {fileID: 0}
 --- !u!58 &1893410628
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -6465,57 +6480,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1893410630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1893410625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0a7ee40d7ef4f44b9f1605ae2d03618, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  centerCircleBlocked: 0
-  spawnBlocked: 0
-  ballInflater: {fileID: 87548213}
-  ballPrefab: {fileID: 1243154274409858, guid: 57d1d53e811810943b079897deb3372f, type: 2}
-  ballSpawnDelay: 3
-  ballInflaterMaxSize: {x: 0, y: 0, z: 0}
-  soundSpawnBall: {fileID: 0}
-  soundInflateBall: {fileID: 0}
---- !u!114 &1893410631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1893410625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!1 &1897962619
 GameObject:
   m_ObjectHideFlags: 0

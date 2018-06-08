@@ -29,8 +29,8 @@ public class MainMenu : MonoBehaviour
 		mainMenu.SetActive (true);
 		waitForPlayer.GetComponent<Text> ().enabled = false;
 
-		passwortErrorText = passwortField.gameObject.transform.Find ("Error-Text").gameObject;
-		VPErrorText = VPInputField.gameObject.transform.Find ("Error-Text").gameObject;
+		passwortErrorText = passwortField.gameObject.transform.Find("Error-Text").gameObject;
+		VPErrorText = VPInputField.gameObject.transform.Find("Error-Text1").gameObject;
 
 
 		if (PlayerPrefs.GetString (VPNummer.ToString () + "TutorialSolved").Equals ("Yes")) {
@@ -57,7 +57,7 @@ public class MainMenu : MonoBehaviour
 	public void StartLocalGame ()
 	{
 		PlayerPrefs.SetString ("GameType", "Local");
-		SceneManager.LoadScene ("Level 1");
+		SceneManager.LoadScene ("Level 1_local");
 	}
 
 	public void StartOnlineGame ()
@@ -93,7 +93,7 @@ public class MainMenu : MonoBehaviour
 	{
 		if (PhotonNetwork.playerList.Length == (2) ) {
 			Debug.Log ("Der andere Spieler ist da. Wir können Starten.");
-			PhotonNetwork.LoadLevel ("Level 1");
+			PhotonNetwork.LoadLevel ("Level 1_photon");
 			//SceneManager.LoadScene("Level 1");
 		}
 	}
@@ -101,7 +101,7 @@ public class MainMenu : MonoBehaviour
 	void OnPhotonPlayerConnected(PhotonPlayer newPlayer){
 		if (PhotonNetwork.playerList.Length == 2) {
 			Debug.Log ("Der andere Spieler ist da. Wir können Starten.");
-			PhotonNetwork.LoadLevel ("Level 1");
+			PhotonNetwork.LoadLevel ("Level 1_photon");
 			//SceneManager.LoadScene("Level 1");
 		}
 	}
