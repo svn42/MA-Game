@@ -14,6 +14,7 @@ public class TutorialScreenState : MonoBehaviour
     public bool screenSkipable;
     public int skipableTime;
     private GameObject skipBox;
+    private GameObject videoPlayer;
 
     private void Start()
     {
