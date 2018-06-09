@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc9930cef5ef82646ae4d199a7af0f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameType: 
+  gameType: Local
   maximumBalls: 2
   goalLimit: 3
   timeLeft: 120
@@ -242,15 +242,13 @@ MonoBehaviour:
   nextLevelReady: 0
   timeUntilNextLevel: 5
   depauseCountdown: 3
-  startCountdownActivated: 0
+  startCountdownActivated: 1
   player1: {fileID: 1425252146}
   player2: {fileID: 1677116220}
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
   allPlayersLoggedIn: 0
   gameStarted: 0
-  spawnPosition1: {fileID: 118221171}
-  spawnPosition2: {fileID: 1072566328}
 --- !u!114 &40496160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -737,36 +735,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 111918567}
---- !u!1 &118221171
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1686076418383510, guid: b79f309cebcdff441a93b0c0de8cdf6b,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 118221172}
-  m_Layer: 0
-  m_Name: SpawnPlayer1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &118221172
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4200608554275742, guid: b79f309cebcdff441a93b0c0de8cdf6b,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 118221171}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -74.9, y: 0, z: -0.02}
-  m_LocalScale: {x: 2.4, y: 2.4, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &122846217
 GameObject:
   m_ObjectHideFlags: 0
@@ -3500,36 +3468,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1064806704}
---- !u!1 &1072566328
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1686076418383510, guid: b79f309cebcdff441a93b0c0de8cdf6b,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1072566329}
-  m_Layer: 0
-  m_Name: SpawnPlayer2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1072566329
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4200608554275742, guid: b79f309cebcdff441a93b0c0de8cdf6b,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1072566328}
-  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 74.9, y: 0, z: -0.02}
-  m_LocalScale: {x: 2.4, y: 2.4, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!1 &1089151501
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,6 +23,8 @@ public class Player : NetworkBehaviour
 
     public bool stunned;    //Wenn der Spieler betäubt wurde, wird die Variable true
     public float stunBlinkEffect;   //Zeitliches Intervall (in Sekunden), in dem das Blinken beim Stun stattfindet
+                                    // public float stunDurationBall;  //Die Zeit in Sekunden, die der Spieler gestunnt wird, sofern er den Ball berührt
+                                    // public bool stunnableByBall;
 
     public GameObject exhaustPrefab; //das Prefab des Abgaspartikels wird über den Inspector bekannt gemacht   
     public GameObject exSpawner;    // der Spawner für die Abgaspartikel wird ebenfalls über den Inspektor bekannt gemacht
@@ -57,19 +59,16 @@ public class Player : NetworkBehaviour
     public List<AudioClip> soundsEmoteHaha = new List<AudioClip>();
     public List<AudioClip> soundsEmoteAngry = new List<AudioClip>();
 
-	private GameObject spawnPosition1;
-	private GameObject spawnPosition2;
+    NetworkManager networkManager;
+    Transform spawnPosition;
 
     // Use this for initialization
     void Start()
     {
-		gameState = (GameState)FindObjectOfType(typeof(GameState));
-		gameType = gameState.gameType;
-
-		//spawnPosition1 = gameState.spawnPosition1;
-		//spawnPosition2 = gameState.spawnPosition2;
-
         SetUpSpeechBubble();
+        networkManager = (NetworkManager)FindObjectOfType(typeof(NetworkManager));
+        gameState = (GameState)FindObjectOfType(typeof(GameState));
+        gameType = gameState.gameType;
 
         SetPlayerTeam();
 
@@ -79,6 +78,8 @@ public class Player : NetworkBehaviour
         if (gameType.Equals("Online"))
         {
             playerAcronym = "P1";
+            SetPlayerSpawn();
+
         }
         else
         {
@@ -130,7 +131,13 @@ public class Player : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (gameType.Equals("Online"))
+        {
+            if (!isLocalPlayer)
+            {
+                return;
+            }
+        }
         if (!gameState.GetGamePaused())
         {
             if (!stunned)
@@ -587,18 +594,47 @@ public class Player : NetworkBehaviour
         speechBubble.GetComponent<FollowPlayer>().SetFollowPlayer(this.gameObject);
     }
 
+    public void SetPlayerSpawn()
+    {
+        if (playerTeam == 1)
+        {
+            spawnPosition = networkManager.startPositions[0];
+            gameObject.transform.SetPositionAndRotation(spawnPosition.position, spawnPosition.rotation);
+        }
+        else
+        {
+            spawnPosition = networkManager.startPositions[1];
+            gameObject.transform.SetPositionAndRotation(spawnPosition.position, spawnPosition.rotation);
+        }
+
+    }
+
     public void SetPlayerTeam()
     {
 
-		if (gameType.Equals ("Online")) {
-			subjectNr = PlayerPrefs.GetInt ("VP");
-			if (subjectNr % 2 == 0) {
-				playerTeam = 2;
-			} else if (subjectNr % 2 == 1) {
-				playerTeam = 1;
-			}
-                        
-		}
+        if (gameType.Equals("Online"))
+        {
+            /*            subjectNr = PlayerPrefs.GetInt("VP");
+                        if (subjectNr % 2 == 0)
+                        {
+                            playerTeam = 2;
+                        }
+                        else if (subjectNr % 2 == 1)
+                        {
+                            playerTeam = 1;
+                        }
+                        */
+            GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
+            if (playerList.Length == 1)
+            {
+                playerTeam = 1;
+            }
+            else
+            {
+                playerTeam = 2;
+            }
+        }
+
         else if (gameType.Equals("Local"))
         {
             if (playerTeam == 1)
@@ -610,6 +646,32 @@ public class Player : NetworkBehaviour
                 subjectNr = PlayerPrefs.GetInt("VP") + 1;
             }
         }
+
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+
+
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+        //zu testzwecken
+
+
 
     }
 

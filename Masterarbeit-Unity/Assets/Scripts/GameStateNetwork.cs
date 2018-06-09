@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
-public class GameStateNetwork : MonoBehaviour
+public class GameStateNetwork : NetworkBehaviour
 {
     public string gameType;
     public int maximumBalls;
@@ -147,6 +147,15 @@ public class GameStateNetwork : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isServer)
+        {
+            return;
+        }
+
+        if (!allPlayersLoggedIn)
+        {
+            CheckPlayerCount();
+        }
         CheckTimer();
         CheckPause();
     }
@@ -161,7 +170,7 @@ public class GameStateNetwork : MonoBehaviour
             {
                 if (playerList[i].GetComponent<PlayerNetwork>().playerTeam == 1)
                 {
-                    player1 = playerList	[i];
+                    player1 = playerList[i];
                 }
                 else if (playerList[i].GetComponent<PlayerNetwork>().playerTeam == 2)
                 {

@@ -47,7 +47,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 1.unity
     guid: 67798006a296ca345837118973af89ab
-  - enabled: 1
-    path: Assets/Scenes/Level 1_photon.unity
-    guid: 614bf4c24cff4bd408fc3512b8930ed6
   m_configObjects: {}
