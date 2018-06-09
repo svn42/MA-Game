@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     [Range(1, 2)]
     public int playerTeam;    //Teamzugehörigkeit (1 oder 2)
@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     private PlayerLogging playerLoggingEnemy;
     private PositionTracker positionTracker;
     private GameState gameState;
-    public Color teamColor;    //Die Farbe des Spielers, die anhand der Teamzugehörigkeit ermittelt wird
+    private Color teamColor;    //Die Farbe des Spielers, die anhand der Teamzugehörigkeit ermittelt wird
 
     public GameObject speechBubblePrefab;
     private GameObject speechBubble;
@@ -85,6 +85,8 @@ public class Player : MonoBehaviour
             playerAcronym = "P" + playerTeam;
         }
         CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
+        blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
+        shotSpawn.GetComponent<ShotSpawner>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
 
 
         //Emotes
@@ -440,23 +442,15 @@ public class Player : MonoBehaviour
         switch (playerTeam)
         {
             case 1: //Team 1 bekommt die rote Farbe
-			SetColor(Color.red);
-			                break;
+                teamColor = Color.red;
+                break;
             case 2: //Team 2 die Blaue
-			SetColor(Color.blue);
+                teamColor = Color.blue;
                 break;
         }
         SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.color = teamColor;   //Die Farbe wird an das Sprite übergeben
     }
-
-	//setzt die Farve des Spielers sowie seiner Spawner fest
-	public void SetColor(Color col){
-		teamColor = col;	//die Team Color wird gesetzt
-		blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
-		shotSpawn.GetComponent<ShotSpawner>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
-
-	}
 
     //Methode zum Übermitteln der Betäubung an den Spieler. Als Argument wird die Zeit übergeben
     IEnumerator StunPlayer(float time)
@@ -603,7 +597,7 @@ public class Player : MonoBehaviour
 			} else if (subjectNr % 2 == 1) {
 				playerTeam = 1;
 			}
-			gameObject.name = "Player"+ PhotonNetwork.player.NickName; 
+                        
 		}
         else if (gameType.Equals("Local"))
         {

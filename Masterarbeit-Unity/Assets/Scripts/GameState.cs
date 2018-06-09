@@ -130,12 +130,10 @@ public class GameState : MonoBehaviour
 
 
 			if (PlayerPrefs.GetInt ("VP") % 2 == 1) {
-				PhotonNetwork.Instantiate ("Player", spawnPosition1.transform.position, spawnPosition1.transform.rotation, 0);
-
+				PhotonNetwork.Instantiate ("Player1", spawnPosition2.transform.position, spawnPosition2.transform.rotation, 0);
 			} else if (PlayerPrefs.GetInt ("VP") % 2 == 0) {
-				PhotonNetwork.Instantiate ("Player", spawnPosition2.transform.position, spawnPosition2.transform.rotation, 0);
+				PhotonNetwork.Instantiate ("Player1", spawnPosition1.transform.position, spawnPosition1.transform.rotation, 0);
 			}
-
 
 		} 
 		CheckPlayerCount ();
