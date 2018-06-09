@@ -249,6 +249,9 @@ MonoBehaviour:
   musicPlayer: {fileID: 0}
   allPlayersLoggedIn: 0
   gameStarted: 0
+  spawnPosition1: {fileID: 0}
+  spawnPosition2: {fileID: 0}
+  alwaysLocal: 1
 --- !u!114 &40496160
 MonoBehaviour:
   m_ObjectHideFlags: 0

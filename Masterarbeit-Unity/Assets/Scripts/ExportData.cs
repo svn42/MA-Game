@@ -34,25 +34,7 @@ public class ExportData : MonoBehaviour
 
     public void FindPlayerLogging(string type)
     {
-        if (type.Equals("Online"))
-        {
-            GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
-            for (int i = 0; i < playerList.Length; i++)
-            {
-                if (playerList[i].GetComponent<PlayerNetwork>().playerTeam == 1)
-                {
-                    player = playerList[i];
-                    playerLoggingPlayer1 = player.GetComponent<PlayerLogging>();
-                }
-                else if (playerList[i].GetComponent<PlayerNetwork>().playerTeam == 2)
-                {
-                    player = playerList[i];
-                    playerLoggingPlayer2 = player.GetComponent<PlayerLogging>();
-                }
-            }
-
-        } else if (type.Equals("Local"))
-        {
+       
             GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
             for (int i = 0; i < playerList.Length; i++)
             {
@@ -68,7 +50,7 @@ public class ExportData : MonoBehaviour
                 }
             }
 
-        }
+        
     }
 
     public void StartUpExportData()
