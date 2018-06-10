@@ -1372,7 +1372,7 @@ MonoBehaviour:
   gameType: 
   maximumBalls: 3
   goalLimit: 3
-  timeLeft: 15
+  timeLeft: 600
   timePlayed: 0
   goalFreezeTime: 3
   goalsTeam1: 0
@@ -1461,6 +1461,7 @@ MonoBehaviour:
   image: {fileID: 750162634}
   videoToPlay: {fileID: 32900000, guid: f96ffd61322679d48af231fd253f426a, type: 3}
   loop: 1
+  audio: 0
 --- !u!114 &750162634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2281,6 +2282,26 @@ Prefab:
       value: 
       objectReference: {fileID: 1599780404292256, guid: 76d6a0e87fd6d0847832da4a5932ae12,
         type: 2}
+    - target: {fileID: 114448604759567942, guid: f6104f43a2e73564bac3fb30907c684c,
+        type: 2}
+      propertyPath: emotesEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114448604759567942, guid: f6104f43a2e73564bac3fb30907c684c,
+        type: 2}
+      propertyPath: shootingEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114448604759567942, guid: f6104f43a2e73564bac3fb30907c684c,
+        type: 2}
+      propertyPath: blocksEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114448604759567942, guid: f6104f43a2e73564bac3fb30907c684c,
+        type: 2}
+      propertyPath: emoteDelay
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f6104f43a2e73564bac3fb30907c684c, type: 2}
   m_IsPrefabParent: 0
@@ -2289,6 +2310,32 @@ GameObject:
   m_PrefabParentObject: {fileID: 1182454484636636, guid: f6104f43a2e73564bac3fb30907c684c,
     type: 2}
   m_PrefabInternal: {fileID: 1125116393}
+--- !u!114 &1125116395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1125116394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aa5907fed508ea4091ebc31f6ee2d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalShotsFired: 0
+  normalShotsFired: 0
+  mediumShotsFired: 0
+  largeShotsFired: 0
+  totalObjectsHit: 0
+  shotsHitBlock: 0
+  shotsHitBall: 0
+  shotsHitPlayer: 0
+  shotsHitEnemyShot: 0
+  shotsDestroyed: 0
+  totalStunnedByEnemy: 0
+  normalStunnedByEnemy: 0
+  mediumStunnedByEnemy: 0
+  largeStunnedByEnemy: 0
+  stunnedByEnemyTotalTime: 0
 --- !u!1 &1162294624
 GameObject:
   m_ObjectHideFlags: 0

@@ -70,7 +70,10 @@ public class PlayerTutorial : MonoBehaviour
     public string challengeType;
     public bool collidingWithStopAndGoZone;
 
-    TutorialCannon tutc;
+	//trigger variablen
+	private bool rightTriggerInUse = false;
+	private bool leftTriggerInUse = false;
+
     // Use this for initialization
     void Start()
     {
@@ -282,14 +285,6 @@ public class PlayerTutorial : MonoBehaviour
 
         if (emotesEnabled)
         {
-
-
-			/*
-         * 
-        Emotes
-         * 
-         * */
-
 			//emote nice
 			if (Input.GetButtonUp ("LBP1") && emoteTimer > emoteDelay) {
 				StopCoroutine("DisplayPreparedEmote");
@@ -316,28 +311,44 @@ public class PlayerTutorial : MonoBehaviour
 			}		
 			//emote cry
 			if (Input.GetAxis ("RTP1") != 0 && emoteTimer > emoteDelay) {
-				StopCoroutine("DisplayPreparedEmote");
-				if (!emoteCryPrepared) {
-					preparedEmojiType = "cry";
-					StartCoroutine("DisplayPreparedEmote");
-					SetEmotePrepared ("cry", true);
-				} else if (emoteCryPrepared) {
-					SetEmotePrepared ("cry", false);
-					StartCoroutine (DisplayEmote("cry"));
+				if (!rightTriggerInUse) {
+					StopCoroutine ("DisplayPreparedEmote");
+					if (!emoteCryPrepared) {
+						preparedEmojiType = "cry";
+						StartCoroutine ("DisplayPreparedEmote");
+						SetEmotePrepared ("cry", true);
+					} else if (emoteCryPrepared) {
+						SetEmotePrepared ("cry", false);
+						StartCoroutine (DisplayEmote ("cry"));
+					}
+					rightTriggerInUse = true;
+				}
+			}
+			if (Input.GetAxis ("RTP1") == 0)
+			{
+				rightTriggerInUse = false;
+			}  
+
+			if (Input.GetAxis ("LTP1") != 0 && emoteTimer > emoteDelay) {
+				if (!leftTriggerInUse) {
+					StopCoroutine ("DisplayPreparedEmote");
+					if (!emoteHahaPrepared) {
+						preparedEmojiType = "haha";
+						StartCoroutine ("DisplayPreparedEmote");
+						SetEmotePrepared ("haha", true);
+					} else if (emoteHahaPrepared) {
+						SetEmotePrepared ("haha", false);
+						StartCoroutine (DisplayEmote ("haha"));
+					}
+					leftTriggerInUse = true;
 				}
 			}
 
-			if (Input.GetAxis ("LTP1") != 0 && emoteTimer > emoteDelay) {
-				StopCoroutine("DisplayPreparedEmote");
-				if (!emoteHahaPrepared) {
-					preparedEmojiType = "haha";
-					StartCoroutine("DisplayPreparedEmote");
-					SetEmotePrepared ("haha", true);
-				} else if (emoteHahaPrepared) {
-					SetEmotePrepared ("haha", false);
-					StartCoroutine (DisplayEmote("haha"));
-				}
-			}
+			if (Input.GetAxis ("LTP1") == 0)
+			{
+				leftTriggerInUse = false;
+			}  
+
         }
     }
 
@@ -593,6 +604,7 @@ public class PlayerTutorial : MonoBehaviour
 
 	IEnumerator DisplayEmote (string type)
 	{
+		emoteTimer = 0;
 		int randomInt = Random.Range (0, 3);
 		switch (type) {
 		case ("nice"):

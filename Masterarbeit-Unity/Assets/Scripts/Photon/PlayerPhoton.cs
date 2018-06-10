@@ -80,6 +80,10 @@ public class PlayerPhoton : MonoBehaviour
 	public List<AudioClip> soundsEmoteHaha = new List<AudioClip> ();
 	public List<AudioClip> soundsEmoteAngry = new List<AudioClip> ();
 
+	//trigger variablen
+	private bool rightTriggerInUse = false;
+	private bool leftTriggerInUse = false;
+
 	//networking
 	PhotonView pvGamestate;
 	PhotonView pvPlayer;
@@ -248,6 +252,7 @@ public class PlayerPhoton : MonoBehaviour
 				SetEmotePrepared ("nice", true);
 			} else if (emoteNicePrepared) {
 				SetEmotePrepared ("nice", false);
+				emoteTimer = 0;
 				pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "nice");
 			}
 		}
@@ -260,33 +265,51 @@ public class PlayerPhoton : MonoBehaviour
 				SetEmotePrepared ("angry", true);
 			} else if (emoteAngryPrepared) {
 				SetEmotePrepared ("angry", false);
+				emoteTimer = 0;
 				pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "angry");
 			}
 		}		
 		//emote cry
 		if (Input.GetAxis ("RTP1") != 0 && emoteTimer > emoteDelay) {
-			StopCoroutine("DisplayPreparedEmote");
-			if (!emoteCryPrepared) {
-				preparedEmojiType = "cry";
-				StartCoroutine("DisplayPreparedEmote");
-				SetEmotePrepared ("cry", true);
-			} else if (emoteCryPrepared) {
-				SetEmotePrepared ("cry", false);
-				pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "cry");
+			if (!rightTriggerInUse) {
+				StopCoroutine ("DisplayPreparedEmote");
+				if (!emoteCryPrepared) {
+					preparedEmojiType = "cry";
+					StartCoroutine ("DisplayPreparedEmote");
+					SetEmotePrepared ("cry", true);
+				} else if (emoteCryPrepared) {
+					SetEmotePrepared ("cry", false);
+					emoteTimer = 0;
+					pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "cry");
+				}
+				rightTriggerInUse = true;
 			}
 		}
+		if (Input.GetAxis ("RTP1") == 0)
+		{
+			rightTriggerInUse = false;
+		}  
 
 		if (Input.GetAxis ("LTP1") != 0 && emoteTimer > emoteDelay) {
-			StopCoroutine("DisplayPreparedEmote");
-			if (!emoteHahaPrepared) {
-				preparedEmojiType = "haha";
-				StartCoroutine("DisplayPreparedEmote");
-				SetEmotePrepared ("haha", true);
-			} else if (emoteHahaPrepared) {
-				SetEmotePrepared ("haha", false);
-				pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "haha");
+			if (!leftTriggerInUse) {
+				StopCoroutine ("DisplayPreparedEmote");
+				if (!emoteHahaPrepared) {
+					preparedEmojiType = "haha";
+					StartCoroutine ("DisplayPreparedEmote");
+					SetEmotePrepared ("haha", true);
+				} else if (emoteHahaPrepared) {
+					SetEmotePrepared ("haha", false);
+					emoteTimer = 0;
+					pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "haha");
+				}
+				leftTriggerInUse = true;
 			}
 		}
+		if (Input.GetAxis ("LTP1") == 0)
+		{
+			leftTriggerInUse = false;
+		}  
+
 
 
 		/*
