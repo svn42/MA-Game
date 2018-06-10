@@ -505,12 +505,13 @@ public class PlayerPhoton : MonoBehaviour
 	}
 
 	[PunRPC]
-	public void SetPlayerInformation (string name)
+	public void SetPlayerInformation (string name, int plTeam)
 	{
 		enemyPlayer = GameObject.Find(name);
 		playerLoggingEnemy = enemyPlayer.GetComponent<PlayerLogging> (); //das playerLogging-Skript des Gegners wird verknüpft, um die Betäubungen abzuspeichern.
 		subjectNrEnemy = enemyPlayer.GetComponent<PlayerPhoton> ().subjectNr;
 		ratingEnemy = enemyPlayer.GetComponent<PlayerPhoton> ().rating;
+		playerTeam = plTeam;
 
 		//Logging
 		playerLogging = this.gameObject.GetComponent<PlayerLogging> ();  //der PlayerLogger wird verknüpft
@@ -518,6 +519,9 @@ public class PlayerPhoton : MonoBehaviour
 
 		positionTracker = gameObject.GetComponent<PositionTracker> ();
 		positionTracker.StartTracking (); //das Tracken der Position wird gestartet
+
+		blockSpawn.gameObject.GetComponent<PhotonView>().RPC("Setup", PhotonTargets.All);
+		shotSpawn.gameObject.GetComponent<PhotonView>().RPC("Setup", PhotonTargets.All);
 
 		audioSource = GetComponent<AudioSource> ();
 		soundBoing = Resources.Load<AudioClip> ("Sounds/boing");

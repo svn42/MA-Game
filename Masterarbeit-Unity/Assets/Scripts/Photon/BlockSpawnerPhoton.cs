@@ -13,12 +13,12 @@ public class BlockSpawnerPhoton : MonoBehaviour
     public bool spawnable = true;  //sofern ein Block spawnen darf (nicht kollidiert), ist die Variable true
     List<GameObject> collidingObjects = new List<GameObject>(); //Liste der GameObjects, die mit dem Spawner kollidieren
     public GameObject blockSpawnSprite; //Sprite des charging-Blocks (Child)
-	private PlayerPhoton player;
-    private PlayerLogging playerLogging;
+	public PlayerPhoton player;
+	public PlayerLogging playerLogging;
 
-    private int playerTeam;
+	public int playerTeam;
 
-    private Color blockColor;
+	public Color blockColor;
     public int blockCount = 0;
     private AudioSource audioSource;
     public AudioClip soundPlaceBlock;
@@ -31,16 +31,6 @@ public class BlockSpawnerPhoton : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        spawnColor = Color.white;           //Zu Beginn wird die Farbe des spawnenden Blocks weiß
-        standardScale = blockSpawnSprite.transform.localScale;
-        SetSpawnerSize(0);            //und die Transparenz auf 0 gesetzt
-		player = transform.parent.GetComponent<PlayerPhoton>();
-        playerTeam = player.playerTeam;
-        playerLogging = transform.parent.GetComponent<PlayerLogging>();
-        audioSource = GetComponent<AudioSource>();
-        soundPlaceBlock = Resources.Load<AudioClip>("Sounds/place_block");
-        soundChargeBlock = Resources.Load<AudioClip>("Sounds/charge_block_1-5");
-        soundPlacementBlocked = Resources.Load<AudioClip>("Sounds/placement_blocked");
 
     }
 
@@ -49,6 +39,22 @@ public class BlockSpawnerPhoton : MonoBehaviour
     {
 
     }
+
+	[PunRPC]
+	public void Setup(){
+		spawnColor = Color.white;           //Zu Beginn wird die Farbe des spawnenden Blocks weiß
+		standardScale = blockSpawnSprite.transform.localScale;
+		SetSpawnerSize(0);            //und die Transparenz auf 0 gesetzt
+		player = transform.parent.GetComponent<PlayerPhoton>();
+		playerTeam = player.playerTeam;
+		playerLogging = transform.parent.GetComponent<PlayerLogging>();
+		audioSource = GetComponent<AudioSource>();
+		soundPlaceBlock = Resources.Load<AudioClip>("Sounds/place_block");
+		soundChargeBlock = Resources.Load<AudioClip>("Sounds/charge_block_1-5");
+		soundPlacementBlocked = Resources.Load<AudioClip>("Sounds/placement_blocked");
+
+	}
+
 
     //Bei Aktivierung des Triggers
     private void OnTriggerEnter2D(Collider2D other)

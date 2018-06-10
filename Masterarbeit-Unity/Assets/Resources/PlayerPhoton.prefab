@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4399701378358698}
   - component: {fileID: 82989376035415410}
   - component: {fileID: 114843263745155262}
+  - component: {fileID: 114815189981862492}
   m_Layer: 0
   m_Name: ShotSpawn
   m_TagString: Untagged
@@ -41,6 +42,7 @@ GameObject:
   - component: {fileID: 50790538275729706}
   - component: {fileID: 82639359995341486}
   - component: {fileID: 114173050898372530}
+  - component: {fileID: 114524094662477744}
   m_Layer: 0
   m_Name: BlockSpawn
   m_TagString: Untagged
@@ -709,6 +711,10 @@ MonoBehaviour:
     type: 2}
   spawnable: 1
   blockSpawnSprite: {fileID: 1818180562887412}
+  player: {fileID: 0}
+  playerLogging: {fileID: 0}
+  playerTeam: 0
+  blockColor: {r: 0, g: 0, b: 0, a: 0}
   blockCount: 0
   soundPlaceBlock: {fileID: 0}
   soundChargeBlock: {fileID: 0}
@@ -724,6 +730,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1a0639e5ac27a74d9f65a6b4143a00e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114524094662477744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1176069305701886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &114556246677119554
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -756,6 +788,9 @@ MonoBehaviour:
   shotSpawn: {fileID: 114843263745155262}
   shotDelay: 0.25
   shotTimer: 0
+  enemyPlayer: {fileID: 0}
+  playerLogging: {fileID: 0}
+  playerLoggingEnemy: {fileID: 0}
   teamColor: {r: 0, g: 0, b: 0, a: 0}
   speechBubblePrefab: {fileID: 1599780404292256, guid: 76d6a0e87fd6d0847832da4a5932ae12,
     type: 2}
@@ -789,6 +824,32 @@ MonoBehaviour:
   positionListWithoutDuplicates: []
   formerResult: 
   currentResult: 
+--- !u!114 &114815189981862492
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1025192446097870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &114843263745155262
 MonoBehaviour:
   m_ObjectHideFlags: 1

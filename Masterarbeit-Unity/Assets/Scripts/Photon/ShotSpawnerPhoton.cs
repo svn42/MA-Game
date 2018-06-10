@@ -44,19 +44,24 @@ public class ShotSpawnerPhoton : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f);  //und die Visualisierung des ChargingShots "unsichtbar" gemacht
-		player = transform.parent.GetComponent<PlayerPhoton>();
-        playerTeam = player.playerTeam;
-        playerLogging = transform.parent.GetComponent<PlayerLogging>();
-        //Audio
-        audioSource = GetComponent<AudioSource>();
-        soundShotNormal = Resources.Load<AudioClip>("Sounds/normal_shot");
-        soundShotMedium = Resources.Load<AudioClip>("Sounds/medium_shot");
-        soundShotLarge = Resources.Load<AudioClip>("Sounds/large_shot");
-        soundShotCharge = Resources.Load<AudioClip>("Sounds/shot_charge");
-        soundShotAbort = Resources.Load<AudioClip>("Sounds/shot_abort");
-
     }
+
+	[PunRPC]
+	public void Setup(){
+		chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f);  //und die Visualisierung des ChargingShots "unsichtbar" gemacht
+		player = transform.parent.GetComponent<PlayerPhoton>();
+		playerTeam = player.playerTeam;
+		playerLogging = transform.parent.GetComponent<PlayerLogging>();
+		//Audio
+		audioSource = GetComponent<AudioSource>();
+		soundShotNormal = Resources.Load<AudioClip>("Sounds/normal_shot");
+		soundShotMedium = Resources.Load<AudioClip>("Sounds/medium_shot");
+		soundShotLarge = Resources.Load<AudioClip>("Sounds/large_shot");
+		soundShotCharge = Resources.Load<AudioClip>("Sounds/shot_charge");
+		soundShotAbort = Resources.Load<AudioClip>("Sounds/shot_abort");
+
+	}
+
 
     // Update is called once per frame
     void Update()

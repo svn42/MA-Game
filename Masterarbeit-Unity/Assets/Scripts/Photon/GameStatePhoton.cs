@@ -443,10 +443,10 @@ public class GameStatePhoton : MonoBehaviour
 		}
 
 		if (!gameStarted) {
-			player1.GetComponent<PhotonView> ().RPC ("SetPlayerInformation",PhotonTargets.All, player2.name);
+			player1.GetComponent<PhotonView> ().RPC ("SetPlayerInformation",PhotonTargets.All, player2.name, 1);
 			playerLoggingP1 = player1.GetComponent<PlayerLogging> ();
 			player1Script = player1.GetComponent<PlayerPhoton> ();
-			player2.GetComponent<PhotonView> ().RPC ("SetPlayerInformation",PhotonTargets.All, player1.name);
+			player2.GetComponent<PhotonView> ().RPC ("SetPlayerInformation",PhotonTargets.All, player1.name, 2);
 			playerLoggingP2 = player2.GetComponent<PlayerLogging> ();
 			player2Script = player2.GetComponent<PlayerPhoton> ();
 			gameStarted = true;
