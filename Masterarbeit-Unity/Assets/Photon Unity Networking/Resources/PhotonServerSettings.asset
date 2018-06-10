@@ -52,4 +52,7 @@ MonoBehaviour:
   - SetGamePaused
   - SetPlayerHelp
   - Setup
+  - CastEmote
+  - DisplayEmote
+  - StartDisplayEmoteCoroutine
   DisableAutoOpenWizard: 1

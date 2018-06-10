@@ -237,13 +237,17 @@ public class PlayerPhoton : MonoBehaviour
 			CastEmote ("nice");
 		}
 		if (Input.GetButtonUp ("RBP1") && emoteTimer > emoteDelay) {
-			CastEmote ("angry");
+				CastEmote ("angry");
+
 		}
 		if (Input.GetAxis ("RTP1") != 0 && emoteTimer > emoteDelay) {
 			CastEmote ("cry");
+		//	pvPlayer.RPC ("CastEmote", PhotonTargets.All, "cry");
+
 		}
 		if (Input.GetAxis ("LTP1") != 0 && emoteTimer > emoteDelay) {
 			CastEmote ("haha");
+		//	pvPlayer.RPC ("CastEmote", PhotonTargets.All, "haha");
 		}
 
 
@@ -429,6 +433,18 @@ public class PlayerPhoton : MonoBehaviour
 	//Methode fürs Benutzen der Emotes
 	public void CastEmote (string type)
 	{
+		pvPlayer.RPC ( "StartDisplayEmoteCoroutine", PhotonTargets.All, type);
+		playerLogging.AddEmote (type);   //dem Logging wird die Art des Emotes mitgeteilt    
+		emoteTimer = 0;
+	}
+
+	[PunRPC]
+	public void StartDisplayEmoteCoroutine(string type){
+		StartCoroutine (DisplayEmote(type));
+	}
+
+	IEnumerator DisplayEmote (string type)
+	{
 		int randomInt = Random.Range (0, 3);
 		switch (type) {
 		case ("nice"):
@@ -444,13 +460,6 @@ public class PlayerPhoton : MonoBehaviour
 			PlaySound (soundsEmoteAngry [randomInt], 0.1f);
 			break;
 		}
-		StartCoroutine (DisplayEmote (type));
-		playerLogging.AddEmote (type);   //dem Logging wird die Art des Emotes mitgeteilt    
-		emoteTimer = 0;
-	}
-
-	IEnumerator DisplayEmote (string type)
-	{
 		emojiRenderer.sprite = Resources.Load<Sprite> ("Textures/Emojis/" + type);
 		speechbubbleRenderer.enabled = true;
 		emojiRenderer.enabled = true;
@@ -487,6 +496,7 @@ public class PlayerPhoton : MonoBehaviour
 
 	}
 
+	//der aktive Spieler registriert sich beim Gamestate
 	public void StartPlayerRegistration ()
 	{
 		rating = PlayerPrefs.GetInt (subjectNr + "Rating");
@@ -504,6 +514,7 @@ public class PlayerPhoton : MonoBehaviour
 		Debug.Log ("Register Player");
 	}
 
+	//Hier werden die Informationen an den Spieler weitergeben. Wichtig für die "gegnerischen" Spieler, damit diese ihre Daten (Farbe, Assets und co) bekommen.
 	[PunRPC]
 	public void SetPlayerInformation (string name, int plTeam)
 	{
