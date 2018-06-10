@@ -5,14 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class GameState : MonoBehaviour
+public class GameStatePhoton : MonoBehaviour
 {
 	public string gameType;
 	public int maximumBalls;
 	public int goalLimit;
 	public float timeLeft;
 	public float goalFreezeTime;
-	private List<Ball> ballList = new List<Ball> ();
+	private List<BallPhoton> ballList = new List<BallPhoton> ();
 	bool maximumBallsReached = false;
 	public int goalsTeam1 = 0;
 	public int goalsTeam2 = 0;
@@ -21,10 +21,10 @@ public class GameState : MonoBehaviour
 	private GameObject gui;
 	private Text scoreTeam1;
 	private Text scoreTeam2;
-	//private Text ratingTeam1;
-	//private Text ratingTeam2;
-	//private Text vpnTeam1;
-	//private Text vpnTeam2;
+	private Text ratingTeam1;
+	private Text ratingTeam2;
+	private Text vpnTeam1;
+	private Text vpnTeam2;
 	private Text timer;
 	private GameObject pauseScreenGO;
 	private Canvas pauseScreen;
@@ -55,10 +55,10 @@ public class GameState : MonoBehaviour
 	//regelt, ob der Startbildschirm mit dem Countdown angezeigt werden soll
 
 	private string endingCondition;
-	private GameObject player1;
-	private GameObject player2;
-	private Player player1Script;
-	private Player player2Script;
+	public GameObject player1;
+	public GameObject player2;
+	public PlayerPhoton player1Script;
+	public PlayerPhoton player2Script;
 
 	private PlayerLogging playerLoggingP1;
 	private PlayerLogging playerLoggingP2;
@@ -80,16 +80,29 @@ public class GameState : MonoBehaviour
 
 	public bool gameStarted;
 
-	public bool alwaysLocal;
+	//networking
+	PhotonView photonView;
+	public GameObject spawnPosition1;
+	public GameObject spawnPosition2;
 
 	private void Awake ()
 	{
+		photonView = gameObject.GetComponent<PhotonView> ();
 
 		gameType = PlayerPrefs.GetString ("GameType");
-		if (alwaysLocal) {
-			gameType = "Local";
-		}
-		 
+
+
+		if (gameType.Equals ("Online")) {
+			PhotonNetwork.automaticallySyncScene = true;
+			if (PlayerPrefs.GetInt ("VP") % 2 == 1) {
+				PhotonNetwork.Instantiate ("PlayerPhoton", spawnPosition1.transform.position, spawnPosition1.transform.rotation, 0);
+
+			} else if (PlayerPrefs.GetInt ("VP") % 2 == 0) {
+				PhotonNetwork.Instantiate ("PlayerPhoton", spawnPosition2.transform.position, spawnPosition2.transform.rotation, 0);
+			}
+
+
+		} 
 	}
 
 	// Use this for initialization
@@ -125,10 +138,14 @@ public class GameState : MonoBehaviour
 		scoreTeam2 = gui.transform.Find ("UI_Spielstand").transform.Find ("Spielstand Team 2").transform.Find ("Score Team 2").GetComponent<Text> ();
 		timer = gui.transform.Find ("UI_Spielstand").transform.Find ("Timer_Background").transform.Find ("Time").GetComponent<Text> ();
 
-		//ratingTeam1 = gui.transform.Find ("PlayerInformation").transform.Find ("BackgroundRating1").transform.Find ("Rating Spieler 1").transform.Find ("Rating").GetComponent<Text> ();
-	//	ratingTeam2 = gui.transform.Find ("PlayerInformation").transform.Find ("BackgroundRating2").transform.Find ("Rating Spieler 2").transform.Find ("Rating").GetComponent<Text> ();
-		//vpnTeam1 = gui.transform.Find ("PlayerInformation").transform.Find ("VP Spieler 1").transform.Find ("VP1").transform.Find ("VPN").GetComponent<Text> ();
-		//vpnTeam2 = gui.transform.Find ("PlayerInformation").transform.Find ("VP Spieler 2").transform.Find ("VP2").transform.Find ("VPN").GetComponent<Text> ();
+		ratingTeam1 = gui.transform.Find ("PlayerInformation").transform.Find ("BackgroundRating1").transform.Find ("Rating Spieler 1").transform.Find ("Rating").GetComponent<Text> ();
+		ratingTeam2 = gui.transform.Find ("PlayerInformation").transform.Find ("BackgroundRating2").transform.Find ("Rating Spieler 2").transform.Find ("Rating").GetComponent<Text> ();
+		vpnTeam1 = gui.transform.Find ("PlayerInformation").transform.Find ("VP Spieler 1").transform.Find ("VP1").transform.Find ("VPN").GetComponent<Text> ();
+		vpnTeam2 = gui.transform.Find ("PlayerInformation").transform.Find ("VP Spieler 2").transform.Find ("VP2").transform.Find ("VPN").GetComponent<Text> ();
+
+
+
+
 
 		audioSource = GetComponent<AudioSource> ();
 		soundCountdownRegular = Resources.Load<AudioClip> ("Sounds/countdown_regular");
@@ -163,16 +180,16 @@ public class GameState : MonoBehaviour
 		if (playerList.Length == 2) {
 
 			for (int i = 0; i < playerList.Length; i++) {
-				if (playerList [i].GetComponent<Player> ().playerTeam == 1) {
+				if (playerList [i].GetComponent<PlayerPhoton> ().playerTeam == 1) {
 					player1 = playerList [i];
-				} else if (playerList [i].GetComponent<Player> ().playerTeam == 2) {
+				} else if (playerList [i].GetComponent<PlayerPhoton> ().playerTeam == 2) {
 					player2 = playerList [i];
 				}
 			}
 			playerLoggingP1 = player1.GetComponent<PlayerLogging> ();
 			playerLoggingP2 = player2.GetComponent<PlayerLogging> ();
-			player1Script = player1.GetComponent<Player> ();
-			player2Script = player2.GetComponent<Player> ();
+			player1Script = player1.GetComponent<PlayerPhoton> ();
+			player2Script = player2.GetComponent<PlayerPhoton> ();
 
 
 		}
@@ -181,13 +198,13 @@ public class GameState : MonoBehaviour
 	}
 
 	//Über diese Methode werden neue Bälle an die ballList übergeben
-	public void RegisterBallList (Ball ball)
+	public void RegisterBallList (BallPhoton ball)
 	{
 		ballList.Add (ball);
 	}
 
 	//Die Methode liefert als return Wert die aktuelle ballList zurück
-	public List<Ball> GetBalllist ()
+	public List<BallPhoton> GetBalllist ()
 	{
 		return ballList;
 	}
@@ -263,11 +280,20 @@ public class GameState : MonoBehaviour
 	private void SetPlayerInformation ()
 	{
 
-		if (gameType.Equals ("Local")) {
+		if (gameType.Equals ("Online")) {
+			gui.transform.Find ("PlayerInformation").GetComponent<Canvas> ().enabled = true;
+
+
 			int vpteam1 = PlayerPrefs.GetInt ("VP");
+			//andere VP bekommen
 			int vpteam2 = vpteam1 + 1;
 
-		}
+			vpnTeam1.text = "VP: " + vpteam1.ToString ();
+			vpnTeam2.text = "VP: " + vpteam2.ToString ();
+
+			ratingTeam1.text = PlayerPrefs.GetInt (vpteam1.ToString () + "Rating").ToString ();
+			ratingTeam2.text = PlayerPrefs.GetInt (vpteam2.ToString () + "Rating").ToString ();
+		} 
 
 	}
 
@@ -382,11 +408,14 @@ public class GameState : MonoBehaviour
                     }*/
 					if (player1Ready && player2Ready) {
 							
-						if (gameType.Equals ("Local")) {
-							SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex + 1);
-						} 
+						if (gameType.Equals ("Online")) {
+								
+							if (PhotonNetwork.isMasterClient) {
+								PhotonNetwork.LoadLevel ("Level 1_photon");
+									//PhotonNetwork.LoadLevel (SceneManager.GetActiveScene ().buildIndex + 1);
 
-
+							}
+						}
 					}
 
 					
@@ -459,8 +488,8 @@ public class GameState : MonoBehaviour
 
 		if (!gameStarted) {
 			CheckPlayerCount ();
-			player1.GetComponent<Player> ().FindEnemyPlayer (player2);
-			player2.GetComponent<Player> ().FindEnemyPlayer (player1);
+			player1.GetComponent<PlayerPhoton> ().FindEnemyPlayer (player2);
+			player2.GetComponent<PlayerPhoton> ().FindEnemyPlayer (player1);
 			gameStarted = true;
 		}
 		PlaySound (soundCountdownEnd, 0.5f);

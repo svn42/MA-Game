@@ -20,12 +20,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4446598061353604}
   - component: {fileID: 212389046323251184}
+  - component: {fileID: 114084287210601498}
   - component: {fileID: 50908490086243248}
   - component: {fileID: 60164384307622140}
   - component: {fileID: 82465200994548046}
-  - component: {fileID: 114863242995325240}
   m_Layer: 0
-  m_Name: ShotNormal
+  m_Name: ShotNormalPhoton
   m_TagString: Shot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,7 +187,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114863242995325240
+--- !u!114 &114084287210601498
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1605120989468744}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72dd6f5b55a0a7c4db11a8df4630ad90, type: 3}
+  m_Script: {fileID: 11500000, guid: 10efcf7dcfbf84a47bab8fa4e4e4f098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 80

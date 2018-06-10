@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 40496160}
   - component: {fileID: 40496162}
   - component: {fileID: 40496163}
+  - component: {fileID: 40496161}
   m_Layer: 0
   m_Name: GameState
   m_TagString: Untagged
@@ -233,7 +234,7 @@ MonoBehaviour:
   gameType: Local
   maximumBalls: 2
   goalLimit: 3
-  timeLeft: 120
+  timeLeft: 11
   goalFreezeTime: 2
   goalsTeam1: 0
   goalsTeam2: 0
@@ -242,15 +243,18 @@ MonoBehaviour:
   nextLevelReady: 0
   timeUntilNextLevel: 5
   depauseCountdown: 3
-  startCountdownActivated: 0
+  startCountdownActivated: 1
   player1: {fileID: 0}
   player2: {fileID: 0}
+  player1Script: {fileID: 0}
+  player2Script: {fileID: 0}
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
   allPlayersLoggedIn: 0
   gameStarted: 0
   spawnPosition1: {fileID: 1604935432}
   spawnPosition2: {fileID: 1027373183}
+  alwaysLocal: 0
 --- !u!114 &40496160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +270,32 @@ MonoBehaviour:
   endTime: 
   playTime: 0
   totalTime: 0
+--- !u!114 &40496161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 40496157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 1
+  instantiationId: 1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &40496162
 MonoBehaviour:
   m_ObjectHideFlags: 0

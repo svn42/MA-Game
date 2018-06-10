@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4399701378358698}
-  - component: {fileID: 114237265526856248}
   - component: {fileID: 82989376035415410}
+  - component: {fileID: 114843263745155262}
   m_Layer: 0
   m_Name: ShotSpawn
   m_TagString: Untagged
@@ -38,9 +38,9 @@ GameObject:
   - component: {fileID: 4966050326566136}
   - component: {fileID: 61854273117028674}
   - component: {fileID: 212993350913610590}
-  - component: {fileID: 114277257188751900}
   - component: {fileID: 50790538275729706}
   - component: {fileID: 82639359995341486}
+  - component: {fileID: 114173050898372530}
   m_Layer: 0
   m_Name: BlockSpawn
   m_TagString: Untagged
@@ -104,7 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4997338861234004}
   - component: {fileID: 58908113485935518}
-  - component: {fileID: 114161868169587086}
+  - component: {fileID: 114108536344339694}
   m_Layer: 0
   m_Name: ZoneCollider
   m_TagString: Untagged
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 114515794302295868}
   - component: {fileID: 114099313043202054}
   m_Layer: 0
-  m_Name: Player
+  m_Name: PlayerPhoton
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -681,7 +681,7 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
---- !u!114 &114161868169587086
+--- !u!114 &114108536344339694
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -689,9 +689,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1630676554467294}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172d86557e18aa041919fc89a9a0c7ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c245fa614517b542b0c53d6380ceb6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114173050898372530
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1176069305701886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6cc02a0978c0c7499140c8ec3d27378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTimer: 1.5
+  blockChargeTime: 0
+  blockPrefab: {fileID: 1741391209202420, guid: 5ae35a6b6fc5a29439c288e5bedd17cd,
+    type: 2}
+  spawnable: 1
+  blockSpawnSprite: {fileID: 1818180562887412}
+  blockCount: 0
+  soundPlaceBlock: {fileID: 0}
+  soundChargeBlock: {fileID: 0}
+  soundPlacementBlocked: {fileID: 0}
 --- !u!114 &114202835746117058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -715,15 +736,16 @@ MonoBehaviour:
   acceleration: 1.75
   stunned: 0
   stunBlinkEffect: 0.2
-  exhaustPrefab: {fileID: 1608806251640764, guid: e6e0204d311283740a88d93bb97183aa,
+  exhaustPrefab: {fileID: 1608806251640764, guid: 05f3d42cc2b800f47b5af5fb967a2634,
     type: 2}
   exSpawner: {fileID: 1530333346363798}
   exhaustTime: 0
   exhaustSpawnTime: 0.12
-  blockSpawn: {fileID: 114277257188751900}
-  shotSpawn: {fileID: 114237265526856248}
+  blockSpawn: {fileID: 0}
+  shotSpawn: {fileID: 0}
   shotDelay: 0.25
   shotTimer: 0
+  teamColor: {r: 0, g: 0, b: 0, a: 0}
   speechBubblePrefab: {fileID: 1599780404292256, guid: 76d6a0e87fd6d0847832da4a5932ae12,
     type: 2}
   emoteTimer: 0
@@ -733,57 +755,6 @@ MonoBehaviour:
   soundsEmoteCry: []
   soundsEmoteHaha: []
   soundsEmoteAngry: []
---- !u!114 &114237265526856248
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1025192446097870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe2cd61fa89c0f54b84d8a2188e5818c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnTimerMedium: 0.5
-  spawnTimerLarge: 2
-  spawnTimerLimit: 5
-  shotChargeTime: 0
-  normalShotPrefab: {fileID: 1605120989468744, guid: e247b1f41739b8f4b87c929aaa7f07a2,
-    type: 2}
-  mediumShotPrefab: {fileID: 1455311078373078, guid: 03fd12a6b7e2abb4ea2d5eabc467dab5,
-    type: 2}
-  largeShotPrefab: {fileID: 1563098449693252, guid: b05f57fa3e7a4f24cb1a5d88c0148e36,
-    type: 2}
-  spawnable: 1
-  chargingShotSprite: {fileID: 1487001400647162}
-  shotCount: 0
-  soundShotNormal: {fileID: 0}
-  soundShotMedium: {fileID: 0}
-  soundShotLarge: {fileID: 0}
-  soundShotCharge: {fileID: 0}
-  soundShotAbort: {fileID: 0}
-  shotBlinkEffectStarted: 0
---- !u!114 &114277257188751900
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1176069305701886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d5588fbcfdfdda49ab998413c1be042, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnTimer: 1.5
-  blockChargeTime: 0
-  blockPrefab: {fileID: 1741391209202420, guid: 25ef676e375f016479ecc966bd40cc14,
-    type: 2}
-  spawnable: 1
-  blockSpawnSprite: {fileID: 1818180562887412}
-  blockCount: 0
-  soundPlaceBlock: {fileID: 0}
-  soundChargeBlock: {fileID: 0}
-  soundPlacementBlocked: {fileID: 0}
 --- !u!114 &114515794302295868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -818,6 +789,36 @@ MonoBehaviour:
   positionListWithoutDuplicates: []
   formerResult: 
   currentResult: 
+--- !u!114 &114843263745155262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1025192446097870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 293063af8eecbd247ac54eb1447763f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTimerMedium: 0.5
+  spawnTimerLarge: 2
+  spawnTimerLimit: 5
+  shotChargeTime: 0
+  normalShotPrefab: {fileID: 1605120989468744, guid: d23e1f91ba4ddeb47b6ff06a28cdd138,
+    type: 2}
+  mediumShotPrefab: {fileID: 1455311078373078, guid: c8c2d8d323d577344b3967fda12d7730,
+    type: 2}
+  largeShotPrefab: {fileID: 1563098449693252, guid: 1cf4ff61546f46b4693d7311fbea3ad1,
+    type: 2}
+  spawnable: 1
+  chargingShotSprite: {fileID: 1487001400647162}
+  shotCount: 0
+  soundShotNormal: {fileID: 0}
+  soundShotMedium: {fileID: 0}
+  soundShotLarge: {fileID: 0}
+  soundShotCharge: {fileID: 0}
+  soundShotAbort: {fileID: 0}
+  shotBlinkEffectStarted: 0
 --- !u!114 &114964997798165938
 MonoBehaviour:
   m_ObjectHideFlags: 1

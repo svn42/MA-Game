@@ -20,11 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4446598061353604}
   - component: {fileID: 212389046323251184}
-  - component: {fileID: 114912192856785348}
-  - component: {fileID: 114962390182578258}
-  - component: {fileID: 114723731102921204}
+  - component: {fileID: 114304619027030650}
   m_Layer: 0
-  m_Name: ShotMediumDestruction
+  m_Name: ShotNormalDestruction
   m_TagString: Shot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,34 +35,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1605120989468744}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -45.3, y: -23.9, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalPosition: {x: -50.4, y: -12.3, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114723731102921204
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1605120989468744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 0
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
---- !u!114 &114912192856785348
+--- !u!114 &114304619027030650
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -75,38 +52,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb6a80bec79cc524795af0188788102b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114962390182578258
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1605120989468744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 85
-    i1: 102
-    i2: 20
-    i3: 40
-    i4: 25
-    i5: 182
-    i6: 133
-    i7: 52
-    i8: 40
-    i9: 179
-    i10: 58
-    i11: 239
-    i12: 49
-    i13: 251
-    i14: 74
-    i15: 170
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!212 &212389046323251184
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -143,7 +88,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4d84db0dea5fc4d4f9db1f2b836eb4b8, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

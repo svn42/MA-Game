@@ -20,11 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4409290815195658}
   - component: {fileID: 212837526709103030}
-  - component: {fileID: 114790515965586318}
   - component: {fileID: 50347029476242226}
   - component: {fileID: 60551470551604790}
   - component: {fileID: 96665895069829900}
   - component: {fileID: 82650694580468684}
+  - component: {fileID: 114531541456456016}
   m_Layer: 0
   m_Name: ShotMedium
   m_TagString: Shot
@@ -279,7 +279,7 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
---- !u!114 &114790515965586318
+--- !u!114 &114531541456456016
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -287,7 +287,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1455311078373078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10efcf7dcfbf84a47bab8fa4e4e4f098, type: 3}
+  m_Script: {fileID: 11500000, guid: 72dd6f5b55a0a7c4db11a8df4630ad90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 60

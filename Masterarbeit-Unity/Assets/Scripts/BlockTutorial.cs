@@ -10,18 +10,17 @@ public class BlockTutorial : MonoBehaviour
 
     public Sprite twoHealthBlock;
     public Sprite oneHealthBlock;
-    private SpriteRenderer sr;
     private int playerTeam;
     private int blockID;
     private TutorialGameState tutorialGameState;
-    SpriteRenderer spriteRenderer;
+	private SpriteRenderer spriteRenderer;
     public GameObject blockDestructionPrefab;
 
     // Use this for initialization
     void Start()
     {
         health = 3;
-        sr = gameObject.GetComponent<SpriteRenderer>();
+		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
 
     }
@@ -37,12 +36,12 @@ public class BlockTutorial : MonoBehaviour
         health -= damage;
         if (health == 2)
         {
-            sr.sprite = Resources.Load<Sprite>("Textures/Block_2Health");
+			spriteRenderer.sprite = Resources.Load<Sprite>("Textures/Block_2Health");
             tutorialGameState.PlaySound("soundSlap", 0.5f);
         }
         else if (health == 1)
         {
-            sr.sprite = Resources.Load<Sprite>("Textures/Block_1Health");
+			spriteRenderer.sprite = Resources.Load<Sprite>("Textures/Block_1Health");
             tutorialGameState.PlaySound("soundSlap", 0.5f);
 
         }
@@ -69,6 +68,7 @@ public class BlockTutorial : MonoBehaviour
 
     public Color GetColor()
     {
+		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         return spriteRenderer.color;
     }
 

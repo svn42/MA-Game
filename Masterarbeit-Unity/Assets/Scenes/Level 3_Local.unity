@@ -3363,10 +3363,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 986070034}
-  - component: {fileID: 986070033}
   - component: {fileID: 986070031}
   - component: {fileID: 986070030}
   - component: {fileID: 986070029}
+  - component: {fileID: 986070032}
   m_Layer: 0
   m_Name: GameState
   m_TagString: Untagged
@@ -3497,7 +3497,7 @@ MonoBehaviour:
   endTime: 
   playTime: 0
   totalTime: 0
---- !u!114 &986070033
+--- !u!114 &986070032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -3505,14 +3505,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 986070028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc9930cef5ef82646ae4d199a7af0f8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2888bfee71f8fae48a07f48e3c5822da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameType: 
+  gameType: Local
   maximumBalls: 2
   goalLimit: 3
   timeLeft: 120
-  goalFreezeTime: 3
+  goalFreezeTime: 2
   goalsTeam1: 0
   goalsTeam2: 0
   gamePaused: 0
@@ -3521,14 +3521,10 @@ MonoBehaviour:
   timeUntilNextLevel: 5
   depauseCountdown: 3
   startCountdownActivated: 1
-  player1: {fileID: 1166422314}
-  player2: {fileID: 1931763974}
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
   allPlayersLoggedIn: 0
   gameStarted: 0
-  spawnPosition1: {fileID: 0}
-  spawnPosition2: {fileID: 0}
   alwaysLocal: 1
 --- !u!4 &986070034
 Transform:

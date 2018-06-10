@@ -38,6 +38,8 @@ public class MainMenu : MonoBehaviour
 			onlineGameButton.interactable = true;
 			mainMenu.transform.Find ("Rating-Text").gameObject.GetComponent<Text> ().text = "Rating: " + PlayerPrefs.GetInt (VPNummer.ToString () + "Rating");
 		}
+
+		//PhotonNetwork.automaticallySyncScene = true;
 	}
 
 	public void Update ()
@@ -45,7 +47,6 @@ public class MainMenu : MonoBehaviour
 		//Debug.Log (PhotonNetwork.connectionStateDetailed.ToString ());
 		Debug.Log ("Anzahl weiterer Spieler: " +PhotonNetwork.otherPlayers.Length);
 	}
-
 
 
 	public void StartTutorial ()

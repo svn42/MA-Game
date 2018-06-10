@@ -17,13 +17,14 @@ public class ShotTutorial : MonoBehaviour
     private TrailRenderer trailRenderer;
     public GameObject shotDestructionPrefab;
     private TutorialGameState tutorialGameState;
-    SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
     public TutorialLogging tutorialLogging;
 
     // Use this for initialization
     void Start()
     {
         tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
+		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
         //zuweisen des shotTypes in abhängigkeit zur Stärke
         switch (strength)
@@ -205,6 +206,7 @@ public class ShotTutorial : MonoBehaviour
 
     public Color GetColor()
     {
+		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         return spriteRenderer.color;
     }
 

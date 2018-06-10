@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Player : MonoBehaviour
+public class PlayerPhoton : MonoBehaviour
 {
 	[Range(1, 2)]
 	public int playerTeam;    //Teamzugehörigkeit (1 oder 2)
@@ -29,8 +29,8 @@ public class Player : MonoBehaviour
 	public float exhaustTime;  //Die Zeit der aktuellen Bewegung in Frames. wird erhöht, sofern sich der Spieler bewegt und dient der Überprüfung, ob ein ABgaspartikel gespawnt werden soll
 	public float exhaustSpawnTime;  //Die Zeit, die erreicht werden muss, bis ein Abgaspartikel gespawnt werden kann
 
-	public BlockSpawner blockSpawn; //Der Blockspawner des Spielers wird über den Inspector mit dem Spieler verknüpft
-	public ShotSpawner shotSpawn;   //Der Shotspawner des Spielers wird über den Inspector mit dem Spieler verknüpft
+	public BlockSpawnerPhoton blockSpawn; //Der Blockspawner des Spielers wird über den Inspector mit dem Spieler verknüpft
+	public ShotSpawnerPhoton shotSpawn;   //Der Shotspawner des Spielers wird über den Inspector mit dem Spieler verknüpft
 	public float shotDelay; //der shotDelay gibt die Zeit in Sekunden wieder, die nach einem Schuss vergehen muss, damit ein neuer Schuss gespawnt werden kann. (damit der normalShot nicht gespammt werden kann)
 	public float shotTimer; //der shotTimer gibt die Zeit in Frames wieder, die bereits auf den nächsten Schuss gewartet wurde.
 
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
 	private PlayerLogging playerLogging;    //das eigene PlayerLogging
 	private PlayerLogging playerLoggingEnemy;
 	private PositionTracker positionTracker;
-	private GameState gameState;
+	private GameStatePhoton gameState;
 	public Color teamColor;    //Die Farbe des Spielers, die anhand der Teamzugehörigkeit ermittelt wird
 
 	public GameObject speechBubblePrefab;
@@ -57,11 +57,22 @@ public class Player : MonoBehaviour
 	public List<AudioClip> soundsEmoteHaha = new List<AudioClip>();
 	public List<AudioClip> soundsEmoteAngry = new List<AudioClip>();
 
+	private GameObject spawnPosition1;
+	private GameObject spawnPosition2;
+
+	//networking
+	PhotonView pvGamestate;
+
 	// Use this for initialization
 	void Start()
 	{
-		gameState = (GameState)FindObjectOfType(typeof(GameState));
+		gameState = (GameStatePhoton)FindObjectOfType(typeof(GameStatePhoton));
 		gameType = gameState.gameType;
+
+		pvGamestate = gameState.gameObject.GetComponent<PhotonView> ();
+
+		//spawnPosition1 = gameState.spawnPosition1;
+		//spawnPosition2 = gameState.spawnPosition2;
 
 		SetUpSpeechBubble();
 
@@ -70,8 +81,14 @@ public class Player : MonoBehaviour
 
 		rating = PlayerPrefs.GetInt(subjectNr + "Rating");
 
+		if (gameType.Equals("Online"))
+		{
+			playerAcronym = "P1";
+		}
+		else
+		{
 			playerAcronym = "P" + playerTeam;
-
+		}
 		CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
 
 
@@ -172,9 +189,9 @@ public class Player : MonoBehaviour
 		}
 		if (coll.gameObject.tag == "Shot")
 		{
-			if (coll.gameObject.GetComponent<Shot>().GetPlayerTeam() != playerTeam) //wenn der Schuss vom gegenerischen Spieler ist
+			if (coll.gameObject.GetComponent<ShotPhoton>().GetPlayerTeam() != playerTeam) //wenn der Schuss vom gegenerischen Spieler ist
 			{
-				Shot collidingShot = coll.gameObject.GetComponent<Shot>();
+				ShotPhoton collidingShot = coll.gameObject.GetComponent<ShotPhoton>();
 				speedX /= 2;    //wird die Geschwindigkeit reduziert
 				speedY /= 2;
 				StartCoroutine(StunPlayer(collidingShot.GetStunDuration()));  //und der Spieler für die Zeit "GetStunDuration" gestunnt
@@ -411,8 +428,8 @@ public class Player : MonoBehaviour
 		{
 			//wird ein Abgaspartikel an der Position des ExhaustSpawners erstellt
 			GameObject exhaust = Instantiate(exhaustPrefab, exSpawner.transform.position, exSpawner.transform.rotation);
-			exhaust.GetComponent<Exhaust>().SetColor(teamColor);    //das Partikel bekommt die Farbe des Spielers
-			exhaust.GetComponent<Exhaust>().SetDirection(new Vector3(speedX, speedY, 0));
+			exhaust.GetComponent<ExhaustPhoton>().SetColor(teamColor);    //das Partikel bekommt die Farbe des Spielers
+			exhaust.GetComponent<ExhaustPhoton>().SetDirection(new Vector3(speedX, speedY, 0));
 			//und die Zeit zum Spawnen eines Partikels auf null gesetzt
 			exhaustTime = 0;
 		}
@@ -422,7 +439,8 @@ public class Player : MonoBehaviour
 	{
 		if (Input.GetButtonUp("Shoot" + playerAcronym))
 		{
-			gameState.SetPlayerReady(true, playerTeam);
+			//gameState.SetPlayerReady(true, playerTeam);
+			pvGamestate.RPC ("SetPlayerReady", PhotonTargets.All, true, playerTeam);
 		}
 	}
 
@@ -446,8 +464,8 @@ public class Player : MonoBehaviour
 	//setzt die Farve des Spielers sowie seiner Spawner fest
 	public void SetColor(Color col){
 		teamColor = col;	//die Team Color wird gesetzt
-		blockSpawn.GetComponent<BlockSpawner>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
-		shotSpawn.GetComponent<ShotSpawner>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
+		blockSpawn.GetComponent<BlockSpawnerPhoton>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
+		shotSpawn.GetComponent<ShotSpawnerPhoton>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
 
 	}
 
@@ -565,8 +583,8 @@ public class Player : MonoBehaviour
 		//}
 
 		playerLoggingEnemy = enemyPlayer.GetComponent<PlayerLogging>(); //das playerLogging-Skript des Gegners wird verknüpft, um die Betäubungen abzuspeichern.
-		subjectNrEnemy = enemyPlayer.GetComponent<Player>().subjectNr;
-		ratingEnemy = enemyPlayer.GetComponent<Player>().rating;
+		subjectNrEnemy = enemyPlayer.GetComponent<PlayerPhoton>().subjectNr;
+		ratingEnemy = enemyPlayer.GetComponent<PlayerPhoton>().rating;
 
 
 	}
@@ -580,7 +598,16 @@ public class Player : MonoBehaviour
 	public void SetPlayerTeam()
 	{
 
-		if (gameType.Equals("Local"))
+		if (gameType.Equals ("Online")) {
+			subjectNr = PlayerPrefs.GetInt ("VP");
+			if (subjectNr % 2 == 0) {
+				playerTeam = 2;
+			} else if (subjectNr % 2 == 1) {
+				playerTeam = 1;
+			}
+			gameObject.name = "Player"+ PhotonNetwork.player.NickName; 
+		}
+		else if (gameType.Equals("Local"))
 		{
 			if (playerTeam == 1)
 			{

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shot : MonoBehaviour
+public class ShotPhoton : MonoBehaviour
 {
 
     public float acceleration;  //der Beschleunigungswert des Partikels
@@ -17,13 +17,13 @@ public class Shot : MonoBehaviour
     public PlayerLogging playerLogging;
     private TrailRenderer trailRenderer;
     public GameObject shotDestructionPrefab;
-	private GameState gameState;
+	private GameStatePhoton gameState;
 	private SpriteRenderer spriteRenderer;
 
     // Use this for initialization
     void Start()
     {
-		gameState = (GameState)FindObjectOfType(typeof(GameState));
+		gameState = (GameStatePhoton)FindObjectOfType(typeof(GameStatePhoton));
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
         //zuweisen des shotTypes in abhängigkeit zur Stärke
@@ -43,7 +43,7 @@ public class Shot : MonoBehaviour
         GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
         for (int i = 0; i < playerList.Length; i++)
         {
-			if (playerList[i].GetComponent<Player>().playerTeam == playerTeam)
+			if (playerList[i].GetComponent<PlayerPhoton>().playerTeam == playerTeam)
             {
                 player = playerList[i];
                 playerLogging = player.GetComponent<PlayerLogging>();
@@ -108,27 +108,27 @@ public class Shot : MonoBehaviour
                 gameState.PlaySound("soundSlap", 0.05f);
                 break;
             case "Shot":
-			if (collidingObject.GetComponent<Shot>().GetPlayerTeam() != playerTeam)
+			if (collidingObject.GetComponent<ShotPhoton>().GetPlayerTeam() != playerTeam)
                 {
                     gameState.PlaySound("soundSlap", 0.05f);
 
-				if (strength < collidingObject.GetComponent<Shot>().strength)
+				if (strength < collidingObject.GetComponent<ShotPhoton>().strength)
                     {
                         DestroyShot();
                     }
-				else if (strength == collidingObject.GetComponent<Shot>().strength)
+				else if (strength == collidingObject.GetComponent<ShotPhoton>().strength)
                     {
                         playerLogging.AddAccuracy("shot");
                         DestroyShot();
                     }
-				else if (strength >= collidingObject.GetComponent<Shot>().strength)
+				else if (strength >= collidingObject.GetComponent<ShotPhoton>().strength)
                     {
                         playerLogging.AddAccuracy("shot");
                     }
                 }
                 else
                 {
-				if (shotID > collidingObject.GetComponent<Shot>().GetShotID())
+				if (shotID > collidingObject.GetComponent<ShotPhoton>().GetShotID())
                     {
                         DestroyShot();
                         playerLogging.AddAccuracy("destroy");
@@ -142,17 +142,17 @@ public class Shot : MonoBehaviour
                 // normalize force vector to get direction only and trim magnitude
                 forceBall.Normalize();
                 coll.rigidbody.AddForce(forceBall * ballImpact);
-			collidingObject.GetComponent<Ball>().SetLastHitBy(playerTeam);
+			collidingObject.GetComponent<BallPhoton>().SetLastHitBy(playerTeam);
                 switch (strength)
                 {
                     case 1:
-				collidingObject.GetComponent<Ball>().PlayHitSound(0.3f);
+				collidingObject.GetComponent<BallPhoton>().PlayHitSound(0.3f);
                         break;
                     case 2:
-				collidingObject.GetComponent<Ball>().PlayHitSound(0.5f);
+				collidingObject.GetComponent<BallPhoton>().PlayHitSound(0.5f);
                         break;
                     case 3:
-				collidingObject.GetComponent<Ball>().PlayHitSound(0.8f);
+				collidingObject.GetComponent<BallPhoton>().PlayHitSound(0.8f);
                         break;
                 }
                 DestroyShot();

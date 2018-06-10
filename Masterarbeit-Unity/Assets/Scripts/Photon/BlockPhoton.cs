@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Block : MonoBehaviour
+public class BlockPhoton : MonoBehaviour
 {
     [Range(0, 3)]
     public int health;
@@ -13,7 +13,7 @@ public class Block : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private int playerTeam;
     private int blockID;
-    private GameState gameState;
+	private GameStatePhoton gameState;
     public GameObject blockDestructionPrefab;
 	private Color col;
 
@@ -22,7 +22,7 @@ public class Block : MonoBehaviour
     {
         health = 3;
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-		gameState = (GameState)FindObjectOfType(typeof(GameState));
+		gameState = (GameStatePhoton)FindObjectOfType(typeof(GameStatePhoton));
 
     }
 
@@ -70,7 +70,7 @@ public class Block : MonoBehaviour
     public Color GetColor()
     {
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-		return spriteRenderer.color;
+        return spriteRenderer.color;
     }
 
     public void SetPlayerTeam(int i)
