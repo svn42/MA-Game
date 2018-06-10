@@ -19,8 +19,8 @@ public class MainMenu : MonoBehaviour
 	public GameObject waitForPlayer;
 
 
-	private GameObject passwortErrorText;
-	private GameObject VPErrorText;
+	public GameObject passwortErrorText;
+	public GameObject VPErrorText;
 	public int VPNummer;
 
 	public void Start ()

@@ -916,7 +916,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1817539800}
+      - m_Target: {fileID: 1737735000}
         m_MethodName: CheckVP
         m_Mode: 1
         m_Arguments:
@@ -1350,7 +1350,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1817539800}
+      - m_Target: {fileID: 1737735000}
         m_MethodName: CheckPassword
         m_Mode: 1
         m_Arguments:
@@ -3258,7 +3258,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1817539800}
+      - m_Target: {fileID: 1737735000}
         m_MethodName: StartLocalGame
         m_Mode: 1
         m_Arguments:
@@ -3867,6 +3867,8 @@ MonoBehaviour:
   localGameButton: {fileID: 1580773749}
   onlineGameButton: {fileID: 1244836288}
   waitForPlayer: {fileID: 1434117}
+  passwortErrorText: {fileID: 0}
+  VPErrorText: {fileID: 0}
   VPNummer: 0
 --- !u!4 &1737735001
 Transform:
@@ -3941,6 +3943,8 @@ MonoBehaviour:
   localGameButton: {fileID: 1580773749}
   onlineGameButton: {fileID: 1244836288}
   waitForPlayer: {fileID: 1434117}
+  passwortErrorText: {fileID: 0}
+  VPErrorText: {fileID: 0}
   VPNummer: 0
 --- !u!1 &1848122116
 GameObject:
