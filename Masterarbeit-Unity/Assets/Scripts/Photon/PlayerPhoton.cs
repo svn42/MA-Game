@@ -90,20 +90,13 @@ public class PlayerPhoton : MonoBehaviour
 		if (pvPlayer.isMine) {
 			StartPlayerRegistration ();	//VP, Rating, PlayerTeam, Color setzen
 			pvPlayer.RPC ("SetUpSpeechBubble",PhotonTargets.All) ;
-
 		}
-
-
-
-
 
 	}
 
 
 	public void SetUpEmotes ()
 	{
-			//SetUpSpeechBubble ();
-
 		emoteTimer = emoteDelay; //sorgt dafür, dass sofort ein Emote benutzt werden kann
 		speechbubbleRenderer = speechBubble.GetComponent<SpriteRenderer> ();
 		emojiRenderer = speechBubble.transform.Find ("Emoji").GetComponent<SpriteRenderer> ();
@@ -253,6 +246,16 @@ public class PlayerPhoton : MonoBehaviour
 			CastEmote ("haha");
 		}
 
+
+		/*
+		 * 
+		 * Pause
+		 * 
+		 */
+
+		if (Input.GetButtonUp ("Start")) {
+			pvGamestate.RPC ("SetGamePaused", PhotonTargets.All, true, "pause");
+		}
 	}
 
 	//Die Methode wird in jedem Update aufgerufen und regelt die Bewegung des Spielers
@@ -373,6 +376,13 @@ public class PlayerPhoton : MonoBehaviour
 		if (Input.GetButtonUp ("ShootP1")) {
 			pvGamestate.RPC ("SetPlayerReady", PhotonTargets.All, true, playerTeam);
 		}
+		if (Input.GetButtonUp ("Help")) {
+			pvGamestate.RPC ("SetPlayerHelp", PhotonTargets.All, true, playerTeam);
+		} 
+		if (Input.GetKeyUp (KeyCode.H)) {
+			pvGamestate.RPC ("SetPlayerHelp", PhotonTargets.All, false, playerTeam);
+		}
+			
 	}
 
 	//setzt die Farve des Spielers sowie seiner Spawner fest

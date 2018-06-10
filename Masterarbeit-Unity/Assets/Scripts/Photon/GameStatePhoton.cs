@@ -87,6 +87,8 @@ public class GameStatePhoton : MonoBehaviour
 
 	public bool gameStarted;
 
+	private int helpOrderedBy;
+
 	//networking
 	PhotonView photonView;
 	public GameObject spawnPosition1;
@@ -129,7 +131,9 @@ public class GameStatePhoton : MonoBehaviour
 		SetPlayerInformation ();
 
 		if (startCountdownActivated) {
-			SetGamePaused (true, "start");    //zu Beginn wird das Spiel pausiert 
+			photonView.RPC("SetGamePaused", PhotonTargets.All, true, "start");
+
+			//SetGamePaused (true, "start");    //zu Beginn wird das Spiel pausiert 
 		}
 	}
 
@@ -306,7 +310,8 @@ public class GameStatePhoton : MonoBehaviour
 
 				PlaySound (soundWhistle, 0.4f);
 				endingCondition = "Time";
-				SetGamePaused (true, "end");
+				photonView.RPC("SetGamePaused", PhotonTargets.All, true, "end");
+
 			}
 		}
 	}
@@ -330,7 +335,8 @@ public class GameStatePhoton : MonoBehaviour
 	{
 		if (goalsTeam1 == goalLimit || goalsTeam2 == goalLimit) {
 			endingCondition = "Goals";
-			SetGamePaused (true, "end");
+			photonView.RPC("SetGamePaused", PhotonTargets.All, true, "end");
+
 		} else {
 			StartCoroutine (GoalFreeze ());
 		}
@@ -338,27 +344,20 @@ public class GameStatePhoton : MonoBehaviour
 
 	private void CheckPause ()
 	{
-		if (Input.GetButtonUp ("Start")) {
-			if (!gamePaused) {
-				SetGamePaused (true, "pause");
-			}
-		}
+
 		//sofern das Spiel pausiert wird
 		if (gamePaused && !depauseCountdownStarted) {
 
-			if (Input.GetButtonUp ("Help")) {
-				playerHelp = true;
+				if (playerHelp) {
 				observerText.enabled = true;
-				observerText.text = "Gib dem Versuchsleiter Bescheid, \nwenn du mit ihm im selben Raum sitzt.";
+				observerText.text = "Hilfe angefordert von Spieler " + helpOrderedBy+ "! \nGib dem Versuchsleiter Bescheid, \nwenn du mit ihm im selben Raum sitzt.";
 				observerText.color = Color.red;
 			}
-			if (playerHelp) {
-				if (Input.GetKeyUp (KeyCode.H)) {
-					playerHelp = false;
+			if (!playerHelp) {
 					observerText.text = "Ihr könnt das Spiel fortsetzen! :)";
 					observerText.color = Color.green;
 				}
-			}
+
 			if (!levelEnded) {
 
 
@@ -398,6 +397,7 @@ public class GameStatePhoton : MonoBehaviour
 		return gamePaused;
 	}
 
+	[PunRPC]
 	public void SetGamePaused (bool b, string screenType)
 	{
 		gamePaused = b;
@@ -452,7 +452,7 @@ public class GameStatePhoton : MonoBehaviour
 			gameStarted = true;
 		}
 		PlaySound (soundCountdownEnd, 0.5f);
-		SetGamePaused (false, "pause");
+		photonView.RPC("SetGamePaused", PhotonTargets.All, false, "pause");
 		SetPlayerReady (false, 1);
 		SetPlayerReady (false, 2);
 		pauseScreen.enabled = false;
@@ -594,15 +594,24 @@ public class GameStatePhoton : MonoBehaviour
 	}
 
 	[PunRPC]
+	public void SetPlayerHelp (bool b, int vp)
+	{
+		playerHelp = b;
+		helpOrderedBy = vp;
+	}
+
+
+	[PunRPC]
 	public void SetPlayerReady (bool b, int playerNr)
 	{
-
-		if (playerNr == 1) {
-			player1Ready = b;
-			greenCheckP1.enabled = b;
-		} else if (playerNr == 2) {
-			player2Ready = b;
-			greenCheckP2.enabled = b;
+		if (!playerHelp) {
+			if (playerNr == 1) {
+				player1Ready = b;
+				greenCheckP1.enabled = b;
+			} else if (playerNr == 2) {
+				player2Ready = b;
+				greenCheckP2.enabled = b;
+			}
 		}
 	}
 

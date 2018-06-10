@@ -49,4 +49,6 @@ MonoBehaviour:
   - FindEnemyPlayer
   - SetPlayerInformation
   - SetUpSpeechBubble
+  - SetGamePaused
+  - SetPlayerHelp
   DisableAutoOpenWizard: 1
