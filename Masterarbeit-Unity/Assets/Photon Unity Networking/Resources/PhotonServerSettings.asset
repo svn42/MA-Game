@@ -45,4 +45,7 @@ MonoBehaviour:
   - SetPlayerReady
   - RegisterPlayer
   - SetPlayerName
+  - CheckTeamColor
+  - FindEnemyPlayer
+  - SetPlayerInformation
   DisableAutoOpenWizard: 1

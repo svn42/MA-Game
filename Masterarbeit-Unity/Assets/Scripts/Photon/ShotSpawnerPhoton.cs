@@ -182,10 +182,10 @@ public class ShotSpawnerPhoton : MonoBehaviour
     private void SetShotProperties(GameObject shot)
     {
         shotCount++;
-        shot.GetComponent<Shot>().SetDirection(this.transform.rotation);    //Der Schuss bekommt die Rotation des Spielers übergeben
-        shot.GetComponent<Shot>().SetColor(shotColor);                      //dessen Farbe
-        shot.GetComponent<Shot>().SetPlayerTeam(playerTeam);                //dessen Team
-        shot.GetComponent<Shot>().SetShotID(shotCount);                     //sowie seine ID
+        shot.GetComponent<ShotPhoton>().SetDirection(this.transform.rotation);    //Der Schuss bekommt die Rotation des Spielers übergeben
+		shot.GetComponent<ShotPhoton>().SetColor(shotColor);                      //dessen Farbe
+		shot.GetComponent<ShotPhoton>().SetPlayerTeam(playerTeam);                //dessen Team
+		shot.GetComponent<ShotPhoton>().SetShotID(shotCount);                     //sowie seine ID
         shot.name = "Shot_" + shotCount + "_Player_" + playerTeam;       //der Name wird aus dem Count und der PlayerID gebaut.
     }
 

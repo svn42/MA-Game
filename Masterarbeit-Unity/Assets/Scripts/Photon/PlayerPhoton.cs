@@ -87,21 +87,14 @@ public class PlayerPhoton : MonoBehaviour
 		pvGamestate = gameState.gameObject.GetComponent<PhotonView> ();
 		pvPlayer = gameObject.GetComponent<PhotonView> ();
 			
-		SetPlayerInformation ();	//VP, Rating, PlayerTeam, Color setzen
-		SetUpEmotes ();
+		if (pvPlayer.isMine) {
+			StartPlayerRegistration ();	//VP, Rating, PlayerTeam, Color setzen
 
-		//Logging
-		playerLogging = this.gameObject.GetComponent<PlayerLogging> ();  //der PlayerLogger wird verknüpft
-		playerLogging.SetPlayerTeam (playerTeam);                        //dem playerLogging wird mitgeteilt, zu welchem Team sein Spieler gehört
+		}
 
-		positionTracker = gameObject.GetComponent<PositionTracker> ();
-		positionTracker.StartTracking (); //das Tracken der Position wird gestartet
 
-		audioSource = GetComponent<AudioSource> ();
-		soundBoing = Resources.Load<AudioClip> ("Sounds/boing");
 
-		pvGamestate.RPC ("RegisterPlayer", PhotonTargets.All, gameObject.name, playerTeam);
-		Debug.Log ("Register Player");
+
 
 	}
 
@@ -483,21 +476,7 @@ public class PlayerPhoton : MonoBehaviour
 
 	}
 
-	public void FindEnemyPlayer (GameObject enePlayer)
-	{
-		enemyPlayer = enePlayer;
-		playerLoggingEnemy = enemyPlayer.GetComponent<PlayerLogging> (); //das playerLogging-Skript des Gegners wird verknüpft, um die Betäubungen abzuspeichern.
-		subjectNrEnemy = enemyPlayer.GetComponent<PlayerPhoton> ().subjectNr;
-		ratingEnemy = enemyPlayer.GetComponent<PlayerPhoton> ().rating;
-	}
-
-	public void SetUpSpeechBubble ()
-	{
-		speechBubble = Instantiate (speechBubblePrefab);
-		speechBubble.GetComponent<FollowPlayer> ().SetFollowPlayer (this.gameObject);
-	}
-
-	public void SetPlayerInformation ()
+	public void StartPlayerRegistration ()
 	{
 		rating = PlayerPrefs.GetInt (subjectNr + "Rating");
 		subjectNr = PlayerPrefs.GetInt ("VP");
@@ -508,19 +487,49 @@ public class PlayerPhoton : MonoBehaviour
 			playerTeam = 1;
 		}
 		pvPlayer.RPC ("SetPlayerName", PhotonTargets.All, subjectNr);
-		CheckTeamColor ();   //zu Beginn bekommt der Spieler die richtige Farbe
+		pvPlayer.RPC ("CheckTeamColor", PhotonTargets.All, playerTeam);
+
+		pvGamestate.RPC ("RegisterPlayer", PhotonTargets.All, gameObject.name, playerTeam, subjectNr, rating);
+		Debug.Log ("Register Player");
 	}
+
+	[PunRPC]
+	public void SetPlayerInformation (string name)
+	{
+		enemyPlayer = GameObject.Find(name);
+		playerLoggingEnemy = enemyPlayer.GetComponent<PlayerLogging> (); //das playerLogging-Skript des Gegners wird verknüpft, um die Betäubungen abzuspeichern.
+		subjectNrEnemy = enemyPlayer.GetComponent<PlayerPhoton> ().subjectNr;
+		ratingEnemy = enemyPlayer.GetComponent<PlayerPhoton> ().rating;
+
+		//Logging
+		playerLogging = this.gameObject.GetComponent<PlayerLogging> ();  //der PlayerLogger wird verknüpft
+		playerLogging.SetPlayerTeam (playerTeam);                        //dem playerLogging wird mitgeteilt, zu welchem Team sein Spieler gehört
+
+		positionTracker = gameObject.GetComponent<PositionTracker> ();
+		positionTracker.StartTracking (); //das Tracken der Position wird gestartet
+
+		audioSource = GetComponent<AudioSource> ();
+		soundBoing = Resources.Load<AudioClip> ("Sounds/boing");
+		SetUpEmotes ();
+	}
+
+	public void SetUpSpeechBubble ()
+	{
+		speechBubble = Instantiate (speechBubblePrefab);
+		speechBubble.GetComponent<FollowPlayer> ().SetFollowPlayer (this.gameObject);
+	}
+
 
 	[PunRPC]
 	public void SetPlayerName (int vpNr){
 		gameObject.name = "VP" + vpNr; 
 	}
 
-
 	//die Methode überprüft die Teamzugehörigkeit und ändert die Farbe des Spielers dementsprechend
-	private void CheckTeamColor ()
+	[PunRPC]
+	private void CheckTeamColor (int teamNr)
 	{
-		switch (playerTeam) {
+		switch (teamNr) {
 		case 1: //Team 1 bekommt die rote Farbe
 			SetColor (Color.red);
 			break;

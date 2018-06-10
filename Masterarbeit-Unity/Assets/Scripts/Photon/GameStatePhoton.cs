@@ -55,13 +55,20 @@ public class GameStatePhoton : MonoBehaviour
 	//regelt, ob der Startbildschirm mit dem Countdown angezeigt werden soll
 
 	private string endingCondition;
+
+	//playerinformation
 	public GameObject player1;
 	public GameObject player2;
 	public PlayerPhoton player1Script;
 	public PlayerPhoton player2Script;
-
 	private PlayerLogging playerLoggingP1;
 	private PlayerLogging playerLoggingP2;
+	public int player1VP;
+	public int player2VP;
+	public int player1Rating;
+	public int player2Rating;
+
+
 	public GlobalTimer globalTimer;
 	//Audios
 	private AudioSource audioSource;
@@ -426,6 +433,7 @@ public class GameStatePhoton : MonoBehaviour
 
 	IEnumerator StartDepauseCountdown (int countdown)
 	{
+		
 		yield return new WaitForSeconds (1 * Time.timeScale);
 		BuildPauseScreen ("countdown");
 		for (int i = countdown; i > 0; i--) {
@@ -435,8 +443,12 @@ public class GameStatePhoton : MonoBehaviour
 		}
 
 		if (!gameStarted) {
-			player1.GetComponent<PlayerPhoton> ().FindEnemyPlayer (player2);
-			player2.GetComponent<PlayerPhoton> ().FindEnemyPlayer (player1);
+			player1.GetComponent<PhotonView> ().RPC ("SetPlayerInformation",PhotonTargets.All, player2.name);
+			playerLoggingP1 = player1.GetComponent<PlayerLogging> ();
+			player1Script = player1.GetComponent<PlayerPhoton> ();
+			player2.GetComponent<PhotonView> ().RPC ("SetPlayerInformation",PhotonTargets.All, player1.name);
+			playerLoggingP2 = player2.GetComponent<PlayerLogging> ();
+			player2Script = player2.GetComponent<PlayerPhoton> ();
 			gameStarted = true;
 		}
 		PlaySound (soundCountdownEnd, 0.5f);
@@ -595,22 +607,32 @@ public class GameStatePhoton : MonoBehaviour
 	}
 
 	[PunRPC]
-	public void RegisterPlayer(string name, int playerTeam){
+	public void RegisterPlayer(string name, int playerTeam, int subjNr, int ratin){
 		Debug.Log ("Register Player");
 		if (playerTeam == 1) {
 			player1 = GameObject.Find(name);
-			playerLoggingP1 = player1.GetComponent<PlayerLogging> ();
-			player1Script = player1.GetComponent<PlayerPhoton> ();
+			player1VP = subjNr;
+			player1Rating = ratin;
 			Debug.Log ("Player1 erkannt");
 
 
 		} else if (playerTeam == 2) {
 			player2 = GameObject.Find(name);
-			playerLoggingP2 = player2.GetComponent<PlayerLogging> ();
-			player2Script = player2.GetComponent<PlayerPhoton> ();
+			player2VP = subjNr;
+			player2Rating = ratin;
 			Debug.Log ("Player2 erkannt");
 			}
 
 	}
+
+
+	/*public void FindPlayer(){
+		GameObject[] playerList = GameObject.FindGameObjectsWithTag ("Player");
+		foreach(GameObject go in playerList) {
+			go.GetComponent<PlayerPhoton> (). ();
+		}
+	}
+	*/
+
 
 }

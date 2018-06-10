@@ -34,7 +34,6 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 			stream.SendNext (transform.rotation);
 			//stream.SendNext (playerScript.teamColor);
 
-
 		} else {
 
 			this.correctPlayerPos = (Vector3)stream.ReceiveNext ();
