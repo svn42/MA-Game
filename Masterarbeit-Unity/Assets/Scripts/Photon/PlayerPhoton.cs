@@ -89,6 +89,7 @@ public class PlayerPhoton : MonoBehaviour
 			
 		if (pvPlayer.isMine) {
 			StartPlayerRegistration ();	//VP, Rating, PlayerTeam, Color setzen
+			pvPlayer.RPC ("SetUpSpeechBubble",PhotonTargets.All) ;
 
 		}
 
@@ -101,7 +102,7 @@ public class PlayerPhoton : MonoBehaviour
 
 	public void SetUpEmotes ()
 	{
-		SetUpSpeechBubble ();
+			//SetUpSpeechBubble ();
 
 		emoteTimer = emoteDelay; //sorgt dafür, dass sofort ein Emote benutzt werden kann
 		speechbubbleRenderer = speechBubble.GetComponent<SpriteRenderer> ();
@@ -510,9 +511,12 @@ public class PlayerPhoton : MonoBehaviour
 
 		audioSource = GetComponent<AudioSource> ();
 		soundBoing = Resources.Load<AudioClip> ("Sounds/boing");
+
 		SetUpEmotes ();
+		
 	}
 
+	[PunRPC]
 	public void SetUpSpeechBubble ()
 	{
 		speechBubble = Instantiate (speechBubblePrefab);

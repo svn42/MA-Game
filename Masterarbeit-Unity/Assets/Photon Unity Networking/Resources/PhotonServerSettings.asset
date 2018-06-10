@@ -48,4 +48,5 @@ MonoBehaviour:
   - CheckTeamColor
   - FindEnemyPlayer
   - SetPlayerInformation
+  - SetUpSpeechBubble
   DisableAutoOpenWizard: 1
