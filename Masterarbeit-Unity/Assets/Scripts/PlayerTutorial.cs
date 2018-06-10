@@ -35,12 +35,19 @@ public class PlayerTutorial : MonoBehaviour
 
     private Color teamColor;    //Die Farbe des Spielers, die anhand der Teamzugehörigkeit ermittelt wird
 
+	public GameObject speechBubblePrefab;
     public GameObject speechBubble;
     private SpriteRenderer speechbubbleRenderer;
     private SpriteRenderer emojiRenderer;
     public float emoteTimer;
     public float emoteDelay;
     public float emoteDisplayTime;
+
+	public bool emoteNicePrepared;
+	public bool emoteHahaPrepared;
+	public bool emoteAngryPrepared;
+	public bool emoteCryPrepared;
+	public string preparedEmojiType;
 
     //Audios
     private AudioSource audioSource;
@@ -88,6 +95,7 @@ public class PlayerTutorial : MonoBehaviour
         CheckTeamColor();   //zu Beginn bekommt der Spieler die richtige Farbe
         blockSpawn.GetComponent<BlockSpawnerTutorial>().SetColor(teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
         shotSpawn.GetComponent<ShotSpawnerTutorial>().SetColor(teamColor);      //ShotSpawner bekannt gemacht
+		SetUpSpeechBubble();
 
         //Emotes
         emoteTimer = emoteDelay; //sorgt dafür, dass sofor ein Emote benutzt werden kann
@@ -102,7 +110,11 @@ public class PlayerTutorial : MonoBehaviour
         AddEmoteSounds();
     }
 
-
+	public void SetUpSpeechBubble ()
+	{
+		speechBubble = Instantiate (speechBubblePrefab);
+		speechBubble.GetComponent<FollowPlayer> ().SetFollowPlayer (this.gameObject);
+	}
     public void AddEmoteSounds()
     {
         AudioClip a;
@@ -271,22 +283,61 @@ public class PlayerTutorial : MonoBehaviour
         if (emotesEnabled)
         {
 
-            if (Input.GetButtonUp("LB" + playerAcronym) && emoteTimer > emoteDelay)
-            {
-                CastEmote("nice");
-            }
-            if (Input.GetButtonUp("RB" + playerAcronym) && emoteTimer > emoteDelay)
-            {
-                CastEmote("angry");
-            }
-            if (Input.GetAxis("RT" + playerAcronym) != 0 && emoteTimer > emoteDelay)
-            {
-                CastEmote("cry");
-            }
-            if (Input.GetAxis("LT" + playerAcronym) != 0 && emoteTimer > emoteDelay)
-            {
-                CastEmote("haha");
-            }
+
+			/*
+         * 
+        Emotes
+         * 
+         * */
+
+			//emote nice
+			if (Input.GetButtonUp ("LBP1") && emoteTimer > emoteDelay) {
+				StopCoroutine("DisplayPreparedEmote");
+				if (!emoteNicePrepared) {
+					preparedEmojiType = "nice";
+					StartCoroutine("DisplayPreparedEmote");
+					SetEmotePrepared ("nice", true);
+				} else if (emoteNicePrepared) {
+					SetEmotePrepared ("nice", false);
+					StartCoroutine (DisplayEmote("nice"));
+				}
+			}
+			//emote angry
+			if (Input.GetButtonUp ("RBP1") && emoteTimer > emoteDelay) {
+				StopCoroutine("DisplayPreparedEmote");
+				if (!emoteAngryPrepared) {
+					preparedEmojiType = "angry";
+					StartCoroutine("DisplayPreparedEmote");
+					SetEmotePrepared ("angry", true);
+				} else if (emoteAngryPrepared) {
+					SetEmotePrepared ("angry", false);
+					StartCoroutine (DisplayEmote("angry"));
+				}
+			}		
+			//emote cry
+			if (Input.GetAxis ("RTP1") != 0 && emoteTimer > emoteDelay) {
+				StopCoroutine("DisplayPreparedEmote");
+				if (!emoteCryPrepared) {
+					preparedEmojiType = "cry";
+					StartCoroutine("DisplayPreparedEmote");
+					SetEmotePrepared ("cry", true);
+				} else if (emoteCryPrepared) {
+					SetEmotePrepared ("cry", false);
+					StartCoroutine (DisplayEmote("cry"));
+				}
+			}
+
+			if (Input.GetAxis ("LTP1") != 0 && emoteTimer > emoteDelay) {
+				StopCoroutine("DisplayPreparedEmote");
+				if (!emoteHahaPrepared) {
+					preparedEmojiType = "haha";
+					StartCoroutine("DisplayPreparedEmote");
+					SetEmotePrepared ("haha", true);
+				} else if (emoteHahaPrepared) {
+					SetEmotePrepared ("haha", false);
+					StartCoroutine (DisplayEmote("haha"));
+				}
+			}
         }
     }
 
@@ -497,39 +548,76 @@ public class PlayerTutorial : MonoBehaviour
         shotTimer = i;
     }
 
-    //Methode fürs Benutzen der Emotes
-    public void CastEmote(string type)
-    {
-        int randomInt = Random.Range(0, 3);
-        switch (type)
-        {
-            case ("nice"):
-                PlaySound(soundsEmoteNice[randomInt], 0.1f);
-                break;
-            case ("haha"):
-                PlaySound(soundsEmoteHaha[randomInt], 0.1f);
-                break;
-            case ("cry"):
-                PlaySound(soundsEmoteCry[randomInt], 0.1f);
-                break;
-            case ("angry"):
-                PlaySound(soundsEmoteAngry[randomInt], 0.1f);
-                break;
-        }
-        StartCoroutine(DisplayEmote(type));
-        emoteTimer = 0;
-    }
+	IEnumerator DisplayPreparedEmote(){
 
-    IEnumerator DisplayEmote(string type)
-    {
-        emojiRenderer.sprite = Resources.Load<Sprite>("Textures/Emojis/" + type);
-        speechbubbleRenderer.enabled = true;
-        emojiRenderer.enabled = true;
-        yield return new WaitForSeconds(emoteDisplayTime);
-        speechbubbleRenderer.enabled = false;
-        emojiRenderer.enabled = false;
-    }
+		emojiRenderer.color = new Color (1, 1, 1, 0.60f);
+		speechbubbleRenderer.color = new Color (1, 1, 1, 0.40f);
+		emojiRenderer.sprite = Resources.Load<Sprite> ("Textures/Emojis/" + preparedEmojiType);
+		speechbubbleRenderer.enabled = true;
+		emojiRenderer.enabled = true;
+		yield return new WaitForSeconds (emoteDisplayTime);
+		SetEmotePrepared (preparedEmojiType, false);
 
+	}
+
+	public void SetEmotePrepared(string type, bool b){
+
+		emoteNicePrepared = false;
+		emoteHahaPrepared = false;
+		emoteAngryPrepared = false;
+		emoteCryPrepared = false;
+
+		switch (type) {
+		case "nice": 
+			emoteNicePrepared = b;
+			break;
+		case "haha": 
+			emoteHahaPrepared = b;
+			break;
+		case "angry": 
+			emoteAngryPrepared = b;
+			break;
+		case "cry": 
+			emoteCryPrepared = b;
+			break;
+
+		}
+
+		if (!b) {
+			speechbubbleRenderer.enabled = false;
+			emojiRenderer.enabled = false;
+
+		}
+
+	}
+
+	IEnumerator DisplayEmote (string type)
+	{
+		int randomInt = Random.Range (0, 3);
+		switch (type) {
+		case ("nice"):
+			PlaySound (soundsEmoteNice [randomInt], 0.1f);
+			break;
+		case ("haha"):
+			PlaySound (soundsEmoteHaha [randomInt], 0.1f);
+			break;
+		case ("cry"):
+			PlaySound (soundsEmoteCry [randomInt], 0.1f);
+			break;
+		case ("angry"):
+			PlaySound (soundsEmoteAngry [randomInt], 0.1f);
+			break;
+		}
+		emojiRenderer.color = new Color (1, 1, 1, 0.85f);
+		speechbubbleRenderer.color = new Color (1, 1, 1, 0.8f);
+
+		emojiRenderer.sprite = Resources.Load<Sprite> ("Textures/Emojis/" + type);
+		speechbubbleRenderer.enabled = true;
+		emojiRenderer.enabled = true;
+		yield return new WaitForSeconds (emoteDisplayTime);
+		speechbubbleRenderer.enabled = false;
+		emojiRenderer.enabled = false;
+	}
     private void PlaySound(AudioClip ac, float volume)
     {
         float lastTimeScale = Time.timeScale;
@@ -564,6 +652,13 @@ public class PlayerTutorial : MonoBehaviour
                     collidingWithStopAndGoZone = false;
                 }
                 break;
+			case "StunChallenge":
+			if (Mathf.Abs(speedX) <= 3 && Mathf.Abs(speedY) <= 3 && collidingWithStopAndGoZone)
+			{
+				gameObject.GetComponent<TutorialStunChallenge>().RemoveZone();
+				collidingWithStopAndGoZone = false;
+			}
+			break;
         }
     }
 

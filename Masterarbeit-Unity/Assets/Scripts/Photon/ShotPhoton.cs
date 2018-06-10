@@ -85,12 +85,12 @@ public class ShotPhoton : MonoBehaviour
         switch (collidingObject.tag)
         {
             case "Block":
-                collidingObject.GetComponent<Block>().ReduceHealth(strength);
+                collidingObject.GetComponent<BlockPhoton>().ReduceHealth(strength);
                 DestroyShot();
                 playerLogging.AddAccuracy("block");
                 break;
             case "Player":
-                if (collidingObject.GetComponent<Player>().playerTeam != playerTeam)   //wenn der Schuss den gegnerischen Spieler trifft
+                if (collidingObject.GetComponent<PlayerPhoton>().playerTeam != playerTeam)   //wenn der Schuss den gegnerischen Spieler trifft
                 {
                     // reference: https://answers.unity.com/questions/1100879/push-object-in-opposite-direction-of-collision.html
                     // calculate force vector

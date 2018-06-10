@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour {
 
-    private GameObject player;
+	private GameObject player;
 
 	// Use this for initialization
 	void Start () {

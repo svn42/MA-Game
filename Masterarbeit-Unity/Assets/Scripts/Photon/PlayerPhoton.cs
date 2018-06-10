@@ -66,6 +66,12 @@ public class PlayerPhoton : MonoBehaviour
 	public float emoteDelay;
 	public float emoteDisplayTime;
 
+	public bool emoteNicePrepared;
+	public bool emoteHahaPrepared;
+	public bool emoteAngryPrepared;
+	public bool emoteCryPrepared;
+	public string preparedEmojiType;
+
 	//Audios
 	private AudioSource audioSource;
 	private AudioClip soundBoing;
@@ -233,21 +239,53 @@ public class PlayerPhoton : MonoBehaviour
          * 
          * */
 
+		//emote nice
 		if (Input.GetButtonUp ("LBP1") && emoteTimer > emoteDelay) {
-			CastEmote ("nice");
+			StopCoroutine("DisplayPreparedEmote");
+			if (!emoteNicePrepared) {
+				preparedEmojiType = "nice";
+				StartCoroutine("DisplayPreparedEmote");
+				SetEmotePrepared ("nice", true);
+			} else if (emoteNicePrepared) {
+				SetEmotePrepared ("nice", false);
+				pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "nice");
+			}
 		}
+		//emote angry
 		if (Input.GetButtonUp ("RBP1") && emoteTimer > emoteDelay) {
-				CastEmote ("angry");
-
-		}
+			StopCoroutine("DisplayPreparedEmote");
+			if (!emoteAngryPrepared) {
+				preparedEmojiType = "angry";
+				StartCoroutine("DisplayPreparedEmote");
+				SetEmotePrepared ("angry", true);
+			} else if (emoteAngryPrepared) {
+				SetEmotePrepared ("angry", false);
+				pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "angry");
+			}
+		}		
+		//emote cry
 		if (Input.GetAxis ("RTP1") != 0 && emoteTimer > emoteDelay) {
-			CastEmote ("cry");
-		//	pvPlayer.RPC ("CastEmote", PhotonTargets.All, "cry");
-
+			StopCoroutine("DisplayPreparedEmote");
+			if (!emoteCryPrepared) {
+				preparedEmojiType = "cry";
+				StartCoroutine("DisplayPreparedEmote");
+				SetEmotePrepared ("cry", true);
+			} else if (emoteCryPrepared) {
+				SetEmotePrepared ("cry", false);
+				pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "cry");
+			}
 		}
+
 		if (Input.GetAxis ("LTP1") != 0 && emoteTimer > emoteDelay) {
-			CastEmote ("haha");
-		//	pvPlayer.RPC ("CastEmote", PhotonTargets.All, "haha");
+			StopCoroutine("DisplayPreparedEmote");
+			if (!emoteHahaPrepared) {
+				preparedEmojiType = "haha";
+				StartCoroutine("DisplayPreparedEmote");
+				SetEmotePrepared ("haha", true);
+			} else if (emoteHahaPrepared) {
+				SetEmotePrepared ("haha", false);
+				pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "haha");
+			}
 		}
 
 
@@ -261,6 +299,8 @@ public class PlayerPhoton : MonoBehaviour
 			pvGamestate.RPC ("SetGamePaused", PhotonTargets.All, true, "pause");
 		}
 	}
+
+
 
 	//Die Methode wird in jedem Update aufgerufen und regelt die Bewegung des Spielers
 	public void Move ()
@@ -430,17 +470,53 @@ public class PlayerPhoton : MonoBehaviour
 		shotTimer = i;
 	}
 
-	//Methode fürs Benutzen der Emotes
-	public void CastEmote (string type)
-	{
-		pvPlayer.RPC ( "StartDisplayEmoteCoroutine", PhotonTargets.All, type);
-		playerLogging.AddEmote (type);   //dem Logging wird die Art des Emotes mitgeteilt    
-		emoteTimer = 0;
-	}
-
 	[PunRPC]
 	public void StartDisplayEmoteCoroutine(string type){
+		SetEmotePrepared (type, false);
 		StartCoroutine (DisplayEmote(type));
+	}
+
+	IEnumerator DisplayPreparedEmote(){
+
+		emojiRenderer.color = new Color (1, 1, 1, 0.60f);
+		speechbubbleRenderer.color = new Color (1, 1, 1, 0.40f);
+		emojiRenderer.sprite = Resources.Load<Sprite> ("Textures/Emojis/" + preparedEmojiType);
+		speechbubbleRenderer.enabled = true;
+		emojiRenderer.enabled = true;
+		yield return new WaitForSeconds (emoteDisplayTime);
+		SetEmotePrepared (preparedEmojiType, false);
+	
+	}
+
+	public void SetEmotePrepared(string type, bool b){
+
+		emoteNicePrepared = false;
+		emoteHahaPrepared = false;
+		emoteAngryPrepared = false;
+		emoteCryPrepared = false;
+
+		switch (type) {
+		case "nice": 
+			emoteNicePrepared = b;
+			break;
+		case "haha": 
+			emoteHahaPrepared = b;
+			break;
+		case "angry": 
+			emoteAngryPrepared = b;
+			break;
+		case "cry": 
+			emoteCryPrepared = b;
+			break;
+
+		}
+
+		if (!b) {
+			speechbubbleRenderer.enabled = false;
+			emojiRenderer.enabled = false;
+
+		}
+
 	}
 
 	IEnumerator DisplayEmote (string type)
@@ -460,6 +536,9 @@ public class PlayerPhoton : MonoBehaviour
 			PlaySound (soundsEmoteAngry [randomInt], 0.1f);
 			break;
 		}
+		emojiRenderer.color = new Color (1, 1, 1, 0.85f);
+		speechbubbleRenderer.color = new Color (1, 1, 1, 0.8f);
+
 		emojiRenderer.sprite = Resources.Load<Sprite> ("Textures/Emojis/" + type);
 		speechbubbleRenderer.enabled = true;
 		emojiRenderer.enabled = true;
