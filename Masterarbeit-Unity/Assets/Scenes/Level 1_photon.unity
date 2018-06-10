@@ -254,7 +254,6 @@ MonoBehaviour:
   gameStarted: 0
   spawnPosition1: {fileID: 1604935432}
   spawnPosition2: {fileID: 1027373183}
-  alwaysLocal: 0
 --- !u!114 &40496160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6357,9 +6356,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1893410626}
-  - component: {fileID: 1893410627}
   - component: {fileID: 1893410628}
   - component: {fileID: 1893410629}
+  - component: {fileID: 1893410630}
   m_Layer: 0
   m_Name: Ball_Spawner
   m_TagString: Untagged
@@ -6381,25 +6380,6 @@ Transform:
   m_Father: {fileID: 1404040367}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1893410627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1893410625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9af5cbf874979c242a9cad42ca6aae49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  centerCircleBlocked: 0
-  spawnBlocked: 0
-  ballInflater: {fileID: 87548213}
-  ballPrefab: {fileID: 1243154274409858, guid: 520c5f0e330cc1045842f946757ba2ab, type: 2}
-  ballSpawnDelay: 3
-  ballInflaterMaxSize: {x: 0, y: 0, z: 0}
-  soundSpawnBall: {fileID: 0}
-  soundInflateBall: {fileID: 0}
 --- !u!58 &1893410628
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -6510,6 +6490,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1893410630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1893410625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e29d373bd5d5044dab35a9d4bfe4c20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerCircleBlocked: 0
+  spawnBlocked: 0
+  ballInflater: {fileID: 87548213}
+  ballPrefab: {fileID: 1243154274409858, guid: 42934ebc3ae06e24088c28a7f11e4d81, type: 2}
+  ballSpawnDelay: 3
+  ballInflaterMaxSize: {x: 0, y: 0, z: 0}
+  soundSpawnBall: {fileID: 0}
+  soundInflateBall: {fileID: 0}
 --- !u!1 &1897962619
 GameObject:
   m_ObjectHideFlags: 0

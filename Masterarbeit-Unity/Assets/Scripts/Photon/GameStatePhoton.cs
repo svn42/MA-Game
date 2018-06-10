@@ -88,12 +88,13 @@ public class GameStatePhoton : MonoBehaviour
 	private void Awake ()
 	{
 		photonView = gameObject.GetComponent<PhotonView> ();
+		PhotonNetwork.automaticallySyncScene = true;
+
+		SetUpGUI ();
+		SetUpAudio ();
 
 		gameType = PlayerPrefs.GetString ("GameType");
 
-
-		if (gameType.Equals ("Online")) {
-			PhotonNetwork.automaticallySyncScene = true;
 			if (PlayerPrefs.GetInt ("VP") % 2 == 1) {
 				PhotonNetwork.Instantiate ("PlayerPhoton", spawnPosition1.transform.position, spawnPosition1.transform.rotation, 0);
 
@@ -101,8 +102,6 @@ public class GameStatePhoton : MonoBehaviour
 				PhotonNetwork.Instantiate ("PlayerPhoton", spawnPosition2.transform.position, spawnPosition2.transform.rotation, 0);
 			}
 
-
-		} 
 	}
 
 	// Use this for initialization
@@ -117,45 +116,6 @@ public class GameStatePhoton : MonoBehaviour
 		timeLeft += 0.02f;
 
 		globalTimer = (GlobalTimer)FindObjectOfType (typeof(GlobalTimer));
-
-		gui = GameObject.FindGameObjectWithTag ("GUI");
-
-		popUp = gui.transform.Find ("PopUp").gameObject;
-		pauseScreenGO = gui.transform.Find ("PauseScreen").gameObject;
-		pauseScreen = pauseScreenGO.GetComponent<Canvas> ();
-		transparentScreen = pauseScreenGO.transform.Find ("TransparentScreen").gameObject;
-		topText = transparentScreen.transform.Find ("topText").GetComponent<Text> ();
-		middleText = transparentScreen.transform.Find ("middleText").GetComponent<Text> ();
-		observerText = transparentScreen.transform.Find ("observerText").GetComponent<Text> ();
-		helpText = transparentScreen.transform.Find ("helpText").GetComponent<Text> ();
-		player1Box = transparentScreen.transform.Find ("Spieler1").GetComponent<Canvas> ();
-		player2Box = transparentScreen.transform.Find ("Spieler2").GetComponent<Canvas> ();
-		greenCheckP1 = transparentScreen.transform.Find ("Spieler1").transform.Find ("Spieler1_Check").GetComponent<Image> ();
-		greenCheckP2 = transparentScreen.transform.Find ("Spieler2").transform.Find ("Spieler2_Check").GetComponent<Image> ();
-		musicPlayer = GameObject.FindGameObjectWithTag ("Music").GetComponent<AudioSource> ();
-
-		scoreTeam1 = gui.transform.Find ("UI_Spielstand").transform.Find ("Spielstand Team 1").transform.Find ("Score Team 1").GetComponent<Text> ();
-		scoreTeam2 = gui.transform.Find ("UI_Spielstand").transform.Find ("Spielstand Team 2").transform.Find ("Score Team 2").GetComponent<Text> ();
-		timer = gui.transform.Find ("UI_Spielstand").transform.Find ("Timer_Background").transform.Find ("Time").GetComponent<Text> ();
-
-		ratingTeam1 = gui.transform.Find ("PlayerInformation").transform.Find ("BackgroundRating1").transform.Find ("Rating Spieler 1").transform.Find ("Rating").GetComponent<Text> ();
-		ratingTeam2 = gui.transform.Find ("PlayerInformation").transform.Find ("BackgroundRating2").transform.Find ("Rating Spieler 2").transform.Find ("Rating").GetComponent<Text> ();
-		vpnTeam1 = gui.transform.Find ("PlayerInformation").transform.Find ("VP Spieler 1").transform.Find ("VP1").transform.Find ("VPN").GetComponent<Text> ();
-		vpnTeam2 = gui.transform.Find ("PlayerInformation").transform.Find ("VP Spieler 2").transform.Find ("VP2").transform.Find ("VPN").GetComponent<Text> ();
-
-
-
-
-
-		audioSource = GetComponent<AudioSource> ();
-		soundCountdownRegular = Resources.Load<AudioClip> ("Sounds/countdown_regular");
-		soundCountdownEnd = Resources.Load<AudioClip> ("Sounds/countdown_ending");
-		soundGoalHorn = Resources.Load<AudioClip> ("Sounds/goal_horn");
-		soundSlap = Resources.Load<AudioClip> ("Sounds/slap");
-		soundPlop = Resources.Load<AudioClip> ("Sounds/plop");
-		soundBallHit = Resources.Load<AudioClip> ("Sounds/ball_hit");
-		soundWhistle = Resources.Load<AudioClip> ("Sounds/whistle");
-		soundPopup = Resources.Load<AudioClip> ("Sounds/popup");
 
 		SetGoalCount ("Team1");
 		SetGoalCount ("Team2");
@@ -173,29 +133,47 @@ public class GameStatePhoton : MonoBehaviour
 		CheckPause ();
 	}
 
-	public void CheckPlayerCount ()
-	{
-		GameObject[] playerList = GameObject.FindGameObjectsWithTag ("Player");
+	public void SetUpGUI(){
+		gui = GameObject.FindGameObjectWithTag ("GUI");
 
-		if (playerList.Length == 2) {
+		popUp = gui.transform.Find ("PopUp").gameObject;
+		pauseScreenGO = gui.transform.Find ("PauseScreen").gameObject;
+		pauseScreen = pauseScreenGO.GetComponent<Canvas> ();
+		transparentScreen = pauseScreenGO.transform.Find ("TransparentScreen").gameObject;
+		topText = transparentScreen.transform.Find ("topText").GetComponent<Text> ();
+		middleText = transparentScreen.transform.Find ("middleText").GetComponent<Text> ();
+		observerText = transparentScreen.transform.Find ("observerText").GetComponent<Text> ();
+		helpText = transparentScreen.transform.Find ("helpText").GetComponent<Text> ();
+		player1Box = transparentScreen.transform.Find ("Spieler1").GetComponent<Canvas> ();
+		player2Box = transparentScreen.transform.Find ("Spieler2").GetComponent<Canvas> ();
+		greenCheckP1 = transparentScreen.transform.Find ("Spieler1").transform.Find ("Spieler1_Check").GetComponent<Image> ();
+		greenCheckP2 = transparentScreen.transform.Find ("Spieler2").transform.Find ("Spieler2_Check").GetComponent<Image> ();
 
-			for (int i = 0; i < playerList.Length; i++) {
-				if (playerList [i].GetComponent<PlayerPhoton> ().playerTeam == 1) {
-					player1 = playerList [i];
-				} else if (playerList [i].GetComponent<PlayerPhoton> ().playerTeam == 2) {
-					player2 = playerList [i];
-				}
-			}
-			playerLoggingP1 = player1.GetComponent<PlayerLogging> ();
-			playerLoggingP2 = player2.GetComponent<PlayerLogging> ();
-			player1Script = player1.GetComponent<PlayerPhoton> ();
-			player2Script = player2.GetComponent<PlayerPhoton> ();
+		scoreTeam1 = gui.transform.Find ("UI_Spielstand").transform.Find ("Spielstand Team 1").transform.Find ("Score Team 1").GetComponent<Text> ();
+		scoreTeam2 = gui.transform.Find ("UI_Spielstand").transform.Find ("Spielstand Team 2").transform.Find ("Score Team 2").GetComponent<Text> ();
+		timer = gui.transform.Find ("UI_Spielstand").transform.Find ("Timer_Background").transform.Find ("Time").GetComponent<Text> ();
 
-
-		}
+		ratingTeam1 = gui.transform.Find ("PlayerInformation").transform.Find ("BackgroundRating1").transform.Find ("Rating Spieler 1").transform.Find ("Rating").GetComponent<Text> ();
+		ratingTeam2 = gui.transform.Find ("PlayerInformation").transform.Find ("BackgroundRating2").transform.Find ("Rating Spieler 2").transform.Find ("Rating").GetComponent<Text> ();
+		vpnTeam1 = gui.transform.Find ("PlayerInformation").transform.Find ("VP Spieler 1").transform.Find ("VP1").transform.Find ("VPN").GetComponent<Text> ();
+		vpnTeam2 = gui.transform.Find ("PlayerInformation").transform.Find ("VP Spieler 2").transform.Find ("VP2").transform.Find ("VPN").GetComponent<Text> ();
 
 
 	}
+
+	public void SetUpAudio(){
+		audioSource = GetComponent<AudioSource> ();
+		musicPlayer = GameObject.FindGameObjectWithTag ("Music").GetComponent<AudioSource> ();
+		soundCountdownRegular = Resources.Load<AudioClip> ("Sounds/countdown_regular");
+		soundCountdownEnd = Resources.Load<AudioClip> ("Sounds/countdown_ending");
+		soundGoalHorn = Resources.Load<AudioClip> ("Sounds/goal_horn");
+		soundSlap = Resources.Load<AudioClip> ("Sounds/slap");
+		soundPlop = Resources.Load<AudioClip> ("Sounds/plop");
+		soundBallHit = Resources.Load<AudioClip> ("Sounds/ball_hit");
+		soundWhistle = Resources.Load<AudioClip> ("Sounds/whistle");
+		soundPopup = Resources.Load<AudioClip> ("Sounds/popup");
+	}
+
 
 	//Über diese Methode werden neue Bälle an die ballList übergeben
 	public void RegisterBallList (BallPhoton ball)
@@ -378,16 +356,7 @@ public class GameStatePhoton : MonoBehaviour
 
 
 				if (!playerHelp) {
-					/*   //überprüfe, ob die einzelnen Spieler bereit sind
-					if (Input.GetButtonUp("ShootP1"))
-					{
-						SetPlayerReady(true, 1);
-					}
-					else if (Input.GetButtonUp("ShootP2"))
-					{
-						SetPlayerReady(true, 2);
-					}
-					*/
+
 					if (player1Ready && player2Ready) {
 						if (!depauseCountdownStarted) {
 							StartCoroutine (StartDepauseCountdown (depauseCountdown));
@@ -397,15 +366,7 @@ public class GameStatePhoton : MonoBehaviour
 				}
 			} else if (levelEnded && nextLevelReady) {
 				if (!playerHelp) {
-					//überprüfe, ob die einzelnen Spieler bereit sind
-					/*    if (Input.GetButtonUp("ShootP1"))
-                    {
-                        SetPlayerReady(true, 1);
-                    }
-                    else if (Input.GetButtonUp("ShootP2"))
-                    {
-                        SetPlayerReady(true, 2);
-                    }*/
+
 					if (player1Ready && player2Ready) {
 							
 						if (gameType.Equals ("Online")) {
@@ -456,18 +417,6 @@ public class GameStatePhoton : MonoBehaviour
 		}
 	}
 
-	[PunRPC]
-	public void SetPlayerReady (bool b, int playerNr)
-	{
-		if (playerNr == 1) {
-			player1Ready = b;
-			greenCheckP1.enabled = b;
-		} else if (playerNr == 2) {
-			player2Ready = b;
-			greenCheckP2.enabled = b;
-		}
-	}
-
 	IEnumerator GoalFreeze ()
 	{
 		Time.timeScale = 0.1f;
@@ -485,9 +434,7 @@ public class GameStatePhoton : MonoBehaviour
 			yield return new WaitForSeconds (1 * Time.timeScale);
 		}
 
-
 		if (!gameStarted) {
-			CheckPlayerCount ();
 			player1.GetComponent<PlayerPhoton> ().FindEnemyPlayer (player2);
 			player2.GetComponent<PlayerPhoton> ().FindEnemyPlayer (player1);
 			gameStarted = true;
@@ -510,8 +457,6 @@ public class GameStatePhoton : MonoBehaviour
 		BuildPauseScreen ("endLevelReady");
 		nextLevelReady = true;
 	}
-
-
 
 	public void BuildPauseScreen (string screenType)
 	{
@@ -636,5 +581,36 @@ public class GameStatePhoton : MonoBehaviour
 
 	}
 
+	[PunRPC]
+	public void SetPlayerReady (bool b, int playerNr)
+	{
+
+		if (playerNr == 1) {
+			player1Ready = b;
+			greenCheckP1.enabled = b;
+		} else if (playerNr == 2) {
+			player2Ready = b;
+			greenCheckP2.enabled = b;
+		}
+	}
+
+	[PunRPC]
+	public void RegisterPlayer(string name, int playerTeam){
+		Debug.Log ("Register Player");
+		if (playerTeam == 1) {
+			player1 = GameObject.Find(name);
+			playerLoggingP1 = player1.GetComponent<PlayerLogging> ();
+			player1Script = player1.GetComponent<PlayerPhoton> ();
+			Debug.Log ("Player1 erkannt");
+
+
+		} else if (playerTeam == 2) {
+			player2 = GameObject.Find(name);
+			playerLoggingP2 = player2.GetComponent<PlayerLogging> ();
+			player2Script = player2.GetComponent<PlayerPhoton> ();
+			Debug.Log ("Player2 erkannt");
+			}
+
+	}
 
 }

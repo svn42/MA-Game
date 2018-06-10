@@ -7,13 +7,13 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 
 	private Vector3 correctPlayerPos;
 	private Quaternion correctPlayerRot;
-	private Player playerScript;
+	private PlayerPhoton playerScript;
 
 
 	// Use this for initialization
 	void Start () {
 	
-		playerScript = GetComponent<Player> ();
+		playerScript = GetComponent<PlayerPhoton> ();
 
 		if (photonView.isMine) {
 			playerScript.enabled = true;

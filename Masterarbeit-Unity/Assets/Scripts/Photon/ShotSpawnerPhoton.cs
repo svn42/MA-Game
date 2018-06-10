@@ -21,7 +21,7 @@ public class ShotSpawnerPhoton : MonoBehaviour
     private bool shotFired;
 
     public GameObject chargingShotSprite; //Sprite des charging-Shots (Child)
-    private Player player;
+    private PlayerPhoton player;
     private PlayerLogging playerLogging;
     private int playerTeam;
     public int shotCount = 0;
@@ -45,7 +45,7 @@ public class ShotSpawnerPhoton : MonoBehaviour
     void Start()
     {
         chargingShotSprite.transform.localScale = new Vector3(0f, 0f, 0f);  //und die Visualisierung des ChargingShots "unsichtbar" gemacht
-        player = transform.parent.GetComponent<Player>();
+		player = transform.parent.GetComponent<PlayerPhoton>();
         playerTeam = player.playerTeam;
         playerLogging = transform.parent.GetComponent<PlayerLogging>();
         //Audio

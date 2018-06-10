@@ -121,7 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4200608554275742}
   - component: {fileID: 212941565101977478}
-  - component: {fileID: 114202835746117058}
+  - component: {fileID: 114556246677119554}
   - component: {fileID: 50372362101184918}
   - component: {fileID: 114964997798165938}
   - component: {fileID: 60142329687107352}
@@ -713,7 +713,18 @@ MonoBehaviour:
   soundPlaceBlock: {fileID: 0}
   soundChargeBlock: {fileID: 0}
   soundPlacementBlocked: {fileID: 0}
---- !u!114 &114202835746117058
+--- !u!114 &114515794302295868
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1686076418383510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a0639e5ac27a74d9f65a6b4143a00e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114556246677119554
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -721,10 +732,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1686076418383510}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c30de17023f1c154caa3be679f085d55, type: 3}
+  m_Script: {fileID: 11500000, guid: ac9dae1442a85b0419d0fba477c0c76e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTeam: 1
+  playerTeam: 0
   subjectNr: 0
   subjectNrEnemy: 0
   rating: 0
@@ -741,8 +752,8 @@ MonoBehaviour:
   exSpawner: {fileID: 1530333346363798}
   exhaustTime: 0
   exhaustSpawnTime: 0.12
-  blockSpawn: {fileID: 0}
-  shotSpawn: {fileID: 0}
+  blockSpawn: {fileID: 114173050898372530}
+  shotSpawn: {fileID: 114843263745155262}
   shotDelay: 0.25
   shotTimer: 0
   teamColor: {r: 0, g: 0, b: 0, a: 0}
@@ -755,17 +766,6 @@ MonoBehaviour:
   soundsEmoteCry: []
   soundsEmoteHaha: []
   soundsEmoteAngry: []
---- !u!114 &114515794302295868
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1686076418383510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1a0639e5ac27a74d9f65a6b4143a00e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114737012354486050
 MonoBehaviour:
   m_ObjectHideFlags: 1
