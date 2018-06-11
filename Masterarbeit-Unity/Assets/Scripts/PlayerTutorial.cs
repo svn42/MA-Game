@@ -624,6 +624,10 @@ public class PlayerTutorial : MonoBehaviour
 		speechbubbleRenderer.color = new Color (1, 1, 1, 0.8f);
 
 		emojiRenderer.sprite = Resources.Load<Sprite> ("Textures/Emojis/" + type);
+		//Wenn das QuickChatTutorial geladen wurde, wird das gezeigte Emote an das Skript des Tutorials geschickt und dort überprüft, ob es mit dem notwendigen übereinstimmt
+		if (challengeType.Equals ("QuickChat")) {	
+			gameObject.GetComponent<TutorialQuickChatChallenge>().RemoveEmoji(type);
+		}
 		speechbubbleRenderer.enabled = true;
 		emojiRenderer.enabled = true;
 		yield return new WaitForSeconds (emoteDisplayTime);

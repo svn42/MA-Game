@@ -62,6 +62,7 @@ public class TutorialGameState : MonoBehaviour
     public GameObject player1;
     public string tutorialFinishedText1;
     public string tutorialFinishedText2;
+	public string pauseScreenText;
     public GameObject videoPlayer;
 
     public bool inverseTime;
@@ -82,7 +83,7 @@ public class TutorialGameState : MonoBehaviour
         vpNummer = PlayerPrefs.GetInt("VP");
         rating = 0;
 
-        timer = gui.transform.Find("UI_Spielstand").transform.Find("Timer_Background").transform.Find("Time").GetComponent<Text>();
+		timer = gui.transform.Find("UI_Spielstand").transform.Find("Timer_BackgroundDark").transform.Find("Time").GetComponent<Text>();
 
         pauseScreenGO = gui.transform.Find("PauseScreen").gameObject;
         pauseScreen = pauseScreenGO.GetComponent<Canvas>();
@@ -421,8 +422,9 @@ public class TutorialGameState : MonoBehaviour
                 player1Box.enabled = true;
                 topText.text = "Pause";
                 topText.fontSize = 100;
-                middleText.text = "";
-                break;
+				middleText.text = pauseScreenText;
+				middleText.fontSize = 30;
+			                break;
             case "start":
                 //   helpText.enabled = true;
                 startScreen.transform.Find("ReadyText").GetComponent<Text>().enabled = false;
@@ -447,7 +449,8 @@ public class TutorialGameState : MonoBehaviour
                 transparentScreen.GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.95f);
                 player1Box.enabled = false;
                 topText.fontSize = 80;
-                topText.text = tutorialFinishedText1;
+				middleText.fontSize = 40;
+				topText.text = tutorialFinishedText1;
                 middleText.text = tutorialFinishedText2;
                 if (showRatingChange)
                 {
@@ -461,7 +464,8 @@ public class TutorialGameState : MonoBehaviour
                 transparentScreen.GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.95f);
                 player1Box.enabled = true;
                 topText.text = tutorialFinishedText1;
-                middleText.text = tutorialFinishedText2;
+				middleText.fontSize = 40;
+				middleText.text = tutorialFinishedText2;
                 topText.fontSize = 80;
                 if (showRatingChange)
                 {
@@ -510,7 +514,7 @@ public class TutorialGameState : MonoBehaviour
 
     }
 
-    public void EndChallenge(int challengeRating)
+	public void EndChallenge(int challengeRating)
     {
         PlaySound(soundWhistle, 0.4f);
         rating = challengeRating;

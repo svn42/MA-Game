@@ -104,7 +104,7 @@ public class ShotTutorial : MonoBehaviour
 			break;
 		case "Boundary":
 			DestroyShot();
-			tutorialGameState.PlaySound("soundSlap", 0.05f);
+			tutorialGameState.PlaySound("soundSlap", 0.15f);
 			if (playerTeam != 55)
 			{
 				tutorialLogging.AddAccuracy("destroy");
@@ -113,7 +113,7 @@ public class ShotTutorial : MonoBehaviour
 		case "Shot":
 			if (collidingObject.GetComponent<ShotTutorial>().GetPlayerTeam() != playerTeam)
 			{
-				tutorialGameState.PlaySound("soundSlap", 0.05f);
+				tutorialGameState.PlaySound("soundSlap", 0.15f);
 
 				if (strength < collidingObject.GetComponent<ShotTutorial>().strength)
 				{
