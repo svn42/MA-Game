@@ -47,6 +47,12 @@ public class BlockSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		Debug.Log ("collidingobjects: "+collidingObjects.Count.ToString());
+		if (collidingObjects.Count == 0)
+		{
+			SetBlockTransparency(1, spawnColor);  //wird die Transparenz richtig berechnet
+			spawnable = true;   //und der spawner freigegeben
+		}
 
     }
 
@@ -56,7 +62,9 @@ public class BlockSpawner : MonoBehaviour
         //sofern das andere Objekt eine Bande, ein anderer Block, ein Ball oder der andere Spieler ist
         if (other.gameObject.tag.Equals("Boundary") || other.gameObject.tag.Equals("Block") || other.gameObject.tag.Equals("Ball") || other.gameObject.tag.Equals("Player"))
         {
-            collidingObjects.Add(other.gameObject); //wird es in die Liste der kollidierenden Objekte aufgenommen
+			if (!collidingObjects.Contains(other.gameObject)){
+			collidingObjects.Add(other.gameObject); //wird es in die Liste der kollidierenden Objekte aufgenommen
+			}
 
             spawnable = false;                  //wird der Spawner blockiert
             if (blockChargeTime > 0)
@@ -71,7 +79,7 @@ public class BlockSpawner : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         //sofern das andere Objekt eine Bande, ein anderer Block, ein Ball oder der andere Spieler ist
-        if (other.gameObject.tag.Equals("Boundary") || other.gameObject.tag.Equals("Block") || other.gameObject.tag.Equals("Ball") || other.gameObject.tag.Equals("Player")) 
+		if (other.gameObject.tag.Equals("Boundary") || other.gameObject.tag.Equals("Block") || other.gameObject.tag.Equals("Ball") || other.gameObject.tag.Equals("Player")) 
         {
             collidingObjects.Remove(other.gameObject);  //wird es aus der Liste entfernt
         }
@@ -81,7 +89,14 @@ public class BlockSpawner : MonoBehaviour
             SetBlockTransparency(1, spawnColor);  //wird die Transparenz richtig berechnet
             spawnable = true;   //und der spawner freigegeben
         }
-    }
+    } 
+
+	public void RemoveObject(string name){
+		GameObject go = GameObject.Find (name);
+		if (collidingObjects.Contains (go)) {
+			collidingObjects.Remove (go);
+		}
+	}
 
     //In der Methode wird die Transparenz des Blocks gesetzt. Übergeben wird ein Zeit Argument in fps
     public void SetBlockTransparency(float transparency, Color col)
@@ -129,7 +144,6 @@ public class BlockSpawner : MonoBehaviour
                 blockChargeTime = spawnTimer;
                 SetSpawnerSize(blockChargeTime);
 
-                //TODO: An die Farbe des Spielers anpassen
                 blockSpawnSprite.GetComponent<SpriteRenderer>().color = blockColor;    //wird der BlockSpawner in der Farbe des Spielers eingefärbt.
             }
             else if (!spawnable)     //wenn das Ziel erreicht wurde und kollidiert
@@ -145,7 +159,6 @@ public class BlockSpawner : MonoBehaviour
         blockChargeTime = 0;    //die Zeit des Aufladens wird zurückgesetzt
         SetSpawnerSize(blockChargeTime);  //ebenfalls die Größe des Spawners 
         SetBlockTransparency(0, spawnColor);
-        collidingObjects = new List<GameObject>();
         GetComponent<SpriteRenderer>().enabled = false; //und der Rahmen ausgeblendet
     }
 

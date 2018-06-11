@@ -54,13 +54,21 @@ public class BlockPhoton : MonoBehaviour
 
     }
 
-    public void DestroyBlock()
-    {
-        GameObject go = Instantiate(blockDestructionPrefab, transform.position, transform.rotation);  //Die Zerstörungsanimation des Shots wird  instanziiert
+	public void DestroyBlock()
+	{
+		GameObject go = Instantiate(blockDestructionPrefab, transform.position, transform.rotation);  //Die Zerstörungsanimation des Shots wird  instanziiert
 		go.GetComponent<BlockDestruction>().SetColor(spriteRenderer.color);
-        Destroy(gameObject);
-    }
+		DeleteFromBlockSpawnCollider (gameObject.name);
+		Destroy(gameObject);
+	}
 
+	//löscht den Block aus den Blockspawner Collider Listen
+	public void DeleteFromBlockSpawnCollider(string name){
+		BlockSpawnerPhoton[] blockspawner = GameObject.FindObjectsOfType<BlockSpawnerPhoton>();
+		foreach (BlockSpawnerPhoton bs in blockspawner) {
+			bs.RemoveObject (name);
+		}
+	}
     public void SetColor(Color col)
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();

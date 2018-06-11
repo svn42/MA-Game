@@ -2913,9 +2913,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Teste im Folgenden den Quickchat. \nMache die Emojis nach, die oben rechts
-    angezeigt werden!\n\nZur Info: \nAuf der linken Seite sind eher positive Emojis
-    und auf der rechten Seite eher negative."
+  m_Text: "Nun kannst du den Quickchat selbst testen.\nMache die Emojis nach, die
+    oben rechts angezeigt werden!\n\nZur Info: \nAuf der linken Seite sind eher positive
+    Emojis und auf der rechten Seite eher negative."
 --- !u!222 &1110715079
 CanvasRenderer:
   m_ObjectHideFlags: 0

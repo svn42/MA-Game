@@ -82,6 +82,13 @@ public class BlockSpawnerTutorial : MonoBehaviour
         }
     }
 
+	public void RemoveObject(string name){
+		GameObject go = GameObject.Find (name);
+		if (collidingObjects.Contains (go)) {
+			collidingObjects.Remove (go);
+		}
+	}
+
     //In der Methode wird die Transparenz des Blocks gesetzt. Übergeben wird ein Zeit Argument in fps
     public void SetBlockTransparency(float transparency, Color col)
     {
@@ -146,7 +153,6 @@ public class BlockSpawnerTutorial : MonoBehaviour
         blockChargeTime = 0;    //die Zeit des Aufladens wird zurückgesetzt
         SetSpawnerSize(blockChargeTime);  //ebenfalls die Größe des Spawners 
         SetBlockTransparency(0, spawnColor);
-        collidingObjects = new List<GameObject>();
         GetComponent<SpriteRenderer>().enabled = false; //und der Rahmen ausgeblendet
     }
 

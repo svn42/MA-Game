@@ -58,8 +58,18 @@ public class Block : MonoBehaviour
     {
         GameObject go = Instantiate(blockDestructionPrefab, transform.position, transform.rotation);  //Die Zerstörungsanimation des Shots wird  instanziiert
 		go.GetComponent<BlockDestruction>().SetColor(spriteRenderer.color);
-        Destroy(gameObject);
+		DeleteFromBlockSpawnCollider (gameObject.name);
+		Destroy(gameObject);
     }
+
+	//löscht den Block aus den Blockspawner Collider Listen
+	public void DeleteFromBlockSpawnCollider(string name){
+		BlockSpawner[] blockspawner = GameObject.FindObjectsOfType<BlockSpawner>();
+		foreach (BlockSpawner bs in blockspawner) {
+			Debug.Log ("Remove Block");
+			bs.RemoveObject (name);
+		}
+	}
 
     public void SetColor(Color col)
     {

@@ -53,12 +53,22 @@ public class BlockTutorial : MonoBehaviour
 
     }
 
-    public void DestroyBlock()
-    {
-        GameObject go = Instantiate(blockDestructionPrefab, transform.position, transform.rotation);  //Die Zerstörungsanimation des Shots wird  instanziiert
-        go.GetComponent<BlockDestruction>().SetColor(spriteRenderer.color);
-        Destroy(gameObject);
-    }
+	public void DestroyBlock()
+	{
+		GameObject go = Instantiate(blockDestructionPrefab, transform.position, transform.rotation);  //Die Zerstörungsanimation des Shots wird  instanziiert
+		go.GetComponent<BlockDestruction>().SetColor(spriteRenderer.color);
+		DeleteFromBlockSpawnCollider (gameObject.name);
+		Destroy(gameObject);
+	}
+
+	//löscht den Block aus den Blockspawner Collider Listen
+	public void DeleteFromBlockSpawnCollider(string name){
+		BlockSpawnerTutorial[] blockspawner = GameObject.FindObjectsOfType<BlockSpawnerTutorial>();
+		foreach (BlockSpawnerTutorial bs in blockspawner) {
+			Debug.Log ("Remove Block");
+			bs.RemoveObject (name);
+		}
+	}
 
     public void SetColor(Color col)
     {
