@@ -3052,13 +3052,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emojis:
   - {fileID: 21300000, guid: 57dd94e7d7953384891965826599ea2d, type: 3}
-  - {fileID: 21300000, guid: 499024568c55aa44dac3de06cb9d887e, type: 3}
-  - {fileID: 21300000, guid: a8f58d5d1c739e24eb72900115c43846, type: 3}
   - {fileID: 21300000, guid: 1067cb384c1556f4f86f392e970c35f1, type: 3}
   - {fileID: 21300000, guid: a8f58d5d1c739e24eb72900115c43846, type: 3}
+  - {fileID: 21300000, guid: 1067cb384c1556f4f86f392e970c35f1, type: 3}
+  - {fileID: 21300000, guid: 499024568c55aa44dac3de06cb9d887e, type: 3}
   - {fileID: 21300000, guid: 57dd94e7d7953384891965826599ea2d, type: 3}
-  - {fileID: 21300000, guid: 499024568c55aa44dac3de06cb9d887e, type: 3}
-  - {fileID: 21300000, guid: 1067cb384c1556f4f86f392e970c35f1, type: 3}
   speechbubble: {fileID: 1803658906}
 --- !u!1 &1128479472
 GameObject:
@@ -4842,7 +4840,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4047943351724692, guid: 76d6a0e87fd6d0847832da4a5932ae12, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.1
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 4047943351724692, guid: 76d6a0e87fd6d0847832da4a5932ae12, type: 2}
       propertyPath: m_LocalRotation.x
@@ -4930,7 +4928,8 @@ Prefab:
       propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114416132919949586, guid: 76d6a0e87fd6d0847832da4a5932ae12, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 76d6a0e87fd6d0847832da4a5932ae12, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1803658906 stripped

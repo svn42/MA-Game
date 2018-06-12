@@ -61,7 +61,7 @@ public class ShotSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+		
     }
 
     //Die Methode wird beim Festhalten des A-Buttons in jedem Frame aufgerufen und erhöht die soundShotChargeTime.

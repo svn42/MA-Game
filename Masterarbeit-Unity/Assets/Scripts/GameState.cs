@@ -334,8 +334,10 @@ public class GameState : MonoBehaviour
 		}
 		//sofern das Spiel pausiert wird
 		if (gamePaused && !depauseCountdownStarted) {
-
-			if (Input.GetButtonUp ("Help")) {
+			if (Input.GetKeyUp (KeyCode.H)) {
+				SceneManager.LoadScene ("MainMenu");
+			}
+		/*	if (Input.GetButtonUp ("Help")) {
 				playerHelp = true;
 				observerText.enabled = true;
 				observerText.text = "Gib dem Versuchsleiter Bescheid, \nwenn du mit ihm im selben Raum sitzt.";
@@ -348,6 +350,7 @@ public class GameState : MonoBehaviour
 					observerText.color = Color.green;
 				}
 			}
+			*/
 			if (!levelEnded) {
 
 

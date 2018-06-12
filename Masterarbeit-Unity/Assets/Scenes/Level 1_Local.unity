@@ -1585,7 +1585,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "M\xF6chtest du den Versuchsleiter kontaktieren? Dr\xFCcke Y!"
+  m_Text: "Dr\xFCcke H, um ins Hauptmen\xFC zur\xFCckzukehren!"
 --- !u!222 &538488356
 CanvasRenderer:
   m_ObjectHideFlags: 0
