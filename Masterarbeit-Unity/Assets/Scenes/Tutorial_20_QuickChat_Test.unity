@@ -1883,13 +1883,12 @@ MonoBehaviour:
   musicPlayer: {fileID: 0}
   player1: {fileID: 1125116394}
   tutorialFinishedText1: Gar nicht so kompliziert, oder?
-  tutorialFinishedText2: "Mit dem Quickchat gibt es eine einfache M\xF6glichkeit mit
-    deinem Gegenspieler zu kommunizieren, ohne dass du zu stark vom Spielgeschehen
+  tutorialFinishedText2: "Mit dem Quickchat gibt es eine einfache M\xF6glichkeit,
+    mit deinem Gegenspieler zu kommunizieren, ohne dass du zu stark vom Spielgeschehen
     abgelenkt wirst."
   pauseScreenText: 'Mache die Emojis nach, die oben rechts angezeigt werden!  Zur
     Info:  Auf der linken Seite sind eher positive Emojis und auf der rechten Seite
     eher negative.'
-  videoPlayer: {fileID: 0}
   inverseTime: 0
   showRatingChange: 0
   challengeType: QuickChat
