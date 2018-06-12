@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial_2.4.unity
     guid: 5d51d881e63c58f40a9142f196834eba
   - enabled: 1
-    path: Assets/Scenes/Tutorial_3_Bewegung_Intro.unity
+    path: Assets/Scenes/Tutorial_3_Bewegung_Test.unity
     guid: 140094a4d4b56654bbb1482a3f8f3749
   - enabled: 1
     path: Assets/Scenes/Tutorial_4_Bewegung_Uebung.unity
@@ -36,8 +36,29 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial_6_Stun_Uebung.unity
     guid: 59b6c737e505b984a9ccda8438c18b30
   - enabled: 1
-    path: Assets/Scenes/Tutorial_18_QuickChat.unity
-    guid: 32c2e56e8cf802e4a9f32a0bdb4dc3ad
+    path: Assets/Scenes/Tutorial_7_Shot_Intro.unity
+    guid: cdf79efa7e6bec74ca92d8cf650d762f
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_8_Shot_Test.unity
+    guid: 2943982852b6f3e43a4081b87c02d50f
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_11_Block_Intro.unity
+    guid: fe444a794cd6ca540b725e93973eb161
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_12_Block_Test.unity
+    guid: 3ab399c6f82597040aab5bdd254738d1
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_13_BlockPlacement_Uebung.unity
+    guid: 39c33cd5144cdab41a31843fd80125a4
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_14_BlockDestroy_Uebung.unity
+    guid: 9feb2d46f074be840904f3906ed096bb
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_19_QuickChat_Intro.unity
+    guid: 20ec551e207dd6845a1b04ff594edc1c
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_20_QuickChat_Test.unity
+    guid: 5131c8c53c4760b4ea4539c39fc5d998
   - enabled: 1
     path: Assets/Scenes/TutorialEnd.unity
     guid: d454f677c7a1ad84789ff4ac55394a5e

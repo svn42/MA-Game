@@ -47,7 +47,6 @@ public class BlockSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		Debug.Log ("collidingobjects: "+collidingObjects.Count.ToString());
 		if (collidingObjects.Count == 0)
 		{
 			SetBlockTransparency(1, spawnColor);  //wird die Transparenz richtig berechnet

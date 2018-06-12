@@ -44,7 +44,6 @@ public class TutorialQuickChatChallenge : MonoBehaviour
 				StartCoroutine (EndChallenge());
 			}
 		}
-
 	}
 
 	IEnumerator EndChallenge(){

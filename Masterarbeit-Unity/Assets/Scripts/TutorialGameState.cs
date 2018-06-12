@@ -63,7 +63,7 @@ public class TutorialGameState : MonoBehaviour
     public string tutorialFinishedText1;
     public string tutorialFinishedText2;
 	public string pauseScreenText;
-    public GameObject videoPlayer;
+   // public GameObject videoPlayer;
 
     public bool inverseTime;
     public bool showRatingChange;
@@ -374,10 +374,10 @@ public class TutorialGameState : MonoBehaviour
     {
         yield return new WaitForSeconds(1 * Time.timeScale);
         startScreen.GetComponent<Canvas>().enabled = false;
-        if (videoPlayer != null)
-        {
-            videoPlayer.SetActive(false);
-        }
+    //    if (videoPlayer != null)
+      //  {
+        //    videoPlayer.SetActive(false);
+        //}
         BuildPauseScreen("countdown");
         for (int i = countdown; i > 0; i--)
         {

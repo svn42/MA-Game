@@ -66,7 +66,6 @@ public class Block : MonoBehaviour
 	public void DeleteFromBlockSpawnCollider(string name){
 		BlockSpawner[] blockspawner = GameObject.FindObjectsOfType<BlockSpawner>();
 		foreach (BlockSpawner bs in blockspawner) {
-			Debug.Log ("Remove Block");
 			bs.RemoveObject (name);
 		}
 	}

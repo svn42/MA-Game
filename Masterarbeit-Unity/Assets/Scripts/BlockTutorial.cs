@@ -15,6 +15,7 @@ public class BlockTutorial : MonoBehaviour
     private TutorialGameState tutorialGameState;
 	private SpriteRenderer spriteRenderer;
     public GameObject blockDestructionPrefab;
+	public TutorialBlockDestroyChallenge tbdc;
 
     // Use this for initialization
     void Start()
@@ -58,14 +59,22 @@ public class BlockTutorial : MonoBehaviour
 		GameObject go = Instantiate(blockDestructionPrefab, transform.position, transform.rotation);  //Die Zerstörungsanimation des Shots wird  instanziiert
 		go.GetComponent<BlockDestruction>().SetColor(spriteRenderer.color);
 		DeleteFromBlockSpawnCollider (gameObject.name);
+
+		//bei der BlockDestroy Challenge wird der zerstörte Block aus der Liste gelöscht
+		if (tutorialGameState.challengeType.Equals ("BlockDestroy")) {
+			tbdc = GameObject.FindObjectOfType<TutorialBlockDestroyChallenge> ();
+			tbdc.RemoveBlock (gameObject);
+		}
+
 		Destroy(gameObject);
+
+
 	}
 
 	//löscht den Block aus den Blockspawner Collider Listen
 	public void DeleteFromBlockSpawnCollider(string name){
 		BlockSpawnerTutorial[] blockspawner = GameObject.FindObjectsOfType<BlockSpawnerTutorial>();
 		foreach (BlockSpawnerTutorial bs in blockspawner) {
-			Debug.Log ("Remove Block");
 			bs.RemoveObject (name);
 		}
 	}

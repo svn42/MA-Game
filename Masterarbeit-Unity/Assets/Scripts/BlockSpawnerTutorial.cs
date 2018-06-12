@@ -169,8 +169,13 @@ public class BlockSpawnerTutorial : MonoBehaviour
             block.GetComponent<BlockTutorial>().SetPlayerTeam(playerTeam);
             block.GetComponent<BlockTutorial>().SetBlockID(blockCount);
             PlaySound(soundPlaceBlock, 0.8f);
-
+			
             block.name = "Block_" + blockCount + "_Player_" + playerTeam;
+
+			if (player.challengeType.Equals ("BlockTest")) {
+				TutorialBlockTest ttbt = GameObject.FindObjectOfType<TutorialBlockTest> ();
+				ttbt.AddPlacedBlock ();
+			}
 
         }
         else if (blockChargeTime == spawnTimer && !spawnable)

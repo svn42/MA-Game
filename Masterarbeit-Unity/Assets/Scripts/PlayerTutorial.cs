@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerTutorial : MonoBehaviour
 {
-
+	public float deadzone;
     [Range(1, 2)]
     public int playerTeam;    //Teamzugehörigkeit (1 oder 2)
     string playerAcronym;
@@ -210,32 +210,34 @@ public class PlayerTutorial : MonoBehaviour
 
     public void CheckInput()
     {
-
-        //sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
-        if ((Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.1f))
-        {
-            //wird die Accelerate-Methode mit dem Argument X aufgerufen
-            Accelerate("X");
-        }
+	//	Vector2 stickInput = new Vector2(Input.GetAxis("Horizontal"+ playerAcronym), Input.GetAxis("Vertical"+ playerAcronym));
+	//	if (stickInput.magnitude > deadzone) {
+			//sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
+			if ((Mathf.Abs (Input.GetAxis ("Horizontal" + playerAcronym)) > 0.05f)) {
+				//wird die Accelerate-Methode mit dem Argument X aufgerufen
+				Accelerate ("X");
+			}
+	//	}
         else
         {
             //ansonsten wird die Brake-Methode mit dem Argument X verwendet
             Brake("X");
         }
 
-
-        //das gleiche geschieht mit der Vertikalen Achse (hoch oder runter Pfeiltaste sowie W und S)
-        if ((Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.1f))
-        {
-            Accelerate("Y");
-        }
+	//	if (stickInput.magnitude > deadzone) {
+			
+			//das gleiche geschieht mit der Vertikalen Achse (hoch oder runter Pfeiltaste sowie W und S)
+			if ((Mathf.Abs (Input.GetAxis ("Vertical" + playerAcronym)) > 0.1f)) {
+				Accelerate ("Y");
+			}
+	//	}
         else
         {
             Brake("Y");
         }
 
         //die BewegungsZeit wird erhöht, sofern mindestens eine der beiden Achsen eine Bewegung zurückliefern
-        if ((Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.1f) || Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.1f)
+		if ((Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.1f) || Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.1f)
         {
             exhaustTime += Time.deltaTime;
         }
@@ -363,21 +365,27 @@ public class PlayerTutorial : MonoBehaviour
             //der Spieler bewegt sich dann mit Hilfe deses Vektors auf dem Spielfeld. Die Bewegung ist immer relativ zur Spielwelt 
             transform.Translate(movementVector * Time.deltaTime, Space.World);
 
-            
-
         }
 
         if (rotatingEnabled)
         {
+		/*	Vector2 stickInput = new Vector2(Input.GetAxis("Horizontal"+ playerAcronym), Input.GetAxis("Vertical"+ playerAcronym));
+			if (stickInput.magnitude > deadzone) {
+				float stickInputHorizontal = Input.GetAxis ("Horizontal" + playerAcronym) * -1;
+				float stickInputVertical = Input.GetAxis ("Vertical" + playerAcronym);
+				stickInput = new Vector2 (stickInputHorizontal, stickInputVertical);
+				stickInput = stickInput.normalized * ((stickInput.magnitude - deadzone) / (1 - deadzone));
 
-            //reference: https://answers.unity.com/questions/307150/rotate-an-object-toward-the-direction-the-joystick.html
-            float yEuler = Mathf.Atan2(Input.GetAxis("Horizontal" + playerAcronym) * -1, Input.GetAxis("Vertical" + playerAcronym)) * Mathf.Rad2Deg; //Horizontal *1
-            yEuler -= 270;   //Korrektur durch das gedrehte Sprite
-            Vector3 direction = new Vector3(0, 0, yEuler);
-            if (Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.1f || Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.1f)   //Damit die Richtung nicht durch die "Nullstellung" des Sticks genullt wird
-            {
-                transform.eulerAngles = direction;
-            }
+				float yEuler = Mathf.Atan2 (stickInput.x, stickInput.y) * Mathf.Rad2Deg; //Horizontal *1
+		*/		
+				//reference: https://answers.unity.com/questions/307150/rotate-an-object-toward-the-direction-the-joystick.html
+				float yEuler = Mathf.Atan2 (Input.GetAxis ("Horizontal" + playerAcronym) * -1, Input.GetAxis ("Vertical" + playerAcronym)) * Mathf.Rad2Deg; //Horizontal *1
+				yEuler -= 270;   //Korrektur durch das gedrehte Sprite
+				Vector3 direction = new Vector3 (0, 0, yEuler);
+				if (Mathf.Abs (Input.GetAxis ("Horizontal" + playerAcronym)) > 0.1f || Mathf.Abs (Input.GetAxis ("Vertical" + playerAcronym)) > 0.1f) {   //Damit die Richtung nicht durch die "Nullstellung" des Sticks genullt wird
+					transform.eulerAngles = direction;
+				}
+		//	}
         }
     }
 
@@ -656,6 +664,7 @@ public class PlayerTutorial : MonoBehaviour
     {
         collidingWithStopAndGoZone = b;
     }
+
 
    private void CheckChallenge(string type)
     {

@@ -38,8 +38,8 @@ public class ShotSpawnerTutorial : MonoBehaviour
     public AudioClip soundShotAbort;
     private bool shotAborted;
     public bool shotBlinkEffectStarted;
-    private TutorialLogging tutorialLogging;
-
+	 private TutorialLogging tutorialLogging;
+	public TutorialShotTest tst;
 
     // Use this for initialization
     void Start()
@@ -55,7 +55,6 @@ public class ShotSpawnerTutorial : MonoBehaviour
         soundShotCharge = Resources.Load<AudioClip>("Sounds/shot_charge");
         soundShotAbort = Resources.Load<AudioClip>("Sounds/shot_abort");
         tutorialLogging = transform.parent.GetComponent<TutorialLogging>();
-
     }
 
     // Update is called once per frame
@@ -147,6 +146,9 @@ public class ShotSpawnerTutorial : MonoBehaviour
     //die Methode wird aufgerufen, sofern der A-Button losgelassen wird 
     public void SpawnShot()
     {
+		if (player.challengeType.Equals ("ShotTest")) {
+			tst = GameObject.FindObjectOfType<TutorialShotTest> ();
+		}
         //wenn das Ziel erreicht wurde und der ShotSpawner nicht kollidiert
         if (spawnNormalShot && spawnable)
         {
@@ -155,6 +157,10 @@ public class ShotSpawnerTutorial : MonoBehaviour
             SetShotProperties(shot);
             tutorialLogging.AddShot("normal");
             PlaySound(soundShotNormal, 0.4f);
+			if (player.challengeType.Equals ("ShotTest")) {
+				tst.AddShot ("normal");
+			}
+
         }
         else if (spawnMediumShot && spawnable)
         {
@@ -163,6 +169,9 @@ public class ShotSpawnerTutorial : MonoBehaviour
             SetShotProperties(shot);
             tutorialLogging.AddShot("medium");
             PlaySound(soundShotMedium, 0.4f);
+			if (player.challengeType.Equals ("ShotTest")) {
+				tst.AddShot ("medium");
+			}
         }
         else if (spawnLargeShot && spawnable)
         {
@@ -171,6 +180,9 @@ public class ShotSpawnerTutorial : MonoBehaviour
             SetShotProperties(shot);
             tutorialLogging.AddShot("large");
             PlaySound(soundShotLarge, 0.3f);
+			if (player.challengeType.Equals ("ShotTest")) {
+				tst.AddShot ("large");
+			}
         }
         ResetShotChargeTime();
         normalShotChargingSound = false;
