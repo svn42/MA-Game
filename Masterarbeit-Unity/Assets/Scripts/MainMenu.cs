@@ -25,6 +25,8 @@ public class MainMenu : MonoBehaviour
 
 	public void Start ()
 	{
+		//PhotonNetwork.automaticallySyncScene = true;
+
 		LoadData (PlayerPrefs.GetInt ("VP"));
 		mainMenu.SetActive (true);
 		waitForPlayer.GetComponent<Text> ().enabled = false;
@@ -78,7 +80,6 @@ public class MainMenu : MonoBehaviour
 
 	void OnJoinedLobby ()
 	{
-		PhotonNetwork.automaticallySyncScene = true;
 		mainMenu.SetActive (false);
 		waitForPlayer.GetComponent<Text> ().enabled = true;
 		PhotonNetwork.JoinRandomRoom();
@@ -88,7 +89,6 @@ public class MainMenu : MonoBehaviour
 
 	void OnPhotonRandomJoinFailed(){
 		//PhotonNetwork.CreateRoom("Lab");
-		PhotonNetwork.automaticallySyncScene = true;
 		PhotonNetwork.CreateRoom(null);
 	}		
 
