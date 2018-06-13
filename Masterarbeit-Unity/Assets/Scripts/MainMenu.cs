@@ -39,7 +39,6 @@ public class MainMenu : MonoBehaviour
 			mainMenu.transform.Find ("Rating-Text").gameObject.GetComponent<Text> ().text = "Rating: " + PlayerPrefs.GetInt (VPNummer.ToString () + "Rating");
 		}
 
-		//PhotonNetwork.automaticallySyncScene = true;
 	}
 
 	public void Update ()
@@ -79,6 +78,7 @@ public class MainMenu : MonoBehaviour
 
 	void OnJoinedLobby ()
 	{
+		PhotonNetwork.automaticallySyncScene = true;
 		mainMenu.SetActive (false);
 		waitForPlayer.GetComponent<Text> ().enabled = true;
 		PhotonNetwork.JoinRandomRoom();
@@ -88,6 +88,7 @@ public class MainMenu : MonoBehaviour
 
 	void OnPhotonRandomJoinFailed(){
 		//PhotonNetwork.CreateRoom("Lab");
+		PhotonNetwork.automaticallySyncScene = true;
 		PhotonNetwork.CreateRoom(null);
 	}		
 
