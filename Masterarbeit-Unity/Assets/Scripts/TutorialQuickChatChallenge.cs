@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialQuickChatChallenge : MonoBehaviour
 {
@@ -10,13 +11,13 @@ public class TutorialQuickChatChallenge : MonoBehaviour
 	private TutorialLogging tutorialLogging;
 
 	public GameObject speechbubble;
-	private SpriteRenderer emojiRenderer;
+	private Image emojiRenderer;
 	// Use this for initialization
 	void Start()
 	{
 		tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
 		tutorialLogging = gameObject.GetComponent<TutorialLogging>();
-		emojiRenderer = speechbubble.transform.Find("Emoji").GetComponent<SpriteRenderer> ();
+		emojiRenderer = speechbubble.transform.Find("Emoji").GetComponent<Image> ();
 	}
 
 	// Update is called once per frame

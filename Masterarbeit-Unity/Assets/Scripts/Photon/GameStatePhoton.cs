@@ -99,9 +99,8 @@ public class GameStatePhoton : MonoBehaviour
 		photonView = gameObject.GetComponent<PhotonView> ();
 		PhotonNetwork.automaticallySyncScene = true;
 
-		SetUpGUI ();
 		SetUpAudio ();
-
+		SetUpGUI ();
 		gameType = PlayerPrefs.GetString ("GameType");
 
 			if (PlayerPrefs.GetInt ("VP") % 2 == 1) {
@@ -128,7 +127,6 @@ public class GameStatePhoton : MonoBehaviour
 
 		SetGoalCount ("Team1");
 		SetGoalCount ("Team2");
-		SetPlayerInformation ();
 
 		if (startCountdownActivated) {
 			photonView.RPC("SetGamePaused", PhotonTargets.All, true, "start");
@@ -169,6 +167,9 @@ public class GameStatePhoton : MonoBehaviour
 		vpnTeam1 = gui.transform.Find ("PlayerInformation").transform.Find ("VP Spieler 1").transform.Find ("VP1").transform.Find ("VPN").GetComponent<Text> ();
 		vpnTeam2 = gui.transform.Find ("PlayerInformation").transform.Find ("VP Spieler 2").transform.Find ("VP2").transform.Find ("VPN").GetComponent<Text> ();
 
+		if (gameType.Equals ("Online")) {
+			gui.transform.Find ("PlayerInformation").GetComponent<Canvas> ().enabled = true;
+		}
 
 	}
 
@@ -265,24 +266,20 @@ public class GameStatePhoton : MonoBehaviour
 
 	}
 
-	//Hiermit kann die Anzeige für die Tore bearbeitet werden
-	private void SetPlayerInformation ()
+	//Hiermit kann die Anzeige für die Spielerinfos bearbeitet werden
+	private void SetGUIPlayerInformation (int playerTeam)
 	{
 
-		if (gameType.Equals ("Online")) {
-			gui.transform.Find ("PlayerInformation").GetComponent<Canvas> ().enabled = true;
-
-
-			int vpteam1 = PlayerPrefs.GetInt ("VP");
-			//andere VP bekommen
-			int vpteam2 = vpteam1 + 1;
-
-			vpnTeam1.text = "VP: " + vpteam1.ToString ();
-			vpnTeam2.text = "VP: " + vpteam2.ToString ();
-
-			ratingTeam1.text = PlayerPrefs.GetInt (vpteam1.ToString () + "Rating").ToString ();
-			ratingTeam2.text = PlayerPrefs.GetInt (vpteam2.ToString () + "Rating").ToString ();
-		} 
+		switch (playerTeam) {
+		case 1: 
+			vpnTeam1.text = "VP: " + player1VP.ToString();
+			ratingTeam1.text = player1Rating.ToString();
+			break;
+		case 2: 
+			vpnTeam2.text = "VP: " + player2VP.ToString();
+			ratingTeam2.text = player2Rating.ToString();
+			break;
+		}
 
 	}
 
@@ -624,13 +621,13 @@ public class GameStatePhoton : MonoBehaviour
 			player1Rating = ratin;
 			Debug.Log ("Player1 erkannt");
 
-
 		} else if (playerTeam == 2) {
 			player2 = GameObject.Find(name);
 			player2VP = subjNr;
 			player2Rating = ratin;
 			Debug.Log ("Player2 erkannt");
 			}
+		SetGUIPlayerInformation (playerTeam);
 
 	}
 

@@ -19,8 +19,8 @@ public class TutorialGameState : MonoBehaviour
     public int goalsTeam2 = 0;
     public bool gamePaused;
 
-    public GameObject gui;
-    public GameObject startScreen;
+	public GameObject gui;
+	private GameObject startScreen;
     private GameObject pauseScreenGO;
     private Canvas pauseScreen;
     private GameObject transparentScreen;
@@ -86,6 +86,7 @@ public class TutorialGameState : MonoBehaviour
 		timer = gui.transform.Find("UI_Spielstand").transform.Find("Timer_BackgroundDark").transform.Find("Time").GetComponent<Text>();
 
         pauseScreenGO = gui.transform.Find("PauseScreen").gameObject;
+		startScreen = gui.transform.Find ("StartScreen").gameObject;
         pauseScreen = pauseScreenGO.GetComponent<Canvas>();
         transparentScreen = pauseScreenGO.transform.Find("TransparentScreen").gameObject;
         topText = transparentScreen.transform.Find("topText").GetComponent<Text>();
