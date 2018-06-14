@@ -601,9 +601,8 @@ public class PlayerPhoton : MonoBehaviour
 	//der aktive Spieler registriert sich beim Gamestate
 	public void StartPlayerRegistration ()
 	{
-		rating = PlayerPrefs.GetInt (subjectNr + "Rating");
 		subjectNr = PlayerPrefs.GetInt ("VP");
-
+		rating = PlayerPrefs.GetInt (subjectNr + "Rating");
 		if (subjectNr % 2 == 0) {
 			playerTeam = 2;
 		} else if (subjectNr % 2 == 1) {
@@ -613,18 +612,16 @@ public class PlayerPhoton : MonoBehaviour
 		pvPlayer.RPC ("CheckTeamColor", PhotonTargets.All, playerTeam);
 
 		pvGamestate.RPC ("RegisterPlayer", PhotonTargets.All, gameObject.name, playerTeam, subjectNr, rating);
-		Debug.Log ("Register Player");
 	}
 
 	//Hier werden die Informationen an den Spieler weitergeben. Wichtig für die "gegnerischen" Spieler, damit diese ihre Daten (Farbe, Assets und co) bekommen.
-	[PunRPC]
+	//[PunRPC]
 	public void SetPlayerInformation (string name, int plTeam)
 	{
-		enemyPlayer = GameObject.Find(name);
-		playerLoggingEnemy = enemyPlayer.GetComponent<PlayerLogging> (); //das playerLogging-Skript des Gegners wird verknüpft, um die Betäubungen abzuspeichern.
-		subjectNrEnemy = enemyPlayer.GetComponent<PlayerPhoton> ().subjectNr;
-		ratingEnemy = enemyPlayer.GetComponent<PlayerPhoton> ().rating;
 		playerTeam = plTeam;
+
+		//subjectNrEnemy = enemyPlayer.GetComponent<PlayerPhoton> ().subjectNr;
+		//ratingEnemy = enemyPlayer.GetComponent<PlayerPhoton> ().rating;
 
 		//Logging
 		playerLogging = this.gameObject.GetComponent<PlayerLogging> ();  //der PlayerLogger wird verknüpft
@@ -635,6 +632,19 @@ public class PlayerPhoton : MonoBehaviour
 
 		blockSpawn.gameObject.GetComponent<PhotonView>().RPC("Setup", PhotonTargets.All);
 		shotSpawn.gameObject.GetComponent<PhotonView>().RPC("Setup", PhotonTargets.All);
+
+		//Enemy Information
+		enemyPlayer = GameObject.Find(name);
+		playerLoggingEnemy = enemyPlayer.GetComponent<PlayerLogging> (); //das playerLogging-Skript des Gegners wird verknüpft, um die Betäubungen abzuspeichern.
+		if (playerTeam == 1) {
+			subjectNrEnemy = gameState.player2VP;
+			ratingEnemy = gameState.player2Rating;
+		} else if (playerTeam == 2) {
+			subjectNrEnemy = gameState.player1VP;
+			ratingEnemy = gameState.player1Rating;
+		}
+
+
 
 		audioSource = GetComponent<AudioSource> ();
 		soundBoing = Resources.Load<AudioClip> ("Sounds/boing");

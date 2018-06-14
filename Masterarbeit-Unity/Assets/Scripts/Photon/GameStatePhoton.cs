@@ -129,6 +129,7 @@ public class GameStatePhoton : MonoBehaviour
 		SetGoalCount ("Team2");
 
 		if (startCountdownActivated) {
+			musicPlayer.Pause ();
 			photonView.RPC("SetGamePaused", PhotonTargets.All, true, "start");
 
 			//SetGamePaused (true, "start");    //zu Beginn wird das Spiel pausiert 
@@ -272,11 +273,11 @@ public class GameStatePhoton : MonoBehaviour
 
 		switch (playerTeam) {
 		case 1: 
-			vpnTeam1.text = "VP: " + player1VP.ToString();
+		//	vpnTeam1.text = "VP: " + player1VP.ToString();
 			ratingTeam1.text = player1Rating.ToString();
 			break;
 		case 2: 
-			vpnTeam2.text = "VP: " + player2VP.ToString();
+		//	vpnTeam2.text = "VP: " + player2VP.ToString();
 			ratingTeam2.text = player2Rating.ToString();
 			break;
 		}
@@ -416,7 +417,7 @@ public class GameStatePhoton : MonoBehaviour
 		} else {
 			Time.timeScale = 1;
 			pauseScreen.enabled = false;
-			musicPlayer.Play ();
+			musicPlayer.UnPause ();
 
 		}
 	}
@@ -440,10 +441,18 @@ public class GameStatePhoton : MonoBehaviour
 		}
 
 		if (!gameStarted) {
-			player1.GetComponent<PhotonView> ().RPC ("SetPlayerInformation",PhotonTargets.All, player2.name, 1);
+			musicPlayer.Play ();
+			if (player1.GetComponent<PhotonView> ().isMine) {	//für den aktiven Spieler werden die Informationen des anderen Spielers gesetzt
+				//player1.GetComponent<PhotonView> ().RPC ("SetPlayerInformation", PhotonTargets.All, player2.name, 1);
+				player1.GetComponent<PlayerPhoton>().SetPlayerInformation(player2.name,1);
+			}
 			playerLoggingP1 = player1.GetComponent<PlayerLogging> ();
 			player1Script = player1.GetComponent<PlayerPhoton> ();
-			player2.GetComponent<PhotonView> ().RPC ("SetPlayerInformation",PhotonTargets.All, player1.name, 2);
+			if (player2.GetComponent<PhotonView> ().isMine) {
+				//player2.GetComponent<PhotonView> ().RPC ("SetPlayerInformation", PhotonTargets.All, player1.name, 2);
+				player2.GetComponent<PlayerPhoton>().SetPlayerInformation(player1.name,2);
+
+			}
 			playerLoggingP2 = player2.GetComponent<PlayerLogging> ();
 			player2Script = player2.GetComponent<PlayerPhoton> ();
 			gameStarted = true;
@@ -628,7 +637,6 @@ public class GameStatePhoton : MonoBehaviour
 			Debug.Log ("Player2 erkannt");
 			}
 		SetGUIPlayerInformation (playerTeam);
-
 	}
 
 

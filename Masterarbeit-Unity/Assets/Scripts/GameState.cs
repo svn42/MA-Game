@@ -144,6 +144,7 @@ public class GameState : MonoBehaviour
 		SetGoalCount ("Team2");
 		SetPlayerInformation ();
 
+
 		if (startCountdownActivated) {
 			SetGamePaused (true, "start");    //zu Beginn wird das Spiel pausiert 
 		}
@@ -425,7 +426,7 @@ public class GameState : MonoBehaviour
 		} else {
 			Time.timeScale = 1;
 			pauseScreen.enabled = false;
-			musicPlayer.Play ();
+			musicPlayer.UnPause ();
 
 		}
 	}
@@ -459,8 +460,8 @@ public class GameState : MonoBehaviour
 			yield return new WaitForSeconds (1 * Time.timeScale);
 		}
 
-
 		if (!gameStarted) {
+			musicPlayer.Play ();
 			CheckPlayerCount ();
 			player1.GetComponent<Player> ().FindEnemyPlayer (player2);
 			player2.GetComponent<Player> ().FindEnemyPlayer (player1);

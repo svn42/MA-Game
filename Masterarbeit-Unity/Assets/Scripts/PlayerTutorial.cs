@@ -213,7 +213,7 @@ public class PlayerTutorial : MonoBehaviour
 	//	Vector2 stickInput = new Vector2(Input.GetAxis("Horizontal"+ playerAcronym), Input.GetAxis("Vertical"+ playerAcronym));
 	//	if (stickInput.magnitude > deadzone) {
 			//sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
-			if ((Mathf.Abs (Input.GetAxis ("Horizontal" + playerAcronym)) > 0.05f)) {
+			if ((Mathf.Abs (Input.GetAxis ("Horizontal" + playerAcronym)) > 0.1f)) {
 				//wird die Accelerate-Methode mit dem Argument X aufgerufen
 				Accelerate ("X");
 			}
