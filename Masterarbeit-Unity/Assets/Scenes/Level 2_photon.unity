@@ -3711,6 +3711,7 @@ GameObject:
   - component: {fileID: 1545081859}
   - component: {fileID: 1545081858}
   - component: {fileID: 1545081863}
+  - component: {fileID: 1545081860}
   m_Layer: 0
   m_Name: GameState
   m_TagString: Untagged
@@ -3746,6 +3747,32 @@ MonoBehaviour:
   endTime: 
   playTime: 0
   totalTime: 0
+--- !u!114 &1545081860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1545081857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 1
+  instantiationId: 1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &1545081861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3769,7 +3796,7 @@ MonoBehaviour:
   nextLevelReady: 0
   timeUntilNextLevel: 5
   depauseCountdown: 3
-  startCountdownActivated: 0
+  startCountdownActivated: 1
   player1: {fileID: 0}
   player2: {fileID: 0}
   player1Script: {fileID: 0}

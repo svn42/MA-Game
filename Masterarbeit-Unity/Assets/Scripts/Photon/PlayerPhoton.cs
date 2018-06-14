@@ -97,8 +97,6 @@ public class PlayerPhoton : MonoBehaviour
 
 		pvGamestate = gameState.gameObject.GetComponent<PhotonView> ();
 		pvPlayer = gameObject.GetComponent<PhotonView> ();
-			
-
 	}
 
 
@@ -135,6 +133,8 @@ public class PlayerPhoton : MonoBehaviour
 			if (playerList.Length == 2){
 				
 			if (pvPlayer.isMine) {
+
+
 				pvPlayer.RPC ("StartPlayerRegistration", PhotonTargets.All);	//VP, Rating, PlayerTeam, Color setzen
 				pvPlayer.RPC ("SetUpSpeechBubble",PhotonTargets.All) ;
 				pvPlayer.RPC ("SetPlayerName", PhotonTargets.All, subjectNr);
@@ -627,7 +627,6 @@ public class PlayerPhoton : MonoBehaviour
 	public void StartPlayerRegistration ()
 	{
 		if (pvPlayer.isMine) {
-			Debug.Log ("Hallo");
 			subjectNr = PlayerPrefs.GetInt ("VP");
 			rating = PlayerPrefs.GetInt (subjectNr + "Rating");
 			if (subjectNr % 2 == 0) {

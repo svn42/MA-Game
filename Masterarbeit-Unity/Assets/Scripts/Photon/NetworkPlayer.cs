@@ -18,7 +18,6 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 		movement = GetComponent<MovementPhoton> ();
 
 		if (photonView.isMine) {
-			//playerScript.enabled = true;
 			movement.enabled = true;
 		}
 

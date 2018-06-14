@@ -18,14 +18,13 @@ public class MainMenu : MonoBehaviour
 	public Button onlineGameButton;
 	public GameObject waitForPlayer;
 
-
 	public GameObject passwortErrorText;
 	public GameObject VPErrorText;
 	public int VPNummer;
 
 	public void Start ()
 	{
-		//PhotonNetwork.automaticallySyncScene = true;
+		PhotonNetwork.automaticallySyncScene = true;
 
 		LoadData (PlayerPrefs.GetInt ("VP"));
 		mainMenu.SetActive (true);
@@ -34,9 +33,8 @@ public class MainMenu : MonoBehaviour
 		passwortErrorText = passwortField.gameObject.transform.Find ("Error-Text").gameObject;
 		VPErrorText = VPInputField.gameObject.transform.Find ("Error-Text").gameObject;
 
-
+		//wenn der Spieler das Tutorial absolviert hat, wird der OnlineButton aktiviert und das Rating eingeblendet
 		if (PlayerPrefs.GetString (VPNummer.ToString () + "TutorialSolved").Equals ("Yes")) {
-			localGameButton.interactable = true;
 			onlineGameButton.interactable = true;
 			mainMenu.transform.Find ("Rating-Text").gameObject.GetComponent<Text> ().text = "Rating: " + PlayerPrefs.GetInt (VPNummer.ToString () + "Rating");
 		}
@@ -65,17 +63,13 @@ public class MainMenu : MonoBehaviour
 	public void StartOnlineGame ()
 	{
 		PlayerPrefs.SetString ("GameType", "Online");
-		//SceneManager.LoadScene("Level 1");
 		PhotonNetwork.ConnectUsingSettings ("v01");
 		PhotonNetwork.player.NickName = PlayerPrefs.GetInt ("VP").ToString();
-
 	}
 
 	void OnConnectedToMaster ()
 	{
-		Debug.Log ("Mit Server verbudnen. Lade nächste Szene");
 		PhotonNetwork.JoinLobby ();
-		//	SceneManager.LoadScene("Level 1");
 	}
 
 	void OnJoinedLobby ()
@@ -83,29 +77,23 @@ public class MainMenu : MonoBehaviour
 		mainMenu.SetActive (false);
 		waitForPlayer.GetComponent<Text> ().enabled = true;
 		PhotonNetwork.JoinRandomRoom();
-		//PhotonNetwork.JoinRoom("Lab");
 
 	}
 
 	void OnPhotonRandomJoinFailed(){
-		//PhotonNetwork.CreateRoom("Lab");
 		PhotonNetwork.CreateRoom(null);
 	}		
 
 	void OnJoinedRoom()
 	{
-		if (PhotonNetwork.playerList.Length == (2) ) {
-			Debug.Log ("Der andere Spieler ist da. Wir können Starten.");
-			PhotonNetwork.LoadLevel ("Level 1_photon");
-			//SceneManager.LoadScene("Level 1");
-		}
-	}
+	} 
+
 
 	void OnPhotonPlayerConnected(PhotonPlayer newPlayer){
 		if (PhotonNetwork.playerList.Length == 2) {
-			Debug.Log ("Der andere Spieler ist da. Wir können Starten.");
+			if (PhotonNetwork.isMasterClient) {
 			PhotonNetwork.LoadLevel ("Level 1_photon");
-			//SceneManager.LoadScene("Level 1");
+			}
 		}
 	}
 
@@ -174,7 +162,7 @@ public class MainMenu : MonoBehaviour
 				mainMenu.transform.Find ("Rating-Text").gameObject.GetComponent<Text> ().text = "Rating: ?";
 
 				tutorialButton.interactable = true;
-				//
+//TODO: MUSS raus, bevor alles beginnt
 				onlineGameButton.interactable = true;
 
 			}

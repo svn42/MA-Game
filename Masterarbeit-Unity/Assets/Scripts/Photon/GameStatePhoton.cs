@@ -103,25 +103,15 @@ public class GameStatePhoton : MonoBehaviour
 		SetUpGUI ();
 		gameType = PlayerPrefs.GetString ("GameType");
 
-			if (PlayerPrefs.GetInt ("VP") % 2 == 1) {
-				PhotonNetwork.Instantiate ("PlayerPhoton", spawnPosition1.transform.position, spawnPosition1.transform.rotation, 0);
-
-			} else if (PlayerPrefs.GetInt ("VP") % 2 == 0) {
-				PhotonNetwork.Instantiate ("PlayerPhoton", spawnPosition2.transform.position, spawnPosition2.transform.rotation, 0);
-			}
-
 	}
 
 	// Use this for initialization
 	void Start ()
 	{
-		if (timeLeft <= 120) {
-			popUp120Showed = true;
-		}
-		if (timeLeft <= 60) {
-			popUp60Showed = true;
-		}
-		timeLeft += 0.02f;
+
+		InstantiatePlayers ();
+
+		timeLeft += 0.05f;
 
 		globalTimer = (GlobalTimer)FindObjectOfType (typeof(GlobalTimer));
 
@@ -131,8 +121,6 @@ public class GameStatePhoton : MonoBehaviour
 		if (startCountdownActivated) {
 			musicPlayer.Pause ();
 			photonView.RPC("SetGamePaused", PhotonTargets.All, true, "start");
-
-			//SetGamePaused (true, "start");    //zu Beginn wird das Spiel pausiert 
 		}
 	}
 
@@ -172,6 +160,14 @@ public class GameStatePhoton : MonoBehaviour
 			gui.transform.Find ("PlayerInformation").GetComponent<Canvas> ().enabled = true;
 		}
 
+
+		//sorgt dafür, dass die PopUps bei 2 und 1 Minute nicht gezeigt werden, wenn das Level mit weniger als 2 bzw 1 Minute startet
+		if (timeLeft <= 120) {
+			popUp120Showed = true;
+		}
+		if (timeLeft <= 60) {
+			popUp60Showed = true;
+		}
 	}
 
 	public void SetUpAudio(){
@@ -187,6 +183,16 @@ public class GameStatePhoton : MonoBehaviour
 		soundPopup = Resources.Load<AudioClip> ("Sounds/popup");
 	}
 
+	public void InstantiatePlayers(){
+		if (PlayerPrefs.GetInt ("VP") % 2 == 1) {
+			PhotonNetwork.Instantiate ("PlayerPhoton", spawnPosition1.transform.position, spawnPosition1.transform.rotation, 0);
+
+		} else if (PlayerPrefs.GetInt ("VP") % 2 == 0) {
+			PhotonNetwork.Instantiate ("PlayerPhoton", spawnPosition2.transform.position, spawnPosition2.transform.rotation, 0);
+		}
+
+	
+	}
 
 	//Über diese Methode werden neue Bälle an die ballList übergeben
 	public void RegisterBallList (BallPhoton ball)
@@ -376,8 +382,7 @@ public class GameStatePhoton : MonoBehaviour
 						if (gameType.Equals ("Online")) {
 								
 							if (PhotonNetwork.isMasterClient) {
-								PhotonNetwork.LoadLevel ("Level 1_photon");
-									//PhotonNetwork.LoadLevel (SceneManager.GetActiveScene ().buildIndex + 1);
+							PhotonNetwork.LoadLevel (SceneManager.GetActiveScene ().buildIndex + 1);
 
 							}
 						}
@@ -625,18 +630,15 @@ public class GameStatePhoton : MonoBehaviour
 
 	[PunRPC]
 	public void RegisterPlayer(string name, int playerTeam, int subjNr, int ratin){
-		Debug.Log ("Register Player");
 		if (playerTeam == 1) {
 			player1 = GameObject.Find(name);
 			player1VP = subjNr;
 			player1Rating = ratin;
-			Debug.Log ("Player1 erkannt");
 
 		} else if (playerTeam == 2) {
 			player2 = GameObject.Find(name);
 			player2VP = subjNr;
 			player2Rating = ratin;
-			Debug.Log ("Player2 erkannt");
 			}
 		SetGUIPlayerInformation (playerTeam);
 	}

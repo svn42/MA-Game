@@ -142,7 +142,7 @@ public class BlockSpawnerPhoton : MonoBehaviour
                 blockChargeTime = spawnTimer;
                 SetSpawnerSize(blockChargeTime);
 
-                //TODO: An die Farbe des Spielers anpassen
+                //An die Farbe des Spielers anpassen
                 blockSpawnSprite.GetComponent<SpriteRenderer>().color = blockColor;    //wird der BlockSpawner in der Farbe des Spielers eingefärbt.
             }
             else if (!spawnable)     //wenn das Ziel erreicht wurde und kollidiert
