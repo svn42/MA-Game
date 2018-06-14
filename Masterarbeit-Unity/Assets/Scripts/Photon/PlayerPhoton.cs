@@ -568,6 +568,7 @@ public class PlayerPhoton : MonoBehaviour
 
 	IEnumerator DisplayEmote (string type)
 	{
+		Debug.Log ("display emote ausgeführt");
 		int randomInt = Random.Range (0, 3);
 		switch (type) {
 		case ("nice"):
@@ -638,7 +639,7 @@ public class PlayerPhoton : MonoBehaviour
 	}
 
 	//Hier werden die Informationen an den Spieler weitergeben. Wichtig für die "gegnerischen" Spieler, damit diese ihre Daten (Farbe, Assets und co) bekommen.
-	//[PunRPC]
+	[PunRPC]
 	public void SetPlayerInformation (string name, int plTeam)
 	{
 		playerTeam = plTeam;

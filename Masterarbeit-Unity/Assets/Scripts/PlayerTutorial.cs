@@ -213,7 +213,7 @@ public class PlayerTutorial : MonoBehaviour
 	//	Vector2 stickInput = new Vector2(Input.GetAxis("Horizontal"+ playerAcronym), Input.GetAxis("Vertical"+ playerAcronym));
 	//	if (stickInput.magnitude > deadzone) {
 			//sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
-			if ((Mathf.Abs (Input.GetAxis ("Horizontal" + playerAcronym)) > 0.1f)) {
+		if ((Mathf.Abs (Input.GetAxis ("Horizontal" + playerAcronym)) > 0.15f)) {
 				//wird die Accelerate-Methode mit dem Argument X aufgerufen
 				Accelerate ("X");
 			}
@@ -227,7 +227,7 @@ public class PlayerTutorial : MonoBehaviour
 	//	if (stickInput.magnitude > deadzone) {
 			
 			//das gleiche geschieht mit der Vertikalen Achse (hoch oder runter Pfeiltaste sowie W und S)
-			if ((Mathf.Abs (Input.GetAxis ("Vertical" + playerAcronym)) > 0.1f)) {
+		if ((Mathf.Abs (Input.GetAxis ("Vertical" + playerAcronym)) > 0.15f)) {
 				Accelerate ("Y");
 			}
 	//	}
@@ -237,7 +237,7 @@ public class PlayerTutorial : MonoBehaviour
         }
 
         //die BewegungsZeit wird erhöht, sofern mindestens eine der beiden Achsen eine Bewegung zurückliefern
-		if ((Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.1f) || Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.1f)
+		if ((Mathf.Abs(Input.GetAxis("Vertical" + playerAcronym)) > 0.15f) || Mathf.Abs(Input.GetAxis("Horizontal" + playerAcronym)) > 0.15f)
         {
             exhaustTime += Time.deltaTime;
         }
