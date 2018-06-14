@@ -444,15 +444,17 @@ public class GameStatePhoton : MonoBehaviour
 			musicPlayer.Play ();
 			if (player1.GetComponent<PhotonView> ().isMine) {	//für den aktiven Spieler werden die Informationen des anderen Spielers gesetzt
 				//player1.GetComponent<PhotonView> ().RPC ("SetPlayerInformation", PhotonTargets.All, player2.name, 1);
-				player1.GetComponent<PlayerPhoton>().SetPlayerInformation(player2.name,1);
+				player1.GetComponent<PlayerPhoton> ().SetPlayerInformation (player2.name, 1);
 			}
+			
 			playerLoggingP1 = player1.GetComponent<PlayerLogging> ();
 			player1Script = player1.GetComponent<PlayerPhoton> ();
-			if (player2.GetComponent<PhotonView> ().isMine) {
+			if (player2.GetComponent<PhotonView> ().isMine) {	//für den aktiven Spieler werden die Informationen des anderen Spielers gesetzt
 				//player2.GetComponent<PhotonView> ().RPC ("SetPlayerInformation", PhotonTargets.All, player1.name, 2);
-				player2.GetComponent<PlayerPhoton>().SetPlayerInformation(player1.name,2);
-
+				player2.GetComponent<PlayerPhoton> ().SetPlayerInformation (player1.name, 2);
 			}
+
+
 			playerLoggingP2 = player2.GetComponent<PlayerLogging> ();
 			player2Script = player2.GetComponent<PlayerPhoton> ();
 			gameStarted = true;

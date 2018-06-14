@@ -83,6 +83,7 @@ public class PlayerPhoton : MonoBehaviour
 	//trigger variablen
 	private bool rightTriggerInUse = false;
 	private bool leftTriggerInUse = false;
+	private bool playersRegistered;
 
 	//networking
 	PhotonView pvGamestate;
@@ -97,12 +98,10 @@ public class PlayerPhoton : MonoBehaviour
 		pvGamestate = gameState.gameObject.GetComponent<PhotonView> ();
 		pvPlayer = gameObject.GetComponent<PhotonView> ();
 			
-		if (pvPlayer.isMine) {
-			StartPlayerRegistration ();	//VP, Rating, PlayerTeam, Color setzen
-			pvPlayer.RPC ("SetUpSpeechBubble",PhotonTargets.All) ;
-		}
 
 	}
+
+
 
 
 	public void SetUpEmotes ()
@@ -130,7 +129,28 @@ public class PlayerPhoton : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		if (!playersRegistered) {
+			GameObject[] playerList = GameObject.FindGameObjectsWithTag ("Player");
 
+			if (playerList.Length == 2){
+				
+			if (pvPlayer.isMine) {
+				pvPlayer.RPC ("StartPlayerRegistration", PhotonTargets.All);	//VP, Rating, PlayerTeam, Color setzen
+				pvPlayer.RPC ("SetUpSpeechBubble",PhotonTargets.All) ;
+				pvPlayer.RPC ("SetPlayerName", PhotonTargets.All, subjectNr);
+				pvPlayer.RPC ("CheckTeamColor", PhotonTargets.All, playerTeam);
+				pvGamestate.RPC ("RegisterPlayer", PhotonTargets.All, gameObject.name, playerTeam, subjectNr, rating);
+				playersRegistered = true;
+
+			}
+
+			}
+
+
+		}
+
+
+		/*
 		if (!gameState.GetGamePaused ()) {
 			if (!stunned) {
 				CheckInput ();   //zunächst wird der Input überprüft
@@ -142,6 +162,7 @@ public class PlayerPhoton : MonoBehaviour
 		} else if (gameState.GetGamePaused ()) {
 			CheckPlayerReady ();
 		}
+		*/
 
 	}
 
@@ -187,9 +208,10 @@ public class PlayerPhoton : MonoBehaviour
 
 	}
 
+	/*
 	public void CheckInput ()
 	{
-
+		/*
 		//sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
 		if ((Mathf.Abs (Input.GetAxis ("HorizontalP1")) > 0.1f)) {
 			//wird die Accelerate-Methode mit dem Argument X aufgerufen
@@ -241,7 +263,7 @@ public class PlayerPhoton : MonoBehaviour
          * 
         Emotes
          * 
-         * */
+         * 
 
 		//emote nice
 		if (Input.GetButtonUp ("LBP1") && emoteTimer > emoteDelay) {
@@ -316,7 +338,7 @@ public class PlayerPhoton : MonoBehaviour
 		 * 
 		 * Pause
 		 * 
-		 */
+		 
 
 		if (Input.GetButtonUp ("Start")) {
 			pvGamestate.RPC ("SetGamePaused", PhotonTargets.All, true, "pause");
@@ -451,6 +473,8 @@ public class PlayerPhoton : MonoBehaviour
 		}
 			
 	}
+
+*/
 
 	//setzt die Farve des Spielers sowie seiner Spawner fest
 	public void SetColor (Color col)
@@ -599,19 +623,19 @@ public class PlayerPhoton : MonoBehaviour
 	}
 
 	//der aktive Spieler registriert sich beim Gamestate
+	[PunRPC]
 	public void StartPlayerRegistration ()
 	{
-		subjectNr = PlayerPrefs.GetInt ("VP");
-		rating = PlayerPrefs.GetInt (subjectNr + "Rating");
-		if (subjectNr % 2 == 0) {
-			playerTeam = 2;
-		} else if (subjectNr % 2 == 1) {
-			playerTeam = 1;
+		if (pvPlayer.isMine) {
+			Debug.Log ("Hallo");
+			subjectNr = PlayerPrefs.GetInt ("VP");
+			rating = PlayerPrefs.GetInt (subjectNr + "Rating");
+			if (subjectNr % 2 == 0) {
+				playerTeam = 2;
+			} else if (subjectNr % 2 == 1) {
+				playerTeam = 1;
+			}
 		}
-		pvPlayer.RPC ("SetPlayerName", PhotonTargets.All, subjectNr);
-		pvPlayer.RPC ("CheckTeamColor", PhotonTargets.All, playerTeam);
-
-		pvGamestate.RPC ("RegisterPlayer", PhotonTargets.All, gameObject.name, playerTeam, subjectNr, rating);
 	}
 
 	//Hier werden die Informationen an den Spieler weitergeben. Wichtig für die "gegnerischen" Spieler, damit diese ihre Daten (Farbe, Assets und co) bekommen.
@@ -643,7 +667,6 @@ public class PlayerPhoton : MonoBehaviour
 			subjectNrEnemy = gameState.player1VP;
 			ratingEnemy = gameState.player1Rating;
 		}
-
 
 
 		audioSource = GetComponent<AudioSource> ();
