@@ -15,6 +15,7 @@ TagManager:
   - Cannon
   - SpeechBubble
   - GUI
+  - Target
   layers:
   - Default
   - TransparentFX

@@ -76,7 +76,7 @@ public class ShotChallenge : MonoBehaviour {
 
 		//rating Accuracy
 		float ratingAccuracyFloat= 0;
-		precision = ((float)targetsInitialCount / (float)tutorialLogging.totalShotsFired);
+		precision = ((float)tutorialLogging.shotsHitTarget / (float)tutorialLogging.totalShotsFired);
 
 		ratingAccuracyFloat = precision * maxRatingAccuracy;
 

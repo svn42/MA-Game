@@ -18,6 +18,7 @@ public class TutorialLogging : MonoBehaviour
     public int shotsHitPlayer;
     public int shotsHitEnemyShot;
     public int shotsDestroyed;
+	public int shotsHitTarget;
 
     //stunned by enemy
     public int totalStunnedByEnemy;
@@ -31,12 +32,6 @@ public class TutorialLogging : MonoBehaviour
     void Start()
     {
     }
-
-    // Update is called once per frame
-    void LateUpdate()
-    {
-    }
-
 
     public void AddShot(string shotType)
     {
@@ -74,9 +69,12 @@ public class TutorialLogging : MonoBehaviour
             case "shot":
                 shotsHitEnemyShot++;
                 break;
-            case "destroy":
-                shotsDestroyed++;
-                break;
+		case "destroy":
+			shotsDestroyed++;
+			break;         
+		case "target":
+			shotsHitTarget++;
+			break;
         }
         totalObjectsHit++;
 

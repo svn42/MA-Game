@@ -174,6 +174,11 @@ public class ShotTutorial : MonoBehaviour
 				tutorialLogging.AddAccuracy("ball");
 			}
 			break;
+		case "Target":
+			tutorialGameState.PlaySound ("soundSlap", 0.25f);
+			tutorialLogging.AddAccuracy ("target");
+			DestroyShot ();
+			break;
 		}
 
 	}
