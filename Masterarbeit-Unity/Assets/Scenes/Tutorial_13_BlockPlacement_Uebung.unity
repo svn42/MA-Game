@@ -2938,7 +2938,7 @@ MonoBehaviour:
   - {fileID: 1840741711}
   - {fileID: 1147239847}
   - {fileID: 2072486206}
-  maxRating: 250
+  maxRating: 300
   bestTime: 25
 --- !u!114 &1125116396
 MonoBehaviour:

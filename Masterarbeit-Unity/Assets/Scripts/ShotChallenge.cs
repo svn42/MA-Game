@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialBlockDestroyChallenge : MonoBehaviour {
+public class ShotChallenge : MonoBehaviour {
 
-	public List<GameObject> blockList;
+
+	public List<GameObject> targets;
 	private TutorialGameState tutorialGameState;
 	private TutorialLogging tutorialLogging;
-
+	private int targetsInitialCount;
 	public int maxRatingTime;
 	public int maxRatingAccuracy;
 	public float bestTime;
@@ -16,11 +17,14 @@ public class TutorialBlockDestroyChallenge : MonoBehaviour {
 	public int ratingAccuracyInt;
 	public float precision;
 
-
 	// Use this for initialization
+
 	void Start () {
 		tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
 		tutorialLogging = gameObject.GetComponent<TutorialLogging>();
+
+		SetUpTargets ();
+		targetsInitialCount = targets.Count;
 	}
 	
 	// Update is called once per frame
@@ -28,20 +32,38 @@ public class TutorialBlockDestroyChallenge : MonoBehaviour {
 		
 	}
 
-	public void RemoveBlock(GameObject go)
+	public void SetUpTargets()
 	{
-		if (blockList.Contains (go)) {
-			blockList.Remove (go);
+		if (targets.Count > 0)
+		{
+			targets[0].SetActive(true);
+			for (int i = 1; i < targets.Count; i++)
+			{
+				targets[i].SetActive(false);
+			}
 		}
-		if (blockList.Count == 0)
+
+	}
+
+	public void RemoveTarget()
+	{
+		Destroy(targets[0]);
+		targets.RemoveAt(0);
+		if (targets.Count != 0)
+		{
+			targets[0].SetActive(true);
+		}
+		else
 		{
 			tutorialGameState.EndChallenge(CalculateRating());
-		} 
+		}
+
 	}
 
 	public int CalculateRating()
 	{
-		int totalRating;
+		int totalRating = 0;
+
 		// rating Time
 		float ratingTimeFloat = 0;
 		float timePlayed = tutorialGameState.timePlayed;
@@ -54,13 +76,15 @@ public class TutorialBlockDestroyChallenge : MonoBehaviour {
 
 		//rating Accuracy
 		float ratingAccuracyFloat= 0;
-		precision = ((float)tutorialLogging.shotsHitBlock / (float)tutorialLogging.totalShotsFired);
-		//total stun time * 10 --> großer treffer = 10% abzug; mittlerer = 5% abzug, kleiner = 2% abzug
+		precision = ((float)targetsInitialCount / (float)tutorialLogging.totalShotsFired);
+
 		ratingAccuracyFloat = precision * maxRatingAccuracy;
 
 		ratingAccuracyInt = Mathf.RoundToInt(ratingAccuracyFloat);
 
 		totalRating = ratingTimeInt + ratingAccuracyInt;
+
 		return totalRating;
 	}
+
 }
