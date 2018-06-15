@@ -182,6 +182,9 @@ public class TutorialGameState : MonoBehaviour
         {
             goalsTeam1++;
             // SetGoalCount("Team1");
+			if (challengeType.Equals ("ScoreGoals")) {
+				FindObjectOfType<ScoreGoalsChallenge> ().RemoveObjects ();
+			}
 
             //Logging
             if (scoredByTeamNr == 1)
