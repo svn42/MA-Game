@@ -26,8 +26,8 @@ public class MainMenu : MonoBehaviour
 	public void Start ()
 	{
 		PhotonNetwork.automaticallySyncScene = true;
-		PhotonNetwork.sendRate = 100;
-		PhotonNetwork.sendRateOnSerialize = 100;
+		PhotonNetwork.sendRate = 80;
+		PhotonNetwork.sendRateOnSerialize = 80;
 		LoadData (PlayerPrefs.GetInt ("VP"));
 		mainMenu.SetActive (true);
 		waitForPlayer.GetComponent<Text> ().enabled = false;
