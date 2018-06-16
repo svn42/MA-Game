@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/GutscheinScreen.unity
+    guid: 603db32a70bee5c4099c0bd46c5a68be
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: ed11cc4347541e946a852884ebad5246
   - enabled: 1
@@ -95,9 +98,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 2_photon.unity
     guid: 6a519d5b4ca6bd94fbd3edeb3b6cc57b
-  - enabled: 1
-    path: Assets/Scenes/GutscheinScreen.unity
-    guid: 603db32a70bee5c4099c0bd46c5a68be
   - enabled: 1
     path: Assets/Scenes/GameEnd.unity
     guid: e2a5f3c32cda88b4ebc62553b66a840e

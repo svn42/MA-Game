@@ -204,7 +204,6 @@ public class GameStatePhoton : MonoBehaviour
 		} else if (PlayerPrefs.GetInt ("VP") % 2 == 0) {
 			PhotonNetwork.Instantiate ("PlayerPhoton", spawnPosition2.transform.position, spawnPosition2.transform.rotation, 0);
 		}
-
 	
 	}
 
@@ -376,7 +375,7 @@ public class GameStatePhoton : MonoBehaviour
 
 				if (playerHelp) {
 				observerText.enabled = true;
-				observerText.text = "Hilfe angefordert von Spieler " + helpOrderedBy+ "! \nGib dem Versuchsleiter Bescheid, \nwenn du mit ihm im selben Raum sitzt.";
+				observerText.text = "Hilfe angefordert von Spieler " + helpOrderedBy+ "! \nGib dem Versuchsleiter Bescheid, wenn du mit ihm im selben Raum sitzt.";
 				observerText.color = Color.red;
 			}
 			if (!playerHelp) {
