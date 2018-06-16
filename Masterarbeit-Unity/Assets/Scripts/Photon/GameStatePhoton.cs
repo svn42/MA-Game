@@ -34,6 +34,11 @@ public class GameStatePhoton : MonoBehaviour
 	private Canvas player2Box;
 	private Image greenCheckP1;
 	private Image greenCheckP2;
+	private GameObject startScreenRatingInfos;
+	private Text startScreenRatingp1;
+	private Text startScreenRatingp2;
+	private GameObject startScreenRatingBoxP1;
+	private GameObject startScreenRatingBoxP2;
 
 	private bool player1Ready;
 	private bool player2Ready;
@@ -146,6 +151,12 @@ public class GameStatePhoton : MonoBehaviour
 		player2Box = transparentScreen.transform.Find ("Spieler2").GetComponent<Canvas> ();
 		greenCheckP1 = transparentScreen.transform.Find ("Spieler1").transform.Find ("Spieler1_Check").GetComponent<Image> ();
 		greenCheckP2 = transparentScreen.transform.Find ("Spieler2").transform.Find ("Spieler2_Check").GetComponent<Image> ();
+
+		startScreenRatingInfos = transparentScreen.transform.Find ("RatingInfos").gameObject;
+		startScreenRatingp1 = startScreenRatingInfos.transform.Find ("RatingSpieler1").transform.Find ("Rating").GetComponent<Text> ();
+		startScreenRatingp2 = startScreenRatingInfos.transform.Find ("RatingSpieler2").transform.Find ("Rating").GetComponent<Text> ();
+		startScreenRatingBoxP1 = startScreenRatingInfos.transform.Find ("RatingSpieler1").transform.Find ("RatingBox").gameObject;
+		startScreenRatingBoxP2 = startScreenRatingInfos.transform.Find ("RatingSpieler2").transform.Find ("RatingBox").gameObject;
 
 		scoreTeam1 = gui.transform.Find ("UI_Spielstand").transform.Find ("Spielstand Team 1").transform.Find ("Score Team 1").GetComponent<Text> ();
 		scoreTeam2 = gui.transform.Find ("UI_Spielstand").transform.Find ("Spielstand Team 2").transform.Find ("Score Team 2").GetComponent<Text> ();
@@ -280,11 +291,17 @@ public class GameStatePhoton : MonoBehaviour
 		switch (playerTeam) {
 		case 1: 
 		//	vpnTeam1.text = "VP: " + player1VP.ToString();
-			ratingTeam1.text = player1Rating.ToString();
+			ratingTeam1.text = player1Rating.ToString ();
+			startScreenRatingp1.text = player1Rating.ToString ();
+			float boxSize1 = ((float)425 / (float)3000 * (float)player1Rating);
+			startScreenRatingBoxP1.transform.localScale = new Vector3 (1, boxSize1, 1); 
 			break;
 		case 2: 
 		//	vpnTeam2.text = "VP: " + player2VP.ToString();
 			ratingTeam2.text = player2Rating.ToString();
+			startScreenRatingp2.text = player2Rating.ToString();
+			float boxSize2 = ((float)425 / (float)3000 * (float)player2Rating);
+			startScreenRatingBoxP2.transform.localScale = new Vector3 (1, boxSize2, 1); 
 			break;
 		}
 
@@ -491,6 +508,7 @@ public class GameStatePhoton : MonoBehaviour
 		switch (screenType) {
 
 		case "pause":
+			startScreenRatingInfos.SetActive (false);
 			helpText.enabled = true;
 			transparentScreen.GetComponent<Image> ().color = new Color (col.r, col.g, col.b, 0.95f);
 			player1Box.enabled = true;
@@ -500,15 +518,17 @@ public class GameStatePhoton : MonoBehaviour
 			middleText.text = "Drücke A zum Fortsetzen!";
 			break;
 		case "start":
+			startScreenRatingInfos.SetActive (true);
 			helpText.enabled = true;
 			transparentScreen.GetComponent<Image> ().color = new Color (col.r, col.g, col.b, 0.95f);
 			player1Box.enabled = true;
 			player2Box.enabled = true;
 			topText.text = "Mach dich bereit für " + SceneManager.GetActiveScene ().name + "!";
-			topText.fontSize = 100;
+			topText.fontSize = 70;
 			middleText.text = "Drücke A zum Starten!";
 			break;
 		case "countdown":
+			startScreenRatingInfos.SetActive (false);
 			helpText.enabled = false;
 			transparentScreen.GetComponent<Image> ().color = new Color (col.r, col.g, col.b, 0.8f);
 			player1Box.enabled = false;
@@ -516,9 +536,9 @@ public class GameStatePhoton : MonoBehaviour
 			topText.text = "";
 			topText.fontSize = 200;
 			middleText.text = "";
-
 			break;
 		case "endWait":
+			startScreenRatingInfos.SetActive (false);
 			helpText.enabled = true;
 			transparentScreen.GetComponent<Image> ().color = new Color (col.r, col.g, col.b, 0.95f);
 			player1Box.enabled = false;
@@ -531,10 +551,11 @@ public class GameStatePhoton : MonoBehaviour
 			} else {
 				topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
 			}
-			topText.fontSize = 80;
+			topText.fontSize = 70;
 			middleText.text = "";
 			break;
 		case "endLevelReady":
+			startScreenRatingInfos.SetActive (false);
 			helpText.enabled = true;
 			transparentScreen.GetComponent<Image> ().color = new Color (col.r, col.g, col.b, 0.95f);
 			player1Box.enabled = true;
@@ -547,7 +568,7 @@ public class GameStatePhoton : MonoBehaviour
 			} else {
 				topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
 			}
-			topText.fontSize = 80;
+			topText.fontSize = 70;
 			middleText.text = "Drücke A zum Fortfahren!";
 			break;
 		}

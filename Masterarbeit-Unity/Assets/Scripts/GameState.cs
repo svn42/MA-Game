@@ -511,7 +511,7 @@ public class GameState : MonoBehaviour
 			player1Box.enabled = true;
 			player2Box.enabled = true;
 			topText.text = "Mach dich bereit für " + SceneManager.GetActiveScene ().name + "!";
-			topText.fontSize = 100;
+			topText.fontSize = 70;
 			middleText.text = "Drücke A zum Starten!";
 			break;
 		case "countdown":
@@ -537,7 +537,7 @@ public class GameState : MonoBehaviour
 			} else {
 				topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
 			}
-			topText.fontSize = 80;
+			topText.fontSize = 70;
 			middleText.text = "";
 			break;
 		case "endLevelReady":
@@ -553,7 +553,7 @@ public class GameState : MonoBehaviour
 			} else {
 				topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
 			}
-			topText.fontSize = 80;
+			topText.fontSize = 70;
 			middleText.text = "Drücke A zum Fortfahren!";
 			break;
 		}
