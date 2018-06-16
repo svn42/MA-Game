@@ -16,6 +16,7 @@ public class MainMenu : MonoBehaviour
 	public Button tutorialButton;
 	public Button localGameButton;
 	public Button onlineGameButton;
+	public Button disconnectButton;
 	public GameObject waitForPlayer;
 
 	public GameObject passwortErrorText;
@@ -78,6 +79,8 @@ public class MainMenu : MonoBehaviour
 	{
 		mainMenu.SetActive (false);
 		waitForPlayer.GetComponent<Text> ().enabled = true;
+		disconnectButton.interactable = true;
+		disconnectButton.gameObject.SetActive (true);
 		PhotonNetwork.JoinRandomRoom();
 
 	}
@@ -86,10 +89,6 @@ public class MainMenu : MonoBehaviour
 		PhotonNetwork.CreateRoom(null);
 	}		
 
-	void OnJoinedRoom()
-	{
-	} 
-
 
 	void OnPhotonPlayerConnected(PhotonPlayer newPlayer){
 		if (PhotonNetwork.playerList.Length == 2) {
@@ -97,6 +96,14 @@ public class MainMenu : MonoBehaviour
 			PhotonNetwork.LoadLevel ("Level 1_photon");
 			}
 		}
+	}
+
+	public void RestartLobby(){
+		PhotonNetwork.Disconnect ();
+		waitForPlayer.GetComponent<Text> ().enabled = false;
+		mainMenu.SetActive (true);
+		disconnectButton.interactable = false;
+		disconnectButton.gameObject.SetActive (false);
 	}
 
 	public void QuitGame ()
