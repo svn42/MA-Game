@@ -32,7 +32,7 @@ public class ExportData : MonoBehaviour
 
     }
 
-    public void FindPlayerLogging(string type)
+   /* public void FindPlayerLogging()
     {
        
             GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
@@ -51,7 +51,7 @@ public class ExportData : MonoBehaviour
             }
 
         
-    }
+    } */
 
     public void StartUpExportData()
     {
@@ -74,7 +74,7 @@ public class ExportData : MonoBehaviour
 
     }
 
-    public void ExportAllData()
+	public void ExportAllData(PlayerLogging activePlayerLogging)
     {
         //Erzeugt den Ordner, falls er noch nicht vorhanden
         if (!Directory.Exists("ResearchData/csv/"))
@@ -100,6 +100,10 @@ public class ExportData : MonoBehaviour
 
                 newFile.Write("Rating;");
                 newFile.Write("Rating_Gegner;");
+
+				//Gesamtergebnis
+				newFile.Write(sceneNameAbbreviation + "_Siege_Spieler1;");
+				newFile.Write(sceneNameAbbreviation + "_Siege_Spieler2;");
 
                 //distance
                 newFile.Write(sceneNameAbbreviation + "_Totale_Bewegung;");
@@ -369,8 +373,7 @@ public class ExportData : MonoBehaviour
         //Schreibt Daten in die .csv-Datei
         using (StreamWriter file = File.AppendText(path))
         {
-            WritePlayerLoggingData(file, playerLoggingPlayer1);
-            WritePlayerLoggingData(file, playerLoggingPlayer2);
+			WritePlayerLoggingData(file, activePlayerLogging);
         }
 
     }
@@ -388,6 +391,10 @@ public class ExportData : MonoBehaviour
 
         file.Write(pL.rating + ";");
         file.Write(pL.ratingEnemy + ";");
+
+		//Gesamtergebnis
+		file.Write(PlayerPrefs.GetInt("WinsP1") + ";");
+		file.Write(PlayerPrefs.GetInt("WinsP2") + ";");
 
         //Bewegung
         file.Write(pL.distanceTravelled + ";");

@@ -62,6 +62,8 @@ public class MainMenu : MonoBehaviour
 
 	public void StartOnlineGame ()
 	{
+		PlayerPrefs.SetInt ("WinsP1", 0);
+		PlayerPrefs.SetInt ("WinsP2", 0);
 		PlayerPrefs.SetString ("GameType", "Online");
 		PhotonNetwork.ConnectUsingSettings ("v01");
 		PhotonNetwork.player.NickName = PlayerPrefs.GetInt ("VP").ToString();

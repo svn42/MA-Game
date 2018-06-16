@@ -159,7 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameType: Online
   maximumBalls: 2
-  goalLimit: 3
+  goalLimit: 1
   timeLeft: 120
   goalFreezeTime: 2
   goalsTeam1: 0
@@ -172,12 +172,15 @@ MonoBehaviour:
   startCountdownActivated: 1
   player1: {fileID: 0}
   player2: {fileID: 0}
+  activePlayer: {fileID: 0}
   player1Script: {fileID: 0}
   player2Script: {fileID: 0}
   player1VP: 0
   player2VP: 0
   player1Rating: 0
   player2Rating: 0
+  winsP1: 0
+  winsP2: 0
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
   allPlayersLoggedIn: 0
@@ -2484,7 +2487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.12575649, g: 0.12748009, b: 0.16981131, a: 1}
+  m_Color: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4271,7 +4274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.12575649, g: 0.12748009, b: 0.16981131, a: 1}
+  m_Color: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

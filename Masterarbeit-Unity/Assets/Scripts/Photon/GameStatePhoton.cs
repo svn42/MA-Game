@@ -64,6 +64,7 @@ public class GameStatePhoton : MonoBehaviour
 	//playerinformation
 	public GameObject player1;
 	public GameObject player2;
+	public GameObject activePlayer; 
 	public PlayerPhoton player1Script;
 	public PlayerPhoton player2Script;
 	private PlayerLogging playerLoggingP1;
@@ -73,6 +74,9 @@ public class GameStatePhoton : MonoBehaviour
 	public int player1Rating;
 	public int player2Rating;
 
+	//Endergebnis
+	public int winsP1;
+	public int winsP2;
 
 	public GlobalTimer globalTimer;
 	//Audios
@@ -89,9 +93,7 @@ public class GameStatePhoton : MonoBehaviour
 	public AudioSource musicPlayer;
 
 	public bool allPlayersLoggedIn;
-
 	public bool gameStarted;
-
 	private int helpOrderedBy;
 
 	//networking
@@ -113,7 +115,8 @@ public class GameStatePhoton : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-
+		winsP1= PlayerPrefs.GetInt ("WinsP1");
+		winsP2= PlayerPrefs.GetInt ("WinsP2");
 		InstantiatePlayers ();
 
 		timeLeft += 0.05f;
@@ -295,6 +298,7 @@ public class GameStatePhoton : MonoBehaviour
 			startScreenRatingp1.text = player1Rating.ToString ();
 			float boxSize1 = ((float)425 / (float)3000 * (float)player1Rating);
 			startScreenRatingBoxP1.transform.localScale = new Vector3 (1, boxSize1, 1); 
+			PlayerPrefs.SetInt ("TempRatingP1", player1Rating);
 			break;
 		case 2: 
 		//	vpnTeam2.text = "VP: " + player2VP.ToString();
@@ -302,6 +306,7 @@ public class GameStatePhoton : MonoBehaviour
 			startScreenRatingp2.text = player2Rating.ToString();
 			float boxSize2 = ((float)425 / (float)3000 * (float)player2Rating);
 			startScreenRatingBoxP2.transform.localScale = new Vector3 (1, boxSize2, 1); 
+			PlayerPrefs.SetInt ("TempRatingP2",player2Rating);
 			break;
 		}
 
@@ -466,6 +471,7 @@ public class GameStatePhoton : MonoBehaviour
 			musicPlayer.Play ();
 			if (player1.GetComponent<PhotonView> ().isMine) {	//für den aktiven Spieler werden die Informationen des anderen Spielers gesetzt
 				player1.GetComponent<PhotonView> ().RPC ("SetPlayerInformation", PhotonTargets.All, player2.name, 1);
+				activePlayer = player1;
 				//player1.GetComponent<PlayerPhoton> ().SetPlayerInformation (player2.name, 1);
 			}
 			
@@ -473,6 +479,7 @@ public class GameStatePhoton : MonoBehaviour
 			player1Script = player1.GetComponent<PlayerPhoton> ();
 			if (player2.GetComponent<PhotonView> ().isMine) {	//für den aktiven Spieler werden die Informationen des anderen Spielers gesetzt
 				player2.GetComponent<PhotonView> ().RPC ("SetPlayerInformation", PhotonTargets.All, player1.name, 2);
+				activePlayer = player2;
 				//player2.GetComponent<PlayerPhoton> ().SetPlayerInformation (player1.name, 2);
 			}
 
@@ -585,15 +592,17 @@ public class GameStatePhoton : MonoBehaviour
 
 	public void EndScene ()
 	{
+		SetFinalResult ();
 		levelEnded = true;
 		BuildPauseScreen ("endWait");
 		globalTimer.SetEndTime ();
+		activePlayer.GetComponent<PlayerPhoton> ().CalculateLogData (endingCondition, gameType);
 	//	player1Script.CalculateLogData (endingCondition, gameType);
 	//	player2Script.CalculateLogData (endingCondition, gameType);
-	//	ExportData exportData = (ExportData)FindObjectOfType (typeof(ExportData));
-	//	exportData.StartUpExportData ();
-	//	exportData.FindPlayerLogging (gameType);
-	//	exportData.ExportAllData ();
+		ExportData exportData = (ExportData)FindObjectOfType (typeof(ExportData));
+		exportData.StartUpExportData ();
+		//exportData.FindPlayerLogging ();
+		exportData.ExportAllData (activePlayer.GetComponent<PlayerLogging>());
 
 	}
 
@@ -663,14 +672,27 @@ public class GameStatePhoton : MonoBehaviour
 		SetGUIPlayerInformation (playerTeam);
 	}
 
+	void SetFinalResult(){
+		if (goalsTeam1 == goalLimit){
+			winsP1++;
+			PlayerPrefs.SetInt ("WinsP1", winsP1); 
+		} else if (goalsTeam2 == goalLimit){
+			winsP2++;
+			PlayerPrefs.SetInt ("WinsP2", winsP2); 
+		}
+			
+	}
 
-	/*public void FindPlayer(){
+	/*private GameObject FindActivePlayer(){
 		GameObject[] playerList = GameObject.FindGameObjectsWithTag ("Player");
 		foreach(GameObject go in playerList) {
-			go.GetComponent<PlayerPhoton> (). ();
+			if (go.GetComponent<PhotonView> ().isMine) {
+				return go;
+			}
 		}
 	}
 	*/
+
 
 
 }
