@@ -23,7 +23,9 @@ public class BlockTutorial : MonoBehaviour
         health = 3;
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
-
+		if (tutorialGameState.challengeType.Equals("Goalkeeper")){
+			Invoke ("DestroyBlock", 8);	//damit die Spieler sich nicht in der GoalkeeperChallenge verbarrikadieren, wird der Block dort nach 8 Sekunden zerstört
+		}
     }
 
     // Update is called once per frame

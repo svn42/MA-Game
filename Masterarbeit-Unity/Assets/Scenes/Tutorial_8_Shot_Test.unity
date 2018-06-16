@@ -1088,7 +1088,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Schie\xDFe mit der gr\xFCnen A-Taste jeden Schuss jeweils 3 mal. F\xFCr
+  m_Text: "Schie\xDFe mit der gr\xFCnen A-Taste jeden Schusstyp jeweils 3 mal. F\xFCr
     den mittleren und den gro\xDFen Schuss musst du die Taste l\xE4nger gedr\xFCckt
     halten."
 --- !u!222 &430686465
@@ -1644,6 +1644,7 @@ MonoBehaviour:
   depauseCountdown: 3
   startCountdownActivated: 1
   rating: 0
+  maxRating: 0
   vpNummer: 0
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
@@ -1652,8 +1653,9 @@ MonoBehaviour:
   tutorialFinishedText2: "Die Sch\xFCsse zu beherrschen ist eine der wichtigsten Eigenschaften
     in Geometry Ball. Bedenke stets, dass deine Sch\xFCsse mit steigender St\xE4rke
     auch st\xE4rkere Auswirkungen auf die getroffenen Objekte haben."
-  pauseScreenText: "Schie\xDFe jeden Schusstyp jeweils 3 mal! Je l\xE4nger du die
-    A-TASTE festh\xE4ltst, desto st\xE4rker werden die Sch\xFCsse."
+  pauseScreenText: "Schie\xDFe mit der gr\xFCnen A-Taste jeden Schusstyp jeweils 3
+    mal. F\xFCr den mittleren und den gro\xDFen Schuss musst du die Taste l\xE4nger
+    gedr\xFCckt halten."
   inverseTime: 0
   showRatingChange: 0
   challengeType: ShotTest
@@ -2532,6 +2534,7 @@ MonoBehaviour:
   shotsHitPlayer: 0
   shotsHitEnemyShot: 0
   shotsDestroyed: 0
+  shotsHitTarget: 0
   totalStunnedByEnemy: 0
   normalStunnedByEnemy: 0
   mediumStunnedByEnemy: 0

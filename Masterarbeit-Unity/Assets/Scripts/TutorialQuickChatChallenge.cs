@@ -49,7 +49,7 @@ public class TutorialQuickChatChallenge : MonoBehaviour
 
 	IEnumerator EndChallenge(){
 		yield return new WaitForSeconds (2);		
-		tutorialGameState.EndChallenge (0);
+		tutorialGameState.EndChallenge (0,0);
 	}
 
 }

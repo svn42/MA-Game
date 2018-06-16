@@ -1639,6 +1639,7 @@ MonoBehaviour:
   depauseCountdown: 3
   startCountdownActivated: 1
   rating: 0
+  maxRating: 0
   vpNummer: 0
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
@@ -1647,7 +1648,7 @@ MonoBehaviour:
   tutorialFinishedText2: "Mit den Bl\xF6cken kannst du den Gegner behindern und verhindern,
     dass B\xE4lle in dein Tor gehen."
   pauseScreenText: "Platziere 3 Bl\xF6cke an beliebigen Stellen auf dem Spielfeld,
-    um ein Gef\xFChl f\xFCr das platzieren der Bl\xF6cke zu bekommen. "
+    um ein Gef\xFChl f\xFCr das Platzieren der Bl\xF6cke zu bekommen. "
   inverseTime: 0
   showRatingChange: 0
   challengeType: BlockTest
@@ -2595,6 +2596,7 @@ MonoBehaviour:
   shotsHitPlayer: 0
   shotsHitEnemyShot: 0
   shotsDestroyed: 0
+  shotsHitTarget: 0
   totalStunnedByEnemy: 0
   normalStunnedByEnemy: 0
   mediumStunnedByEnemy: 0

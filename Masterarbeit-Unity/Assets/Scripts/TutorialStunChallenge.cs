@@ -54,7 +54,7 @@ public class TutorialStunChallenge : MonoBehaviour
         }
         else
         {
-            tutorialGameState.EndChallenge(CalculateRating());
+			tutorialGameState.EndChallenge(CalculateRating(), (maxRatingStun+maxRatingTime));
         }
 
     }

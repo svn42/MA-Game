@@ -42,6 +42,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial_8_Shot_Test.unity
     guid: 2943982852b6f3e43a4081b87c02d50f
   - enabled: 1
+    path: Assets/Scenes/Tutorial_9_ShotStatic_Uebung.unity
+    guid: 8354ff518b2f1eb4aafed977e98a3ce8
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_10_ShotDynamic_Uebung.unity
+    guid: 3f99108cb6b53b7449f0bf1936c07522
+  - enabled: 1
     path: Assets/Scenes/Tutorial_11_Block_Intro.unity
     guid: fe444a794cd6ca540b725e93973eb161
   - enabled: 1
@@ -53,6 +59,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorial_14_BlockDestroy_Uebung.unity
     guid: 9feb2d46f074be840904f3906ed096bb
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_15_Ball_Intro.unity
+    guid: d98978bc9b8a79a42b1214464490fda4
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_16_Ball_Uebung_1.unity
+    guid: ceeb4e088efe0e7438007f939bee6ac5
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_17_Ball_Uebung_2.unity
+    guid: d7cc19ea06510884a88043ced3b88ace
+  - enabled: 1
+    path: Assets/Scenes/Tutorial_18_Goalkeeping_Uebung.unity
+    guid: 3190a1e3f8f1bdf49907a0307d6e1fd7
   - enabled: 1
     path: Assets/Scenes/Tutorial_19_QuickChat_Intro.unity
     guid: 20ec551e207dd6845a1b04ff594edc1c

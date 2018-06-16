@@ -55,7 +55,7 @@ public class ShotChallenge : MonoBehaviour {
 		}
 		else
 		{
-			tutorialGameState.EndChallenge(CalculateRating());
+			tutorialGameState.EndChallenge(CalculateRating(), (maxRatingTime+maxRatingAccuracy));
 		}
 
 	}

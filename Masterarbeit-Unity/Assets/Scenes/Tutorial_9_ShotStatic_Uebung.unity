@@ -1472,7 +1472,7 @@ MonoBehaviour:
     Sch\xFCssen abschie\xDFen musst. Die Farbe des Ziels zeigt dir dabei an, welchen
     Schusstypen du daf\xFCr verwenden musst. \nDu wirst dich bei dieser \xDCbung nicht
     bewegen k\xF6nnen!\n\n\t\t- Gr\xFCn = normaler Schuss;\n\t\t- Gelb = mittlerer
-    Schuss; \n\t\t- Rot = Gro\xDFer Schuss"
+    Schuss; \n\t\t- Rot = gro\xDFer Schuss"
 --- !u!222 &430686465
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2134,6 +2134,7 @@ MonoBehaviour:
   depauseCountdown: 3
   startCountdownActivated: 1
   rating: 0
+  maxRating: 0
   vpNummer: 0
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
@@ -3624,8 +3625,8 @@ MonoBehaviour:
   - {fileID: 1776400471}
   - {fileID: 1518241684}
   - {fileID: 1777044076}
-  maxRatingTime: 75
-  maxRatingAccuracy: 125
+  maxRatingTime: 125
+  maxRatingAccuracy: 175
   bestTime: 45
   ratingTimeInt: 0
   ratingAccuracyInt: 0

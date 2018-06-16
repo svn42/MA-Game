@@ -58,6 +58,6 @@ public class TutorialShotTest : MonoBehaviour {
 
 	IEnumerator EndChallenge(){
 		yield return new WaitForSeconds (1);		
-		tutorialGameState.EndChallenge (0);
+		tutorialGameState.EndChallenge (0,0);
 	}
 }

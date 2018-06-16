@@ -12,12 +12,13 @@ public class TutorialStopAndGo : MonoBehaviour
     void Start()
     {
         tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
+		SetUpZones();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        SetUpZones();
     }
 
     public void SetUpZones()
@@ -42,7 +43,7 @@ public class TutorialStopAndGo : MonoBehaviour
             zones[0].SetActive(true);
         } else
         {
-            tutorialGameState.EndChallenge(CalculateRating());
+			tutorialGameState.EndChallenge(CalculateRating(), maxRating);
         }
 
     }

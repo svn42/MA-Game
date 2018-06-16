@@ -1870,38 +1870,6 @@ Prefab:
       propertyPath: m_Name
       value: CannonNormal (11)
       objectReference: {fileID: 0}
-    - target: {fileID: 4781580886788440, guid: 99d8ce88e7f159440a6e3774aafa25e3, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -90.04101
-      objectReference: {fileID: 0}
-    - target: {fileID: 114352290375589026, guid: 99d8ce88e7f159440a6e3774aafa25e3,
-        type: 2}
-      propertyPath: shotIntervall
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 212601659553836766, guid: 99d8ce88e7f159440a6e3774aafa25e3,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.3490566
-      objectReference: {fileID: 0}
-    - target: {fileID: 212601659553836766, guid: 99d8ce88e7f159440a6e3774aafa25e3,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.3490566
-      objectReference: {fileID: 0}
-    - target: {fileID: 212601659553836766, guid: 99d8ce88e7f159440a6e3774aafa25e3,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0.3490566
-      objectReference: {fileID: 0}
-    - target: {fileID: 4781580886788440, guid: 99d8ce88e7f159440a6e3774aafa25e3, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.34285718
-      objectReference: {fileID: 0}
-    - target: {fileID: 4781580886788440, guid: 99d8ce88e7f159440a6e3774aafa25e3, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.119174875
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 99d8ce88e7f159440a6e3774aafa25e3, type: 2}
   m_IsPrefabParent: 0
@@ -4512,7 +4480,7 @@ MonoBehaviour:
   ratingTimeInt: 0
   ratingStunFloat: 0
   ratingStunInt: 0
-  bestTime: 35
+  bestTime: 38
 --- !u!114 &1125116396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4534,6 +4502,7 @@ MonoBehaviour:
   shotsHitPlayer: 0
   shotsHitEnemyShot: 0
   shotsDestroyed: 0
+  shotsHitTarget: 0
   totalStunnedByEnemy: 0
   normalStunnedByEnemy: 0
   mediumStunnedByEnemy: 0
@@ -6090,51 +6059,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4276415364034012, guid: d30c2343482387044b3765a1cd29e2cd, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4276415364034012, guid: d30c2343482387044b3765a1cd29e2cd, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4567733435146442, guid: d30c2343482387044b3765a1cd29e2cd, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 320
-      objectReference: {fileID: 0}
-    - target: {fileID: 114281856500636514, guid: d30c2343482387044b3765a1cd29e2cd,
-        type: 2}
-      propertyPath: shotIntervall
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 114281856500636514, guid: d30c2343482387044b3765a1cd29e2cd,
-        type: 2}
-      propertyPath: startShooting
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 212100627516207680, guid: d30c2343482387044b3765a1cd29e2cd,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.3490566
-      objectReference: {fileID: 0}
-    - target: {fileID: 212100627516207680, guid: d30c2343482387044b3765a1cd29e2cd,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.3490566
-      objectReference: {fileID: 0}
-    - target: {fileID: 212100627516207680, guid: d30c2343482387044b3765a1cd29e2cd,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0.3490566
-      objectReference: {fileID: 0}
-    - target: {fileID: 4567733435146442, guid: d30c2343482387044b3765a1cd29e2cd, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.3428572
-      objectReference: {fileID: 0}
-    - target: {fileID: 4567733435146442, guid: d30c2343482387044b3765a1cd29e2cd, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.30457175
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d30c2343482387044b3765a1cd29e2cd, type: 2}
   m_IsPrefabParent: 0
@@ -7040,43 +6964,6 @@ Prefab:
     - target: {fileID: 1010805000904384, guid: 1c7c8b426d4b15149850879ec9970913, type: 2}
       propertyPath: m_Name
       value: CannonMedium 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4772755134774040, guid: 1c7c8b426d4b15149850879ec9970913, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997896294456076, guid: 1c7c8b426d4b15149850879ec9970913,
-        type: 2}
-      propertyPath: shotIntervall
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997896294456076, guid: 1c7c8b426d4b15149850879ec9970913,
-        type: 2}
-      propertyPath: startShooting
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 212342588713537488, guid: 1c7c8b426d4b15149850879ec9970913,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.3490566
-      objectReference: {fileID: 0}
-    - target: {fileID: 212342588713537488, guid: 1c7c8b426d4b15149850879ec9970913,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.3490566
-      objectReference: {fileID: 0}
-    - target: {fileID: 212342588713537488, guid: 1c7c8b426d4b15149850879ec9970913,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0.3490566
-      objectReference: {fileID: 0}
-    - target: {fileID: 4772755134774040, guid: 1c7c8b426d4b15149850879ec9970913, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.34285712
-      objectReference: {fileID: 0}
-    - target: {fileID: 4772755134774040, guid: 1c7c8b426d4b15149850879ec9970913, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.22142856
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1c7c8b426d4b15149850879ec9970913, type: 2}

@@ -45,7 +45,7 @@ public class TutorialBlockPlacementChallenge : MonoBehaviour {
 			zones[0].SetActive(true);
 		} else
 		{
-			tutorialGameState.EndChallenge(CalculateRating());
+			tutorialGameState.EndChallenge(CalculateRating(), maxRating);
 		}
 	}
 

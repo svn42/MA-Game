@@ -145,7 +145,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -56}
+  m_AnchoredPosition: {x: 0, y: -27}
   m_SizeDelta: {x: 1600, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2418732
@@ -1281,7 +1281,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000030518, y: -144}
+  m_AnchoredPosition: {x: -0.000030518, y: -107}
   m_SizeDelta: {x: 970.7, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &430686464
@@ -1318,7 +1318,8 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "Platziere deine Bl\xF6cke so, dass sie die orangenen Zonen ber\xFChren.
     \nBeachte dabei, dass du dich w\xE4hrend und nach dem Aufladen des Blocks noch
-    bewegen kannst, um den Block zu platzieren!"
+    bewegen kannst, um den Block zu platzieren!\n\nWenn dich deine eigenen Bl\xF6cke
+    beim Erreichen einer Zone behindern, zerschie\xDFe sie einfach!"
 --- !u!222 &430686465
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1764,6 +1765,7 @@ MonoBehaviour:
   depauseCountdown: 3
   startCountdownActivated: 1
   rating: 0
+  maxRating: 0
   vpNummer: 0
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
@@ -1773,7 +1775,8 @@ MonoBehaviour:
     ein."
   pauseScreenText: "Platziere deine Bl\xF6cke so, dass sie die orangenen Zonen ber\xFChren.
     \ Beachte dabei, dass du dich w\xE4hrend und nach dem Aufladen des Blocks noch
-    bewegen kannst, um den Block zu platzieren!"
+    bewegen kannst, um den Block zu platzieren!  Wenn dich deine eigenen Bl\xF6cke
+    beim Erreichen einer Zone behindern, zerschie\xDFe sie einfach!"
   inverseTime: 1
   showRatingChange: 1
   challengeType: BlockPlacement
@@ -2754,7 +2757,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000022888, y: 30}
+  m_AnchoredPosition: {x: 0.000022888, y: -5}
   m_SizeDelta: {x: 800, y: 118.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1096885117
@@ -2939,7 +2942,7 @@ MonoBehaviour:
   - {fileID: 1147239847}
   - {fileID: 2072486206}
   maxRating: 300
-  bestTime: 25
+  bestTime: 30
 --- !u!114 &1125116396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2961,6 +2964,7 @@ MonoBehaviour:
   shotsHitPlayer: 0
   shotsHitEnemyShot: 0
   shotsDestroyed: 0
+  shotsHitTarget: 0
   totalStunnedByEnemy: 0
   normalStunnedByEnemy: 0
   mediumStunnedByEnemy: 0
@@ -3278,7 +3282,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -68.6}
-  m_SizeDelta: {x: 1102.7, y: 476.6}
+  m_SizeDelta: {x: 1102.7, y: 520.4}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1242853794
 MonoBehaviour:
@@ -4690,7 +4694,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030517578, y: -206}
+  m_AnchoredPosition: {x: 0.000030517578, y: -264}
   m_SizeDelta: {x: 970.7, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2047111639

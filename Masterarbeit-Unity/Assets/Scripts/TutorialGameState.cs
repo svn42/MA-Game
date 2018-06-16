@@ -10,6 +10,7 @@ public class TutorialGameState : MonoBehaviour
     public string gameType;
     public int maximumBalls;
     public int goalLimit;
+	private int totalGoalsScored;
     public float timeLeft;
     public float timePlayed;
     public float goalFreezeTime;
@@ -45,6 +46,7 @@ public class TutorialGameState : MonoBehaviour
     public bool startCountdownActivated;    //regelt, ob der Startbildschirm mit dem Countdown angezeigt werden soll
 
     public int rating;
+	public int maxRating;
     public int vpNummer;
 
     public GlobalTimer globalTimer;
@@ -164,7 +166,8 @@ public class TutorialGameState : MonoBehaviour
 
     //Wenn ein Ball mit dem entsprechendem Goal-Collider in Berührung kommt, wird dem anderen Team ein Tor zugeschrieben.
     public void GoalScored(string goal, int scoredByTeamNr)
-    {
+	{
+		totalGoalsScored++;
         PlaySound(soundGoalHorn, 0.3f);
         if (goal.Equals("Goal1"))
         {
@@ -182,9 +185,7 @@ public class TutorialGameState : MonoBehaviour
         {
             goalsTeam1++;
             // SetGoalCount("Team1");
-			if (challengeType.Equals ("ScoreGoals")) {
-				FindObjectOfType<ScoreGoalsChallenge> ().RemoveObjects ();
-			}
+
 
             //Logging
             if (scoredByTeamNr == 1)
@@ -194,6 +195,13 @@ public class TutorialGameState : MonoBehaviour
             {
             }
         }
+		if (challengeType.Equals ("ScoreGoals")) {
+			FindObjectOfType<ScoreGoalsChallenge> ().RemoveObjects ();
+		}
+		if (challengeType.Equals ("Goalkeeper")) {
+			FindObjectOfType<GoalkeeperChallenge> ().AddGoal();
+		}
+			
         CheckGoalLimit();
 
     }
@@ -259,13 +267,19 @@ public class TutorialGameState : MonoBehaviour
 
     private void CheckGoalLimit()
     {
-        if (goalsTeam1 == goalLimit || goalsTeam2 == goalLimit)
+        if (goalsTeam1 == goalLimit || goalsTeam2 == goalLimit )
         {
             SetGamePaused(true, "end");
         }
         else
         {
+			if ((challengeType.Equals ("ScoreGoals") && (totalGoalsScored == 3))) {
+				return;
+			}
+
+			Debug.Log ("tore erzielt: "+ totalGoalsScored);
             StartCoroutine(GoalFreeze());
+
         }
     }
 
@@ -369,9 +383,9 @@ public class TutorialGameState : MonoBehaviour
 
     IEnumerator GoalFreeze()
     {
-        Time.timeScale = 0.1f;
+		Time.timeScale = 0.1f;
         yield return new WaitForSeconds(goalFreezeTime * Time.timeScale);
-        Time.timeScale = 1;
+		Time.timeScale = 1;
     }
 
     IEnumerator StartDepauseCountdown(int countdown)
@@ -458,7 +472,7 @@ public class TutorialGameState : MonoBehaviour
                 middleText.text = tutorialFinishedText2;
                 if (showRatingChange)
                 {
-                    bottomText.text = " Rating: +" + rating;
+				bottomText.text = " Rating: +" + rating + " von maximal "+ maxRating;
                 }
                 break;
             case "endLevelReady":
@@ -473,7 +487,7 @@ public class TutorialGameState : MonoBehaviour
                 topText.fontSize = 80;
                 if (showRatingChange)
                 {
-                    bottomText.text = " Rating: +" + rating;
+				bottomText.text = " Rating: +" + rating + " von maximal "+ maxRating;
                 }
 
                 break;
@@ -518,10 +532,11 @@ public class TutorialGameState : MonoBehaviour
 
     }
 
-	public void EndChallenge(int challengeRating)
+	public void EndChallenge(int challengeRating, int maximum)
     {
         PlaySound(soundWhistle, 0.4f);
         rating = challengeRating;
+		maxRating = maximum;
         SetGamePaused(true, "end");
     }
 

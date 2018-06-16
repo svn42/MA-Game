@@ -35,7 +35,7 @@ public class TutorialBlockDestroyChallenge : MonoBehaviour {
 		}
 		if (blockList.Count == 0)
 		{
-			tutorialGameState.EndChallenge(CalculateRating());
+			tutorialGameState.EndChallenge(CalculateRating(), (maxRatingTime+maxRatingAccuracy));
 		} 
 	}
 
