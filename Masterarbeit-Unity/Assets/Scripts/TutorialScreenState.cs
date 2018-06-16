@@ -51,7 +51,7 @@ public class TutorialScreenState : MonoBehaviour
                 {
                     PlayerPrefs.SetString(vpNummer.ToString() + "TutorialSolved", "Yes");
                     PlayerPrefs.SetInt("CurrentVP", vpNummer);
-                    StartCoroutine(LoadNextScene("MainMenu"));
+                    StartCoroutine(LoadNextScene("GutscheinScreen"));
                 }
                 else
                 {

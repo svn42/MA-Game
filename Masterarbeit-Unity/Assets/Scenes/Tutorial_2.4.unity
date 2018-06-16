@@ -418,9 +418,10 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1.25
   m_Text: "Nachdem du nun theoretisch bestens vorbereitet bist, k\xF6nnen wir zum
-    praktischen Teil kommen und dich f\xFCr das Spiel fit machen. Strenge dich bei
-    den \xDCbungen an, damit das sp\xE4tere Rating dein K\xF6nnen m\xF6glichst pr\xE4zise
-    wiederspiegelt!\n"
+    praktischen Teil kommen und dich f\xFCr das Spiel fit machen. \n\nStrenge dich
+    bei den \xDCbungen an, damit das sp\xE4tere Rating dein K\xF6nnen m\xF6glichst
+    pr\xE4zise wiederspiegelt! Au\xDFerdem hast du mit einem besseren Rating eine
+    h\xF6here Wahrscheinlichkeit, einen Gutschein zu gewinnen.\n"
 --- !u!222 &430686465
 CanvasRenderer:
   m_ObjectHideFlags: 0

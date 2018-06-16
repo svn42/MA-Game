@@ -63,10 +63,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial_15_Ball_Intro.unity
     guid: d98978bc9b8a79a42b1214464490fda4
   - enabled: 1
-    path: Assets/Scenes/Tutorial_16_Ball_Uebung_1.unity
+    path: Assets/Scenes/Tutorial_16_ScoreGoals_Uebung_1.unity
     guid: ceeb4e088efe0e7438007f939bee6ac5
   - enabled: 1
-    path: Assets/Scenes/Tutorial_17_Ball_Uebung_2.unity
+    path: Assets/Scenes/Tutorial_17_ScoreGoals_Uebung_2.unity
     guid: d7cc19ea06510884a88043ced3b88ace
   - enabled: 1
     path: Assets/Scenes/Tutorial_18_Goalkeeping_Uebung.unity
@@ -95,6 +95,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 2_photon.unity
     guid: 6a519d5b4ca6bd94fbd3edeb3b6cc57b
+  - enabled: 1
+    path: Assets/Scenes/GutscheinScreen.unity
+    guid: 603db32a70bee5c4099c0bd46c5a68be
   - enabled: 1
     path: Assets/Scenes/GameEnd.unity
     guid: e2a5f3c32cda88b4ebc62553b66a840e

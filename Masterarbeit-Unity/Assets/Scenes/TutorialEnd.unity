@@ -326,7 +326,7 @@ MonoBehaviour:
   rating: 0
   vpNummer: 0
   screenSkipable: 0
-  skipableTime: 0
+  skipableTime: 5
 --- !u!1 &440384014
 GameObject:
   m_ObjectHideFlags: 0
