@@ -154,7 +154,7 @@ public class ShotSpawnerPhoton : MonoBehaviour
         //wenn das Ziel erreicht wurde und der ShotSpawner nicht kollidiert
         if (spawnNormalShot && spawnable)
         {
-            GameObject shot = Instantiate(normalShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
+			GameObject shot = PhotonNetwork.Instantiate ("ShotNormalPhoton", chargingShotSprite.transform.position, this.transform.rotation,0);  //wird der Shot aus dem Prefab instanziiert
             spawnNormalShot = false;
             playerLogging.AddShot("normal");
             SetShotProperties(shot);

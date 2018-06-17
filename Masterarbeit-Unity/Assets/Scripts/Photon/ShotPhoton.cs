@@ -191,7 +191,7 @@ public class ShotPhoton : MonoBehaviour
 
     public void DestroyShot()
     {
-        GameObject go = Instantiate(shotDestructionPrefab, transform.position, transform.rotation);  //Die Zerstörungsanimation des Shots wird  instanziiert
+		GameObject go = PhotonNetwork.Instantiate("ShotNormalDestruction", transform.position, transform.rotation, 0);  //Die Zerstörungsanimation des Shots wird  instanziiert
         go.GetComponent<ShotDestruction>().SetColor(spriteRenderer.color);
         Destroy(gameObject);
     }

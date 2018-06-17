@@ -35,7 +35,7 @@ public class BallSpawnerPhoton : MonoBehaviour
         ballPosition = this.transform.position - new Vector3(0,0,0.01f);
         ballRotation = new Quaternion(0, 0, 0, 0);
         //Zu Beginn einer Partie wird der erste Ball gespawnt
-        StartCoroutine(SpawnBall(0, false));    //der erste Ball wird ohne Sound gespawnt
+		StartCoroutine(SpawnBall(0, false));    //der erste Ball wird ohne Sound gespawnt
         audioSource = GetComponent<AudioSource>();
         soundSpawnBall = Resources.Load<AudioClip>("Sounds/ball_spawn");
         soundInflateBall = Resources.Load<AudioClip>("Sounds/inflate_ball");
@@ -75,21 +75,21 @@ public class BallSpawnerPhoton : MonoBehaviour
 
     public IEnumerator SpawnBall(float time, bool soundOn)
     {
-        StartCoroutine(InflateBall(time));
-        if (soundOn)
-        {
-            PlaySound(soundInflateBall, 0.2f);
-        }
-        yield return new WaitForSeconds(time);
-        //wird ein neuer Ball gespawnt und als "neuester Ball" markiert
-        lastSpawnedBall = Instantiate(ballPrefab, ballPosition, ballRotation);
-        if (soundOn)
-        {
-            PlaySound(soundSpawnBall, 0.25f);
-        }
-        //der Mittelkreis wird zudem als vom neuesten Ball blockiert markiert
-        centerCircleBlocked = true;
-        SetSpawnBlocked(false);
+		if (PhotonNetwork.isMasterClient) {
+			StartCoroutine (InflateBall (time));
+			if (soundOn) {
+				PlaySound (soundInflateBall, 0.2f);
+			}
+			yield return new WaitForSeconds (time);
+			//wird ein neuer Ball gespawnt und als "neuester Ball" markiert
+			lastSpawnedBall = PhotonNetwork.Instantiate ("BallPrefabPhoton", ballPosition, ballRotation, 0);
+			if (soundOn) {
+				PlaySound (soundSpawnBall, 0.25f);
+			}
+			//der Mittelkreis wird zudem als vom neuesten Ball blockiert markiert
+			centerCircleBlocked = true;
+			SetSpawnBlocked (false);
+		}
     }
 
     public void SetSpawnBlocked(bool b)

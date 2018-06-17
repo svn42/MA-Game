@@ -35,7 +35,6 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 			
-		Debug.Log (PhotonNetwork.sendRate);
 			if (!photonView.isMine) {
 			realPosition = playerScript.transform.position;
 			realRotation = playerScript.transform.rotation;
@@ -44,8 +43,6 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 
 			transform.position = Vector3.Lerp(transform.position, realPosition + (predictionCoeff * velocity * Time.deltaTime), Time.deltaTime);
 			transform.rotation = Quaternion.Lerp(transform.rotation, realRotation, Time.deltaTime);
-		//	transform.position = Vector3.Lerp(this.transform.position, realPosition, Time.deltaTime * 100);
-		//	transform.rotation = Quaternion.Lerp(this.transform.rotation, realRotation, Time.deltaTime * 100);
 				}
 
 	}
