@@ -59,4 +59,8 @@ MonoBehaviour:
   - CheckSpawnBall
   - CheckExhaust
   - SetColor
+  - SetPlayerTeam
+  - SetShotID
+  - SetShotName
+  - StartSpawnBall
   DisableAutoOpenWizard: 1

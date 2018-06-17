@@ -159,7 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameType: Online
   maximumBalls: 2
-  goalLimit: 1
+  goalLimit: 3
   timeLeft: 120
   goalFreezeTime: 2
   goalsTeam1: 0

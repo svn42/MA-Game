@@ -162,7 +162,7 @@ public class ShotSpawnerPhoton : MonoBehaviour
         }
         else if (spawnMediumShot && spawnable)
         {
-            GameObject shot = Instantiate(mediumShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
+			GameObject shot = PhotonNetwork.Instantiate ("ShotMediumPhoton", chargingShotSprite.transform.position, this.transform.rotation,0);  //wird der Shot aus dem Prefab instanziiert
             spawnMediumShot = false;
             playerLogging.AddShot("medium");
             SetShotProperties(shot);
@@ -170,7 +170,7 @@ public class ShotSpawnerPhoton : MonoBehaviour
         }
         else if (spawnLargeShot && spawnable)
         {
-            GameObject shot = Instantiate(largeShotPrefab, chargingShotSprite.transform.position, this.transform.rotation);  //wird der Shot aus dem Prefab instanziiert
+			GameObject shot = PhotonNetwork.Instantiate ("ShotLargePhoton", chargingShotSprite.transform.position, this.transform.rotation,0);  //wird der Shot aus dem Prefab instanziiert
             spawnLargeShot = false;
             playerLogging.AddShot("large");
             SetShotProperties(shot);
@@ -187,11 +187,16 @@ public class ShotSpawnerPhoton : MonoBehaviour
     private void SetShotProperties(GameObject shot)
     {
         shotCount++;
-        shot.GetComponent<ShotPhoton>().SetDirection(this.transform.rotation);    //Der Schuss bekommt die Rotation des Spielers übergeben
-		shot.GetComponent<ShotPhoton>().SetColor(shotColor);                      //dessen Farbe
-		shot.GetComponent<ShotPhoton>().SetPlayerTeam(playerTeam);                //dessen Team
-		shot.GetComponent<ShotPhoton>().SetShotID(shotCount);                     //sowie seine ID
-        shot.name = "Shot_" + shotCount + "_Player_" + playerTeam;       //der Name wird aus dem Count und der PlayerID gebaut.
+		string shotName = "Shot_" + shotCount + "_Player_" + playerTeam;       //der Name wird aus dem Count und der PlayerID gebaut.
+		shot.GetComponent<ShotPhoton>().SetDirection(this.transform.rotation);    //Der Schuss bekommt die Rotation des Spielers übergeben
+		shot.GetComponent<PhotonView> ().RPC ("SetColor", PhotonTargets.All, player.colorVector);//dessen Farbe
+		shot.GetComponent<PhotonView> ().RPC ("SetPlayerTeam", PhotonTargets.All, playerTeam); //dessen Team
+		shot.GetComponent<PhotonView> ().RPC ("SetShotID", PhotonTargets.All, shotCount);//sowie seine ID
+
+		shot.GetComponent<PhotonView> ().RPC ("SetShotName", PhotonTargets.All, shotName);
+	//	shot.GetComponent<ShotPhoton>().SetColor(shotColor);                      //dessen Farbe
+	//	shot.GetComponent<ShotPhoton>().SetPlayerTeam(playerTeam);                //dessen Team
+	//	shot.GetComponent<ShotPhoton>().SetShotID(shotCount);                     //sowie seine ID
     }
 
     private void PlaySound(AudioClip ac, float volume)

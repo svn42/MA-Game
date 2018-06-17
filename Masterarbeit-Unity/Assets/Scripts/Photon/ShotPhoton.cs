@@ -191,15 +191,17 @@ public class ShotPhoton : MonoBehaviour
 
     public void DestroyShot()
     {
-		GameObject go = PhotonNetwork.Instantiate("ShotNormalDestruction", transform.position, transform.rotation, 0);  //Die Zerstörungsanimation des Shots wird  instanziiert
+		GameObject go = Instantiate(shotDestructionPrefab, transform.position, transform.rotation);  //Die Zerstörungsanimation des Shots wird  instanziiert
         go.GetComponent<ShotDestruction>().SetColor(spriteRenderer.color);
         Destroy(gameObject);
     }
 
-    public void SetColor(Color col)
+	[PunRPC]
+	public void SetColor(Vector3 colVector)
     {
+		Color colorNew = new Color(colVector.x, colVector.y, colVector.z, 1);
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-		spriteRenderer.color = col;
+		spriteRenderer.color = colorNew;
     }
 
     public Color GetColor()
@@ -208,17 +210,24 @@ public class ShotPhoton : MonoBehaviour
         return spriteRenderer.color;
     }
 
+	[PunRPC]
+	public void SetPlayerTeam(int i)
+	{
+		playerTeam = i;
+	}
 
-    public void SetPlayerTeam(int i)
-    {
-        playerTeam = i;
-    }
+	[PunRPC]
+	public void SetShotName(string name)
+	{
+		gameObject.name = name;
+	}
 
     public int GetPlayerTeam()
     {
         return playerTeam;
     }
 
+	[PunRPC]
     public void SetShotID(int i)
     {
         shotID = i;

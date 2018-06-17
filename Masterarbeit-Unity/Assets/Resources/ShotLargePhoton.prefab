@@ -25,6 +25,8 @@ GameObject:
   - component: {fileID: 60889673301102202}
   - component: {fileID: 96863683274996054}
   - component: {fileID: 82559347254432280}
+  - component: {fileID: 114402522574272916}
+  - component: {fileID: 114662668891296688}
   m_Layer: 0
   m_Name: ShotLargePhoton
   m_TagString: Shot
@@ -298,6 +300,45 @@ MonoBehaviour:
   playerLogging: {fileID: 0}
   shotDestructionPrefab: {fileID: 1605120989468744, guid: 7e0574f22ddfe8b438c97f0aeb6e3ed0,
     type: 2}
+--- !u!114 &114402522574272916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1563098449693252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 114662668891296688}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
+--- !u!114 &114662668891296688
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1563098449693252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
 --- !u!212 &212764447594908098
 SpriteRenderer:
   m_ObjectHideFlags: 1

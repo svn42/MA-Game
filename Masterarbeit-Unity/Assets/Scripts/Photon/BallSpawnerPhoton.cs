@@ -54,7 +54,8 @@ public class BallSpawnerPhoton : MonoBehaviour
         {
             if (!spawnBlocked) //und der spawner nicht durch einen anderen Ball belegt wird
             {
-                StartCoroutine(SpawnBall(ballSpawnDelay, true)); //wird ein neuer Ball gespawnt
+				gameObject.GetComponent<PhotonView> ().RPC ("StartSpawnBall",PhotonTargets.All,ballSpawnDelay,true);
+				//StartCoroutine(SpawnBall(ballSpawnDelay, true)); //wird ein neuer Ball gespawnt
                 SetSpawnBlocked(true);      //und der spawner als belegt markiert
             } 
         }
@@ -73,24 +74,30 @@ public class BallSpawnerPhoton : MonoBehaviour
 
     }
 
+	[PunRPC]
+	public void StartSpawnBall(float time, bool soundOn){
+		StartCoroutine(SpawnBall(time, soundOn)); //wird ein neuer Ball gespawnt
+	}
+
     public IEnumerator SpawnBall(float time, bool soundOn)
     {
-		if (PhotonNetwork.isMasterClient) {
 			StartCoroutine (InflateBall (time));
 			if (soundOn) {
 				PlaySound (soundInflateBall, 0.2f);
 			}
 			yield return new WaitForSeconds (time);
 			//wird ein neuer Ball gespawnt und als "neuester Ball" markiert
+		if (PhotonNetwork.isMasterClient) {
+
 			lastSpawnedBall = PhotonNetwork.Instantiate ("BallPrefabPhoton", ballPosition, ballRotation, 0);
+		}
 			if (soundOn) {
 				PlaySound (soundSpawnBall, 0.25f);
 			}
 			//der Mittelkreis wird zudem als vom neuesten Ball blockiert markiert
 			centerCircleBlocked = true;
 			SetSpawnBlocked (false);
-		}
-    }
+	}
 
     public void SetSpawnBlocked(bool b)
     {

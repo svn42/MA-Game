@@ -70,8 +70,8 @@ public class BallPhoton : MonoBehaviour {
         //Der Ball wird aus der Liste der GameState entfernt
         gameState.RemoveBall(instanceID);
         //Ein neuer Ball wird gespawnt, sofern der Spawn nicht geblockt wird
-      //  ballSpawner.CheckSpawnBall();
-		ballSpawner.gameObject.GetComponent<PhotonView>().RPC("CheckSpawnBall", PhotonTargets.All, ballSpawner.ballSpawnDelay, true);
+        ballSpawner.CheckSpawnBall();
+	//	ballSpawner.gameObject.GetComponent<PhotonView>().RPC("CheckSpawnBall", PhotonTargets.All, ballSpawner.ballSpawnDelay, true);
 
         //Der Ball wird zerstört
         Destroy(this.gameObject);

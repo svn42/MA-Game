@@ -97,7 +97,6 @@ public class PlayerPhoton : MonoBehaviour
 		gameType = gameState.gameType;
 
 		pvGamestate = gameState.gameObject.GetComponent<PhotonView> ();
-		pvPlayer = gameObject.GetComponent<PhotonView> ();
 	}
 
 
@@ -132,7 +131,8 @@ public class PlayerPhoton : MonoBehaviour
 			GameObject[] playerList = GameObject.FindGameObjectsWithTag ("Player");
 
 			if (playerList.Length == 2){
-				
+				pvPlayer = gameObject.GetComponent<PhotonView> ();
+
 			if (pvPlayer.isMine) {
 
 
@@ -625,13 +625,15 @@ public class PlayerPhoton : MonoBehaviour
 	[PunRPC]
 	public void StartPlayerRegistration ()
 	{
-		if (pvPlayer.isMine) {
-			subjectNr = PlayerPrefs.GetInt ("VP");
-			rating = PlayerPrefs.GetInt (subjectNr + "Rating");
-			if (subjectNr % 2 == 0) {
-				playerTeam = 2;
-			} else if (subjectNr % 2 == 1) {
-				playerTeam = 1;
+		if (pvPlayer != null) {
+			if (pvPlayer.isMine) {
+				subjectNr = PlayerPrefs.GetInt ("VP");
+				rating = PlayerPrefs.GetInt (subjectNr + "Rating");
+				if (subjectNr % 2 == 0) {
+					playerTeam = 2;
+				} else if (subjectNr % 2 == 1) {
+					playerTeam = 1;
+				}
 			}
 		}
 	}
