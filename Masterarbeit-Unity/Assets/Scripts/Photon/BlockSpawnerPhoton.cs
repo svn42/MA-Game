@@ -5,7 +5,9 @@ using UnityEngine;
 public class BlockSpawnerPhoton : MonoBehaviour
 {
 
-    Color spawnColor;    //Farbe des spawnenden Blocks
+   // Color spawnColor;    //Farbe des spawnenden Blocks
+	public Vector3 spawnColor = new Vector3 (1,1,1);
+
     Vector3 standardScale;
     public float spawnTimer;    //Zeit des Aufladens, die benötigt wird, bis der Block spawnen soll in Sekunden
     public float blockChargeTime;   //aktuelle Zeit des Aufladens 
@@ -42,8 +44,8 @@ public class BlockSpawnerPhoton : MonoBehaviour
 
 	[PunRPC]
 	public void Setup(){
-		spawnColor = Color.white;           //Zu Beginn wird die Farbe des spawnenden Blocks weiß
-		standardScale = blockSpawnSprite.transform.localScale;
+		//spawnColor = Color.white;           //Zu Beginn wird die Farbe des spawnenden Blocks weiß
+		standardScale = new Vector3(1,1,1);
 		SetSpawnerSize(0);            //und die Transparenz auf 0 gesetzt
 		player = transform.parent.GetComponent<PlayerPhoton>();
 		playerTeam = player.playerTeam;
@@ -67,7 +69,8 @@ public class BlockSpawnerPhoton : MonoBehaviour
             spawnable = false;                  //wird der Spawner blockiert
             if (blockChargeTime > 0)
             {
-                SetBlockTransparency(0.33f, spawnColor);             //und die Transparenz auf 33% gesetzt, sofern der Block aufgeladen wird.  
+				pv.RPC("SetBlockTransparency", PhotonTargets.All, 0.33f, spawnColor);
+				//SetBlockTransparency(0.33f, spawnColor);             //und die Transparenz auf 33% gesetzt, sofern der Block aufgeladen wird.  
             }
         }
 
@@ -84,7 +87,8 @@ public class BlockSpawnerPhoton : MonoBehaviour
         //wenn kein Objekt mit dem Spawner kollidiert
         if (collidingObjects.Count == 0)
         {
-            SetBlockTransparency(1, spawnColor);  //wird die Transparenz richtig berechnet
+            pv.RPC("SetBlockTransparency", PhotonTargets.All, 1.0f, spawnColor);
+			//SetBlockTransparency(1, spawnColor);  //wird die Transparenz richtig berechnet
             spawnable = true;   //und der spawner freigegeben
         }
     }
@@ -97,13 +101,17 @@ public class BlockSpawnerPhoton : MonoBehaviour
 	}
 
     //In der Methode wird die Transparenz des Blocks gesetzt. Übergeben wird ein Zeit Argument in fps
-    public void SetBlockTransparency(float transparency, Color col)
+	[PunRPC]
+	public void SetBlockTransparency(float transparency, Vector3 colVector)
     {
-        col.a = transparency;    //Die Transparenz wird so modifiziert, dass der Block stetig weniger transparent wird. Wenn der Block komplett aufgeladen ist, wird er komplett transparent
-        blockSpawnSprite.GetComponent<SpriteRenderer>().color = col;    //und die Farbe wird an das Objekt übergeben
+		Color colorNew = Color.white;
+		//Color colorNew = new Color(colVector.x, colVector.y, colVector.z, transparency);
+		colorNew.a = transparency;    //Die Transparenz wird so modifiziert, dass der Block stetig weniger transparent wird. Wenn der Block komplett aufgeladen ist, wird er komplett transparent
+		blockSpawnSprite.GetComponent<SpriteRenderer>().color = colorNew;    //und die Farbe wird an das Objekt übergeben
     }
 
     //In der Methode wird die Größe des Blocks gesetzt. Übergeben wird ein Zeit Argument in fps
+	[PunRPC]
     public void SetSpawnerSize(float time)
     {
         blockSpawnSprite.transform.localScale = standardScale * (time / spawnTimer);
@@ -124,31 +132,37 @@ public class BlockSpawnerPhoton : MonoBehaviour
         if (blockChargeTime < spawnTimer)
         {
             blockChargeTime+= i;  //wird die Zeit erhöht
-            SetSpawnerSize(blockChargeTime);  //und die Größe an den Block übergeben, sofern dieser nicht mit anderen Objekten kollidiert
+			pv.RPC("SetSpawnerSize", PhotonTargets.All, blockChargeTime);
+			//SetSpawnerSize(blockChargeTime);  //und die Größe an den Block übergeben, sofern dieser nicht mit anderen Objekten kollidiert
 
             if (spawnable)
             {
-                SetBlockTransparency(1, spawnColor);
+              //  SetBlockTransparency(1, spawnColor);
+				pv.RPC("SetBlockTransparency", PhotonTargets.All, 1.0f, spawnColor);
             } else if (!spawnable)
             {
-                SetBlockTransparency(0.33f, spawnColor);
+				pv.RPC("SetBlockTransparency", PhotonTargets.All,0.33f, spawnColor);
+				//SetBlockTransparency(0.33f, spawnColor);
             }
         }
         if (blockChargeTime >= spawnTimer) {
             blockChargeTime = spawnTimer;
-            SetSpawnerSize(blockChargeTime);
+			pv.RPC("SetSpawnerSize", PhotonTargets.All,blockChargeTime);
+            //SetSpawnerSize(blockChargeTime);
 
             if (spawnable)   //wenn das Ziel erreicht wurde und spawenbar ist
             {
                 blockChargeTime = spawnTimer;
-                SetSpawnerSize(blockChargeTime);
+				pv.RPC("SetSpawnerSize", PhotonTargets.All,blockChargeTime);
+				//SetSpawnerSize(blockChargeTime);
 
                 //An die Farbe des Spielers anpassen
                 blockSpawnSprite.GetComponent<SpriteRenderer>().color = blockColor;    //wird der BlockSpawner in der Farbe des Spielers eingefärbt.
             }
             else if (!spawnable)     //wenn das Ziel erreicht wurde und kollidiert
             {
-                SetBlockTransparency(0.33f, blockColor); //wird der Block in der Farbe des Spielers und transparent gefärbt
+				pv.RPC("SetBlockTransparency", PhotonTargets.All,0.33f, spawnColor);
+				//SetBlockTransparency(0.33f, blockColor); //wird der Block in der Farbe des Spielers und transparent gefärbt
             }
         }
     }
@@ -158,8 +172,10 @@ public class BlockSpawnerPhoton : MonoBehaviour
     {
         blockChargingSound = false;
         blockChargeTime = 0;    //die Zeit des Aufladens wird zurückgesetzt
-        SetSpawnerSize(blockChargeTime);  //ebenfalls die Größe des Spawners 
-        SetBlockTransparency(0, spawnColor);
+		pv.RPC("SetSpawnerSize", PhotonTargets.All,blockChargeTime);
+		//SetSpawnerSize(blockChargeTime);  //ebenfalls die Größe des Spawners 
+		pv.RPC("SetBlockTransparency", PhotonTargets.All,0.33f, spawnColor);
+		//SetBlockTransparency(0, spawnColor);
         GetComponent<SpriteRenderer>().enabled = false; //und der Rahmen ausgeblendet
     }
 

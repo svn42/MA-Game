@@ -706,6 +706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6cc02a0978c0c7499140c8ec3d27378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnColor: {x: 0, y: 0, z: 0}
   spawnTimer: 1.5
   blockChargeTime: 0
   blockPrefab: {fileID: 1741391209202420, guid: 5ae35a6b6fc5a29439c288e5bedd17cd,
@@ -744,6 +745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1a0639e5ac27a74d9f65a6b4143a00e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  predictionCoeff: 1
 --- !u!114 &114524094662477744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -806,6 +808,7 @@ MonoBehaviour:
   playerLogging: {fileID: 0}
   playerLoggingEnemy: {fileID: 0}
   teamColor: {r: 0, g: 0, b: 0, a: 0}
+  colorVector: {x: 0, y: 0, z: 0}
   speechBubblePrefab: {fileID: 1599780404292256, guid: 76d6a0e87fd6d0847832da4a5932ae12,
     type: 2}
   emoteTimer: 0

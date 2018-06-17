@@ -74,4 +74,6 @@ MonoBehaviour:
   - SpawnShot
   - PlaySound
   - StopAudio
+  - SetBlockTransparency
+  - SetSpawnerSize
   DisableAutoOpenWizard: 1
