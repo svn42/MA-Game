@@ -29,7 +29,6 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 		if (photonView.isMine) {
 			movementScript.enabled = true;
 		}
-
 	}
 
 	// Update is called once per frame

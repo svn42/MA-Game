@@ -56,6 +56,7 @@ public class PlayerPhoton : MonoBehaviour
 	private PositionTracker positionTracker;
 	private GameStatePhoton gameState;
 	public Color teamColor;
+	public Vector3 colorVector;
 	//Die Farbe des Spielers, die anhand der Teamzugehörigkeit ermittelt wird
 
 	public GameObject speechBubblePrefab;
@@ -568,7 +569,6 @@ public class PlayerPhoton : MonoBehaviour
 
 	IEnumerator DisplayEmote (string type)
 	{
-		Debug.Log ("display emote ausgeführt");
 		int randomInt = Random.Range (0, 3);
 		switch (type) {
 		case ("nice"):
@@ -614,13 +614,11 @@ public class PlayerPhoton : MonoBehaviour
 
 	public void CalculateLogData (string endingCondition, string gameType)
 	{
-
 		playerLogging.SetSubjectNr (subjectNr, subjectNrEnemy);
 		playerLogging.SetRating (rating, ratingEnemy);
 		playerLogging.SetGameType (gameType);
 		positionTracker.CalculateWalkedDistance ();
 		playerLogging.SetEndingCondition (endingCondition);
-
 	}
 
 	//der aktive Spieler registriert sich beim Gamestate
@@ -638,12 +636,18 @@ public class PlayerPhoton : MonoBehaviour
 		}
 	}
 
+	public Vector3 ConvertColorToVector(){
+		Color c = teamColor;
+		Vector3 colVector = new Vector3(c.r, c.g, c.b);
+		return colVector;
+	}
+
 	//Hier werden die Informationen an den Spieler weitergeben. Wichtig für die "gegnerischen" Spieler, damit diese ihre Daten (Farbe, Assets und co) bekommen.
 	[PunRPC]
 	public void SetPlayerInformation (string name, int plTeam)
 	{
 		playerTeam = plTeam;
-
+		colorVector = ConvertColorToVector ();
 		//subjectNrEnemy = enemyPlayer.GetComponent<PlayerPhoton> ().subjectNr;
 		//ratingEnemy = enemyPlayer.GetComponent<PlayerPhoton> ().rating;
 

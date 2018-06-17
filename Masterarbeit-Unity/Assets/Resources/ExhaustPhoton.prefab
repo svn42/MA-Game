@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4818706360536916}
   - component: {fileID: 212548194618443062}
   - component: {fileID: 114027494923829724}
-  - component: {fileID: 114013982200823406}
-  - component: {fileID: 114797968807859844}
+  - component: {fileID: 114142498555417582}
+  - component: {fileID: 114215908322784068}
   m_Layer: 0
   m_Name: ExhaustPhoton
   m_TagString: Untagged
@@ -43,7 +43,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114013982200823406
+--- !u!114 &114027494923829724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1608806251640764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97aaa6fd4d68b64469b3a54d9a50d8e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTime: 0.5
+  acceleration: 0.6
+--- !u!114 &114142498555417582
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -63,27 +76,14 @@ MonoBehaviour:
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114797968807859844}
-  - {fileID: 114027494923829724}
+  - {fileID: 4818706360536916}
+  - {fileID: 114215908322784068}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
---- !u!114 &114027494923829724
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1608806251640764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97aaa6fd4d68b64469b3a54d9a50d8e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyTime: 0.5
-  acceleration: 0.6
---- !u!114 &114797968807859844
+--- !u!114 &114215908322784068
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

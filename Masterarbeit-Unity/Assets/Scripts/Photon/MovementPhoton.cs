@@ -285,7 +285,8 @@ public class MovementPhoton : MonoBehaviour {
 		if (playerPhoton.exhaustTime > playerPhoton.exhaustSpawnTime) {
 			//wird ein Abgaspartikel an der Position des ExhaustSpawners erstellt
 			GameObject exhaust = PhotonNetwork.Instantiate ("ExhaustPhoton", playerPhoton.exSpawner.transform.position, playerPhoton.exSpawner.transform.rotation,0);
-			exhaust.GetComponent<ExhaustPhoton> ().SetColor (playerPhoton.teamColor);    //das Partikel bekommt die Farbe des Spielers
+			exhaust.GetComponent<PhotonView> ().RPC ("SetColor", PhotonTargets.All, playerPhoton.colorVector);
+		//	exhaust.GetComponent<ExhaustPhoton> ().SetColor (playerPhoton.teamColor);    //das Partikel bekommt die Farbe des Spielers
 			exhaust.GetComponent<ExhaustPhoton> ().SetDirection (new Vector3 (playerPhoton.speedX, playerPhoton.speedY, 0));
 			//und die Zeit zum Spawnen eines Partikels auf null gesetzt
 			playerPhoton.exhaustTime = 0;

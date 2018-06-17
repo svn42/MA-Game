@@ -12,6 +12,7 @@ public class GutscheinExport : MonoBehaviour {
 	public InputField contactInputField;
 	private string path;
 	public string contact;
+	string time;
 	private TutorialScreenState tutorialScreenState;
 
 	// Use this for initialization
@@ -30,6 +31,9 @@ public class GutscheinExport : MonoBehaviour {
 
 	public void SaveData(){
 		contact = contactInputField.text;
+		time = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+
+
 
 		saveText.enabled = true;
 		saveDateButton.gameObject.SetActive (false);
@@ -49,6 +53,7 @@ public class GutscheinExport : MonoBehaviour {
 				//Schreibe alle Spaltennamen in erste Zeile
 				newFile.Write ("Rating;");
 				newFile.Write ("Kontakt;");
+				newFile.Write ("Datum;");
 			}
 		}
 
@@ -58,7 +63,6 @@ public class GutscheinExport : MonoBehaviour {
 			WriteData(file);
 		}
 
-
 	}
 
 	public void WriteData(StreamWriter file)
@@ -66,5 +70,6 @@ public class GutscheinExport : MonoBehaviour {
 		file.Write ("\n");
 		file.Write (tutorialScreenState.rating + ";");
 		file.Write (contact + ";");
+		file.Write (time + ";");
 	}
 }
