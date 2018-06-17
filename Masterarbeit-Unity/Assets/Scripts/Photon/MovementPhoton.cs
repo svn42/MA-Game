@@ -71,24 +71,31 @@ public class MovementPhoton : MonoBehaviour {
 
 		//wenn der Block-Button (B) gedrückt wird
 		if (Input.GetButton ("BlockP1")) {
-			playerPhoton.blockSpawn.AddBlockChargeTime (Time.deltaTime);    //wird die Zeit zum Spawnen des Blocks hochgezählt
-			playerPhoton.shotSpawn.ResetShotChargeTime ();
+			playerPhoton.blockSpawn.GetComponent<PhotonView>().RPC ("AddBlockChargeTime", PhotonTargets.All, Time.deltaTime);
+			//playerPhoton.blockSpawn.AddBlockChargeTime (Time.deltaTime);    //wird die Zeit zum Spawnen des Blocks hochgezählt
+			playerPhoton.shotSpawn.GetComponent<PhotonView>().RPC ("ResetShotChargeTime", PhotonTargets.All);
+		//	playerPhoton.shotSpawn.ResetShotChargeTime ();
 		}
 		//wenn der Block-Button (B) losgelassen wird
 		if (Input.GetButtonUp ("BlockP1")) {
+			//playerPhoton.blockSpawn.GetComponent<PhotonView>().RPC ("SpawnBlock", PhotonTargets.All);
 			playerPhoton.blockSpawn.SpawnBlock ();    //wird überprüft, ob der Block gespawnt werden kann (wenn die Zeit groß genug ist)
 		}
 
 		//wenn der Schuss-Button (A) gedrückt wird
 		if (Input.GetButton ("ShootP1")) {
 			if (playerPhoton.shotTimer > playerPhoton.shotDelay) {  //und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen
-				playerPhoton.shotSpawn.AddShotChargeTime (Time.deltaTime);  //wird die Zeit zum Aufladen des Schuss hochgezählt
-				playerPhoton.blockSpawn.ResetBlockChargeTime ();
+				playerPhoton.shotSpawn.GetComponent<PhotonView>().RPC ("AddShotChargeTime", PhotonTargets.All, Time.deltaTime);
+				//playerPhoton.shotSpawn.AddShotChargeTime (Time.deltaTime);  //wird die Zeit zum Aufladen des Schuss hochgezählt
+				playerPhoton.blockSpawn.GetComponent<PhotonView>().RPC  ("ResetBlockChargeTime", PhotonTargets.All);
+				//playerPhoton.blockSpawn.ResetBlockChargeTime ();
 			}
 		}
 		//wenn der Schuss-Button (A) losgelassen wird und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen 
 		if (Input.GetButtonUp ("ShootP1") && playerPhoton.shotTimer > playerPhoton.shotDelay) {
-			playerPhoton.shotSpawn.SpawnShot ();  //wird der Schuss gespawnt 
+		//	playerPhoton.shotSpawn.SpawnShot ();  //wird der Schuss gespawnt 
+			playerPhoton.shotSpawn.GetComponent<PhotonView>().RPC ("SpawnShot", PhotonTargets.All);
+
 		}
 
 		/*

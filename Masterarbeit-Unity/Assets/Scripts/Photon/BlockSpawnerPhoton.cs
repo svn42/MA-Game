@@ -26,7 +26,7 @@ public class BlockSpawnerPhoton : MonoBehaviour
     public AudioClip soundPlacementBlocked;
     private bool blockChargingSound;
 
-
+	PhotonView pv;
 
     // Use this for initialization
     void Start()
@@ -52,7 +52,7 @@ public class BlockSpawnerPhoton : MonoBehaviour
 		soundPlaceBlock = Resources.Load<AudioClip>("Sounds/place_block");
 		soundChargeBlock = Resources.Load<AudioClip>("Sounds/charge_block_1-5");
 		soundPlacementBlocked = Resources.Load<AudioClip>("Sounds/placement_blocked");
-
+		pv = gameObject.GetComponent<PhotonView> ();
 	}
 
 
@@ -111,6 +111,7 @@ public class BlockSpawnerPhoton : MonoBehaviour
 
 
     //Die Methode wird beim Festhalten des B-Buttons in jedem Frame aufgerufen und erhöht die blockChargeTime.
+	[PunRPC]
     public void AddBlockChargeTime(float i)
     {
         if (!blockChargingSound)
@@ -152,6 +153,7 @@ public class BlockSpawnerPhoton : MonoBehaviour
         }
     }
 
+	[PunRPC]
     public void ResetBlockChargeTime()
     {
         blockChargingSound = false;
@@ -162,27 +164,34 @@ public class BlockSpawnerPhoton : MonoBehaviour
     }
 
     //die Methode wird aufgerufen, sofern der B-Button losgelassen wird 
+	[PunRPC]
     public void SpawnBlock()
     {
-        audioSource.Stop();
+		pv.RPC ("StopAudio", PhotonTargets.All);
         //wenn das Ziel erreicht wurde und der Blockspawner nicht kollidiert
         if (blockChargeTime == spawnTimer && spawnable)
         {
-            blockCount++;
-            GameObject block = Instantiate(blockPrefab, this.transform.position, this.transform.rotation);  //wird der Block aus dem Prefab instanziiert
-			block.GetComponent<BlockPhoton>().SetColor(blockColor); //und entsprechend der Teamfarbe eingefärbt
-			block.GetComponent<BlockPhoton>().SetPlayerTeam(playerTeam);
-			block.GetComponent<BlockPhoton>().SetBlockID(blockCount);
-            playerLogging.AddBlock();
-            PlaySound(soundPlaceBlock, 0.8f);
+			if (pv.isMine) {
+				blockCount++;
+				string blockName = "Block_" + blockCount + "_Player_" + playerTeam;
+				GameObject block = PhotonNetwork.Instantiate ("BlockPrefabPhoton", this.transform.position, this.transform.rotation, 0);  //wird der Block aus dem Prefab instanziiert
+				block.GetComponent<PhotonView> ().RPC ("SetColor", PhotonTargets.All, player.colorVector);
+				block.GetComponent<PhotonView> ().RPC ("SetPlayerTeam", PhotonTargets.All, playerTeam);
+				block.GetComponent<PhotonView> ().RPC ("SetBlockID", PhotonTargets.All, blockCount);
+				block.GetComponent<PhotonView> ().RPC ("SetBlockName", PhotonTargets.All, blockName);
 
-            block.name = "Block_" + blockCount + "_Player_" + playerTeam;
-
+				//	block.GetComponent<BlockPhoton>().SetColor(blockColor); //und entsprechend der Teamfarbe eingefärbt
+				//	block.GetComponent<BlockPhoton>().SetPlayerTeam(playerTeam);
+				//	block.GetComponent<BlockPhoton>().SetBlockID(blockCount);
+				playerLogging.AddBlock ();
+			}
+			pv.RPC("PlaySound", PhotonTargets.All, "soundPlaceBlock", 0.8f);
+		//	PlaySound(soundPlaceBlock, 0.8f);
         } else if (blockChargeTime == spawnTimer && !spawnable)
         {
             PlaySound(soundPlacementBlocked, 0.6f);
         }
-        ResetBlockChargeTime();
+		pv.RPC("ResetBlockChargeTime", PhotonTargets.All);
 
 }
 
@@ -204,8 +213,23 @@ public class BlockSpawnerPhoton : MonoBehaviour
         Time.timeScale = lastTimeScale;
     }
 
-    public void StopSoundByStun()
-    {
-        audioSource.Stop();
-    }
+	[PunRPC]
+	public void PlaySound (string file, float volume)
+	{
+		float lastTimeScale = Time.timeScale;
+		Time.timeScale = 1f;
+		switch (file) {
+		case "soundPlaceBlock":
+			audioSource.PlayOneShot (soundPlaceBlock, volume);
+			break;
+		}
+
+		Time.timeScale = lastTimeScale;
+	}
+
+	[PunRPC]
+	public void StopAudio(){
+		audioSource.Stop();
+	}
+
 }

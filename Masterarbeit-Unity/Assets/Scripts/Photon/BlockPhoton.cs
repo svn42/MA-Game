@@ -15,7 +15,6 @@ public class BlockPhoton : MonoBehaviour
     private int blockID;
 	private GameStatePhoton gameState;
     public GameObject blockDestructionPrefab;
-	private Color col;
 
     // Use this for initialization
     void Start()
@@ -23,7 +22,6 @@ public class BlockPhoton : MonoBehaviour
         health = 3;
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 		gameState = (GameStatePhoton)FindObjectOfType(typeof(GameStatePhoton));
-
     }
 
     // Update is called once per frame
@@ -69,10 +67,13 @@ public class BlockPhoton : MonoBehaviour
 			bs.RemoveObject (name);
 		}
 	}
-    public void SetColor(Color col)
+
+	[PunRPC]
+	public void SetColor(Vector3 colVector)
     {
+		Color colorNew = new Color(colVector.x, colVector.y, colVector.z, 1);
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        spriteRenderer.color = col;
+		spriteRenderer.color = colorNew;
     }
 
     public Color GetColor()
@@ -81,6 +82,13 @@ public class BlockPhoton : MonoBehaviour
         return spriteRenderer.color;
     }
 
+	[PunRPC]
+	public void SetBlockName(string name)
+	{
+		gameObject.name = name;
+	}
+
+	[PunRPC]
     public void SetPlayerTeam(int i)
     {
         playerTeam = i;
@@ -91,6 +99,7 @@ public class BlockPhoton : MonoBehaviour
         return playerTeam;
     }
 
+	[PunRPC]
     public void SetBlockID(int i)
     {
         blockID = i;

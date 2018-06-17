@@ -26,7 +26,7 @@ public class ShotSpawnerPhoton : MonoBehaviour
     private int playerTeam;
     public int shotCount = 0;
 
-    private Color shotColor;
+ //   private Color shotColor;
     //Audios
     private AudioSource audioSource;
     public AudioClip soundShotNormal;
@@ -39,6 +39,7 @@ public class ShotSpawnerPhoton : MonoBehaviour
     public AudioClip soundShotAbort;
     private bool shotAborted;
     public bool shotBlinkEffectStarted;
+	PhotonView pv;
 
 
     // Use this for initialization
@@ -59,6 +60,7 @@ public class ShotSpawnerPhoton : MonoBehaviour
 		soundShotLarge = Resources.Load<AudioClip>("Sounds/large_shot");
 		soundShotCharge = Resources.Load<AudioClip>("Sounds/shot_charge");
 		soundShotAbort = Resources.Load<AudioClip>("Sounds/shot_abort");
+		pv = gameObject.GetComponent<PhotonView> ();
 
 	}
 
@@ -70,6 +72,7 @@ public class ShotSpawnerPhoton : MonoBehaviour
     }
 
     //Die Methode wird beim Festhalten des A-Buttons in jedem Frame aufgerufen und erhöht die soundShotChargeTime.
+	[PunRPC]
     public void AddShotChargeTime(float i)
     {
         shotChargeTime += i;
@@ -149,31 +152,39 @@ public class ShotSpawnerPhoton : MonoBehaviour
     }
 
     //die Methode wird aufgerufen, sofern der A-Button losgelassen wird 
+	[PunRPC]
     public void SpawnShot()
     {
         //wenn das Ziel erreicht wurde und der ShotSpawner nicht kollidiert
         if (spawnNormalShot && spawnable)
         {
-			GameObject shot = PhotonNetwork.Instantiate ("ShotNormalPhoton", chargingShotSprite.transform.position, this.transform.rotation,0);  //wird der Shot aus dem Prefab instanziiert
-            spawnNormalShot = false;
-            playerLogging.AddShot("normal");
-            SetShotProperties(shot);
-            PlaySound(soundShotNormal, 0.4f);
+			if (pv.isMine) 
+			{
+				GameObject shot = PhotonNetwork.Instantiate ("ShotNormalPhoton", chargingShotSprite.transform.position, this.transform.rotation, 0);  //wird der Shot aus dem Prefab instanziiert
+				spawnNormalShot = false;
+				playerLogging.AddShot ("normal");
+				SetShotProperties (shot);
+			}
+			PlaySound(soundShotNormal, 0.4f);
         }
         else if (spawnMediumShot && spawnable)
         {
-			GameObject shot = PhotonNetwork.Instantiate ("ShotMediumPhoton", chargingShotSprite.transform.position, this.transform.rotation,0);  //wird der Shot aus dem Prefab instanziiert
-            spawnMediumShot = false;
-            playerLogging.AddShot("medium");
-            SetShotProperties(shot);
+			if (pv.isMine) {
+				GameObject shot = PhotonNetwork.Instantiate ("ShotMediumPhoton", chargingShotSprite.transform.position, this.transform.rotation, 0);  //wird der Shot aus dem Prefab instanziiert
+				spawnMediumShot = false;
+				playerLogging.AddShot ("medium");
+				SetShotProperties (shot);
+			}
             PlaySound(soundShotMedium, 0.4f);
         }
         else if (spawnLargeShot && spawnable)
         {
-			GameObject shot = PhotonNetwork.Instantiate ("ShotLargePhoton", chargingShotSprite.transform.position, this.transform.rotation,0);  //wird der Shot aus dem Prefab instanziiert
-            spawnLargeShot = false;
-            playerLogging.AddShot("large");
-            SetShotProperties(shot);
+			if (pv.isMine) {
+				GameObject shot = PhotonNetwork.Instantiate ("ShotLargePhoton", chargingShotSprite.transform.position, this.transform.rotation, 0);  //wird der Shot aus dem Prefab instanziiert
+				spawnLargeShot = false;
+				playerLogging.AddShot ("large");
+				SetShotProperties (shot);
+			}
             PlaySound(soundShotLarge, 0.3f);
         }
         ResetShotChargeTime();
@@ -199,16 +210,6 @@ public class ShotSpawnerPhoton : MonoBehaviour
 	//	shot.GetComponent<ShotPhoton>().SetShotID(shotCount);                     //sowie seine ID
     }
 
-    private void PlaySound(AudioClip ac, float volume)
-    {
-        float lastTimeScale = Time.timeScale;
-        Time.timeScale = 1f;
-        audioSource.clip = ac;
-        audioSource.volume = volume;
-        audioSource.Play();
-        Time.timeScale = lastTimeScale;
-    }
-
     //Blinkeffekt des Stuns
     IEnumerator ShotBlinkEffect(float time)
     {
@@ -231,7 +232,41 @@ public class ShotSpawnerPhoton : MonoBehaviour
         }
     }
 
-    public void StopSoundByStun()
+	private void PlaySound(AudioClip ac, float volume)
+	{
+		float lastTimeScale = Time.timeScale;
+		Time.timeScale = 1f;
+		audioSource.clip = ac;
+		audioSource.volume = volume;
+		audioSource.Play();
+		Time.timeScale = lastTimeScale;
+	}
+
+	/*
+	public void PlaySound (string file, float volume)
+	{
+		float lastTimeScale = Time.timeScale;
+		Time.timeScale = 1f;
+		switch (file) {
+		case "soundShotNormal":
+			audioSource.PlayOneShot (soundShotNormal, volume);
+			break;
+		case "soundShotMedium":
+			audioSource.PlayOneShot (soundShotMedium, volume);
+			break;
+		case "soundShotLarge":
+			audioSource.PlayOneShot (soundShotLarge, volume);
+			break;
+		case "soundShotCharge":
+			audioSource.PlayOneShot (soundShotCharge, volume);
+			break;
+		}
+
+		Time.timeScale = lastTimeScale;
+	}
+	*/
+
+	public void StopAudio()
     {
         audioSource.Stop();
         normalShotChargingSound = false;
@@ -240,15 +275,15 @@ public class ShotSpawnerPhoton : MonoBehaviour
         shotAborted = false;
         audioSource.loop = false;
         shotBlinkEffectStarted = false;
-
     }
 
     //Methode, um die Farbe des Schusses zu setzen
-    public void SetColor(Color col)
-    {
-        shotColor = col;    //Die Farbvariable für das Erstellen der neuen Schüsse bekommt die Farbe
-    }
+ //   public void SetColor(Color col)
+   // {
+     //   shotColor = col;    //Die Farbvariable für das Erstellen der neuen Schüsse bekommt die Farbe
+    //}
 
+	[PunRPC]
     public void ResetShotChargeTime()
     {
         shotChargeTime = 0;    //die Zeit des Aufladens wird zurückgesetzt

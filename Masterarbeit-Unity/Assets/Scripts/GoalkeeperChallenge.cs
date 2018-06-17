@@ -9,7 +9,6 @@ public class GoalkeeperChallenge : MonoBehaviour {
 	public GameObject goalBlue;
 
 	private TutorialGameState tutorialGameState;
-	private TutorialLogging tutorialLogging;
 	private PlayerTutorial player;
 	public int startBallCount;
 	public int goalsConceded;
@@ -19,7 +18,6 @@ public class GoalkeeperChallenge : MonoBehaviour {
 	void Start()
 	{
 		tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
-		tutorialLogging = gameObject.GetComponent<TutorialLogging>();
 		player = gameObject.GetComponent<PlayerTutorial>();
 		SetGoalColor();
 		SetUpObjects();

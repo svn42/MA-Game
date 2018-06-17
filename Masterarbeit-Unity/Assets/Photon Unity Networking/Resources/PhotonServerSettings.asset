@@ -63,4 +63,15 @@ MonoBehaviour:
   - SetShotID
   - SetShotName
   - StartSpawnBall
+  - GetPlayerTeam
+  - SetBlockID
+  - SetBlockName
+  - AddBlockChargeTime
+  - ResetBlockChargeTime
+  - SpawnBlock
+  - AddShotChargeTime
+  - ResetShotChargeTime
+  - SpawnShot
+  - PlaySound
+  - StopAudio
   DisableAutoOpenWizard: 1

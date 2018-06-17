@@ -37,7 +37,7 @@ public class GameState : MonoBehaviour
 
 	private bool player1Ready;
 	private bool player2Ready;
-	private bool playerHelp;
+//	private bool playerHelp;
 
 	public bool levelEnded;
 	public bool nextLevelReady;
@@ -265,9 +265,8 @@ public class GameState : MonoBehaviour
 	{
 
 		if (gameType.Equals ("Local")) {
-			int vpteam1 = PlayerPrefs.GetInt ("VP");
-			int vpteam2 = vpteam1 + 1;
-
+		//	int vpteam1 = PlayerPrefs.GetInt ("VP");
+		//	int vpteam2 = vpteam1 + 1;
 		}
 
 	}
@@ -355,7 +354,7 @@ public class GameState : MonoBehaviour
 			if (!levelEnded) {
 
 
-				if (!playerHelp) {
+		//		if (!playerHelp) {
 					/*   //überprüfe, ob die einzelnen Spieler bereit sind
 					if (Input.GetButtonUp("ShootP1"))
 					{
@@ -372,9 +371,9 @@ public class GameState : MonoBehaviour
 							depauseCountdownStarted = true;
 						}
 					}
-				}
+		//		}
 			} else if (levelEnded && nextLevelReady) {
-				if (!playerHelp) {
+		//		if (!playerHelp) {
 					//überprüfe, ob die einzelnen Spieler bereit sind
 					/*    if (Input.GetButtonUp("ShootP1"))
                     {
@@ -394,7 +393,7 @@ public class GameState : MonoBehaviour
 					}
 
 					
-				}
+				//}
 			}
 		}
 

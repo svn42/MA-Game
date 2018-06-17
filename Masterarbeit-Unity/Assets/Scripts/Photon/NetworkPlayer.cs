@@ -11,8 +11,6 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 	private Vector3 velocity;
 	private Vector3 realPosition = Vector3.zero;
 	private Quaternion realRotation;
-	private Vector3 sendPosition = Vector3.zero;
-	private Quaternion sendRotation;
 	[Range(0.0f, 1.0f)]
 	public float predictionCoeff = 1.0f; //How much the game should predict an observed object's velocity: between 0 and 1
 

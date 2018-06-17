@@ -82,8 +82,6 @@ public class PlayerPhoton : MonoBehaviour
 	public List<AudioClip> soundsEmoteAngry = new List<AudioClip> ();
 
 	//trigger variablen
-	private bool rightTriggerInUse = false;
-	private bool leftTriggerInUse = false;
 	private bool playersRegistered;
 
 	//networking
@@ -147,23 +145,7 @@ public class PlayerPhoton : MonoBehaviour
 
 			}
 
-
 		}
-
-
-		/*
-		if (!gameState.GetGamePaused ()) {
-			if (!stunned) {
-				CheckInput ();   //zunächst wird der Input überprüft
-				Move (); //dann der Spieler bewegt
-				CheckExhaust (); //sowie überprüft, ob das Abgas erzeugt werden soll
-			}
-			shotTimer += Time.deltaTime;
-			emoteTimer += Time.deltaTime;
-		} else if (gameState.GetGamePaused ()) {
-			CheckPlayerReady ();
-		}
-		*/
 
 	}
 
@@ -209,280 +191,13 @@ public class PlayerPhoton : MonoBehaviour
 
 	}
 
-	/*
-	public void CheckInput ()
-	{
-		/*
-		//sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
-		if ((Mathf.Abs (Input.GetAxis ("HorizontalP1")) > 0.1f)) {
-			//wird die Accelerate-Methode mit dem Argument X aufgerufen
-			Accelerate ("X");
-		} else {
-			//ansonsten wird die Brake-Methode mit dem Argument X verwendet
-			Brake ("X");
-		}
-
-
-		//das gleiche geschieht mit der Vertikalen Achse (hoch oder runter Pfeiltaste sowie W und S)
-		if ((Mathf.Abs (Input.GetAxis ("VerticalP1")) > 0.1f)) {
-			Accelerate ("Y");
-		} else {
-			Brake ("Y");
-		}
-
-		//die BewegungsZeit wird erhöht, sofern mindestens eine der beiden Achsen eine Bewegung zurückliefern
-		if ((Mathf.Abs (Input.GetAxis ("VerticalP1")) > 0.1f) || Mathf.Abs (Input.GetAxis ("HorizontalP1")) > 0.1f) {
-			exhaustTime += Time.deltaTime;
-		} else {
-			//wenn die Figur nicht mehr bewegt wird, wird die BewegungsZeit auf 0 zurückgesetzt
-			exhaustTime = 0;
-		}
-
-		//wenn der Block-Button (B) gedrückt wird
-		if (Input.GetButton ("BlockP1")) {
-			blockSpawn.AddBlockChargeTime (Time.deltaTime);    //wird die Zeit zum Spawnen des Blocks hochgezählt
-			shotSpawn.ResetShotChargeTime ();
-		}
-		//wenn der Block-Button (B) losgelassen wird
-		if (Input.GetButtonUp ("BlockP1")) {
-			blockSpawn.SpawnBlock ();    //wird überprüft, ob der Block gespawnt werden kann (wenn die Zeit groß genug ist)
-		}
-
-		//wenn der Schuss-Button (A) gedrückt wird
-		if (Input.GetButton ("ShootP1")) {
-			if (shotTimer > shotDelay) {  //und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen
-				shotSpawn.AddShotChargeTime (Time.deltaTime);  //wird die Zeit zum Aufladen des Schuss hochgezählt
-				blockSpawn.ResetBlockChargeTime ();
-			}
-		}
-		//wenn der Schuss-Button (A) losgelassen wird und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen 
-		if (Input.GetButtonUp ("ShootP1") && shotTimer > shotDelay) {
-			shotSpawn.SpawnShot ();  //wird der Schuss gespawnt 
-		}
-
-		/*
-         * 
-        Emotes
-         * 
-         * 
-
-		//emote nice
-		if (Input.GetButtonUp ("LBP1") && emoteTimer > emoteDelay) {
-			StopCoroutine("DisplayPreparedEmote");
-			if (!emoteNicePrepared) {
-				preparedEmojiType = "nice";
-				StartCoroutine("DisplayPreparedEmote");
-				SetEmotePrepared ("nice", true);
-			} else if (emoteNicePrepared) {
-				SetEmotePrepared ("nice", false);
-				emoteTimer = 0;
-				pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "nice");
-			}
-		}
-		//emote angry
-		if (Input.GetButtonUp ("RBP1") && emoteTimer > emoteDelay) {
-			StopCoroutine("DisplayPreparedEmote");
-			if (!emoteAngryPrepared) {
-				preparedEmojiType = "angry";
-				StartCoroutine("DisplayPreparedEmote");
-				SetEmotePrepared ("angry", true);
-			} else if (emoteAngryPrepared) {
-				SetEmotePrepared ("angry", false);
-				emoteTimer = 0;
-				pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "angry");
-			}
-		}		
-		//emote cry
-		if (Input.GetAxis ("RTP1") != 0 && emoteTimer > emoteDelay) {
-			if (!rightTriggerInUse) {
-				StopCoroutine ("DisplayPreparedEmote");
-				if (!emoteCryPrepared) {
-					preparedEmojiType = "cry";
-					StartCoroutine ("DisplayPreparedEmote");
-					SetEmotePrepared ("cry", true);
-				} else if (emoteCryPrepared) {
-					SetEmotePrepared ("cry", false);
-					emoteTimer = 0;
-					pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "cry");
-				}
-				rightTriggerInUse = true;
-			}
-		}
-		if (Input.GetAxis ("RTP1") == 0)
-		{
-			rightTriggerInUse = false;
-		}  
-
-		if (Input.GetAxis ("LTP1") != 0 && emoteTimer > emoteDelay) {
-			if (!leftTriggerInUse) {
-				StopCoroutine ("DisplayPreparedEmote");
-				if (!emoteHahaPrepared) {
-					preparedEmojiType = "haha";
-					StartCoroutine ("DisplayPreparedEmote");
-					SetEmotePrepared ("haha", true);
-				} else if (emoteHahaPrepared) {
-					SetEmotePrepared ("haha", false);
-					emoteTimer = 0;
-					pvPlayer.RPC ("StartDisplayEmoteCoroutine", PhotonTargets.All, "haha");
-				}
-				leftTriggerInUse = true;
-			}
-		}
-		if (Input.GetAxis ("LTP1") == 0)
-		{
-			leftTriggerInUse = false;
-		}  
-
-
-
-		/*
-		 * 
-		 * Pause
-		 * 
-		 
-
-		if (Input.GetButtonUp ("Start")) {
-			pvGamestate.RPC ("SetGamePaused", PhotonTargets.All, true, "pause");
-		}
-	}
-
-
-
-	//Die Methode wird in jedem Update aufgerufen und regelt die Bewegung des Spielers
-	public void Move ()
-	{
-		//es wird ein Bewegungsvektor erstellt und dieser bekommt die Geschwindigkeit auf der X und Y Achse übertragen.
-		movementVector = new Vector3 (speedX, speedY, 0f);
-
-		//der Spieler bewegt sich dann mit Hilfe deses Vektors auf dem Spielfeld. Die Bewegung ist immer relativ zur Spielwelt 
-		transform.Translate (movementVector * Time.deltaTime, Space.World);
-
-
-		//reference: https://answers.unity.com/questions/307150/rotate-an-object-toward-the-direction-the-joystick.html
-
-		float yEuler = Mathf.Atan2 (Input.GetAxis ("HorizontalP1") * -1, Input.GetAxis ("VerticalP1")) * Mathf.Rad2Deg; //Horizontal *1
-		yEuler -= 270;   //Korrektur durch das gedrehte Sprite
-		Vector3 direction = new Vector3 (0, 0, yEuler);
-		if (Mathf.Abs (Input.GetAxis ("HorizontalP1")) > 0.1f || Mathf.Abs (Input.GetAxis ("VerticalP1")) > 0.1f) {   //Damit die Richtung nicht durch die "Nullstellung" des Sticks genullt wird
-			transform.eulerAngles = direction;
-		}
-
-	}
-
-	//Die Beschleunigen-Methode ermittelt die Geschwindigketi des Spielers bei einem Input
-	public void Accelerate (string axis)
-	{
-		//Sofern das Argument "X" übergeben wird 
-		if (axis.Equals ("X")) {
-			//erhöht sich die Geschwindigkeit auf der X-Achse um den Wert des Inputs, multipliziert mit der Beschleunigung
-			speedX += Input.GetAxis ("HorizontalP1") * acceleration;
-		}
-
-
-		//sofern die Geschwindigkeit doch außerhalb der Grenzen von -maxSpeed und maxSpeed liegt, wird der Wert an diese Grenzwerte angepasst
-		if (speedX > maxSpeed) {
-			speedX = maxSpeed;
-		} else if (speedX < -maxSpeed) {
-			speedX = -maxSpeed;
-		}
-
-
-		//Sofern das Argument Y übergeben wird, wird die Ermittlung der Geschwindigkeit genauso ermittelt wie für die X-Achse
-		else if (axis.Equals ("Y")) {
-			speedY += Input.GetAxis ("VerticalP1") * acceleration;
-		}
-
-		if (speedY > maxSpeed) {
-			speedY = maxSpeed;
-		} else if (speedY < -maxSpeed) {
-			speedY = -maxSpeed;
-		}
-
-		//wenn diagonal voll beschleunigt wird, wird der Spieler minimal langsamer
-		if (Mathf.Abs (speedY) >= (maxSpeed - 10) && Mathf.Abs (speedX) >= (maxSpeed - 10)) {
-			if (speedY >= (maxSpeed - 10)) {
-				speedY = maxSpeed - 10;
-			} else if (speedY <= (-maxSpeed + 10)) {
-				speedY = -maxSpeed + 10;
-			}
-
-			if (speedX >= (maxSpeed - 10)) {
-				speedX = maxSpeed - 10;
-			} else if (speedX <= (-maxSpeed + 10)) {
-				speedX = -maxSpeed + 10;
-			}
-		}
-
-
-	}
-
-	//Sofern kein Input seitens des Spielers kommt, wird die Brake-Methode zum Abbremsen der Figur verwendet
-	public void Brake (string axis)
-	{
-		//sofern die Geschwindigkeit positiv ist
-		if (axis.Equals ("X") && speedX > 0) {
-			//wird in die negative Richtung abgebremst
-			speedX -= brakingForce;
-		}
-		//sofern die GEschwindigkeit negativ ist,
-		else if (axis.Equals ("X") && speedX < 0) {
-			//wird in die positive Richtung abgebremst
-			speedX += brakingForce;
-		}
-
-
-		//für die Y-Achse genauso
-		if (axis.Equals ("Y") && speedY > 0) {
-			speedY -= brakingForce;
-		} else if (axis.Equals ("Y") && speedY < 0) {
-			speedY += brakingForce;
-		}
-
-		//endgültiges abremsen, bei Geschwindigkeit um 0
-		if (Mathf.Abs (speedX) >= -brakingForce / 2 && Mathf.Abs (speedX) <= brakingForce / 2) {
-			speedX = 0;
-		}
-		if (Mathf.Abs (speedY) >= -brakingForce / 2 && Mathf.Abs (speedY) <= brakingForce / 2) {
-			speedY = 0;
-		}
-	}
-
-	//die Methode überprüft, ob ein Abgaspartikel erzeugt werden soll
-	public void CheckExhaust ()
-	{
-		//sofern sich der Spieler eine bestimmte Zeit bewegt und diese Zeit über der festgelegten Zeit bis zum Spawnen eines Abgaspartikels liegt
-		if (exhaustTime > exhaustSpawnTime) {
-			//wird ein Abgaspartikel an der Position des ExhaustSpawners erstellt
-			GameObject exhaust = Instantiate (exhaustPrefab, exSpawner.transform.position, exSpawner.transform.rotation);
-			exhaust.GetComponent<ExhaustPhoton> ().SetColor (teamColor);    //das Partikel bekommt die Farbe des Spielers
-			exhaust.GetComponent<ExhaustPhoton> ().SetDirection (new Vector3 (speedX, speedY, 0));
-			//und die Zeit zum Spawnen eines Partikels auf null gesetzt
-			exhaustTime = 0;
-		}
-	}
-
-	public void CheckPlayerReady ()
-	{
-		if (Input.GetButtonUp ("ShootP1")) {
-			pvGamestate.RPC ("SetPlayerReady", PhotonTargets.All, true, playerTeam);
-		}
-		if (Input.GetButtonUp ("Help")) {
-			pvGamestate.RPC ("SetPlayerHelp", PhotonTargets.All, true, playerTeam);
-		} 
-		if (Input.GetKeyUp (KeyCode.H)) {
-			pvGamestate.RPC ("SetPlayerHelp", PhotonTargets.All, false, playerTeam);
-		}
-			
-	}
-
-*/
 
 	//setzt die Farve des Spielers sowie seiner Spawner fest
 	public void SetColor (Color col)
 	{
 		teamColor = col;	//die Team Color wird gesetzt
 		blockSpawn.GetComponent<BlockSpawnerPhoton> ().SetColor (teamColor);    //ebenso wird die Farbe dem Blockspawner und dem    
-		shotSpawn.GetComponent<ShotSpawnerPhoton> ().SetColor (teamColor);      //ShotSpawner bekannt gemacht
+	//	shotSpawn.GetComponent<ShotSpawnerPhoton> ().SetColor (teamColor);      //ShotSpawner bekannt gemacht
 
 	}
 
@@ -608,8 +323,8 @@ public class PlayerPhoton : MonoBehaviour
 	public void StopSound ()
 	{
 		audioSource.Stop ();
-		shotSpawn.StopSoundByStun ();
-		blockSpawn.StopSoundByStun ();
+		shotSpawn.StopAudio ();
+		blockSpawn.StopAudio ();
 	}
 
 	public void CalculateLogData (string endingCondition, string gameType)

@@ -8,7 +8,6 @@ public class TutorialQuickChatChallenge : MonoBehaviour
 {
 	public List<Sprite> emojis;
 	private TutorialGameState tutorialGameState;
-	private TutorialLogging tutorialLogging;
 
 	public GameObject speechbubble;
 	private Image emojiRenderer;
@@ -16,7 +15,6 @@ public class TutorialQuickChatChallenge : MonoBehaviour
 	void Start()
 	{
 		tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
-		tutorialLogging = gameObject.GetComponent<TutorialLogging>();
 		emojiRenderer = speechbubble.transform.Find("Emoji").GetComponent<Image> ();
 	}
 

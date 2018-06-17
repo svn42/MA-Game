@@ -8,7 +8,6 @@ public class ShotChallenge : MonoBehaviour {
 	public List<GameObject> targets;
 	private TutorialGameState tutorialGameState;
 	private TutorialLogging tutorialLogging;
-	private int targetsInitialCount;
 	public int maxRatingTime;
 	public int maxRatingAccuracy;
 	public float bestTime;
@@ -24,7 +23,6 @@ public class ShotChallenge : MonoBehaviour {
 		tutorialLogging = gameObject.GetComponent<TutorialLogging>();
 
 		SetUpTargets ();
-		targetsInitialCount = targets.Count;
 	}
 	
 	// Update is called once per frame

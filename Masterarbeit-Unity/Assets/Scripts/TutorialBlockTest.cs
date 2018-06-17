@@ -7,13 +7,10 @@ public class TutorialBlockTest : MonoBehaviour {
 	public int placedBlocks;
 	private int blocksToPlace = 3;
 	private TutorialGameState tutorialGameState;
-	private TutorialLogging tutorialLogging;
 
 	// Use this for initialization
 	void Start () {
 		tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
-		tutorialLogging = gameObject.GetComponent<TutorialLogging>();
-
 	}
 	
 	// Update is called once per frame
