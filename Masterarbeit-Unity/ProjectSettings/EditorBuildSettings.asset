@@ -9,79 +9,79 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: ed11cc4347541e946a852884ebad5246
   - enabled: 1
-    path: Assets/Scenes/Tutorial_1.unity
+    path: Assets/Scenes/Tutorials/Tutorial_1.unity
     guid: a290709741a4aca408827487fb3c5674
   - enabled: 1
-    path: Assets/Scenes/Tutorial_2.1.unity
+    path: Assets/Scenes/Tutorials/Tutorial_2.1.unity
     guid: cca63f0ad3180ab4b8b437fac142c7fc
   - enabled: 1
-    path: Assets/Scenes/Tutorial_2.2.unity
+    path: Assets/Scenes/Tutorials/Tutorial_2.2.unity
     guid: 2350f0d25bfe567428bcd520e921a846
   - enabled: 1
-    path: Assets/Scenes/Tutorial_2.3.unity
+    path: Assets/Scenes/Tutorials/Tutorial_2.3.unity
     guid: c4263507b5a2ca345a1b7b93a1e0fddb
   - enabled: 1
-    path: Assets/Scenes/Tutorial_2.4.unity
+    path: Assets/Scenes/Tutorials/Tutorial_2.4.unity
     guid: 5d51d881e63c58f40a9142f196834eba
   - enabled: 1
-    path: Assets/Scenes/Tutorial_3_Bewegung_Test.unity
+    path: Assets/Scenes/Tutorials/Tutorial_3_Bewegung_Test.unity
     guid: 140094a4d4b56654bbb1482a3f8f3749
   - enabled: 1
-    path: Assets/Scenes/Tutorial_4_Bewegung_Uebung.unity
+    path: Assets/Scenes/Tutorials/Tutorial_4_Bewegung_Uebung.unity
     guid: 31749b22538bb764b9794c10672789eb
   - enabled: 1
-    path: Assets/Scenes/Tutorial_5_Stun_Intro.unity
+    path: Assets/Scenes/Tutorials/Tutorial_5_Stun_Intro.unity
     guid: 784a9361df7078347a8d4c28a1e03f0b
   - enabled: 1
-    path: Assets/Scenes/Tutorial_6_Stun_Uebung.unity
+    path: Assets/Scenes/Tutorials/Tutorial_6_Stun_Uebung.unity
     guid: 59b6c737e505b984a9ccda8438c18b30
   - enabled: 1
-    path: Assets/Scenes/Tutorial_7_Shot_Intro.unity
+    path: Assets/Scenes/Tutorials/Tutorial_7_Shot_Intro.unity
     guid: cdf79efa7e6bec74ca92d8cf650d762f
   - enabled: 1
-    path: Assets/Scenes/Tutorial_8_Shot_Test.unity
+    path: Assets/Scenes/Tutorials/Tutorial_8_Shot_Test.unity
     guid: 2943982852b6f3e43a4081b87c02d50f
   - enabled: 1
-    path: Assets/Scenes/Tutorial_9_ShotStatic_Uebung.unity
+    path: Assets/Scenes/Tutorials/Tutorial_9_ShotStatic_Uebung.unity
     guid: 8354ff518b2f1eb4aafed977e98a3ce8
   - enabled: 1
-    path: Assets/Scenes/Tutorial_10_ShotDynamic_Uebung.unity
+    path: Assets/Scenes/Tutorials/Tutorial_10_ShotDynamic_Uebung.unity
     guid: 3f99108cb6b53b7449f0bf1936c07522
   - enabled: 1
-    path: Assets/Scenes/Tutorial_11_Block_Intro.unity
+    path: Assets/Scenes/Tutorials/Tutorial_11_Block_Intro.unity
     guid: fe444a794cd6ca540b725e93973eb161
   - enabled: 1
-    path: Assets/Scenes/Tutorial_12_Block_Test.unity
+    path: Assets/Scenes/Tutorials/Tutorial_12_Block_Test.unity
     guid: 3ab399c6f82597040aab5bdd254738d1
   - enabled: 1
-    path: Assets/Scenes/Tutorial_13_BlockPlacement_Uebung.unity
+    path: Assets/Scenes/Tutorials/Tutorial_13_BlockPlacement_Uebung.unity
     guid: 39c33cd5144cdab41a31843fd80125a4
   - enabled: 1
-    path: Assets/Scenes/Tutorial_14_BlockDestroy_Uebung.unity
+    path: Assets/Scenes/Tutorials/Tutorial_14_BlockDestroy_Uebung.unity
     guid: 9feb2d46f074be840904f3906ed096bb
   - enabled: 1
-    path: Assets/Scenes/Tutorial_15_Ball_Intro.unity
+    path: Assets/Scenes/Tutorials/Tutorial_15_Ball_Intro.unity
     guid: d98978bc9b8a79a42b1214464490fda4
   - enabled: 1
-    path: Assets/Scenes/Tutorial_16_ScoreGoals_Uebung_1.unity
+    path: Assets/Scenes/Tutorials/Tutorial_16_ScoreGoals_Uebung_1.unity
     guid: ceeb4e088efe0e7438007f939bee6ac5
   - enabled: 1
-    path: Assets/Scenes/Tutorial_17_ScoreGoals_Uebung_2.unity
+    path: Assets/Scenes/Tutorials/Tutorial_17_ScoreGoals_Uebung_2.unity
     guid: d7cc19ea06510884a88043ced3b88ace
   - enabled: 1
-    path: Assets/Scenes/Tutorial_18_Goalkeeping_Uebung.unity
+    path: Assets/Scenes/Tutorials/Tutorial_18_Goalkeeping_Uebung.unity
     guid: 3190a1e3f8f1bdf49907a0307d6e1fd7
   - enabled: 1
-    path: Assets/Scenes/Tutorial_19_QuickChat_Intro.unity
+    path: Assets/Scenes/Tutorials/Tutorial_19_QuickChat_Intro.unity
     guid: 20ec551e207dd6845a1b04ff594edc1c
   - enabled: 1
-    path: Assets/Scenes/Tutorial_20_QuickChat_Test.unity
+    path: Assets/Scenes/Tutorials/Tutorial_20_QuickChat_Test.unity
     guid: 5131c8c53c4760b4ea4539c39fc5d998
   - enabled: 1
-    path: Assets/Scenes/Tutorial_21_End.unity
+    path: Assets/Scenes/Tutorials/Tutorial_21_End.unity
     guid: d454f677c7a1ad84789ff4ac55394a5e
   - enabled: 1
-    path: Assets/Scenes/Tutorial_22_GutscheinScreen.unity
+    path: Assets/Scenes/Tutorials/Tutorial_22_GutscheinScreen.unity
     guid: 603db32a70bee5c4099c0bd46c5a68be
   - enabled: 1
     path: Assets/Scenes/Level 1_Local.unity
@@ -92,6 +92,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 3_Local.unity
     guid: 261ebee1927360947ae2442de297bbb6
+  - enabled: 1
+    path: Assets/Scenes/StartOnline.unity
+    guid: a2fe040224316ea4ab591ed2123ad716
   - enabled: 1
     path: Assets/Scenes/Level 1_photon.unity
     guid: 2bfab419a086fa945a2989186538e119

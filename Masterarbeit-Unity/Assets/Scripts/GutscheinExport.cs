@@ -71,5 +71,6 @@ public class GutscheinExport : MonoBehaviour {
 		file.Write (tutorialScreenState.rating + ";");
 		file.Write (contact + ";");
 		file.Write (time + ";");
+		file.Close();
 	}
 }

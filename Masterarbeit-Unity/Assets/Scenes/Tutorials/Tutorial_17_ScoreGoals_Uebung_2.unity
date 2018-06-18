@@ -2281,7 +2281,7 @@ MonoBehaviour:
     Kanonen treffen!"
   inverseTime: 1
   showRatingChange: 1
-  challengeType: ScoreGoals
+  challengeType: ScoreGoalsHard
 --- !u!4 &671548902
 Transform:
   m_ObjectHideFlags: 0

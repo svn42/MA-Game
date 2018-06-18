@@ -291,6 +291,7 @@ GameObject:
   m_Component:
   - component: {fileID: 328936325}
   - component: {fileID: 328936326}
+  - component: {fileID: 328936327}
   m_Layer: 0
   m_Name: TutorialState
   m_TagString: Untagged
@@ -327,6 +328,17 @@ MonoBehaviour:
   vpNummer: 0
   screenSkipable: 0
   skipableTime: 5
+--- !u!114 &328936327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 328936324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7020a890a09203146b43b2103aa312d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &440384014
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,6 +16,8 @@ public class TutorialScreenState : MonoBehaviour
     private GameObject skipBox;
     private GameObject videoPlayer;
 
+
+
     private void Start()
     {
         Time.timeScale = 1f;
@@ -29,6 +31,11 @@ public class TutorialScreenState : MonoBehaviour
             ratingText.text = rating.ToString();
         }
         skipBox.SetActive(false);
+
+		if (SceneManager.GetActiveScene ().name.Equals ("Tutorial_21_End")) { 
+			ExportTutorialData expTutData = gameObject.GetComponent<ExportTutorialData> ();
+			expTutData.SaveData ();
+		}
 
     }
 

@@ -94,7 +94,7 @@ public class MainMenu : MonoBehaviour
 	void OnPhotonPlayerConnected(PhotonPlayer newPlayer){
 		if (PhotonNetwork.playerList.Length == 2) {
 			if (PhotonNetwork.isMasterClient) {
-			PhotonNetwork.LoadLevel ("Level 1_photon");
+				PhotonNetwork.LoadLevel ("StartOnline");
 			}
 		}
 	}

@@ -195,7 +195,7 @@ public class TutorialGameState : MonoBehaviour
             {
             }
         }
-		if (challengeType.Equals ("ScoreGoals")) {
+		if (challengeType.Equals ("ScoreGoals") || challengeType.Equals ("ScoreGoalsHard")) {
 			FindObjectOfType<ScoreGoalsChallenge> ().RemoveObjects ();
 		}
 		if (challengeType.Equals ("Goalkeeper")) {
@@ -273,8 +273,10 @@ public class TutorialGameState : MonoBehaviour
         }
         else
         {
-			if ((challengeType.Equals ("ScoreGoals") && (totalGoalsScored == 3))) {
+			if (challengeType.Equals ("ScoreGoals") || challengeType.Equals ("ScoreGoalsHard")) {
+				if (totalGoalsScored == 3) {
 				return;
+				}
 			}
 
 			Debug.Log ("tore erzielt: "+ totalGoalsScored);
@@ -534,6 +536,9 @@ public class TutorialGameState : MonoBehaviour
 
 	public void EndChallenge(int challengeRating, int maximum)
     {
+		if (showRatingChange) {
+			PlayerPrefs.SetInt(vpNummer.ToString() + challengeType, challengeRating);
+		}
         PlaySound(soundWhistle, 0.4f);
         rating = challengeRating;
 		maxRating = maximum;

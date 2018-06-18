@@ -557,6 +557,8 @@ public class ExportData : MonoBehaviour
         file.Write(pL.emoteAngryInDeficit + ";");
         file.Write(pL.emoteCryInDeficit + ";");
         file.Write(pL.emoteHahaInDeficit + ";");
+		file.Close();
+
     }
 }
 

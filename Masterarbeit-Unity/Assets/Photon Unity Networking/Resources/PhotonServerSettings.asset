@@ -76,4 +76,6 @@ MonoBehaviour:
   - StopAudio
   - SetBlockTransparency
   - SetSpawnerSize
+  - CheckPlayersReady
+  - SetPlayersReady
   DisableAutoOpenWizard: 1
