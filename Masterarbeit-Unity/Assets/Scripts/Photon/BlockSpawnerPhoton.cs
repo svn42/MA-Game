@@ -6,7 +6,7 @@ public class BlockSpawnerPhoton : MonoBehaviour
 {
 
    // Color spawnColor;    //Farbe des spawnenden Blocks
-	public Vector3 spawnColor = new Vector3 (1,1,1);
+	public Vector3 spawnColor;
 
     Vector3 standardScale;
     public float spawnTimer;    //Zeit des Aufladens, die benötigt wird, bis der Block spawnen soll in Sekunden
@@ -44,7 +44,7 @@ public class BlockSpawnerPhoton : MonoBehaviour
 
 	[PunRPC]
 	public void Setup(){
-		//spawnColor = Color.white;           //Zu Beginn wird die Farbe des spawnenden Blocks weiß
+		spawnColor = new Vector3(1,1,1); //Zu Beginn wird die Farbe des spawnenden Blocks weiß
 		standardScale = new Vector3(1,1,1);
 		SetSpawnerSize(0);            //und die Transparenz auf 0 gesetzt
 		player = transform.parent.GetComponent<PlayerPhoton>();
@@ -104,8 +104,7 @@ public class BlockSpawnerPhoton : MonoBehaviour
 	[PunRPC]
 	public void SetBlockTransparency(float transparency, Vector3 colVector)
     {
-		Color colorNew = Color.white;
-		//Color colorNew = new Color(colVector.x, colVector.y, colVector.z, transparency);
+		Color colorNew = new Color(colVector.x, colVector.y,colVector.z);
 		colorNew.a = transparency;    //Die Transparenz wird so modifiziert, dass der Block stetig weniger transparent wird. Wenn der Block komplett aufgeladen ist, wird er komplett transparent
 		blockSpawnSprite.GetComponent<SpriteRenderer>().color = colorNew;    //und die Farbe wird an das Objekt übergeben
     }
@@ -141,7 +140,7 @@ public class BlockSpawnerPhoton : MonoBehaviour
 				pv.RPC("SetBlockTransparency", PhotonTargets.All, 1.0f, spawnColor);
             } else if (!spawnable)
             {
-				pv.RPC("SetBlockTransparency", PhotonTargets.All,0.33f, spawnColor);
+				pv.RPC("SetBlockTransparency", PhotonTargets.All, 0.33f, spawnColor);
 				//SetBlockTransparency(0.33f, spawnColor);
             }
         }
@@ -157,11 +156,12 @@ public class BlockSpawnerPhoton : MonoBehaviour
 				//SetSpawnerSize(blockChargeTime);
 
                 //An die Farbe des Spielers anpassen
-                blockSpawnSprite.GetComponent<SpriteRenderer>().color = blockColor;    //wird der BlockSpawner in der Farbe des Spielers eingefärbt.
+				pv.RPC("SetBlockTransparency", PhotonTargets.All, 1.0f, player.colorVector);
+                //blockSpawnSprite.GetComponent<SpriteRenderer>().color = blockColor;    //wird der BlockSpawner in der Farbe des Spielers eingefärbt.
             }
             else if (!spawnable)     //wenn das Ziel erreicht wurde und kollidiert
             {
-				pv.RPC("SetBlockTransparency", PhotonTargets.All,0.33f, spawnColor);
+				pv.RPC("SetBlockTransparency", PhotonTargets.All, 0.33f, player.colorVector);
 				//SetBlockTransparency(0.33f, blockColor); //wird der Block in der Farbe des Spielers und transparent gefärbt
             }
         }
@@ -174,7 +174,7 @@ public class BlockSpawnerPhoton : MonoBehaviour
         blockChargeTime = 0;    //die Zeit des Aufladens wird zurückgesetzt
 		pv.RPC("SetSpawnerSize", PhotonTargets.All,blockChargeTime);
 		//SetSpawnerSize(blockChargeTime);  //ebenfalls die Größe des Spawners 
-		pv.RPC("SetBlockTransparency", PhotonTargets.All,0.33f, spawnColor);
+		pv.RPC("SetBlockTransparency", PhotonTargets.All, 0.33f, spawnColor);
 		//SetBlockTransparency(0, spawnColor);
         GetComponent<SpriteRenderer>().enabled = false; //und der Rahmen ausgeblendet
     }

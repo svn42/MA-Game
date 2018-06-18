@@ -23,7 +23,7 @@ public class TutorialScreenState : MonoBehaviour
         skipBox = gui.transform.Find("PauseScreen").gameObject.transform.Find("Spieler1").transform.gameObject;
         greenCheck = gui.transform.Find("PauseScreen").gameObject.transform.Find("Spieler1").transform.Find("Spieler1_Check").GetComponent<Image>(); ;
         rating = PlayerPrefs.GetInt(vpNummer.ToString() + "Rating");
-        if (SceneManager.GetActiveScene().name.Equals("TutorialEnd"))
+		if (SceneManager.GetActiveScene().name.Equals("Tutorial_21_End"))
         {
             ratingText = gui.transform.Find("PauseScreen").gameObject.transform.Find("TransparentScreen").transform.Find("RatingText").GetComponent<Text>(); ;
             ratingText.text = rating.ToString();
@@ -47,11 +47,11 @@ public class TutorialScreenState : MonoBehaviour
             //wenn der Schuss-Button (A) losgelassen wird und der ShotTimer größer ist als die gewünschte Wartezeit zwischen zwei Schüssen 
             if (Input.GetButtonUp("ShootP1"))
             {
-                if (SceneManager.GetActiveScene().name.Equals("TutorialEnd"))
+				if (SceneManager.GetActiveScene().name.Equals("Tutorial_21_End"))
                 {
                     PlayerPrefs.SetString(vpNummer.ToString() + "TutorialSolved", "Yes");
                     PlayerPrefs.SetInt("CurrentVP", vpNummer);
-                    StartCoroutine(LoadNextScene("GutscheinScreen"));
+					StartCoroutine(LoadNextScene("Tutorial_22_GutscheinScreen"));
                 }
                 else
                 {

@@ -630,7 +630,7 @@ MonoBehaviour:
   rating: 0
   vpNummer: 0
   screenSkipable: 0
-  skipableTime: 3
+  skipableTime: 5
 --- !u!4 &959126516
 Transform:
   m_ObjectHideFlags: 0

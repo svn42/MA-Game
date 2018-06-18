@@ -2139,9 +2139,8 @@ MonoBehaviour:
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
   player1: {fileID: 1125116394}
-  tutorialFinishedText1: Nicht schlecht!
-  tutorialFinishedText2: "Deine Leistung flie\xDFt in die Berechnung deines Ratings
-    ein."
+  tutorialFinishedText1: Gut geschossen!
+  tutorialFinishedText2: Bei statischen Zielen klappt das doch ganz gut.
   pauseScreenText: "In dieser \xDCbung tauchen verschiedenfarbige Ziele auf, die du
     mit deinen Sch\xFCssen abschie\xDFen musst. Die Farbe des Ziels zeigt dir dabei
     an, welchen Schusstypen du daf\xFCr verwenden musst.  Du wirst dich bei dieser
@@ -2523,7 +2522,7 @@ Transform:
   - {fileID: 959323869}
   - {fileID: 1249949335}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &762135535
 Prefab:
@@ -3121,51 +3120,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 896679633}
---- !u!1 &959126514
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 959126516}
-  - component: {fileID: 959126515}
-  m_Layer: 0
-  m_Name: TutorialState_Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &959126515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 959126514}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ced85d65f087a54bb1504252e8e4a1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gui: {fileID: 0}
-  rating: 0
-  vpNummer: 0
-  screenSkipable: 0
-  skipableTime: 0
---- !u!4 &959126516
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 959126514}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 532.9629, y: 214.61868, z: 8.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &959323868
 GameObject:
   m_ObjectHideFlags: 0
@@ -4557,7 +4511,7 @@ Transform:
   - {fileID: 1518241683}
   - {fileID: 1777044075}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1642595394
 GameObject:

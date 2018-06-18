@@ -386,7 +386,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -56}
+  m_AnchoredPosition: {x: 0, y: -63}
   m_SizeDelta: {x: 1600, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &580489299
@@ -421,7 +421,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Bl\xF6cke"
+  m_Text: "B\xE4lle"
 --- !u!222 &580489300
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -528,7 +528,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000030518, y: -144}
+  m_AnchoredPosition: {x: -0.000030518, y: -124}
   m_SizeDelta: {x: 970.7, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &926181636
@@ -563,13 +563,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Mit der roten B-TASTE kannst du Bl\xF6cke platzieren. Dazu musst du die
-    Taste so lange festhalten, bis sich der Block farbig und nicht mehr transparent
-    f\xE4rbt, und daraufhin zum Platzieren des Blockes die Taste loslassen. Achte
-    stets darauf, dass die Bl\xF6cke nicht in anderen Objekten platziert werden, da
-    das Platzieren sonst abgebrochen wird. \n\nBl\xF6cke k\xF6nnen nur durch Sch\xFCsse
-    zerst\xF6rt werden. Ein Block hat 3 Leben. Ein normaler Schuss zieht 1 Leben,
-    ein mittlerer 2 Leben und ein gro\xDFer direkt alle 3 Leben ab. "
+  m_Text: "Im Spiel gibt es maximal 2 B\xE4lle. Nachdem ein Ball den Mittelkreis verlassen
+    hat, spawnt in der Mitte des Spielfeldes ein neuer Ball, sofern das Maximum von
+    2 B\xE4llen nicht \xFCberschritten wurde. Wenn 2 B\xE4lle auf dem Spielfeld sind,
+    spawnt der n\xE4chste Ball also erst, wenn ein Tor gefallen ist.\n\nVersuche deine
+    unterschiedlichen Sch\xFCsse sinnvoll zu kombinieren, um einen Ball fester zu
+    schie\xDFen oder nur leicht voranzutreiben. Beachte auch, dass der Ball anders
+    abprallt, wenn dein Schuss den Ball seitlich trifft!"
 --- !u!222 &926181637
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -607,7 +607,7 @@ MonoBehaviour:
   rating: 0
   vpNummer: 0
   screenSkipable: 0
-  skipableTime: 3
+  skipableTime: 5
 --- !u!4 &959126516
 Transform:
   m_ObjectHideFlags: 0
@@ -657,7 +657,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -68.599976}
-  m_SizeDelta: {x: 1102.7, y: 476.6}
+  m_SizeDelta: {x: 1102.7, y: 402}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &996482327
 MonoBehaviour:
@@ -671,7 +671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+  m_Color: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 0.91764706}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -802,7 +802,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10, y: 30}
+  m_AnchoredPosition: {x: -10, y: 98}
   m_SizeDelta: {x: 800, y: 118.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1096885117
@@ -1104,7 +1104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1793856103}
-  videoToPlay: {fileID: 32900000, guid: 76251dfb9ac7f0c48bf968e4f4530fb7, type: 3}
+  videoToPlay: {fileID: 32900000, guid: 6ead03f36d1f9bf42bfff3466f3f2148, type: 3}
   loop: 1
   audio: 1
 --- !u!114 &1793856103

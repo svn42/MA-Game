@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Generelles Spielziel II
+  m_Text: Generelles Spielziel III
 --- !u!222 &2418733
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -417,13 +417,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.25
-  m_Text: "Um den Gegner zu behindern oder Tore zu verhindern, kannst du Bl\xF6cke
-    platzieren, die nur zerst\xF6rt werden k\xF6nnen, indem diese beschossen werden.
-    Au\xDFerdem kannst du deinen Gegner beschie\xDFen, um ihn zu bet\xE4uben. Bedenke
-    bei allen Aktionen, dass die 3 verschiedenen Sch\xFCsse unterschiedlich starke
-    Auswirkungen haben. Je st\xE4rker der Schuss ist, desto st\xE4rker wird der Ball
-    angesto\xDFen, der Gegner l\xE4nger bet\xE4ubt und Bl\xF6cke bekommen mehr Schaden.\n\nFahre
-    fort, um einen kurzen Ausschnitt aus dem Spiel zu sehen."
+  m_Text: "Nachdem du nun theoretisch bestens vorbereitet bist, k\xF6nnen wir zum
+    praktischen Teil kommen und dich f\xFCr das Spiel fit machen. \n\nStrenge dich
+    bei den \xDCbungen an, damit das sp\xE4tere Rating dein K\xF6nnen m\xF6glichst
+    pr\xE4zise wiederspiegelt! Au\xDFerdem hast du mit einem besseren Rating eine
+    h\xF6here Wahrscheinlichkeit, einen Gutschein zu gewinnen.\n"
 --- !u!222 &430686465
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -559,7 +557,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000095367, y: -289}
+  m_AnchoredPosition: {x: 0.0000095367, y: -130}
   m_SizeDelta: {x: 1920, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &870936660
@@ -588,7 +586,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 49
-    m_Alignment: 4
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -632,7 +630,7 @@ MonoBehaviour:
   rating: 0
   vpNummer: 0
   screenSkipable: 0
-  skipableTime: 3
+  skipableTime: 5
 --- !u!4 &959126516
 Transform:
   m_ObjectHideFlags: 0

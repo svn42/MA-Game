@@ -1539,7 +1539,7 @@ Transform:
   - {fileID: 945063319}
   - {fileID: 1840741714}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &372194271 stripped
 GameObject:
@@ -2466,7 +2466,7 @@ Transform:
   - {fileID: 897498457}
   - {fileID: 73920362}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &616552938
 GameObject:
@@ -2830,13 +2830,13 @@ MonoBehaviour:
   depauseCountdown: 3
   startCountdownActivated: 1
   rating: 0
+  maxRating: 0
   vpNummer: 0
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
   player1: {fileID: 1125116394}
   tutorialFinishedText1: Nicht schlecht!
-  tutorialFinishedText2: "Deine Leistung flie\xDFt in die Berechnung deines Ratings
-    ein."
+  tutorialFinishedText2: Auch unter Druck klappt das schon ganz gut.
   pauseScreenText: Steuere mit deiner Figur die orangenen Zonen an und komme innerhalb
     dieser Zonen zum Stehen. Nachdem du in einer Zone zum Stillstand gekommen bist,
     taucht eine neue Zone auf, die du ansteuern musst. Pass auf, dass du nicht von
@@ -3154,7 +3154,7 @@ Transform:
   - {fileID: 959323869}
   - {fileID: 1249949335}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &762704495
 GameObject:
@@ -3788,51 +3788,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1405375238793904, guid: 5b2e784449322ce4aa87eeed9ee22756,
     type: 2}
   m_PrefabInternal: {fileID: 945063318}
---- !u!1 &959126514
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 959126516}
-  - component: {fileID: 959126515}
-  m_Layer: 0
-  m_Name: TutorialState_Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &959126515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 959126514}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ced85d65f087a54bb1504252e8e4a1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gui: {fileID: 0}
-  rating: 0
-  vpNummer: 0
-  screenSkipable: 0
-  skipableTime: 0
---- !u!4 &959126516
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 959126514}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 532.9629, y: 214.61868, z: 8.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &959323868
 GameObject:
   m_ObjectHideFlags: 0
