@@ -132,15 +132,12 @@ public class PlayerPhoton : MonoBehaviour
 				pvPlayer = gameObject.GetComponent<PhotonView> ();
 
 			if (pvPlayer.isMine) {
-
-
 				pvPlayer.RPC ("StartPlayerRegistration", PhotonTargets.All);	//VP, Rating, PlayerTeam, Color setzen
 				pvPlayer.RPC ("SetUpSpeechBubble",PhotonTargets.All) ;
 				pvPlayer.RPC ("SetPlayerName", PhotonTargets.All, subjectNr);
 				pvPlayer.RPC ("CheckTeamColor", PhotonTargets.All, playerTeam);
 				pvGamestate.RPC ("RegisterPlayer", PhotonTargets.All, gameObject.name, playerTeam, subjectNr, rating);
 				playersRegistered = true;
-
 			}
 
 			}
@@ -271,13 +268,11 @@ public class PlayerPhoton : MonoBehaviour
 		case "cry": 
 			emoteCryPrepared = b;
 			break;
-
 		}
 
 		if (!b) {
 			speechbubbleRenderer.enabled = false;
 			emojiRenderer.enabled = false;
-
 		}
 
 	}
@@ -299,9 +294,10 @@ public class PlayerPhoton : MonoBehaviour
 			PlaySound (soundsEmoteAngry [randomInt], 0.1f);
 			break;
 		}
+		playerLogging.AddEmote(type);   //dem Logging wird die Art des Emotes mitgeteilt    
+
 		emojiRenderer.color = new Color (1, 1, 1, 0.85f);
 		speechbubbleRenderer.color = new Color (1, 1, 1, 0.8f);
-
 		emojiRenderer.sprite = Resources.Load<Sprite> ("Textures/Emojis/" + type);
 		speechbubbleRenderer.enabled = true;
 		emojiRenderer.enabled = true;
@@ -333,6 +329,7 @@ public class PlayerPhoton : MonoBehaviour
 		playerLogging.SetRating (rating, ratingEnemy);
 		playerLogging.SetGameType (gameType);
 		positionTracker.CalculateWalkedDistance ();
+		positionTracker.ChangeResult(playerLogging.currentResult);
 		playerLogging.SetEndingCondition (endingCondition);
 	}
 

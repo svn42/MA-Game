@@ -1578,7 +1578,7 @@ MonoBehaviour:
   gameType: 
   maximumBalls: 3
   goalLimit: 3
-  timeLeft: 120
+  timeLeft: 600
   timePlayed: 0
   goalFreezeTime: 3
   goalsTeam1: 0
@@ -1593,6 +1593,7 @@ MonoBehaviour:
   depauseCountdown: 3
   startCountdownActivated: 1
   rating: 0
+  maxRating: 0
   vpNummer: 0
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
@@ -2569,6 +2570,7 @@ MonoBehaviour:
   shotsHitPlayer: 0
   shotsHitEnemyShot: 0
   shotsDestroyed: 0
+  shotsHitTarget: 0
   totalStunnedByEnemy: 0
   normalStunnedByEnemy: 0
   mediumStunnedByEnemy: 0

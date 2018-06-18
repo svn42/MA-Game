@@ -2251,7 +2251,7 @@ MonoBehaviour:
   gameType: 
   maximumBalls: 0
   goalLimit: 10
-  timeLeft: 120
+  timeLeft: 600
   timePlayed: 0
   goalFreezeTime: 3
   goalsTeam1: 0
@@ -4322,7 +4322,7 @@ MonoBehaviour:
   goalBlue: {fileID: 1189382351}
   maxRatingTime: 480
   maxRatingAccuracy: 120
-  bestTime: 80
+  bestTime: 70
   ratingTimeInt: 0
   ratingAccuracyInt: 0
   precision: 0

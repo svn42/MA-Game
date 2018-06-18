@@ -78,8 +78,8 @@ public class MovementPhoton : MonoBehaviour {
 		}
 		//wenn der Block-Button (B) losgelassen wird
 		if (Input.GetButtonUp ("BlockP1")) {
-			//playerPhoton.blockSpawn.GetComponent<PhotonView>().RPC ("SpawnBlock", PhotonTargets.All);
-			playerPhoton.blockSpawn.SpawnBlock ();    //wird überprüft, ob der Block gespawnt werden kann (wenn die Zeit groß genug ist)
+			playerPhoton.blockSpawn.GetComponent<PhotonView>().RPC ("SpawnBlock", PhotonTargets.All);
+			//playerPhoton.blockSpawn.SpawnBlock ();    //wird überprüft, ob der Block gespawnt werden kann (wenn die Zeit groß genug ist)
 		}
 
 		//wenn der Schuss-Button (A) gedrückt wird

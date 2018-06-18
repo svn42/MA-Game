@@ -34,12 +34,6 @@ public class PlayerLogging : MonoBehaviour
     public float timeInLead;
     public float timeTied;
     public float timeInDeficit;
-    //public float timeInLeadPercent;
-    //public float timeTiedPercent;
-    //public float timeInDeficitPercent;
-
-    //alle variablen je nach result. 
-    //in schleife in export?
 
     //time per Zone
     public float timeCenterZone;
@@ -47,11 +41,6 @@ public class PlayerLogging : MonoBehaviour
     public float timeOwnGoalZone;
     public float timeOpponentZone;
     public float timeOpponentGoalZone;
-    //public float timeCenterZonePercent;
-    //public float timeOwnZonePercent;
-    //public float timeOwnGoalZonePercent;
-    //public float timeOpponentZonePercent;
-    //public float timeOpponentGoalZonePercent;
 
     //time per zone per result
     public float timeCenterZoneInLead;
@@ -74,25 +63,6 @@ public class PlayerLogging : MonoBehaviour
     public float timeOpponentGoalZoneInTie;
     public float timeOpponentGoalZoneInDeficit;
 
-    //time per zone per result Percent
-    ////public float timeCenterZoneInLeadPercent;
-    ////public float timeOwnZoneInLeadPercent;
-    ////public float timeOwnGoalZoneInLeadPercent;
-    ////public float timeOpponentZoneInLeadPercent;
-    ////public float timeOpponentGoalZoneInLeadPercent;
-
-    ////public float timeCenterZoneInTiePercent;
-    ////public float timeOwnZoneInTiePercent;
-    ////public float timeOwnGoalZoneInTiePercent;
-    ////public float timeOpponentZoneInTiePercent;
-    ////public float timeOpponentGoalZoneInTiePercent;
-
-    ////public float timeCenterZoneInDeficitPercent;
-    ////public float timeOwnZoneInDeficitPercent;
-    ////public float timeOwnGoalZoneInDeficitPercent;
-    ////public float timeOpponentZoneInDeficitPercent;
-    ////public float timeOpponentGoalZoneInDeficitPercent;
-
     //Shots
     public int totalShotsFired;
     public int normalShotsFired;
@@ -113,10 +83,6 @@ public class PlayerLogging : MonoBehaviour
     public int normalShotsFiredInDeficit;
     public int mediumShotsFiredInDeficit;
     public int largeShotsFiredInDeficit;
-
-    //public float normalShotsFiredPercent;
-    //public float mediumShotsFiredPercent;
-    //public float largeShotsFiredPercent;
 
     //Accuracy
     public int totalObjectsHit;
@@ -147,11 +113,6 @@ public class PlayerLogging : MonoBehaviour
     public int shotsHitEnemyShotInDeficit;
     public int shotsDestroyedInDeficit;
 
-    //public float shotsHitBlockPercent;
-    //public float shotsHitBallPercent;
-    //public float shotsHitPlayerPercent;
-    //public float shotsHitEnemyShotPercent;
-    //public float shotsDestroyedPercent;
 
     //Blocks
     public int totalBlocksPlaced;
@@ -160,11 +121,6 @@ public class PlayerLogging : MonoBehaviour
     public int blocksInCenterZone;
     public int blocksInOpponentZone;
     public int blocksInOpponentGoalZone;
-    //public float blocksInOwnZonePercent;
-    //public float blocksInOwnGoalZonePercent;
-    //public float blocksInCenterZonePercent;
-    //public float blocksInOpponentZonePercent;
-    //public float blocksInOpponentGoalZonePercent;
     //blocks per result
     public int totalBlocksPlacedInLead;
     public int blocksInOwnZoneInLead;
@@ -237,24 +193,12 @@ public class PlayerLogging : MonoBehaviour
     public int mediumStunnedByEnemyInDeficit;
     public int largeStunnedByEnemyInDeficit;
     public float stunnedByEnemyTotalTimeInDeficit;
-
-    ////Stunned by ball
-    //public int stunnedByBall;
-    //public int stunnedByBallInLead;
-    //public int stunnedByBallInTie;
-    //public int stunnedByBallInDeficit;
-
-
     //Emotes
     public int totalEmotes;
     public int emoteNice;
     public int emoteAngry;
     public int emoteCry;
     public int emoteHaha;
-    //public float emoteNicePercent;
-    //public float emoteAngryPercent;
-    //public float emoteCryPercent;
-    //public float emoteHahaPercent;
     public int totalEmotesInLead;
     public int emoteNiceInLead;
     public int emoteAngryInLead;
@@ -342,17 +286,6 @@ public class PlayerLogging : MonoBehaviour
         }
     }
 
-    //public void CalculateResultTimePercentage()
-    //{
-
-    //    float totalTimeResult = timeInLead + timeTied + timeInDeficit;
-    //    if (totalTimeResult > 0)
-    //    {
-    //        timeInLeadPercent = timeInLead / totalTimeResult;
-    //        timeTiedPercent = timeTied / totalTimeResult;
-    //        timeInDeficitPercent = timeInDeficit / totalTimeResult;
-    //    }
-    //}
 
     public void AddZoneTime(string zone)
     {
@@ -531,42 +464,6 @@ public class PlayerLogging : MonoBehaviour
         }
     }
 
-    //public void CalculateZonePercentage()
-    //{
-
-    //    float totalZoneTime = timeCenterZone + timeOwnZone + timeOwnGoalZone + timeOpponentZone + timeOpponentGoalZone;
-    //    if (totalZoneTime > 0)
-    //    {
-    //        timeCenterZonePercent = timeCenterZone / totalZoneTime;
-    //        timeOwnZonePercent = timeOwnZone / totalZoneTime;
-    //        timeOwnGoalZonePercent = timeOwnGoalZone / totalZoneTime;
-    //        timeOpponentZonePercent = timeOpponentZone / totalZoneTime;
-    //        timeOpponentGoalZonePercent = timeOpponentGoalZone / totalZoneTime;
-    //    }
-    //}
-
-    //public void CalculateResultZonePercentage()
-    //{
-
-    //    timeCenterZoneInLeadPercent = timeCenterZoneInLead / timeInLead;
-    //    timeOwnZoneInLeadPercent = timeOwnZoneInLead / timeInLead; ;
-    //    timeOwnGoalZoneInLeadPercent = timeOwnGoalZoneInLead / timeInLead; ;
-    //    timeOpponentZoneInLeadPercent = timeOpponentZoneInLead / timeInLead; ;
-    //    timeOpponentGoalZoneInLeadPercent = timeOpponentGoalZoneInLead / timeInLead; ;
-
-    //    timeCenterZoneInTiePercent = timeCenterZoneInTie / timeTied; ;
-    //    timeOwnZoneInTiePercent = timeOwnZoneInTie / timeTied; ;
-    //    timeOwnGoalZoneInTiePercent = timeOwnGoalZoneInTie / timeTied; ;
-    //    timeOpponentZoneInTiePercent = timeOpponentZoneInTie / timeTied; ;
-    //    timeOpponentGoalZoneInTiePercent = timeOpponentGoalZoneInTie / timeTied; ;
-
-    //    timeCenterZoneInDeficitPercent = timeCenterZoneInDeficit / timeInDeficit; ;
-    //    timeOwnZoneInDeficitPercent = timeOwnZoneInDeficit / timeInDeficit; ;
-    //    timeOwnGoalZoneInDeficitPercent = timeOwnGoalZoneInDeficit / timeInDeficit; ;
-    //    timeOpponentZoneInDeficitPercent = timeOpponentZoneInDeficit / timeInDeficit; ;
-    //    timeOpponentGoalZoneInDeficitPercent = timeOpponentGoalZoneInDeficit / timeInDeficit; ;
-    //}
-
     public void AddShot(string shotType)
     {
         switch (shotType)
@@ -633,16 +530,6 @@ public class PlayerLogging : MonoBehaviour
         }
 
     }
-
-    //public void CalculateShots()
-    //{
-    //    if (totalShotsFired > 0)
-    //    {
-    //        normalShotsFiredPercent = (float)normalShotsFired / totalShotsFired;
-    //        mediumShotsFiredPercent = (float)mediumShotsFired / totalShotsFired;
-    //        largeShotsFiredPercent = (float)largeShotsFired / totalShotsFired;
-    //    }
-    //}
 
     public void AddAccuracy(string action)
     {
@@ -745,19 +632,6 @@ public class PlayerLogging : MonoBehaviour
 
     }
 
-
-    //public void CalculateAccuracy()
-    //{
-    //    if (totalObjectsHit > 0)
-    //    {
-    //        shotsHitBlockPercent = (float)shotsHitBlock / totalObjectsHit;
-    //        shotsDestroyedPercent = (float)shotsDestroyed / totalObjectsHit;
-    //        shotsHitBallPercent = (float)shotsHitBall / totalObjectsHit;
-    //        shotsHitEnemyShotPercent = (float)shotsHitEnemyShot / totalObjectsHit;
-    //        shotsHitPlayerPercent = (float)shotsHitPlayer / totalObjectsHit;
-    //    }
-    //}
-
     public void AddBlock()
     {
         switch (currentZone)
@@ -853,17 +727,6 @@ public class PlayerLogging : MonoBehaviour
         }
     }
 
-    //public void CalculateBlocks()
-    //{
-    //    if (totalBlocksPlaced > 0)
-    //    {
-    //        blocksInOwnZonePercent = (float)blocksInOwnZone / totalBlocksPlaced;
-    //        blocksInOwnGoalZonePercent = (float)blocksInOwnGoalZone / totalBlocksPlaced;
-    //        blocksInCenterZonePercent = (float)blocksInCenterZone / totalBlocksPlaced;
-    //        blocksInOpponentZonePercent = (float)blocksInOpponentZone / totalBlocksPlaced;
-    //        blocksInOpponentGoalZonePercent = (float)blocksInOpponentGoalZone / totalBlocksPlaced;
-    //    }
-    //}
 
     public void AddGoalType(string goalType)
     {
@@ -912,23 +775,6 @@ public class PlayerLogging : MonoBehaviour
         distanceTravelled += walkedDistance;
     }
 
-    //public void AddStunnedByBall()
-    //{
-    //    stunnedByBall++;
-    //    switch (currentResult)
-    //    {
-    //        case "in_lead":
-    //            stunnedByBallInLead++;
-    //            break;
-    //        case "in_tie":
-    //            stunnedByBallInTie++;
-    //            break;
-    //        case "in_deficit":
-    //            stunnedByBallInDeficit++;
-    //            break;
-    //    }
-
-    //}
 
     public void AddEnemyStunned(string shotType, float stunDuration)
     {
@@ -1170,16 +1016,6 @@ public class PlayerLogging : MonoBehaviour
     {
         gameType = type;
     }
-    //public void CalculateEmotes()
-    //{
-    //    if (totalEmotes > 0)
-    //    {
-    //        emoteNicePercent = (float)emoteNice / totalEmotes;
-    //        emoteAngryPercent = (float)emoteAngry / totalEmotes;
-    //        emoteCryPercent = (float)emoteCry / totalEmotes;
-    //        emoteHahaPercent = (float)emoteHaha / totalEmotes;
-    //    }
-    //}
 
 
 }

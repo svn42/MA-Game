@@ -3625,9 +3625,9 @@ MonoBehaviour:
   - {fileID: 1776400471}
   - {fileID: 1518241684}
   - {fileID: 1777044076}
-  maxRatingTime: 125
-  maxRatingAccuracy: 175
-  bestTime: 45
+  maxRatingTime: 100
+  maxRatingAccuracy: 200
+  bestTime: 50
   ratingTimeInt: 0
   ratingAccuracyInt: 0
   precision: 0

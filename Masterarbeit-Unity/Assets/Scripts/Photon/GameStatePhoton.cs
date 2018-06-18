@@ -500,7 +500,9 @@ public class GameStatePhoton : MonoBehaviour
 
 	IEnumerator SetNextLevelReady ()
 	{
-		yield return new WaitForSeconds (timeUntilNextLevel * Time.timeScale);
+		yield return new WaitForSeconds (timeUntilNextLevel / 2 * Time.timeScale);
+		BuildLoggingData ();
+		yield return new WaitForSeconds (timeUntilNextLevel / 2 * Time.timeScale);
 		BuildPauseScreen ("endLevelReady");
 		nextLevelReady = true;
 	}
@@ -595,9 +597,12 @@ public class GameStatePhoton : MonoBehaviour
 		levelEnded = true;
 		BuildPauseScreen ("endWait");
 		globalTimer.SetEndTime ();
+	}
+
+	private void BuildLoggingData(){
 		activePlayer.GetComponent<PlayerPhoton> ().CalculateLogData (endingCondition, gameType);
-	//	player1Script.CalculateLogData (endingCondition, gameType);
-	//	player2Script.CalculateLogData (endingCondition, gameType);
+		//	player1Script.CalculateLogData (endingCondition, gameType);
+		//	player2Script.CalculateLogData (endingCondition, gameType);
 		ExportData exportData = (ExportData)FindObjectOfType (typeof(ExportData));
 		exportData.StartUpExportData ();
 		//exportData.FindPlayerLogging ();

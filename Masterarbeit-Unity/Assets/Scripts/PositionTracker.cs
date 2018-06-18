@@ -94,7 +94,7 @@ public class PositionTracker : MonoBehaviour
         {
             walkedDistance = walkedDistance + Vector3.Distance(positionListWithoutDuplicates[i], positionListWithoutDuplicates[i + 1]);
         }
-        playerLogging.AddWalkedDistance("end", walkedDistance);
+        playerLogging.AddWalkedDistance(walkedDistance);
     }
 
     public void CalculateWalkedDistancePerResult(string currentResult)

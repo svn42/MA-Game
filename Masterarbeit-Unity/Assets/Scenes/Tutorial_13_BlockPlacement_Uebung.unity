@@ -1750,7 +1750,7 @@ MonoBehaviour:
   gameType: 
   maximumBalls: 3
   goalLimit: 3
-  timeLeft: 120
+  timeLeft: 600
   timePlayed: 0
   goalFreezeTime: 3
   goalsTeam1: 0
@@ -2942,7 +2942,7 @@ MonoBehaviour:
   - {fileID: 1147239847}
   - {fileID: 2072486206}
   maxRating: 300
-  bestTime: 30
+  bestTime: 33
 --- !u!114 &1125116396
 MonoBehaviour:
   m_ObjectHideFlags: 0
