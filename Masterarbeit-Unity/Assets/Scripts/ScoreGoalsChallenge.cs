@@ -7,8 +7,8 @@ public class ScoreGoalsChallenge : MonoBehaviour {
 	public List<GameObject> firstObjects;
 	public List<GameObject> secondObjects;
 	public List<GameObject> thirdObjects;
-	public GameObject goalRed;
-	public GameObject goalBlue;
+	public GameObject goal;
+	private SpriteRenderer goalRenderer;
 
 	private List<List<GameObject> > objects = new List<List<GameObject> >(); 
 	private TutorialGameState tutorialGameState;
@@ -27,34 +27,42 @@ public class ScoreGoalsChallenge : MonoBehaviour {
 	public int ratingAccuracyInt;
 	public float precision;
 	public float stunPenalty;
-
+	public Color32 blue;
+	public Color32 red;
 
 	// Use this for initialization
 	void Start()
 	{
+		goalRenderer = goal.GetComponent<SpriteRenderer> ();
 		playerPosition = gameObject.transform.position;
 		playerRotation = gameObject.transform.rotation;
+
+		blue = new Color32 (87, 73,255, 255);
+		red = new Color32 (255,100,100, 255);
 
 		tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
 		tutorialLogging = gameObject.GetComponent<TutorialLogging>();
 		player = gameObject.GetComponent<PlayerTutorial>();
-		SetGoalColor ();
 		SetUpObjects();
+		SetGoalColor ();
 
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		Debug.Log ("blue: " +blue);
 	}
+
 
 	private void SetGoalColor(){
 		switch (player.playerTeam) {
 		case 1: 
-			goalBlue.SetActive (true);
+			goalRenderer.color = red;
+
 			break;
 		case 2: 
-			goalRed.SetActive (true);
+			goalRenderer.color = blue;
 			break;
 		}
 
