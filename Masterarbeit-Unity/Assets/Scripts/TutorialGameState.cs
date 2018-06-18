@@ -279,7 +279,6 @@ public class TutorialGameState : MonoBehaviour
 				}
 			}
 
-			Debug.Log ("tore erzielt: "+ totalGoalsScored);
             StartCoroutine(GoalFreeze());
 
         }

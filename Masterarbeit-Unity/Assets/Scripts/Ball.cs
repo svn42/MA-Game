@@ -66,6 +66,7 @@ public class Ball : MonoBehaviour {
     //zerstört den Ball, entfernt den Ball aus der Liste und spawnt u.U. einen neuen Ball
     public void DestroyBall()
     {
+		DeleteFromBlockSpawnCollider (gameObject.name);
         Instantiate(ballExplosion, transform.position, transform.rotation);  //Die BallExplosion wird dabei instanziiert
         //Der Ball wird aus der Liste der GameState entfernt
         gameState.RemoveBall(instanceID);
@@ -84,5 +85,14 @@ public class Ball : MonoBehaviour {
     {
         gameState.PlaySound("ball_hit", vol);  
     }
+
+	//löscht den Ball aus den Blockspawner Collider Listen
+	public void DeleteFromBlockSpawnCollider(string name){
+		BlockSpawner[] blockspawner = GameObject.FindObjectsOfType<BlockSpawner>();
+		foreach (BlockSpawner bs in blockspawner) {
+			bs.RemoveObject (name);
+		}
+	}
+
 
 }

@@ -2052,9 +2052,8 @@ MonoBehaviour:
   globalTimer: {fileID: 0}
   musicPlayer: {fileID: 0}
   player1: {fileID: 1125116394}
-  tutorialFinishedText1: Gut geschossen!
-  tutorialFinishedText2: "Das war ja fast so entspannend, wie das Zerdr\xFCcken von
-    Luftpolsterfolie."
+  tutorialFinishedText1: Plop!
+  tutorialFinishedText2: Gut geschossen.
   pauseScreenText: "Zerst\xF6re die Bl\xF6cke so schnell und pr\xE4zise wie m\xF6glich.
     Sch\xFCsse, die keinen Block treffen, wirken sich negativ auf das Rating aus."
   inverseTime: 1

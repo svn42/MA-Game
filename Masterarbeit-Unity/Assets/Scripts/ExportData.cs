@@ -99,7 +99,7 @@ public class ExportData : MonoBehaviour
         {
             Directory.CreateDirectory("ResearchData/csv/");
         }
-        path = "ResearchData/csv/testData" + sceneName + ".csv";
+        path = "ResearchData/csv/LogData" + sceneName + ".csv";
 
         //Falls noch keine .csv-Datei vorhanden ist
         if (!File.Exists(path))
