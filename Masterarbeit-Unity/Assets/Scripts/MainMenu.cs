@@ -14,14 +14,17 @@ public class MainMenu : MonoBehaviour
 	public GameObject VLPWMenu;
 	public GameObject VLMenu;
 	public Button tutorialButton;
+	public Button lastTutorialButton;
 	public Button localGameButton;
 	public Button onlineGameButton;
+	public Button lastOnlineButton;
 	public Button disconnectButton;
 	public GameObject waitForPlayer;
 
 	public GameObject passwortErrorText;
 	public GameObject VPErrorText;
 	public int VPNummer;
+	private string lastOnlineLevel = "StartOnline";
 
 	public void Start ()
 	{
@@ -34,12 +37,6 @@ public class MainMenu : MonoBehaviour
 
 		passwortErrorText = passwortField.gameObject.transform.Find ("Error-Text").gameObject;
 		VPErrorText = VPInputField.gameObject.transform.Find ("Error-Text").gameObject;
-
-		//wenn der Spieler das Tutorial absolviert hat, wird der OnlineButton aktiviert und das Rating eingeblendet
-		if (PlayerPrefs.GetString (VPNummer.ToString () + "TutorialSolved").Equals ("Yes")) {
-			onlineGameButton.interactable = true;
-			mainMenu.transform.Find ("Rating-Text").gameObject.GetComponent<Text> ().text = "Rating: " + PlayerPrefs.GetInt (VPNummer.ToString () + "Rating");
-		}
 
 	}
 
@@ -54,6 +51,7 @@ public class MainMenu : MonoBehaviour
 	{
 		PlayerPrefs.SetString ("GameType", "Tutorial");
 		SceneManager.LoadScene ("Tutorial_1");
+		PlayerPrefs.SetInt(VPNummer.ToString() + "Rating", 0);
 	}
 
 	public void StartLocalGame ()
@@ -94,7 +92,7 @@ public class MainMenu : MonoBehaviour
 	void OnPhotonPlayerConnected(PhotonPlayer newPlayer){
 		if (PhotonNetwork.playerList.Length == 2) {
 			if (PhotonNetwork.isMasterClient) {
-				PhotonNetwork.LoadLevel ("StartOnline");
+				PhotonNetwork.LoadLevel (lastOnlineLevel);
 			}
 		}
 	}
@@ -147,6 +145,33 @@ public class MainMenu : MonoBehaviour
         
 	}
 
+	public void LoadLastOnlineScene(){
+		PlayerPrefs.SetString ("GameType", "Online");
+		PhotonNetwork.ConnectUsingSettings ("v01");
+		PhotonNetwork.player.NickName = PlayerPrefs.GetInt ("VP").ToString();
+		lastOnlineLevel = PlayerPrefs.GetString ("LastOnline");
+	}
+
+	public void LoadLastTutorial(){
+		string lastTut = PlayerPrefs.GetString ("LastTutorial");
+		SceneManager.LoadScene (lastTut);
+	}
+
+	public void ResetTutorial(){
+		PlayerPrefs.SetString (VPNummer.ToString () + "TutorialSolved", "No");
+		tutorialButton.interactable = true;
+		lastTutorialButton.interactable = false;
+		PlayerPrefs.SetString ("LastTutorial", "");
+		PlayerPrefs.SetInt(VPNummer.ToString() + "Rating", 0);
+		mainMenu.transform.Find ("Rating-Text").gameObject.GetComponent<Text> ().text = "Rating: ?";
+	}
+
+	public void ResetOnline(){
+		PlayerPrefs.SetString ("LastOnline", "");
+		onlineGameButton.interactable = true;
+		lastOnlineButton.interactable = false;
+	}
+
 	public void LoadData (int i)
 	{
 		VPNummer = i;
@@ -155,9 +180,11 @@ public class MainMenu : MonoBehaviour
 			mainMenu.transform.Find ("Rating-Text").gameObject.GetComponent<Text> ().text = "Rating: ?";
 			VLMenu.transform.Find ("VP-Text").gameObject.GetComponent<Text> ().text = "VP: ?";
 			mainMenu.transform.Find ("VP-Text").gameObject.GetComponent<Text> ().text = "VP: ?";
-
 			tutorialButton.interactable = false;
-			//
+			lastTutorialButton.interactable = false;
+			lastOnlineButton.interactable = false;
+
+			//TODO: MUSS raus, bevor alles beginnt
 			onlineGameButton.interactable = true;
 		} else {
 
@@ -167,13 +194,30 @@ public class MainMenu : MonoBehaviour
 			if (PlayerPrefs.GetString (VPNummer.ToString () + "TutorialSolved").Equals ("Yes")) {
 				mainMenu.transform.Find ("Rating-Text").gameObject.GetComponent<Text> ().text = "Rating: " + PlayerPrefs.GetInt (VPNummer.ToString () + "Rating");
 				tutorialButton.interactable = false;
-				onlineGameButton.interactable = true;
+				lastTutorialButton.interactable = false;
+				if (PlayerPrefs.GetString ("LastOnline") != "") {
+					onlineGameButton.interactable = false;
+					lastOnlineButton.interactable = true;
+				} else {
+					onlineGameButton.interactable = true;
+					lastOnlineButton.interactable = false;
+				}
+
 			} else {
 				mainMenu.transform.Find ("Rating-Text").gameObject.GetComponent<Text> ().text = "Rating: ?";
+				if (PlayerPrefs.GetString ("LastTutorial") != "") {
+					tutorialButton.interactable = false;
+					lastTutorialButton.interactable = true;
 
-				tutorialButton.interactable = true;
+				} else {
+					tutorialButton.interactable = true;
+					lastTutorialButton.interactable = false;
+
+				}
+
 //TODO: MUSS raus, bevor alles beginnt
 				onlineGameButton.interactable = true;
+				lastOnlineButton.interactable = false;
 
 			}
 

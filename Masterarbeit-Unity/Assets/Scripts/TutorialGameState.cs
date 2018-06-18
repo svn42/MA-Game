@@ -83,6 +83,7 @@ public class TutorialGameState : MonoBehaviour
         timeLeft += 0.02f;
 
         vpNummer = PlayerPrefs.GetInt("VP");
+		PlayerPrefs.SetString ("LastTutorial", SceneManager.GetActiveScene().name);
         rating = 0;
 
 		timer = gui.transform.Find("UI_Spielstand").transform.Find("Timer_BackgroundDark").transform.Find("Time").GetComponent<Text>();

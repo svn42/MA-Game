@@ -17,9 +17,9 @@ public class TutorialScreenState : MonoBehaviour
     private GameObject videoPlayer;
 
 
-
     private void Start()
     {
+		PlayerPrefs.SetString ("LastTutorial", SceneManager.GetActiveScene().name);
         Time.timeScale = 1f;
         vpNummer = PlayerPrefs.GetInt("VP");
         skipBox = gui.transform.Find("PauseScreen").gameObject.transform.Find("Spieler1").transform.gameObject;

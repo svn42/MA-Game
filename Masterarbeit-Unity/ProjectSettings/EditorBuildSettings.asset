@@ -96,8 +96,14 @@ EditorBuildSettings:
     path: Assets/Scenes/StartOnline.unity
     guid: a2fe040224316ea4ab591ed2123ad716
   - enabled: 1
-    path: Assets/Scenes/Level 1_photon.unity
+    path: Assets/Scenes/Level 1.1.unity
     guid: 2bfab419a086fa945a2989186538e119
+  - enabled: 1
+    path: Assets/Scenes/Level 1.2.unity
+    guid: 486a592167dac3d4a8f0a3a3794fb2ce
+  - enabled: 1
+    path: Assets/Scenes/Level 1.3.unity
+    guid: 6e144876a6923f2459d0db7f051746a7
   - enabled: 1
     path: Assets/Scenes/GameEnd.unity
     guid: e2a5f3c32cda88b4ebc62553b66a840e

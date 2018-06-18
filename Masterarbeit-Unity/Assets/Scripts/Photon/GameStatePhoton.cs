@@ -130,6 +130,8 @@ public class GameStatePhoton : MonoBehaviour
 			musicPlayer.Pause ();
 			photonView.RPC("SetGamePaused", PhotonTargets.All, true, "start");
 		}
+		PlayerPrefs.SetString("LastOnline", SceneManager.GetActiveScene().name);
+
 	}
 
 	// Update is called once per frame
