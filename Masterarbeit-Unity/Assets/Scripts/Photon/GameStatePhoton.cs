@@ -128,7 +128,8 @@ public class GameStatePhoton : MonoBehaviour
 
 		if (startCountdownActivated) {
 			musicPlayer.Pause ();
-			photonView.RPC("SetGamePaused", PhotonTargets.All, true, "start");
+			SetGamePaused (true, "start");
+		//	photonView.RPC("SetGamePaused", PhotonTargets.All, true, "start");
 		}
 		PlayerPrefs.SetString("LastOnline", SceneManager.GetActiveScene().name);
 
@@ -337,7 +338,8 @@ public class GameStatePhoton : MonoBehaviour
 
 				PlaySound (soundWhistle, 0.4f);
 				endingCondition = "Time";
-				photonView.RPC("SetGamePaused", PhotonTargets.All, true, "end");
+				//photonView.RPC("SetGamePaused", PhotonTargets.All, true, "end");
+				SetGamePaused(true,"end");
 
 			}
 		}
@@ -362,7 +364,8 @@ public class GameStatePhoton : MonoBehaviour
 	{
 		if (goalsTeam1 == goalLimit || goalsTeam2 == goalLimit) {
 			endingCondition = "Goals";
-			photonView.RPC("SetGamePaused", PhotonTargets.All, true, "end");
+			//photonView.RPC("SetGamePaused", PhotonTargets.All, true, "end");
+			SetGamePaused(true, "end");
 
 		} else {
 			StartCoroutine (GoalFreeze ());
@@ -489,7 +492,8 @@ public class GameStatePhoton : MonoBehaviour
 			gameStarted = true;
 		}
 		PlaySound (soundCountdownEnd, 0.5f);
-		photonView.RPC("SetGamePaused", PhotonTargets.All, false, "pause");
+		//photonView.RPC("SetGamePaused", PhotonTargets.All, false, "pause");
+		SetGamePaused(false, "pause");
 		SetPlayerReady (false, 1);
 		SetPlayerReady (false, 2);
 		pauseScreen.enabled = false;
