@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour
 		LoadData (PlayerPrefs.GetInt ("VP"));
 		mainMenu.SetActive (true);
 		waitForPlayer.GetComponent<Text> ().enabled = false;
-
+		Cursor.visible = true;
 		passwortErrorText = passwortField.gameObject.transform.Find ("Error-Text").gameObject;
 		VPErrorText = VPInputField.gameObject.transform.Find ("Error-Text").gameObject;
 

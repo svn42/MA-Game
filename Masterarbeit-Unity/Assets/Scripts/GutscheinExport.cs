@@ -18,6 +18,7 @@ public class GutscheinExport : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		tutorialScreenState = (TutorialScreenState)FindObjectOfType(typeof(TutorialScreenState));
+		Cursor.visible = true;
 	}
 	
 	// Update is called once per frame

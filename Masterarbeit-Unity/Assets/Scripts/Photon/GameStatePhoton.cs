@@ -105,7 +105,7 @@ public class GameStatePhoton : MonoBehaviour
 	{
 		photonView = gameObject.GetComponent<PhotonView> ();
 		PhotonNetwork.automaticallySyncScene = true;
-
+		Cursor.visible = false;
 		SetUpAudio ();
 		SetUpGUI ();
 		gameType = PlayerPrefs.GetString ("GameType");

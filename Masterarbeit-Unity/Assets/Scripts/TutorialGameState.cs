@@ -75,6 +75,7 @@ public class TutorialGameState : MonoBehaviour
     private void Awake()
     {
         gameType = PlayerPrefs.GetString("GameType");
+		Cursor.visible = false;
     }
 
     // Use this for initialization

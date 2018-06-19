@@ -24,7 +24,7 @@ public class EndGame : MonoBehaviour {
 		finalScoreTeam2 = player2Info.transform.Find ("Siege-Spieler2").GetComponent<Text> ();
 		ratingTeam1 = player1Info.transform.Find ("Rating").gameObject.transform.Find("RatingInt").GetComponent<Text> ();
 		ratingTeam2 = player2Info.transform.Find ("Rating").gameObject.transform.Find("RatingInt").GetComponent<Text> ();
-
+		Cursor.visible = true;
 		finalScoreTeam1.text = PlayerPrefs.GetInt ("WinsP1").ToString();
 		finalScoreTeam2.text = PlayerPrefs.GetInt ("WinsP2").ToString();
 		ratingTeam1.text =	PlayerPrefs.GetInt ("TempRatingP1").ToString();

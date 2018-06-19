@@ -5,8 +5,10 @@ using UnityEngine;
 public class GoalkeeperChallenge : MonoBehaviour {
 
 	public List<GameObject> balls;
-	public GameObject goalRed;
-	public GameObject goalBlue;
+	public GameObject goal;
+
+	private SpriteRenderer goalRenderer;
+
 
 	private TutorialGameState tutorialGameState;
 	private PlayerTutorial player;
@@ -14,11 +16,20 @@ public class GoalkeeperChallenge : MonoBehaviour {
 	public int goalsConceded;
 	public int maxRating;
 	public float goalPenalty;
+	public Color32 blue;
+	public Color32 red;
+
 	// Use this for initialization
 	void Start()
 	{
 		tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
 		player = gameObject.GetComponent<PlayerTutorial>();
+
+		goalRenderer = goal.GetComponent<SpriteRenderer> ();
+
+		blue = new Color32 (87, 73,255, 255);
+		red = new Color32 (255, 100, 100, 255);
+			
 		SetGoalColor();
 		SetUpObjects();
 	}
@@ -31,10 +42,11 @@ public class GoalkeeperChallenge : MonoBehaviour {
 	private void SetGoalColor(){
 		switch (player.playerTeam) {
 		case 1: 
-			goalRed.SetActive (true);
+			goalRenderer.color = red;
+
 			break;
 		case 2: 
-			goalBlue.SetActive (true);
+			goalRenderer.color = blue;
 			break;
 		}
 
