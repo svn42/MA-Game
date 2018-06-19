@@ -169,7 +169,7 @@ MonoBehaviour:
   nextLevelReady: 0
   timeUntilNextLevel: 5
   depauseCountdown: 3
-  popUp120Showed: 1
+  popUp120Showed: 0
   popUp60Showed: 0
   startCountdownActivated: 1
   player1: {fileID: 0}
