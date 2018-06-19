@@ -13,9 +13,12 @@ public class BallPhoton : MonoBehaviour {
     public int instanceID;     //instanceID, um die ID des Balles zwischenzuspeichern
     public int lastHitBy;   //beinhaltet die Team Nummer des Spielers, der als letztes diesen Ball mit einem Schuss getroffen hat. So kann festgestellt werden, durch wen das Tor erzielt wurde.
 
+	PhotonView pv;
     // Use this for initialization
     void Start () {
-        //jeder Ball bekommt beim erstellen die nächsthöhere ID
+        
+		pv = gameObject.GetComponent<PhotonView> ();
+		//jeder Ball bekommt beim erstellen die nächsthöhere ID
         globalId++;
         instanceID = globalId;
         //und wird dementsprechend umbenannt
@@ -42,10 +45,9 @@ public class BallPhoton : MonoBehaviour {
     {
         if (other.gameObject.tag.Equals("Goal"))
         {
-            //wird dem GameState mitgeteilt, welches Tor betroffen ist
-            gameState.GoalScored(other.gameObject.name, lastHitBy);
             //und der Ball zerstört
-            DestroyBall();
+			pv.RPC("DestroyBall",PhotonTargets.AllViaServer, other.gameObject.name);
+		//	DestroyBall();
         } 
     }
 
@@ -64,8 +66,11 @@ public class BallPhoton : MonoBehaviour {
     }
 
     //zerstört den Ball, entfernt den Ball aus der Liste und spawnt u.U. einen neuen Ball
-    public void DestroyBall()
+	[PunRPC]
+	public void DestroyBall(string otherGOName)
     {
+		//wird dem GameState mitgeteilt, welches Tor betroffen ist
+		gameState.GoalScored(otherGOName, lastHitBy);
 		DeleteFromBlockSpawnCollider (gameObject.name);
         Instantiate(ballExplosion, transform.position, transform.rotation);  //Die BallExplosion wird dabei instanziiert
         //Der Ball wird aus der Liste der GameState entfernt
