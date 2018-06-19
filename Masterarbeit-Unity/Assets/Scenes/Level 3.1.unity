@@ -160,7 +160,7 @@ MonoBehaviour:
   gameType: Online
   maximumBalls: 2
   goalLimit: 3
-  timeLeft: 120.5
+  timeLeft: 120.4
   goalFreezeTime: 2
   goalsTeam1: 0
   goalsTeam2: 0
@@ -169,6 +169,8 @@ MonoBehaviour:
   nextLevelReady: 0
   timeUntilNextLevel: 5
   depauseCountdown: 3
+  popUp120Showed: 1
+  popUp60Showed: 0
   startCountdownActivated: 1
   player1: {fileID: 0}
   player2: {fileID: 0}

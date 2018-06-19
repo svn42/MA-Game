@@ -50,8 +50,8 @@ public class GameStatePhoton : MonoBehaviour
 	public int depauseCountdown;
 	private bool depauseCountdownStarted;
 	private bool timerBlink;
-	private bool popUp120Showed;
-	private bool popUp60Showed;
+	public bool popUp120Showed;
+	public bool popUp60Showed;
 	private Text topText;
 	private Text middleText;
 	private Text observerText;
@@ -179,7 +179,7 @@ public class GameStatePhoton : MonoBehaviour
 
 
 		//sorgt dafür, dass die PopUps bei 2 und 1 Minute nicht gezeigt werden, wenn das Level mit weniger als 2 bzw 1 Minute startet
-		if (timeLeft <= 120) {
+		if (timeLeft <= 121) {
 			popUp120Showed = true;
 		}
 		if (timeLeft <= 60) {
