@@ -46,7 +46,9 @@ public class BallPhoton : MonoBehaviour {
         if (other.gameObject.tag.Equals("Goal"))
         {
             //und der Ball zerstört
+			if (PhotonNetwork.isMasterClient){
 			pv.RPC("DestroyBall",PhotonTargets.AllViaServer, other.gameObject.name);
+			}
 		//	DestroyBall();
         } 
     }
