@@ -492,8 +492,8 @@ public class GameStatePhoton : MonoBehaviour
 			gameStarted = true;
 		}
 		PlaySound (soundCountdownEnd, 0.5f);
-		//photonView.RPC("SetGamePaused", PhotonTargets.All, false, "pause");
-		SetGamePaused(false, "pause");
+		photonView.RPC("SetGamePaused", PhotonTargets.All, false, "pause");
+		//SetGamePaused(false, "pause");
 		SetPlayerReady (false, 1);
 		SetPlayerReady (false, 2);
 		pauseScreen.enabled = false;
