@@ -78,4 +78,5 @@ MonoBehaviour:
   - SetSpawnerSize
   - CheckPlayersReady
   - SetPlayersReady
+  - DestroyBall
   DisableAutoOpenWizard: 1
