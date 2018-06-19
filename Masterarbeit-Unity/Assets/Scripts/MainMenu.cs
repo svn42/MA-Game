@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
 {
 	public InputField passwortField;
 	public InputField VPInputField;
+	public InputField ServerAddressInputField;
 	public GameObject mainMenu;
 	public GameObject VLPWMenu;
 	public GameObject VLMenu;
@@ -21,8 +22,9 @@ public class MainMenu : MonoBehaviour
 	public Button disconnectButton;
 	public GameObject waitForPlayer;
 
-	public GameObject passwortErrorText;
-	public GameObject VPErrorText;
+	private GameObject passwortErrorText;
+	private GameObject VPErrorText;
+	private GameObject IPChangedText;
 	public int VPNummer;
 	private string lastOnlineLevel = "StartOnline";
 
@@ -37,13 +39,13 @@ public class MainMenu : MonoBehaviour
 		Cursor.visible = true;
 		passwortErrorText = passwortField.gameObject.transform.Find ("Error-Text").gameObject;
 		VPErrorText = VPInputField.gameObject.transform.Find ("Error-Text").gameObject;
-
+		IPChangedText = ServerAddressInputField.gameObject.transform.Find ("Success-Text").gameObject;
+		PhotonNetwork.PhotonServerSettings.ServerAddress = PlayerPrefs.GetString ("ServerAddress");
 	}
 
 	public void Update ()
 	{
 		//Debug.Log (PhotonNetwork.connectionStateDetailed.ToString ());
-		Debug.Log ("Anzahl weiterer Spieler: " +PhotonNetwork.otherPlayers.Length);
 	}
 
 
@@ -58,6 +60,7 @@ public class MainMenu : MonoBehaviour
 	{
 		PlayerPrefs.SetString ("GameType", "Local");
 		SceneManager.LoadScene ("Level 1_local");
+		IPChangedText.SetActive (false);
 	}
 
 	public void StartOnlineGame ()
@@ -170,6 +173,14 @@ public class MainMenu : MonoBehaviour
 		PlayerPrefs.SetString ("LastOnline", "");
 		onlineGameButton.interactable = true;
 		lastOnlineButton.interactable = false;
+	}
+
+	public void SetServerIP(){
+		string address;
+		address = ServerAddressInputField.text;
+		IPChangedText.SetActive (true);
+		PlayerPrefs.SetString ("ServerAddress", address);
+		PhotonNetwork.PhotonServerSettings.ServerAddress = PlayerPrefs.GetString ("ServerAddress");;
 	}
 
 	public void LoadData (int i)

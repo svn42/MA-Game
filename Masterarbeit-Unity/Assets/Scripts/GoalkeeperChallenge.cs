@@ -43,7 +43,6 @@ public class GoalkeeperChallenge : MonoBehaviour {
 		switch (player.playerTeam) {
 		case 1: 
 			goalRenderer.color = red;
-
 			break;
 		case 2: 
 			goalRenderer.color = blue;

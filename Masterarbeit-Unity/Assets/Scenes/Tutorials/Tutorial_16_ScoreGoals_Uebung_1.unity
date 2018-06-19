@@ -1147,7 +1147,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
+    m_FontSize: 22
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
@@ -1160,7 +1160,8 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "Schie\xDFe die B\xE4lle in das rechte Tor. Nach jedem Tor spawnt ein neuer
     Ball an einer zuf\xE4lligen Position auf dem Spielfeld und du wirst auch auf deine
-    Startposition zur\xFCckgesetzt. Du musst insgesamt 3 Tore schie\xDFen. \nDenke
+    Startposition zur\xFCckgesetzt. Du musst insgesamt 3 Tore schie\xDFen. \nWenn
+    du einen Ball nach 45 Sekunden nicht ins Tor gebracht hast, wird dieser zerst\xF6rt.\nDenke
     an die verschiedenen Schusstypen!"
 --- !u!222 &430686465
 CanvasRenderer:
@@ -1744,6 +1745,7 @@ MonoBehaviour:
   timeUntilTutorialStart: 5
   tutorialReady: 0
   depauseCountdown: 3
+  timerBlink: 0
   startCountdownActivated: 1
   rating: 0
   maxRating: 0
@@ -2760,7 +2762,7 @@ MonoBehaviour:
   goal: {fileID: 519413557}
   maxRatingTime: 350
   maxRatingAccuracy: 50
-  bestTime: 50
+  bestTime: 3
   ratingTimeInt: 0
   ratingAccuracyInt: 0
   precision: 0
@@ -2771,6 +2773,9 @@ MonoBehaviour:
   red:
     serializedVersion: 2
     rgba: 0
+  destroyTime: 60
+  destroyPenalty: 25
+  totalPenalty: 0
 --- !u!114 &1125116396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4430,7 +4435,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
+    m_FontSize: 22
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0

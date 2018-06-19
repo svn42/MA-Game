@@ -29,6 +29,12 @@ public class ScoreGoalsChallenge : MonoBehaviour {
 	public float stunPenalty;
 	public Color32 blue;
 	public Color32 red;
+	public float destroyTime;
+	public int destroyPenalty;
+	public int totalPenalty;
+
+	private AudioClip abort; 
+	private AudioSource audioSource;
 
 	// Use this for initialization
 	void Start()
@@ -39,6 +45,8 @@ public class ScoreGoalsChallenge : MonoBehaviour {
 
 		blue = new Color32 (87, 73,255, 255);
 		red = new Color32 (255,100,100, 255);
+		abort = Resources.Load<AudioClip>("Sounds/placement_blocked");
+		audioSource = gameObject.GetComponent<AudioSource> ();
 
 		tutorialGameState = (TutorialGameState)FindObjectOfType(typeof(TutorialGameState));
 		tutorialLogging = gameObject.GetComponent<TutorialLogging>();
@@ -58,7 +66,6 @@ public class ScoreGoalsChallenge : MonoBehaviour {
 		switch (player.playerTeam) {
 		case 1: 
 			goalRenderer.color = red;
-
 			break;
 		case 2: 
 			goalRenderer.color = blue;
@@ -72,7 +79,7 @@ public class ScoreGoalsChallenge : MonoBehaviour {
 		objects.Add (firstObjects);
 		objects.Add (secondObjects);
 		objects.Add (thirdObjects);
-
+		tutorialGameState.timeLeft = destroyTime + 0.1f;
 		if (objects.Count > 0)
 		{
 			for (int i = 1; i < objects.Count; i++)
@@ -84,14 +91,18 @@ public class ScoreGoalsChallenge : MonoBehaviour {
 			}
 			foreach (GameObject go in objects[0]) {
 				go.SetActive (true);
+				Invoke ("RemoveTargetTime", destroyTime);
 			}
 		}
 	}
 
 	public void RemoveObjects()
 	{
+		tutorialGameState.timeLeft = destroyTime + 0.1f;
+		tutorialGameState.timerBlink = false;
 		this.gameObject.transform.position = playerPosition;
 		this.gameObject.transform.rotation = playerRotation;
+		CancelInvoke ();
 
 
 		foreach (GameObject go in objects[0]) {
@@ -104,6 +115,7 @@ public class ScoreGoalsChallenge : MonoBehaviour {
 		{
 			foreach (GameObject go in objects[0]) {
 				go.SetActive (true);
+				Invoke ("RemoveTargetTime", destroyTime);
 			}
 		} else
 		{
@@ -111,6 +123,34 @@ public class ScoreGoalsChallenge : MonoBehaviour {
 		}
 
 	}
+
+	public void RemoveTargetTime()
+	{
+		tutorialGameState.timeLeft = destroyTime + 0.1f;
+		tutorialGameState.timerBlink = false;
+		this.gameObject.transform.position = playerPosition;
+		this.gameObject.transform.rotation = playerRotation;
+		CancelInvoke ();
+		totalPenalty += destroyPenalty;
+		PlaySound (abort, 0.8f);
+		foreach (GameObject go in objects[0]) {
+			if (go != null) {
+				Destroy (go);
+			}
+		}
+		objects.RemoveAt(0);
+		if (objects.Count != 0)
+		{
+			foreach (GameObject go in objects[0]) {
+				go.SetActive (true);
+				Invoke ("RemoveTargetTime", destroyTime);
+							}
+		} else
+		{
+			tutorialGameState.EndChallenge(CalculateRating(), (maxRatingTime+maxRatingAccuracy));
+		}	
+	}
+
 
 	public int CalculateRating()
 	{
@@ -128,7 +168,11 @@ public class ScoreGoalsChallenge : MonoBehaviour {
 
 		//rating Accuracy
 		float ratingAccuracyFloat= 0;
-		precision = (((float)tutorialLogging.shotsHitBall + (float)tutorialLogging.shotsHitBlock) / (float)tutorialLogging.totalShotsFired);
+		if (tutorialLogging.totalShotsFired > 0) {
+			precision = (((float)tutorialLogging.shotsHitBall + (float)tutorialLogging.shotsHitBlock) / (float)tutorialLogging.totalShotsFired);
+		} else {
+			precision = 0;
+		}
 
 		ratingAccuracyFloat = precision * maxRatingAccuracy;
 
@@ -139,8 +183,19 @@ public class ScoreGoalsChallenge : MonoBehaviour {
 		//total stun time * 5 --> großer treffer = 10 abzug; mittlerer = 5 abzug, kleiner = 2 abzug
 		stunPenalty = (totalStunTime * 10);
 		int stunPenaltyInt = Mathf.RoundToInt(stunPenalty);
-		totalRating = ratingTimeInt + ratingAccuracyInt - stunPenaltyInt;
+		totalRating = ratingTimeInt + ratingAccuracyInt - stunPenaltyInt - totalPenalty;
 
 		return totalRating;
 	}
+
+	private void PlaySound(AudioClip ac, float volume)
+	{
+		float lastTimeScale = Time.timeScale;
+		Time.timeScale = 1f;
+		audioSource.clip = ac;
+		audioSource.volume = volume;
+		audioSource.Play();
+		Time.timeScale = lastTimeScale;
+	}
+
 }

@@ -38,7 +38,7 @@ public class TutorialGameState : MonoBehaviour
     public bool tutorialReady;
     public int depauseCountdown;
     private bool depauseCountdownStarted;
-    private bool timerBlink;
+    public bool timerBlink;
     private Text topText;
     private Text middleText;
     private Text bottomText;
@@ -224,8 +224,8 @@ public class TutorialGameState : MonoBehaviour
             {
                 if (!timerBlink)
                 {
-                    StartCoroutine(TimerBlinkEffect());
-                    timerBlink = true;
+						StartCoroutine (TimerBlinkEffect ());
+						timerBlink = true;
                 }
             }
         } 
@@ -261,7 +261,7 @@ public class TutorialGameState : MonoBehaviour
             PlaySound(soundCountdownRegular, 0.5f);   
             timer.color = Color.red;     //wird der Renderer im Wechsel weiß und daraufhin in der ursprünglichen Farbe des Spielers eingefärbt
             yield return new WaitForSeconds(0.5f);
-            timer.color = Color.white;
+            timer.color = Color.black;
             yield return new WaitForSeconds(0.5f);
 
         }

@@ -1457,7 +1457,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
+    m_FontSize: 22
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
@@ -1470,9 +1470,10 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "In dieser \xDCbung tauchen verschiedenfarbige Ziele auf, die du mit deinen
     Sch\xFCssen abschie\xDFen musst. Die Farbe des Ziels zeigt dir dabei an, welchen
-    Schusstypen du daf\xFCr verwenden musst. \nDu wirst dich bei dieser \xDCbung nicht
-    bewegen k\xF6nnen!\n\n\t\t- Gr\xFCn = normaler Schuss;\n\t\t- Gelb = mittlerer
-    Schuss; \n\t\t- Rot = gro\xDFer Schuss"
+    Schusstypen du daf\xFCr verwenden musst. Du wirst dich bei dieser \xDCbung nicht
+    bewegen k\xF6nnen. \nSolltest du ein Ziel nach 20 Sekunden nicht zerst\xF6rt haben,
+    verschwindet es automatisch!\n\n\t\t- Gr\xFCn = normaler Schuss;\n\t\t- Gelb =
+    mittlerer Schuss; \n\t\t- Rot = gro\xDFer Schuss"
 --- !u!222 &430686465
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3585,6 +3586,7 @@ MonoBehaviour:
   ratingTimeInt: 0
   ratingAccuracyInt: 0
   precision: 0
+  destroyTime: 20
 --- !u!114 &1125116396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5612,7 +5614,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030517578, y: -286}
+  m_AnchoredPosition: {x: 0.000030517578, y: -278}
   m_SizeDelta: {x: 970.7, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2047111639
@@ -5636,7 +5638,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
+    m_FontSize: 22
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
