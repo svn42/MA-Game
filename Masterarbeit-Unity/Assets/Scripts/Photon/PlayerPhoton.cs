@@ -328,6 +328,7 @@ public class PlayerPhoton : MonoBehaviour
 		playerLogging.SetSubjectNr (subjectNr, subjectNrEnemy);
 		playerLogging.SetRating (rating, ratingEnemy);
 		playerLogging.SetGameType (gameType);
+		positionTracker.CalculateWalkedDistancePerResult (playerLogging.currentResult);
 		positionTracker.CalculateWalkedDistance ();
 		positionTracker.ChangeResult(playerLogging.currentResult);
 		playerLogging.SetEndingCondition (endingCondition);

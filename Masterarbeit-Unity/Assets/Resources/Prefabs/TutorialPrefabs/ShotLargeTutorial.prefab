@@ -89,8 +89,8 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.9965325, y: -1.35}
-      - {x: -0.9980794, y: 1.35}
+    - - {x: -0.9965325, y: -1.25}
+      - {x: -0.9980794, y: 1.25}
       - {x: 0.74, y: 0.15}
       - {x: 0.74, y: -0.15}
 --- !u!82 &82559347254432280
@@ -293,10 +293,12 @@ MonoBehaviour:
   acceleration: 50
   strength: 3
   ballImpact: 4200
+  playerTeam: 0
   stunDuration: 1
   player: {fileID: 0}
   shotDestructionPrefab: {fileID: 1605120989468744, guid: 7e0574f22ddfe8b438c97f0aeb6e3ed0,
     type: 2}
+  tutorialLogging: {fileID: 0}
 --- !u!212 &212764447594908098
 SpriteRenderer:
   m_ObjectHideFlags: 1

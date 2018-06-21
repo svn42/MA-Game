@@ -541,6 +541,7 @@ public class Player : MonoBehaviour
 		playerLogging.SetSubjectNr(subjectNr, subjectNrEnemy);
 		playerLogging.SetRating(rating, ratingEnemy);
 		playerLogging.SetGameType(gameType);
+		positionTracker.CalculateWalkedDistancePerResult (playerLogging.currentResult);
 		positionTracker.CalculateWalkedDistance();
 		playerLogging.SetEndingCondition(endingCondition);
 		//playerLogging.CalculateAccuracy();

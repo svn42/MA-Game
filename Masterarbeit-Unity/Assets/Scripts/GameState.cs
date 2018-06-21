@@ -573,8 +573,8 @@ public class GameState : MonoBehaviour
 		levelEnded = true;
 		BuildPauseScreen ("endWait");
 		globalTimer.SetEndTime ();
-	//	player1Script.CalculateLogData (endingCondition, gameType);
-	//	player2Script.CalculateLogData (endingCondition, gameType);
+		player1Script.CalculateLogData (endingCondition, gameType);
+		player2Script.CalculateLogData (endingCondition, gameType);
 	//	ExportData exportData = (ExportData)FindObjectOfType (typeof(ExportData));
 	//	exportData.StartUpExportData ();
 	//	exportData.FindPlayerLogging (gameType);
