@@ -650,8 +650,10 @@ public class GameStatePhoton : MonoBehaviour
 	[PunRPC]
 	public void SetPlayerHelp (bool b, int vp)
 	{
-		playerHelp = b;
-		helpOrderedBy = vp;
+		if (!depauseCountdownStarted) {
+			playerHelp = b;
+			helpOrderedBy = vp;
+		}
 	}
 
 
