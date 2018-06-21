@@ -303,8 +303,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Kehre nun zum Hauptmen\xFC zur\xFCck und beende dort das Spiel \xFCber
-    den \"Quit\"-Button. Fahre daraufhin mit dem Fragebogen fort."
+  m_Text: "Kehre nun zum Hauptmen\xFC zur\xFCck fahre daraufhin mit dem Fragebogen
+    fort."
 --- !u!222 &264822355
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -378,7 +378,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2450
+  m_Text: 
 --- !u!222 &313254692
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -526,7 +526,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 7
+  m_Text: 
 --- !u!222 &726263050
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -676,7 +676,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2
+  m_Text: 
 --- !u!222 &794900723
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1383,7 +1383,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1750
+  m_Text: 
 --- !u!222 &1643505032
 CanvasRenderer:
   m_ObjectHideFlags: 0
