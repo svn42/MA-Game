@@ -395,8 +395,10 @@ public class GameStatePhoton : MonoBehaviour
 
 					if (player1Ready && player2Ready) {
 						if (!depauseCountdownStarted) {
-							StartCoroutine (StartDepauseCountdown (depauseCountdown));
 							depauseCountdownStarted = true;
+							playerHelp = false;
+							StartCoroutine (StartDepauseCountdown (depauseCountdown));
+
 						}
 					}
 				}
