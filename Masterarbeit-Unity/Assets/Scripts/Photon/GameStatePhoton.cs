@@ -561,7 +561,7 @@ public class GameStatePhoton : MonoBehaviour
 			if (goalsTeam1 > goalsTeam2) {
 				topText.text = "Spieler 1 gewinnt mit " + goalsTeam1 + " - " + goalsTeam2 + "!";
 			} else if (goalsTeam1 < goalsTeam2) {
-				topText.text = "Spieler 1 gewinnt mit " + goalsTeam2 + " - " + goalsTeam1 + "!";
+				topText.text = "Spieler 2 gewinnt mit " + goalsTeam2 + " - " + goalsTeam1 + "!";
 			} else {
 				topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
 			}
@@ -578,7 +578,7 @@ public class GameStatePhoton : MonoBehaviour
 			if (goalsTeam1 > goalsTeam2) {
 				topText.text = "Spieler 1 gewinnt mit " + goalsTeam1 + " - " + goalsTeam2 + "!";
 			} else if (goalsTeam1 < goalsTeam2) {
-				topText.text = "Spieler 1 gewinnt mit " + goalsTeam2 + " - " + goalsTeam1 + "!";
+				topText.text = "Spieler 2 gewinnt mit " + goalsTeam2 + " - " + goalsTeam1 + "!";
 			} else {
 				topText.text = "Das Spiel endet " + goalsTeam2 + " - " + goalsTeam1 + " unentschieden!";
 			}

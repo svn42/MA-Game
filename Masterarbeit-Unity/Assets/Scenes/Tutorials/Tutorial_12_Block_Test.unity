@@ -1637,6 +1637,7 @@ MonoBehaviour:
   timeUntilTutorialStart: 5
   tutorialReady: 0
   depauseCountdown: 3
+  timerBlink: 0
   startCountdownActivated: 1
   rating: 0
   maxRating: 0
@@ -2509,6 +2510,11 @@ Prefab:
         type: 2}
       propertyPath: shootingEnabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114448604759567942, guid: f6104f43a2e73564bac3fb30907c684c,
+        type: 2}
+      propertyPath: stickSensitivity
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f6104f43a2e73564bac3fb30907c684c, type: 2}

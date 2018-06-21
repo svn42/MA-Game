@@ -1161,7 +1161,7 @@ MonoBehaviour:
   m_Text: "Schie\xDFe die B\xE4lle in das rechte Tor. Nach jedem Tor spawnt ein neuer
     Ball an einer zuf\xE4lligen Position auf dem Spielfeld und du wirst auch auf deine
     Startposition zur\xFCckgesetzt. Du musst insgesamt 3 Tore schie\xDFen. \nWenn
-    du einen Ball nach 45 Sekunden nicht ins Tor gebracht hast, wird dieser zerst\xF6rt.\nDenke
+    du einen Ball nach 60 Sekunden nicht ins Tor gebracht hast, wird dieser zerst\xF6rt.\nDenke
     an die verschiedenen Schusstypen!"
 --- !u!222 &430686465
 CanvasRenderer:
@@ -1760,7 +1760,7 @@ MonoBehaviour:
     ein neuer Ball an einer zuf\xE4lligen Position auf dem Spielfeld und du wirst
     auch auf deine Startposition zur\xFCckgesetzt. Du musst insgesamt 3 Tore schie\xDFen.
     \ Denke an die verschiedenen Schusstypen!"
-  inverseTime: 1
+  inverseTime: 0
   showRatingChange: 1
   challengeType: ScoreGoals
 --- !u!4 &671548902
@@ -2289,80 +2289,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 827392286}
---- !u!1 &870936658
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 870936659}
-  - component: {fileID: 870936661}
-  - component: {fileID: 870936660}
-  m_Layer: 5
-  m_Name: bottomText_alt
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &870936659
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 870936658}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1242853793}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000030518, y: -36}
-  m_SizeDelta: {x: 970.7, y: 164.1}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &870936660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 870936658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.4392157, b: 0.023529412, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
-    m_FontStyle: 1
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 49
-    m_Alignment: 3
-    m_AlignByGeometry: 1
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Je schneller du diese Aufgabe absolvierst, desto besser ist dein Rating!
---- !u!222 &870936661
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 870936658}
 --- !u!1 &922530994
 GameObject:
   m_ObjectHideFlags: 0
@@ -2734,6 +2660,11 @@ Prefab:
       propertyPath: playerTeam
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114448604759567942, guid: f6104f43a2e73564bac3fb30907c684c,
+        type: 2}
+      propertyPath: stickSensitivity
+      value: 0.587
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f6104f43a2e73564bac3fb30907c684c, type: 2}
   m_IsPrefabParent: 0
@@ -2762,7 +2693,7 @@ MonoBehaviour:
   goal: {fileID: 519413557}
   maxRatingTime: 350
   maxRatingAccuracy: 50
-  bestTime: 3
+  bestTime: 50
   ratingTimeInt: 0
   ratingAccuracyInt: 0
   precision: 0
@@ -2773,7 +2704,7 @@ MonoBehaviour:
   red:
     serializedVersion: 2
     rgba: 0
-  destroyTime: 60
+  destroyTime: 50
   destroyPenalty: 25
   totalPenalty: 0
 --- !u!114 &1125116396
@@ -3065,7 +2996,6 @@ RectTransform:
   m_Children:
   - {fileID: 2418731}
   - {fileID: 430686463}
-  - {fileID: 870936659}
   - {fileID: 2047111638}
   m_Father: {fileID: 139278019}
   m_RootOrder: 0
@@ -4407,11 +4337,11 @@ RectTransform:
   m_LocalScale: {x: 1.0000093, y: 1.0000093, z: 1.0000093}
   m_Children: []
   m_Father: {fileID: 1242853793}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030517578, y: -249}
+  m_AnchoredPosition: {x: 0.000030517578, y: -241}
   m_SizeDelta: {x: 970.7, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2047111639
@@ -4447,7 +4377,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
   m_Text: "Messwerte f\xFCr das Rating: \t\n\t\t- Ben\xF6tigte Zeit\n\t\t- Pr\xE4zision
-    der Sch\xFCsse"
+    der Sch\xFCsse\n\t\t- Strafe bei Zerst\xF6rung eines Balles"
 --- !u!222 &2047111640
 CanvasRenderer:
   m_ObjectHideFlags: 0

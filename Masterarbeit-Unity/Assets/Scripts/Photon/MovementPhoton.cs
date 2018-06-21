@@ -45,7 +45,7 @@ public class MovementPhoton : MonoBehaviour {
 	{
 
 		//sofern die Horizontale Achse betätigt wird (linke oder rechte Pfeiltaste sowie A oder D)
-		if ((Mathf.Abs (Input.GetAxis ("HorizontalP1")) > 0.15f)) {
+		if ((Mathf.Abs (Input.GetAxis ("HorizontalP1")) > 0.25f)) {
 			//wird die Accelerate-Methode mit dem Argument X aufgerufen
 			Accelerate ("X");
 		} else {
@@ -55,14 +55,14 @@ public class MovementPhoton : MonoBehaviour {
 
 
 		//das gleiche geschieht mit der Vertikalen Achse (hoch oder runter Pfeiltaste sowie W und S)
-		if ((Mathf.Abs (Input.GetAxis ("VerticalP1")) > 0.15f)) {
+		if ((Mathf.Abs (Input.GetAxis ("VerticalP1")) > 0.25f)) {
 			Accelerate ("Y");
 		} else {
 			Brake ("Y");
 		}
 
 		//die BewegungsZeit wird erhöht, sofern mindestens eine der beiden Achsen eine Bewegung zurückliefern
-		if ((Mathf.Abs (Input.GetAxis ("VerticalP1")) > 0.15f) || Mathf.Abs (Input.GetAxis ("HorizontalP1")) > 0.15f) {
+		if ((Mathf.Abs (Input.GetAxis ("VerticalP1")) > 0.25f) || Mathf.Abs (Input.GetAxis ("HorizontalP1")) > 0.25f) {
 			playerPhoton.exhaustTime += Time.deltaTime;
 		} else {
 			//wenn die Figur nicht mehr bewegt wird, wird die BewegungsZeit auf 0 zurückgesetzt
@@ -201,7 +201,7 @@ public class MovementPhoton : MonoBehaviour {
 		float yEuler = Mathf.Atan2 (Input.GetAxis ("HorizontalP1") * -1, Input.GetAxis ("VerticalP1")) * Mathf.Rad2Deg; //Horizontal *1
 		yEuler -= 270;   //Korrektur durch das gedrehte Sprite
 		Vector3 direction = new Vector3 (0, 0, yEuler);
-		if (Mathf.Abs (Input.GetAxis ("HorizontalP1")) > 0.1f || Mathf.Abs (Input.GetAxis ("VerticalP1")) > 0.1f) {   //Damit die Richtung nicht durch die "Nullstellung" des Sticks genullt wird
+		if (Mathf.Abs (Input.GetAxis ("HorizontalP1")) > 0.15f || Mathf.Abs (Input.GetAxis ("VerticalP1")) > 0.15f) {   //Damit die Richtung nicht durch die "Nullstellung" des Sticks genullt wird
 			transform.eulerAngles = direction;
 		}
 
