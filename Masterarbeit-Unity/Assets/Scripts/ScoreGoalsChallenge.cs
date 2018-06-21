@@ -65,10 +65,10 @@ public class ScoreGoalsChallenge : MonoBehaviour {
 	private void SetGoalColor(){
 		switch (player.playerTeam) {
 		case 1: 
-			goalRenderer.color = red;
+			goalRenderer.color = blue;
 			break;
 		case 2: 
-			goalRenderer.color = blue;
+			goalRenderer.color = red;
 			break;
 		}
 

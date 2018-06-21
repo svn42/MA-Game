@@ -1560,9 +1560,10 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "Schie\xDFe die B\xE4lle in das rechte Tor. Nach jedem Tor spawnt ein neuer
     Ball an einer zuf\xE4lligen Position auf dem Spielfeld und du wirst auch auf deine
-    Startposition zur\xFCckgesetzt. Du musst insgesamt 3 Tore schie\xDFen.\nWenn du
-    einen Ball nach 90 Sekunden nicht ins Tor gebracht hast, wird dieser zerst\xF6rt.\n\nZerst\xF6re
-    dabei Bl\xF6cke, die dich st\xF6ren und lass dich nicht von den Kanonen treffen!"
+    Startposition zur\xFCckgesetzt. Du hast insgesamt 3 B\xE4lle, die du ins Tor schie\xDFen
+    musst.\nWenn du einen Ball nach 90 Sekunden nicht ins Tor gebracht hast, wird
+    dieser zerst\xF6rt.\n\nZerst\xF6re dabei Bl\xF6cke, die dich st\xF6ren und lass
+    dich nicht von den Kanonen treffen!"
 --- !u!222 &430686465
 CanvasRenderer:
   m_ObjectHideFlags: 0
