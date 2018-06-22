@@ -8,6 +8,10 @@ in regelmäßigen Intervallen.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using UnityEngine.SceneManagement;
+
+
 
 public class PositionTracker : MonoBehaviour
 {
@@ -25,7 +29,6 @@ public class PositionTracker : MonoBehaviour
     public List<Vector3> CompletePositionListInTie;
     public List<Vector3> CompletePositionListInDeficit;
 
-
     public List<Vector3> positionListWithoutDuplicates;
 
     private float walkedDistance;
@@ -41,7 +44,6 @@ public class PositionTracker : MonoBehaviour
     {
         playerLogging = this.gameObject.GetComponent<PlayerLogging>();  //der PlayerLogger wird verknüpft
         formerResult = "in_tie";
-
     }
 
     // Update is called once per frame
@@ -179,6 +181,5 @@ public class PositionTracker : MonoBehaviour
         CalculateWalkedDistancePerResult(formerResult);
         currentResult = result;
     }
-
 
 }

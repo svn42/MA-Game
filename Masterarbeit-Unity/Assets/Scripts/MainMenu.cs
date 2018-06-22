@@ -194,9 +194,7 @@ public class MainMenu : MonoBehaviour
 			tutorialButton.interactable = false;
 			lastTutorialButton.interactable = false;
 			lastOnlineButton.interactable = false;
-
-			//TODO: MUSS raus, bevor alles beginnt
-			onlineGameButton.interactable = true;
+			onlineGameButton.interactable = false;
 		} else {
 
 			VLMenu.transform.Find ("VP-Text").gameObject.GetComponent<Text> ().text = "VP: " + VPNummer;
@@ -214,6 +212,7 @@ public class MainMenu : MonoBehaviour
 					lastOnlineButton.interactable = false;
 				}
 
+				//Wenn das Tutorial noch nicht absolviert wurde und VP ausgewählt wurde
 			} else {
 				mainMenu.transform.Find ("Rating-Text").gameObject.GetComponent<Text> ().text = "Rating: ?";
 				if (PlayerPrefs.GetString ("LastTutorial") != "") {
@@ -225,9 +224,7 @@ public class MainMenu : MonoBehaviour
 					lastTutorialButton.interactable = false;
 
 				}
-
-//TODO: MUSS raus, bevor alles beginnt
-				onlineGameButton.interactable = true;
+				onlineGameButton.interactable = false;
 				lastOnlineButton.interactable = false;
 
 			}

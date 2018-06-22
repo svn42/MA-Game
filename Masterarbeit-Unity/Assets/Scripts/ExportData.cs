@@ -13,7 +13,11 @@ using System.IO;
 public class ExportData : MonoBehaviour
 {
     private string gameType;
-    public string path;
+    public string logdataPath;
+	public string completePositionPath;
+	public string inLeadPositionPath;
+	public string inTiePositionPath;
+	public string inDeficitPositionPath;
     private string sceneName;
     private string sceneNameAbbreviation;
     private string subjectName;
@@ -21,39 +25,19 @@ public class ExportData : MonoBehaviour
     PlayerLogging playerLoggingPlayer1;
     PlayerLogging playerLoggingPlayer2;
     public GameObject player;
-
+	private PositionTracker posiTracker;
 
     void Start()
     {
-        
+		posiTracker = gameObject.GetComponent<PositionTracker> ();
     }
-    void Update()
+   
+	void Update()
     {
 
     }
 
-   /* public void FindPlayerLogging()
-    {
-       
-            GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
-            for (int i = 0; i < playerList.Length; i++)
-            {
-                if (playerList[i].GetComponent<Player>().playerTeam == 1)
-                {
-                    player = playerList[i];
-                    playerLoggingPlayer1 = player.GetComponent<PlayerLogging>();
-                }
-                else if (playerList[i].GetComponent<Player>().playerTeam == 2)
-                {
-                    player = playerList[i];
-                    playerLoggingPlayer2 = player.GetComponent<PlayerLogging>();
-                }
-            }
-
-        
-    } */
-
-    public void StartUpExportData()
+      public void StartUpExportData()
     {
         sceneName = SceneManager.GetActiveScene().name;
 
@@ -95,17 +79,17 @@ public class ExportData : MonoBehaviour
 	public void ExportAllData(PlayerLogging activePlayerLogging)
     {
         //Erzeugt den Ordner, falls er noch nicht vorhanden
-        if (!Directory.Exists("ResearchData/csv/"))
+        if (!Directory.Exists("ResearchData/csv/LogData/"))
         {
-            Directory.CreateDirectory("ResearchData/csv/");
+			Directory.CreateDirectory("ResearchData/csv/LogData/");
         }
-        path = "ResearchData/csv/LogData" + sceneName + ".csv";
+		logdataPath = "ResearchData/csv/Logdata/LogData" + sceneNameAbbreviation + ".csv";
 
         //Falls noch keine .csv-Datei vorhanden ist
-        if (!File.Exists(path))
+		if (!File.Exists(logdataPath))
         {
             //Erzeuge neue .csv-Datei und 
-            using (StreamWriter newFile = File.CreateText(path))
+			using (StreamWriter newFile = File.CreateText(logdataPath))
             {
                 //Schreibe alle Spaltennamen in erste Zeile
                 newFile.Write("VP;");
@@ -333,7 +317,7 @@ public class ExportData : MonoBehaviour
         }
 
         //Schreibt Daten in die .csv-Datei
-        using (StreamWriter file = File.AppendText(path))
+		using (StreamWriter file = File.AppendText(logdataPath))
         {
 			WritePlayerLoggingData(file, activePlayerLogging);
         }
@@ -558,8 +542,113 @@ public class ExportData : MonoBehaviour
         file.Write(pL.emoteCryInDeficit + ";");
         file.Write(pL.emoteHahaInDeficit + ";");
 		file.Close();
-
     }
+
+	public void WriteAllPositionData(){
+		exportPositionDataComplete ();
+		exportPositionDataInLead ();
+		exportPositionDataInTie ();
+		exportPositionDataInDeficit ();
+	}
+
+	//Code aus dem FoPro Lost In Space!
+	//PositionData
+	// Exportiert die kompletten Positionsdaten in eine .csv-Datei
+	public void exportPositionDataComplete()
+	{
+		completePositionPath = "ResearchData/csv/PositionData/"+ sceneNameAbbreviation+"/Complete/";
+		List<Vector3> completePositionList = posiTracker.CompletePositionList;
+
+		//Erzeugt den Ordner, falls er noch nicht vorhanden
+		if (!Directory.Exists(completePositionPath))
+		{
+			Directory.CreateDirectory(completePositionPath);
+		}
+
+		// Positionsdaten in Datei speichern.
+		StreamWriter file = File.CreateText(completePositionPath + "VP_" + subjectName+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_CompletePosition.csv");
+
+		file.WriteLine("Index; Position");
+
+		for (int i = 0; i < completePositionList.Count; i++)
+		{
+			file.WriteLine(i + ";" + completePositionList[i]);
+		}
+		file.Close();
+	}
+
+	// Exportiert die Positionsdaten in Führung in eine .csv-Datei
+		public void exportPositionDataInLead()
+	{
+		inLeadPositionPath = "ResearchData/csv/PositionData/"+ sceneNameAbbreviation+"/InLead/";
+		List<Vector3> inLeadPositionList = posiTracker.CompletePositionListInLead;
+
+		//Erzeugt den Ordner, falls er noch nicht vorhanden
+		if (!Directory.Exists(inLeadPositionPath))
+		{
+			Directory.CreateDirectory(inLeadPositionPath);
+		}
+
+		// Positionsdaten in Datei speichern.
+		StreamWriter file = File.CreateText(inLeadPositionPath + "VP_" + subjectName+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_InLeadPosition.csv");
+
+		file.WriteLine("Index; Position");
+
+		for (int i = 0; i < inLeadPositionList.Count; i++)
+		{
+			file.WriteLine(i + ";" + inLeadPositionList[i]);
+		}
+		file.Close();
+	}
+
+	// Exportiert die Positionsdaten in Remis in eine .csv-Datei
+	public void exportPositionDataInTie()
+	{
+		inTiePositionPath = "ResearchData/csv/PositionData/"+ sceneNameAbbreviation+"/InTie/";
+		List<Vector3> inTiePositionList = posiTracker.CompletePositionListInTie;
+
+		//Erzeugt den Ordner, falls er noch nicht vorhanden
+		if (!Directory.Exists(inTiePositionPath))
+		{
+			Directory.CreateDirectory(inTiePositionPath);
+		}
+
+		// Positionsdaten in Datei speichern.
+		StreamWriter file = File.CreateText(inTiePositionPath + "VP_" + subjectName+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_InTiePosition.csv");
+
+		file.WriteLine("Index; Position");
+
+		for (int i = 0; i < inTiePositionList.Count; i++)
+		{
+			file.WriteLine(i + ";" + inTiePositionList[i]);
+		}
+		file.Close();
+	}
+
+	// Exportiert die Positionsdaten in Rückstand in eine .csv-Datei
+	public void exportPositionDataInDeficit()
+	{
+		inDeficitPositionPath = "ResearchData/csv/PositionData/"+ sceneNameAbbreviation+"/InDeficit/";
+		List<Vector3> inDeficitPositionList = posiTracker.CompletePositionListInDeficit;
+
+		//Erzeugt den Ordner, falls er noch nicht vorhanden
+		if (!Directory.Exists(inDeficitPositionPath))
+		{
+			Directory.CreateDirectory(inDeficitPositionPath);
+		}
+
+		// Positionsdaten in Datei speichern.
+		StreamWriter file = File.CreateText(inDeficitPositionPath + "VP_" + subjectName+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_InDeficitPosition.csv");
+
+		file.WriteLine("Index; Position");
+
+		for (int i = 0; i < inDeficitPositionList.Count; i++)
+		{
+			file.WriteLine(i + ";" + inDeficitPositionList[i]);
+		}
+		file.Close();
+	}
+
 }
 
 

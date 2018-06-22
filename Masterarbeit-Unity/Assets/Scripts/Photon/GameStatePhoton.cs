@@ -609,6 +609,7 @@ public class GameStatePhoton : MonoBehaviour
 
 	private void BuildLoggingData(){
 		activePlayer.GetComponent<PlayerPhoton> ().CalculateLogData (endingCondition, gameType);
+		activePlayer.GetComponent<ExportData> ().WriteAllPositionData ();
 		//	player1Script.CalculateLogData (endingCondition, gameType);
 		//	player2Script.CalculateLogData (endingCondition, gameType);
 		ExportData exportData = (ExportData)FindObjectOfType (typeof(ExportData));

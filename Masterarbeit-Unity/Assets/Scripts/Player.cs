@@ -544,13 +544,6 @@ public class Player : MonoBehaviour
 		positionTracker.CalculateWalkedDistancePerResult (playerLogging.currentResult);
 		positionTracker.CalculateWalkedDistance();
 		playerLogging.SetEndingCondition(endingCondition);
-		//playerLogging.CalculateAccuracy();
-		//playerLogging.CalculateZonePercentage();
-		//playerLogging.CalculateShots();
-		//playerLogging.CalculateBlocks();
-		//playerLogging.CalculateEmotes();
-		//playerLogging.CalculateResultTimePercentage();
-		//playerLogging.CalculateResultZonePercentage();
 	}
 
 	public void FindEnemyPlayer(GameObject enePlayer)
