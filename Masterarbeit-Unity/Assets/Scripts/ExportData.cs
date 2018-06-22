@@ -563,7 +563,7 @@ public class ExportData : MonoBehaviour
 		}
 
 		// Positionsdaten in Datei speichern.
-		StreamWriter file = File.CreateText(completePositionPath + "VP_" + pL.subjectNr+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_CompletePosition.csv");
+		StreamWriter file = File.CreateText(completePositionPath + "VP_" + pL.subjectNr+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm")+ "_" + sceneNameAbbreviation + "_CompletePosition.csv");
 
 		file.WriteLine("Index; Position");
 
@@ -587,7 +587,7 @@ public class ExportData : MonoBehaviour
 		}
 
 		// Positionsdaten in Datei speichern.
-		StreamWriter file = File.CreateText(inLeadPositionPath + "VP_" + pL.subjectNr+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_InLeadPosition.csv");
+		StreamWriter file = File.CreateText(inLeadPositionPath + "VP_" + pL.subjectNr+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm")+ "_" + sceneNameAbbreviation + "_InLeadPosition.csv");
 
 		file.WriteLine("Index; Position");
 
@@ -611,7 +611,7 @@ public class ExportData : MonoBehaviour
 		}
 
 		// Positionsdaten in Datei speichern.
-		StreamWriter file = File.CreateText(inTiePositionPath + "VP_" + pL.subjectNr+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_InTiePosition.csv");
+		StreamWriter file = File.CreateText(inTiePositionPath + "VP_" + pL.subjectNr+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm")+ "_" + sceneNameAbbreviation + "_InTiePosition.csv");
 
 		file.WriteLine("Index; Position");
 
@@ -635,7 +635,7 @@ public class ExportData : MonoBehaviour
 		}
 
 		// Positionsdaten in Datei speichern.
-		StreamWriter file = File.CreateText(inDeficitPositionPath + "VP_" + pL.subjectNr+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_InDeficitPosition.csv");
+		StreamWriter file = File.CreateText(inDeficitPositionPath + "VP_" + pL.subjectNr+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm")+ "_" + sceneNameAbbreviation + "_InDeficitPosition.csv");
 
 		file.WriteLine("Index; Position");
 
