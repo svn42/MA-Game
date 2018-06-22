@@ -25,11 +25,9 @@ public class ExportData : MonoBehaviour
     PlayerLogging playerLoggingPlayer1;
     PlayerLogging playerLoggingPlayer2;
     public GameObject player;
-	private PositionTracker posiTracker;
 
     void Start()
     {
-		posiTracker = gameObject.GetComponent<PositionTracker> ();
     }
    
 	void Update()
@@ -544,17 +542,17 @@ public class ExportData : MonoBehaviour
 		file.Close();
     }
 
-	public void WriteAllPositionData(){
-		exportPositionDataComplete ();
-		exportPositionDataInLead ();
-		exportPositionDataInTie ();
-		exportPositionDataInDeficit ();
+	public void WriteAllPositionData(PositionTracker posiTracker){
+		exportPositionDataComplete (posiTracker);
+		exportPositionDataInLead (posiTracker);
+		exportPositionDataInTie (posiTracker);
+		exportPositionDataInDeficit (posiTracker);
 	}
 
 	//Code aus dem FoPro Lost In Space!
 	//PositionData
 	// Exportiert die kompletten Positionsdaten in eine .csv-Datei
-	public void exportPositionDataComplete()
+	public void exportPositionDataComplete(PositionTracker posiTracker)
 	{
 		completePositionPath = "ResearchData/csv/PositionData/"+ sceneNameAbbreviation+"/Complete/";
 		List<Vector3> completePositionList = posiTracker.CompletePositionList;
@@ -578,7 +576,7 @@ public class ExportData : MonoBehaviour
 	}
 
 	// Exportiert die Positionsdaten in Führung in eine .csv-Datei
-		public void exportPositionDataInLead()
+	public void exportPositionDataInLead(PositionTracker posiTracker)
 	{
 		inLeadPositionPath = "ResearchData/csv/PositionData/"+ sceneNameAbbreviation+"/InLead/";
 		List<Vector3> inLeadPositionList = posiTracker.CompletePositionListInLead;
@@ -602,7 +600,7 @@ public class ExportData : MonoBehaviour
 	}
 
 	// Exportiert die Positionsdaten in Remis in eine .csv-Datei
-	public void exportPositionDataInTie()
+	public void exportPositionDataInTie(PositionTracker posiTracker)
 	{
 		inTiePositionPath = "ResearchData/csv/PositionData/"+ sceneNameAbbreviation+"/InTie/";
 		List<Vector3> inTiePositionList = posiTracker.CompletePositionListInTie;
@@ -626,7 +624,7 @@ public class ExportData : MonoBehaviour
 	}
 
 	// Exportiert die Positionsdaten in Rückstand in eine .csv-Datei
-	public void exportPositionDataInDeficit()
+	public void exportPositionDataInDeficit(PositionTracker posiTracker)
 	{
 		inDeficitPositionPath = "ResearchData/csv/PositionData/"+ sceneNameAbbreviation+"/InDeficit/";
 		List<Vector3> inDeficitPositionList = posiTracker.CompletePositionListInDeficit;
