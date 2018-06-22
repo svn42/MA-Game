@@ -97,9 +97,6 @@ public class PlayerPhoton : MonoBehaviour
 		pvGamestate = gameState.gameObject.GetComponent<PhotonView> ();
 	}
 
-
-
-
 	public void SetUpEmotes ()
 	{
 		emoteTimer = emoteDelay; //sorgt dafür, dass sofort ein Emote benutzt werden kann
@@ -387,8 +384,7 @@ public class PlayerPhoton : MonoBehaviour
 			ratingEnemy = gameState.player1Rating;
 		}
 
-
-		audioSource = GetComponent<AudioSource> ();
+				audioSource = GetComponent<AudioSource> ();
 		soundBoing = Resources.Load<AudioClip> ("Sounds/boing");
 
 		SetUpEmotes ();

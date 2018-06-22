@@ -566,9 +566,9 @@ MonoBehaviour:
   m_Text: "Im Spiel gibt es maximal 2 B\xE4lle. Nachdem ein Ball den Mittelkreis verlassen
     hat, spawnt in der Mitte des Spielfeldes ein neuer Ball, sofern das Maximum von
     2 B\xE4llen nicht \xFCberschritten wurde. Wenn 2 B\xE4lle auf dem Spielfeld sind,
-    spawnt der n\xE4chste Ball also erst, wenn ein Tor gefallen ist.\n\nVersuche deine
-    unterschiedlichen Sch\xFCsse sinnvoll zu kombinieren, um einen Ball fester zu
-    schie\xDFen oder nur leicht voranzutreiben. Beachte auch, dass der Ball anders
+    spawnt der n\xE4chste Ball also erst, nachdem ein Tor gefallen ist.\n\nVersuche
+    deine unterschiedlichen Sch\xFCsse sinnvoll zu kombinieren, um einen Ball fester
+    zu schie\xDFen oder nur leicht voranzutreiben. Beachte auch, dass der Ball anders
     abprallt, wenn dein Schuss den Ball seitlich trifft!"
 --- !u!222 &926181637
 CanvasRenderer:

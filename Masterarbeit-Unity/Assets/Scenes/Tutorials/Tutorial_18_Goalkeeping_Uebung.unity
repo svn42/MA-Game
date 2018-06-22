@@ -1800,8 +1800,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameType: 
   maximumBalls: 0
-  goalLimit: 100
-  timeLeft: 120
+  goalLimit: 3
+  timeLeft: 91
   timePlayed: 0
   goalFreezeTime: 3
   goalsTeam1: 0
@@ -1814,6 +1814,7 @@ MonoBehaviour:
   timeUntilTutorialStart: 5
   tutorialReady: 0
   depauseCountdown: 3
+  timerBlink: 0
   startCountdownActivated: 1
   rating: 0
   maxRating: 0

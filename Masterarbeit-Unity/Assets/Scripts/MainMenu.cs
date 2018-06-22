@@ -171,7 +171,11 @@ public class MainMenu : MonoBehaviour
 
 	public void ResetOnline(){
 		PlayerPrefs.SetString ("LastOnline", "");
-		onlineGameButton.interactable = true;
+		if (PlayerPrefs.GetString (VPNummer.ToString () + "TutorialSolved").Equals ("Yes")) {
+			onlineGameButton.interactable = true;
+		} else {
+			onlineGameButton.interactable = false;
+		}
 		lastOnlineButton.interactable = false;
 	}
 
@@ -214,7 +218,7 @@ public class MainMenu : MonoBehaviour
 
 				//Wenn das Tutorial noch nicht absolviert wurde und VP ausgewählt wurde
 			} else {
-				mainMenu.transform.Find ("Rating-Text").gameObject.GetComponent<Text> ().text = "Rating: ?";
+					mainMenu.transform.Find ("Rating-Text").gameObject.GetComponent<Text> ().text = "Rating: ?";
 				if (PlayerPrefs.GetString ("LastTutorial") != "") {
 					tutorialButton.interactable = false;
 					lastTutorialButton.interactable = true;

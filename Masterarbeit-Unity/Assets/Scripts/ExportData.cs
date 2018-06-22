@@ -20,7 +20,6 @@ public class ExportData : MonoBehaviour
 	public string inDeficitPositionPath;
     private string sceneName;
     private string sceneNameAbbreviation;
-    private string subjectName;
     private GlobalTimer globalTimer;
     PlayerLogging playerLoggingPlayer1;
     PlayerLogging playerLoggingPlayer2;
@@ -542,17 +541,17 @@ public class ExportData : MonoBehaviour
 		file.Close();
     }
 
-	public void WriteAllPositionData(PositionTracker posiTracker){
-		exportPositionDataComplete (posiTracker);
-		exportPositionDataInLead (posiTracker);
-		exportPositionDataInTie (posiTracker);
-		exportPositionDataInDeficit (posiTracker);
+	public void WriteAllPositionData(PositionTracker posiTracker, PlayerLogging pL){
+		exportPositionDataComplete (posiTracker, pL);
+		exportPositionDataInLead (posiTracker, pL);
+		exportPositionDataInTie (posiTracker, pL);
+		exportPositionDataInDeficit (posiTracker, pL);
 	}
 
 	//Code aus dem FoPro Lost In Space!
 	//PositionData
 	// Exportiert die kompletten Positionsdaten in eine .csv-Datei
-	public void exportPositionDataComplete(PositionTracker posiTracker)
+	public void exportPositionDataComplete(PositionTracker posiTracker, PlayerLogging pL)
 	{
 		completePositionPath = "ResearchData/csv/PositionData/"+ sceneNameAbbreviation+"/Complete/";
 		List<Vector3> completePositionList = posiTracker.CompletePositionList;
@@ -564,7 +563,7 @@ public class ExportData : MonoBehaviour
 		}
 
 		// Positionsdaten in Datei speichern.
-		StreamWriter file = File.CreateText(completePositionPath + "VP_" + subjectName+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_CompletePosition.csv");
+		StreamWriter file = File.CreateText(completePositionPath + "VP_" + pL.subjectNr+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_CompletePosition.csv");
 
 		file.WriteLine("Index; Position");
 
@@ -576,7 +575,7 @@ public class ExportData : MonoBehaviour
 	}
 
 	// Exportiert die Positionsdaten in Führung in eine .csv-Datei
-	public void exportPositionDataInLead(PositionTracker posiTracker)
+	public void exportPositionDataInLead(PositionTracker posiTracker, PlayerLogging pL)
 	{
 		inLeadPositionPath = "ResearchData/csv/PositionData/"+ sceneNameAbbreviation+"/InLead/";
 		List<Vector3> inLeadPositionList = posiTracker.CompletePositionListInLead;
@@ -588,7 +587,7 @@ public class ExportData : MonoBehaviour
 		}
 
 		// Positionsdaten in Datei speichern.
-		StreamWriter file = File.CreateText(inLeadPositionPath + "VP_" + subjectName+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_InLeadPosition.csv");
+		StreamWriter file = File.CreateText(inLeadPositionPath + "VP_" + pL.subjectNr+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_InLeadPosition.csv");
 
 		file.WriteLine("Index; Position");
 
@@ -600,7 +599,7 @@ public class ExportData : MonoBehaviour
 	}
 
 	// Exportiert die Positionsdaten in Remis in eine .csv-Datei
-	public void exportPositionDataInTie(PositionTracker posiTracker)
+	public void exportPositionDataInTie(PositionTracker posiTracker, PlayerLogging pL)
 	{
 		inTiePositionPath = "ResearchData/csv/PositionData/"+ sceneNameAbbreviation+"/InTie/";
 		List<Vector3> inTiePositionList = posiTracker.CompletePositionListInTie;
@@ -612,7 +611,7 @@ public class ExportData : MonoBehaviour
 		}
 
 		// Positionsdaten in Datei speichern.
-		StreamWriter file = File.CreateText(inTiePositionPath + "VP_" + subjectName+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_InTiePosition.csv");
+		StreamWriter file = File.CreateText(inTiePositionPath + "VP_" + pL.subjectNr+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_InTiePosition.csv");
 
 		file.WriteLine("Index; Position");
 
@@ -624,7 +623,7 @@ public class ExportData : MonoBehaviour
 	}
 
 	// Exportiert die Positionsdaten in Rückstand in eine .csv-Datei
-	public void exportPositionDataInDeficit(PositionTracker posiTracker)
+	public void exportPositionDataInDeficit(PositionTracker posiTracker, PlayerLogging pL)
 	{
 		inDeficitPositionPath = "ResearchData/csv/PositionData/"+ sceneNameAbbreviation+"/InDeficit/";
 		List<Vector3> inDeficitPositionList = posiTracker.CompletePositionListInDeficit;
@@ -636,7 +635,7 @@ public class ExportData : MonoBehaviour
 		}
 
 		// Positionsdaten in Datei speichern.
-		StreamWriter file = File.CreateText(inDeficitPositionPath + "VP_" + subjectName+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_InDeficitPosition.csv");
+		StreamWriter file = File.CreateText(inDeficitPositionPath + "VP_" + pL.subjectNr+ "_" +System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + sceneNameAbbreviation + "_InDeficitPosition.csv");
 
 		file.WriteLine("Index; Position");
 

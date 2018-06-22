@@ -615,7 +615,7 @@ public class GameStatePhoton : MonoBehaviour
 		exportData.StartUpExportData ();
 		//exportData.FindPlayerLogging ();
 		exportData.ExportAllData (activePlayer.GetComponent<PlayerLogging>());
-		exportData.WriteAllPositionData (activePlayer.GetComponent<PositionTracker>());
+		exportData.WriteAllPositionData (activePlayer.GetComponent<PositionTracker>(), activePlayer.GetComponent<PlayerLogging>());
 
 	}
 
