@@ -135,7 +135,7 @@ public class ExportData : MonoBehaviour
                 newFile.Write(sceneNameAbbreviation + "_Zeit_gegnerische_Torzone;");
                 //time per zone per result
 
-                newFile.Write(sceneNameAbbreviation + "_Zeit_in_eigene_Torzone_Vorsprung;");
+                newFile.Write(sceneNameAbbreviation + "_Zeit_eigene_Torzone_Vorsprung;");
                 newFile.Write(sceneNameAbbreviation + "_Zeit_eigene_Torzone_Remis;");
                 newFile.Write(sceneNameAbbreviation + "_Zeit_eigene_Torzone_Rueckstand;");
 
@@ -175,8 +175,6 @@ public class ExportData : MonoBehaviour
                 newFile.Write(sceneNameAbbreviation + "_Normale_Schuesse_Rueckstand;");
                 newFile.Write(sceneNameAbbreviation + "_Mittlere_Schuesse_Rueckstand;");
                 newFile.Write(sceneNameAbbreviation + "_Grosse_Schuesse_Rueckstand;");
-
-
 
                 //accuracy
                 newFile.Write(sceneNameAbbreviation + "_Total_getroffene_Objekte;");
