@@ -24,7 +24,7 @@ public class GlobalTimer : MonoBehaviour
     void Start()
     {
         //Für die Spielzeiten
-        startTime = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+		startTime = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm");
     }
 
     // Update is called once per frame
@@ -36,7 +36,7 @@ public class GlobalTimer : MonoBehaviour
 
     public void SetEndTime()
     {
-        endTime = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+        endTime = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm");
     }
 
     void SetPlayTime()
