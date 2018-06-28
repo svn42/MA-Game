@@ -115,8 +115,8 @@ public class GameStatePhoton : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		winsP1= PlayerPrefs.GetInt ("WinsP1");
-		winsP2= PlayerPrefs.GetInt ("WinsP2");
+		//winsP1= PlayerPrefs.GetInt ("WinsP1");
+		//winsP2= PlayerPrefs.GetInt ("WinsP2");
 		InstantiatePlayers ();
 
 		timeLeft += 0.05f;
@@ -464,7 +464,8 @@ public class GameStatePhoton : MonoBehaviour
 
 	IEnumerator StartDepauseCountdown (int countdown)
 	{
-		
+		winsP1= PlayerPrefs.GetInt ("WinsP1");
+		winsP2= PlayerPrefs.GetInt ("WinsP2");
 		yield return new WaitForSeconds (1 * Time.timeScale);
 		BuildPauseScreen ("countdown");
 		for (int i = countdown; i > 0; i--) {
@@ -688,26 +689,14 @@ public class GameStatePhoton : MonoBehaviour
 	}
 
 	void SetFinalResult(){
-		if (goalsTeam1 == goalLimit){
+		if (goalsTeam1 > goalsTeam2){
 			winsP1++;
 			PlayerPrefs.SetInt ("WinsP1", winsP1); 
-		} else if (goalsTeam2 == goalLimit){
+		} else if (goalsTeam2 > goalsTeam1){
 			winsP2++;
 			PlayerPrefs.SetInt ("WinsP2", winsP2); 
 		}
 			
 	}
-
-	/*private GameObject FindActivePlayer(){
-		GameObject[] playerList = GameObject.FindGameObjectsWithTag ("Player");
-		foreach(GameObject go in playerList) {
-			if (go.GetComponent<PhotonView> ().isMine) {
-				return go;
-			}
-		}
-	}
-	*/
-
-
 
 }
