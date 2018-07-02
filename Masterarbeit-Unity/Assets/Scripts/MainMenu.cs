@@ -46,14 +46,27 @@ public class MainMenu : MonoBehaviour
 	public void Update ()
 	{
 		//Debug.Log (PhotonNetwork.connectionStateDetailed.ToString ());
+		CheckInput();
 	}
 
+
+	public void CheckInput(){
+		if (Input.GetKeyUp (KeyCode.Keypad1)) {
+			PlayerPrefs.SetInt ("RatingManipulated", 1557);
+			Debug.Log ("RatingManipulated: "+ PlayerPrefs.GetInt("RatingManipulated"));
+		} else if (Input.GetKeyUp (KeyCode.Keypad9)) {
+			PlayerPrefs.SetInt ("RatingManipulated", 2453);
+			Debug.Log ("RatingManipulated: "+ PlayerPrefs.GetInt("RatingManipulated"));
+
+		}
+	}
 
 	public void StartTutorial ()
 	{
 		PlayerPrefs.SetString ("GameType", "Tutorial");
 		SceneManager.LoadScene ("Tutorial_1");
 		PlayerPrefs.SetInt(VPNummer.ToString() + "Rating", 0);
+
 	}
 
 	public void StartLocalGame ()
@@ -112,6 +125,9 @@ public class MainMenu : MonoBehaviour
 	{
 		Application.Quit ();
 		PlayerPrefs.SetInt ("VP", 0);
+		PlayerPrefs.SetInt ("RatingManipulated", 0);
+		Debug.Log ("RatingManipulated: "+ PlayerPrefs.GetInt("RatingManipulated"));
+
 	}
 
 	public void CheckPassword ()
@@ -177,6 +193,9 @@ public class MainMenu : MonoBehaviour
 			onlineGameButton.interactable = false;
 		}
 		lastOnlineButton.interactable = false;
+		PlayerPrefs.SetInt ("RatingManipulated", 0);
+		Debug.Log ("RatingManipulated: "+ PlayerPrefs.GetInt("RatingManipulated"));
+
 	}
 
 	public void SetServerIP(){

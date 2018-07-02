@@ -379,16 +379,30 @@ public class PlayerPhoton : MonoBehaviour
 		if (playerTeam == 1) {
 			subjectNrEnemy = gameState.player2VP;
 			ratingEnemy = gameState.player2Rating;
+
+			//sofern das Rating manipuliert wurde, bekommt der Spieler für den gegnerischen Spieler das manipulierte angezeigt
+			if (PlayerPrefs.GetInt ("RatingManipulated") != 0) {
+				if (pvPlayer.isMine) {
+					ratingEnemy = PlayerPrefs.GetInt ("RatingManipulated");
+				}
+			}
+		
+
 		} else if (playerTeam == 2) {
 			subjectNrEnemy = gameState.player1VP;
 			ratingEnemy = gameState.player1Rating;
+
+			if (PlayerPrefs.GetInt ("RatingManipulated") != 0) {
+				if (pvPlayer.isMine) {
+					ratingEnemy = PlayerPrefs.GetInt ("RatingManipulated");
+				}
+			}
+
+			audioSource = GetComponent<AudioSource> ();
+			soundBoing = Resources.Load<AudioClip> ("Sounds/boing");
+
+			SetUpEmotes ();
 		}
-
-				audioSource = GetComponent<AudioSource> ();
-		soundBoing = Resources.Load<AudioClip> ("Sounds/boing");
-
-		SetUpEmotes ();
-		
 	}
 
 	[PunRPC]

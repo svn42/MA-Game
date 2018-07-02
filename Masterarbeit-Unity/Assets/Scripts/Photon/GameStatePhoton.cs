@@ -293,6 +293,8 @@ public class GameStatePhoton : MonoBehaviour
 	private void SetGUIPlayerInformation (int playerTeam)
 	{
 
+
+
 		switch (playerTeam) {
 		case 1: 
 		//	vpnTeam1.text = "VP: " + player1VP.ToString();
@@ -680,11 +682,26 @@ public class GameStatePhoton : MonoBehaviour
 			player1VP = subjNr;
 			player1Rating = ratin;
 
+			if (PlayerPrefs.GetInt ("RatingManipulated") != 0) {
+				if (!player1.GetComponent<PhotonView>().isMine ) {
+					player1Rating = PlayerPrefs.GetInt ("RatingManipulated");
+				}
+			}
+
+
 		} else if (playerTeam == 2) {
 			player2 = GameObject.Find(name);
 			player2VP = subjNr;
 			player2Rating = ratin;
+		
+			if (PlayerPrefs.GetInt ("RatingManipulated") != 0) {
+				if (!player2.GetComponent<PhotonView>().isMine ) {
+					player2Rating = PlayerPrefs.GetInt ("RatingManipulated");
+				}
 			}
+		}
+
+
 		SetGUIPlayerInformation (playerTeam);
 	}
 
