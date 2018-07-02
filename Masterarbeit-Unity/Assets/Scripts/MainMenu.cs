@@ -52,12 +52,17 @@ public class MainMenu : MonoBehaviour
 
 	public void CheckInput(){
 		if (Input.GetKeyUp (KeyCode.Keypad1)) {
-			PlayerPrefs.SetInt ("RatingManipulated", 1557);
+			PlayerPrefs.SetInt ("RatingManipulated", 1453);
 			Debug.Log ("RatingManipulated: "+ PlayerPrefs.GetInt("RatingManipulated"));
-		} else if (Input.GetKeyUp (KeyCode.Keypad9)) {
+		} else if (Input.GetKeyUp (KeyCode.Keypad3)) {
+			PlayerPrefs.SetInt ("RatingManipulated", 1753);
+			Debug.Log ("RatingManipulated: "+ PlayerPrefs.GetInt("RatingManipulated"));
+		}else if (Input.GetKeyUp (KeyCode.Keypad7)) {
+			PlayerPrefs.SetInt ("RatingManipulated", 2053);
+			Debug.Log ("RatingManipulated: "+ PlayerPrefs.GetInt("RatingManipulated"));
+		}else if (Input.GetKeyUp (KeyCode.Keypad9)) {
 			PlayerPrefs.SetInt ("RatingManipulated", 2453);
 			Debug.Log ("RatingManipulated: "+ PlayerPrefs.GetInt("RatingManipulated"));
-
 		}
 	}
 
