@@ -397,12 +397,12 @@ public class PlayerPhoton : MonoBehaviour
 					ratingEnemy = PlayerPrefs.GetInt ("RatingManipulated");
 				}
 			}
-		}
+
 			audioSource = GetComponent<AudioSource> ();
 			soundBoing = Resources.Load<AudioClip> ("Sounds/boing");
 
 			SetUpEmotes ();
-		
+		}
 	}
 
 	[PunRPC]
