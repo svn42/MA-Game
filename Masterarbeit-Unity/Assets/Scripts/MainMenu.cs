@@ -74,10 +74,24 @@ public class MainMenu : MonoBehaviour
 
 	}
 
-	public void StartLocalGame ()
+	public void StartLocalGame1 ()
 	{
 		PlayerPrefs.SetString ("GameType", "Local");
 		SceneManager.LoadScene ("Level 1_local");
+		IPChangedText.SetActive (false);
+	}
+
+	public void StartLocalGame2 ()
+	{
+		PlayerPrefs.SetString ("GameType", "Local");
+		SceneManager.LoadScene ("Level 2_local");
+		IPChangedText.SetActive (false);
+	}
+
+	public void StartLocalGame3 ()
+	{
+		PlayerPrefs.SetString ("GameType", "Local");
+		SceneManager.LoadScene ("Level 3_local");
 		IPChangedText.SetActive (false);
 	}
 
